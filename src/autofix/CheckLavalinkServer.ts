@@ -1,7 +1,7 @@
 import { Manager } from "../manager.js";
 import { Headers } from "../@types/Lavalink.js";
 import { GetLavalinkServer } from "./GetLavalinkServer.js";
-import { MewslinkWebsocket } from "../mewslink/main.js";
+import { ZkslinkWebsocket } from "../zklink/main.js";
 
 export class CheckLavalinkServer {
   client: Manager;
@@ -25,11 +25,11 @@ export class CheckLavalinkServer {
 
     lavalink_data.forEach((config) => {
       let headers = {
-        "Client-Name": "mewwme/1.0.0 (https://github.com/lrmn7/mewwme)",
-        "User-Agent": "mewwme/1.0.0 (https://github.com/lrmn7/mewwme)",
+        "Client-Name": "zkmusics/1.0.0 (https://github.com/ZenKho-chill/Zk-Musics)",
+        "User-Agent": "zkmusic/1.0.0 (https://github.com/ZenKho-chill/Zk-Musics)",
         Authorization: config.pass,
-        "User-Id": "928711702596423740",
-        "Resume-Key": "mewwme@1.0.0(https://github.com/lrmn7/mewwme)",
+        "User-Id": "1370307244444487680",
+        "Resume-Key": "zkmusic@1.0.0(https://github.com/ZenKho-chill/Zk-Musics)",
       };
 
   const url = `ws://${config.host}:${config.port}/v4/websocket`;
@@ -60,7 +60,7 @@ export class CheckLavalinkServer {
 
   checkServerStatus(url: string, headers: Headers) {
     return new Promise((resolve, reject) => {
-      const ws = new MewslinkWebsocket(url, { headers });
+      const ws = new ZkslinkWebsocket(url, { headers });
       ws.on("open", () => {
         resolve(true);
         ws.close();
