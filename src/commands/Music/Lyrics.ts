@@ -7,10 +7,10 @@ import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
 
-// Main code
+// Mã chính
 export default class implements Command {
   public name = ["lyrics"];
-  public description = "Display lyrics of the song.";
+  public description = "Hiển thị lời bài hát.";
   public category = "Music";
   public accessableby = data.COMMANDS_ACCESS.MUSIC.Lyrics;
   public usage = "";
@@ -23,7 +23,7 @@ export default class implements Command {
   public options = [
     {
       name: "search",
-      description: "The song name",
+      description: "Tên bài hát",
       type: ApplicationCommandOptionType.String,
       required: false,
     },
@@ -32,7 +32,9 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
-    const geniusClient = new Genius.Client(client.config.utilities.LyricsGenius.ApiKey);
+    const geniusClient = new Genius.Client(
+      client.config.utilities.LyricsGenius.ApiKey
+    );
 
     let query = handler.args.join(" ");
 
@@ -41,10 +43,15 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "lyrics_disable", {
-                user: String(handler.user?.displayName || handler.user?.tag),
-                botname: client.user!.username || client.user!.displayName,
-              })}`
+              `${client.i18n.get(
+                handler.language,
+                "commands.music",
+                "lyrics_disable",
+                {
+                  user: String(handler.user?.displayName || handler.user?.tag),
+                  botname: client.user!.username || client.user!.displayName,
+                }
+              )}`
             )
             .setColor(client.color_main),
         ],
@@ -61,10 +68,15 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.music", "lyrics_noquery", {
-                  user: handler.user.username,
-                  botname: client.user!.username,
-                })}`
+                `${client.i18n.get(
+                  handler.language,
+                  "commands.music",
+                  "lyrics_noquery",
+                  {
+                    user: handler.user.username,
+                    botname: client.user!.username,
+                  }
+                )}`
               )
               .setColor(client.color_main),
           ],
@@ -79,10 +91,15 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.music", "lyrics_notfound", {
-                  user: handler.user.username,
-                  botname: client.user!.username,
-                })}`
+                `${client.i18n.get(
+                  handler.language,
+                  "commands.music",
+                  "lyrics_notfound",
+                  {
+                    user: handler.user.username,
+                    botname: client.user!.username,
+                  }
+                )}`
               )
               .setColor(client.color_main),
           ],
@@ -97,10 +114,15 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.music", "lyrics_notfound", {
-                  user: handler.user.username,
-                  botname: client.user!.username,
-                })}`
+                `${client.i18n.get(
+                  handler.language,
+                  "commands.music",
+                  "lyrics_notfound",
+                  {
+                    user: handler.user.username,
+                    botname: client.user!.username,
+                  }
+                )}`
               )
               .setColor(client.color_main),
           ],
@@ -115,9 +137,14 @@ export default class implements Command {
 
       if (lyrics.length > 4096) {
         embed.setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "lyrics_toolong", {
-            url: song.url,
-          })}`
+          `${client.i18n.get(
+            handler.language,
+            "commands.music",
+            "lyrics_toolong",
+            {
+              url: song.url,
+            }
+          )}`
         );
       } else {
         embed.setDescription(lyrics);
@@ -125,16 +152,21 @@ export default class implements Command {
 
       return handler.editReply({ embeds: [embed] });
     } catch (error) {
-      client.logger.error("LyricsCommand Error:", error);
+      client.logger.error("Lỗi LyricsCommand:", error);
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "lyrics_error", {
-                user: handler.user.username,
-                botname: client.user!.username,
-                error: error.message,
-              })}`
+              `${client.i18n.get(
+                handler.language,
+                "commands.music",
+                "lyrics_error",
+                {
+                  user: handler.user.username,
+                  botname: client.user!.username,
+                  error: error.message,
+                }
+              )}`
             )
             .setColor(client.color_main),
         ],
