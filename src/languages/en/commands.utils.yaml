@@ -1,0 +1,44 @@
+### Kick command! ###
+kick_user_not_found: "That user doesn't exist in this server"
+kick_user_ownerid: "You can't kick that user because they're the server owner"
+kick_user_higher_role: "You can't kick that user because they have a higher role than you"
+kick_bot_higher_role: "You can't kick that user because they have a higher role than me"
+kick_error: "error occurred while trying to kick that user"
+kick_success: "**%{user} has been kicked by %{moderator}**"
+kick_success_dm: |
+  You have been kicked by %{moderator} from the server %{guild}. ```Reason: %{reason}```
+  Contact the server administrator if you have any questions or would like to appeal.
+
+### Ban command! ###
+ban_user_not_found: "That user doesn't exist in this server"
+ban_user_ownerid: "You can't ban that user because they're the server owner"
+ban_user_higher_role: "You can't ban that user because they have a higher role than you"
+ban_bot_higher_role: "You can't ban that user because they have a higher role than me"
+ban_error: "error occurred while trying to ban that user"
+banned_success: "**%{user} has been banned by %{moderator}**"
+ban_success_dm: |
+  You have been banned by %{moderator} from the server %{guild}. ```Reason: %{reason}```
+  Contact the server administrator if you have any questions or would like to appeal.
+
+### Purge command! ###
+purge_invalid_amount: "Please provide a valid number"
+purge_success: "Successfully purged %{amount} messages"
+purge_older_than_14_days: "You can't purge messages older than 14 days"
+purge_error: "Failed to purge messages"
+
+### Cat command #####
+cat_error: "An error occured while sending the image cat! Please try again."
+
+### Quotes command ####
+provide_categories_quote: "Oops! Invalid commands.please provide category\nAvailable categories: %{categories}"
+invalid_categories_quote: "Invalid category\nAvailable categories: %{categories}"
+quote_error: "An error occured while sending the quote! Please try again."
+
+### MyStats command ####
+mystats_error: "There was an error generating your statistics. Please try again later."
+
+### TopStats command ####
+topstats_error: "There was an error generating your statistics. Please try again later."
+
+### profile command ###
+user_arg_error: "<:m_wrong:1193112008124530738> Invalid argument. Please use %{text}"

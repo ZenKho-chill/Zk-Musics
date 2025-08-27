@@ -1,0 +1,167 @@
+### Lệnh Tìm kiếm!
+search_desc: "### HEY! Đã tìm thấy kết quả cho yêu cầu của bạn"
+search_end_desc2: "### Ôi! %{user}, bạn đã không chọn bài kịp\n**Thử lại nhé!**"
+search_footer: "%{countSong} bài được tìm thấy"
+search_end_desc1: "## [`%{title}`](%{url}) `%{author}` thưởng thức nhé ♥"
+search_placeholder: "Thêm vào hàng chờ và phát cho bạn ♥"
+search_no_result: "Không tìm thấy kết quả cho tìm kiếm của bạn :("
+search_active: "Ồ! Đang có tìm kiếm đang chạy. Vui lòng đợi 30s"
+play_search_track: "## [`%{title}`](%{url}) `%{author}` thưởng thức nhé ♥"
+no_songs_playing: "<:wrong:1220876213896216686> Hiện không có bài nào đang phát!"
+url_no_allowed: "<:wrong:1220876213896216686> Vui lòng dùng tên bài/ca sĩ (không dùng URL)"
+
+### Lệnh Tự phát (Autoplay)!
+autoplay_off: "<:wrong:1220876213896216686> Tự phát đã **TẮT**"
+autoplay_on: "<:okee:1220876098456256512> Tự phát đã **BẬT**"
+autoplay_no_songs_playing: "<:warnings:1220876158254710936> Không có bài nào đang phát!"
+
+### Lệnh Xóa hàng chờ!
+clearqueue_msg: "<:bin:1220831964890927235> Hàng chờ đã **được xóa**"
+
+### Lệnh tua (Forward)!
+forward_msg: "<:next:1220832036101820508> **%{user} đã tua %{title} đến** `%{duration}`"
+forward_beyond: "<:warnings:1220876158254710936> Bài hát sắp kết thúc. Không thể tua quá thời lượng!"
+
+### Lệnh Phát tiếp theo!
+playnext_desc: "### %{name} sẽ phát tiếp theo ♪"
+playnext_queue_empty: "<:wrong:1220876213896216686> Hàng chờ đang rỗng. Vui lòng thêm vài bài trước"
+playnext_notfound: "<:wrong:1220876213896216686> Không tìm thấy bài!"
+
+# Thực thi khi không hợp lệ
+no_node: "<:warnings:1220876158254710936> **Không tìm thấy server Lavalink. Vui lòng thử lại sau 5 phút**"
+
+### Lệnh vào kênh (Join)!
+join_msg: "Trình phát đã được tạo và tham gia %{channel} thành công"
+join_already: "<:warnings:1220876158254710936> Mình đã có mặt ở %{channel} rồi"
+join_no_in_voice: "<:wrong:1220876213896216686> Bạn chưa vào kênh thoại!"
+join_no_same_voice: "<:wrong:1220876213896216686> Bạn không ở cùng kênh thoại với mình!"
+
+### Lệnh Lặp (Loop)!
+loop_current: |
+  <:loop:1220832757496811570> **Đang lặp %{title}
+  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Thưởng thức nhé, %{user}**
+
+loop_all: "<:loop:1220832757496811570> **Đã bật chế độ lặp toàn bộ hàng chờ**"
+unloop_all: "<:wrong:1220876213896216686> **Chế độ lặp đã bị TẮT**"
+loop_invalid: "<:warnings:1220876158254710936> Chế độ lặp không hợp lệ. Vui lòng dùng **%{mode}**"
+loop_already: "<:warnings:1220876158254710936> Chế độ lặp hiện đã là **%{mode}**"
+
+### Lệnh Lyrics!
+provide_lyrics: "Vui lòng cung cấp **tên bài hát** hợp lệ"
+lyrics_title: "Lời bài hát cho **%{song}**"
+lyrics_notfound: "<:wrong:1291138140681273396> **Không tìm thấy lời bài hát cho bài này!**"
+lyrics_toolong: "**Lời bài hát quá dài, tối đa 4048 ký tự!**"
+lyrics_disable: "**Lời bài hát hiện đang bị tắt!**"
+lyrics_noquery: "**Vui lòng cung cấp **tên bài hát** hợp lệ"
+lyrics_error: "**Lỗi: %{error}**"
+
+### Lệnh Đang phát (Nowplaying)!
+nowplaying_title: "Đang phát..."
+nowplaying_footer: "Còn trong hàng: %{queue} • Chế độ lặp: %{loopmode} • Âm lượng: %{volume}"
+nowplaying_author_title: "Tác giả"
+nowplaying_total_duration_title: "Thời lượng"
+nowplaying_request_title: "Yêu cầu bởi"
+
+### Lệnh Tạm dừng (Pause)!
+pause_msg: |
+  <:pause:1220831927595175949> **Bài hát %{title} đã tạm dừng! 
+  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Đã bị %{user} tạm dừng.**
+
+### Lệnh Phát (Play)!
+play_no_same_voice: "<:wrong:1220876213896216686> Bạn không ở cùng kênh thoại với mình!"
+play_no_in_voice: "<:wrong:1220876213896216686> Bạn chưa vào kênh thoại!"
+play_arg: "<:warnings:1220876158254710936> Vui lòng cung cấp tên bài hoặc URL hợp lệ!"
+play_emoji: "<:wrong:1220876213896216686> **Ồ! Đây là emoji, không thể phát nhạc từ emoji**"
+play_match: "<:wrong:1220876213896216686> **Ôi! Xin lỗi, không tìm thấy bài! Vui lòng thử lại**"
+
+play_track: "### %{title} thưởng thức nhé ♥"
+play_result: "### %{title} thưởng thức nhé ♥"
+play_playlist: |
+  ## Dễ vậy thôi!
+  ### %{title} đã được thêm vào hàng chờ
+
+play_queue_max: |
+  <:wrong:1220876213896216686> Ôi không! Hàng chờ quá dài. Tối đa %{limitqueue} bài.
+  <:blankers:1220848705289064669><:pop:1220849334606626946> Nâng cấp lên [**premium**](%{premium}) để được hàng chờ không giới hạn!
+
+play_playlist_max: |
+  <:wrong:1220876213896216686> Ôi không! Playlist quá dài. Tối đa %{limitqueue} bài.
+  <:blankers:1220848705289064669><:pop:1220849334606626946> Nâng cấp lên [**premium**](%{premium}) để được playlist không giới hạn!
+
+### Lệnh Trước đó!
+previous_notfound: |
+  <:warnings:1220876158254710936> **Không tìm thấy bài trước trong hàng chờ! 
+  <:blankers:1220848705289064669><:pop:1220849334606626946> Hãy /play thêm bài để tiếp tục không khí nhé!**
+previous_msg: |
+  <:replay:1220881274378653787>  **Quay lại bài trước! 
+  <:blankers:1220848705289064669><:pop:1220849334606626946> Đang phát: %{title}**
+
+### Lệnh Hàng chờ (Queue)!
+queue_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
+queue_title: "Đang phát hàng chờ..."
+queue_description: "**%{title}**\n\n**Các bài còn lại trong hàng chờ %{rest}**"
+queue_footer: "Trang • %{page}/%{pages} | Bài • %{queue_lang} | Tổng thời lượng • %{duration}"
+queue_notnumber: "<:warnings:1220876158254710936> Vui lòng nhập số trang hợp lệ!"
+queue_page_notfound: "<:warnings:1220876158254710936> Chỉ có **%{page} trang**"
+
+### Lệnh Xóa bài!
+removetrack_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
+removetrack_already: "<:wrong:1220876213896216686> **Mình không thể xóa bài đang phát**"
+removetrack_notfound: "<:warnings:1220876158254710936> **Xin lỗi %{user}, không tìm thấy bài!**"
+removetrack_desc: "<:bin:1220831964890927235> **Đã xóa %{title} khỏi hàng chờ!**"
+
+### Lệnh Phát lại (Replay)!
+replay_msg: "<:replay:1220881274378653787> **%{user} đã phát lại %{title}**"
+replay_not_seekable: "<:warnings:1220876158254710936> Bài **%{title}** không thể phát lại."
+
+### Lệnh Tiếp tục (Resume)!
+resume_msg: |
+  <:play:1220839345938763978> **Đã tiếp tục phát %{title},
+  <:blankers:1220848705289064669><:pop:1220849334606626946> Thưởng thức nào %{user}**
+
+### Lệnh Tua lùi (Rewind)!
+rewind_msg: "<:back:1220832007303594086> **%{user} đã tua lùi %{title} đến** `%{duration}`"
+rewind_beyond: "<:warnings:1220876158254710936> Bài vừa mới bắt đầu. Không thể tua lùi quá thời điểm này!"
+
+### Lệnh Seek!
+seek_msg: "<:seek:1220881026302345355> **%{user} đã tua %{title} tới** `%{duration}`"
+seek_beyond: "<:warnings:1220876158254710936> Xin lỗi %{user}, bạn không thể tua quá thời lượng bài!"
+seek_invalid: "<:warnings:1220876158254710936> Thời lượng tua không hợp lệ. Vui lòng dùng định dạng thời gian hợp lệ. Ví dụ: **1:30**"
+seek_not_seekable: "<:seek:1220881026302345355> Bài **%{title}** không thể tua lùi hoặc tua tới."
+
+### Lệnh Xáo trộn!
+shuffle_title: "Xáo trộn hàng chờ"
+
+### Lệnh Bỏ qua!
+skip_notfound: |
+  <:warnings:1220876158254710936> **Không tìm thấy bài để bỏ qua! Có vẻ không còn gì để bỏ qua. 
+  <:blankers:1220848705289064669><:pop:1220849334606626946> Hãy /play thêm bài để tiếp tục nghe nhé!**
+skip_msg: "<:next:1220832036101820508> **%{title} đã bị bỏ qua**"
+skip_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
+
+### Lệnh Dừng!
+stop_msg: "<:stop:1220831796430897272> **%{title} đã bị dừng**"
+
+### Lệnh Âm lượng!
+volume_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
+volume_invalid: "<:warnings:1220876158254710936> Giá trị âm lượng không hợp lệ. Vui lòng dùng số từ **1** đến **100**"
+volume_msg: "<:voldown:1220831827825135637> **Đã đặt âm lượng %{volume}%, thưởng thức nào %{user}**"
+volume_max: "<:warnings:1220876158254710936> **Âm lượng đã ở mức tối đa 100%**"
+
+### Lệnh Spotify Playlist!
+spotify_playlist_placeholder: "Thêm vào hàng chờ và phát cho bạn ♥"
+spotify_playlist_title: "Danh sách phát Spotify của %{SpotifyName}"
+spotify_playlist_desc: "%{playlists}"
+spotify_playlist_footer: "Chỉ hiển thị tối đa %{max} playlist"
+spotify_play_playlist: |
+  ## Danh sách phát [`%{playlistname}`](%{title})
+  ### đã được thêm vào hàng chờ
+spotify_playlist_empty: "Bạn không có danh sách phát trên Spotify."
+spotify_playlist_not_connected: "Vui lòng kết nối tài khoản Spotify trước!"
+spotify_playlist_notfound: "Không tìm thấy playlist bạn chọn. Vui lòng thử lại hoặc chọn playlist khác."
+spotify_playlist_error: "Lỗi khi lấy danh sách phát. Vui lòng thử lại sau."
+spotify_playlist_active: "Vui lòng đợi 30s trước khi gửi yêu cầu mới.\nNếu bạn đã chọn rồi, bạn có thể gửi yêu cầu mới."
+
+## Lệnh tạm thời bị vô hiệu
+youtube_disabled: "Hỗ trợ YouTube tạm thời không khả dụng"
+autoplay_disabled: "Tự phát tạm thời bị tắt."

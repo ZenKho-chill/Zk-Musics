@@ -1,0 +1,33 @@
+### Yêu cầu nhạc qua nút ! ###
+stop_msg: "Bài hát đã **dừng**"
+skip_notfound: "Hiện tại không có bài nào để bỏ qua"
+skip_msg: "Bài hát đã được **bỏ qua**"
+previous_msg: "Quay lại bài **trước**"
+previous_notfound: "Không tìm thấy bài trước trong hàng chờ!"
+resume_msg: "Đã **tiếp tục** phát"
+pause_msg: "Bài hát đã **tạm dừng**"
+loop_current: "Đang lặp lại **bài hiện tại**"
+loop_all: "Đang lặp **toàn bộ hàng chờ**"
+unloop_all: "Chế độ lặp đã **TẮT**"
+
+# Cần vào voice & cùng kênh voice để sử dụng lệnh!
+no_player: "<:warnings:1220876158254710936> Hiện không có bài nào đang phát!"
+no_same_voice: "<:wrong:1220876213896216686> Bạn không ở cùng kênh thoại với mình!"
+no_in_voice: "<:wrong:1220876213896216686> Bạn chưa vào kênh thoại!"
+
+### XỬ LÝ YÊU CẦU NHẠC ###
+### cập nhật hiển thị ###
+player_setup_author: "ĐANG PHÁT"
+player_setup_icon_author: "https://media.tenor.com/Sb0yPHMgNaUAAAAi/music-disc.gif"
+setup_content_queue: "%{index}. **%{title}** Yêu cầu bởi %{request}"
+setup_footer: "Còn • %{totalsong} | Tổng thời lượng • %{duration}"
+setup_queuemsg: "**Vào kênh thoại và phát nhạc bằng từ khóa hoặc URL ngay đây nhé!**"
+setup_playembed_author: "Gõ tên bài hoặc dán URL vào đây, mình lo phần còn lại!"
+
+### nội dung phát ###
+player_setup_title: "**%{title}**"
+play_track: "Đã thêm **%{title}** • %{request}"
+play_playlist: "Đã thêm **%{title}** • (**%{songs} bài**) • %{request}"
+play_result: "Đã thêm **%{title}** • %{request}"
+play_emoji: "Mình không chắc cách phát cái này... Không phải bài hoặc playlist."
+setup_content: "**Hehe! Mình đã sẵn sàng cho danh sách nhạc của bạn — thả gì vào đây đi!**"

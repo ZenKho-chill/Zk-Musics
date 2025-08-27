@@ -1,0 +1,126 @@
+### Giới thiệu lệnh
+about_desc1: "** %{bot} Nơi những ai muốn hát luôn tìm thấy bài ca ♪\nTham gia giai điệu trên máy chủ Discord của bạn ngay hôm nay!**"
+about_desc2: |
+  ・Tiền tố (prefix) cho bot trên máy chủ này là `%{prefix}`
+  ・Đổi tiền tố với `%{prefix} prefix <new prefix>`
+  ・Phát bài bằng link hoặc từ khóa tìm kiếm `%{prefix} play`
+  Ghé thăm **[website](%{website})** hoặc dùng lệnh `%{prefix} help` để xem thêm lệnh.
+about_desc3: |
+  %{bot} yêu cầu quyền `administrator`,
+  Nếu bạn tắt quyền Administrator cho %{bot}, bot sẽ không hoạt động đầy đủ! Bạn vẫn có thể nghe các tính năng nhạc cơ bản nhưng một số thứ sẽ không hoạt động.
+
+  <a:support:1220847678380970086>**Hỗ trợ**
+  Tham gia **[server hỗ trợ](%{serversupport})** nếu bạn cần trợ giúp, muốn cập nhật thông tin hoặc tham gia thảo luận cộng đồng với nhà phát triển!
+
+### Lệnh trợ giúp (Help)
+finder_invalid: "Lệnh không hợp lệ"
+finder_example: "**Vui lòng cung cấp tên lệnh hợp lệ**"
+finder_name: "**Lệnh:**"
+finder_des: "**Mô tả:**"
+finder_usage: "**Cách dùng:**"
+finder_access: "**Ai có thể dùng:**"
+finder_aliases: "**Bí danh:**"
+finder_slash: "**Slash:**"
+finder_des_no: "Chưa có mô tả"
+finder_usage_no: "Chưa có hướng dẫn"
+finder_aliases_prefix: "[Chỉ Prefix]"
+finder_aliases_no: "Không có bí danh"
+finder_slash_enable: "Đã bật"
+finder_slash_disable: "Đã tắt"
+### Menu trang chủ / lệnh trợ giúp và Tất cả lệnh
+command_not_found: "Không tìm thấy lệnh"
+select_menu: "Thưởng thức âm nhạc cùng mình nào!"
+footer: "© 2024 Bản quyền thuộc về chủ sở hữu"
+help_timeout: "Menu trợ giúp hết thời gian, thử dùng **`%{prefix}help`** hoặc **`/help`** nhé."
+homepage_title: "Nơi những ai muốn hát luôn tìm thấy bài ca ♪\nTham gia giai điệu trên máy chủ Discord của bạn ngay hôm nay!"
+homepage_desc: |
+  <:blankers:1220848705289064669><:music:1220842323760648443> **Nhạc 24/7**
+  <:blankers:1220848705289064669><:filters:1252602140472508476> **Bộ lọc âm thanh**
+  <:blankers:1220848705289064669><:queue:1220834363818770432> **Danh sách phát**
+  <:blankers:1220848705289064669><:premium:1220842373614010420> **Mở khóa tính năng Premium**
+  <:blankers:1220848705289064669><:pop:1220849334606626946> **Spotify, Deezer, Soundcloud, Youtube & nhiều hơn nữa...**
+
+  <:blankers:1220848705289064669><a:support:1220847678380970086> **Muốn nâng cấp lên [Premium](%{premium}) không?**
+
+### Trạng thái Lavalink khi không khả dụng!
+lavalink_title: "Thông tin Lavalink"
+lavalink_desc: |
+  **Thông tin Node**
+  - Không khả dụng!
+  **Thông tin CPU**
+  - Không khả dụng!
+  **Thông tin Bộ nhớ**
+  - Không khả dụng!
+
+### Lệnh đánh giá bot! ###
+rating_desc: "Cảm ơn %{user} đã đánh giá bot nhạc Discord của chúng mình!"
+rating_succes: "Cảm ơn vì đánh giá!\nĐánh giá của bạn đã được gửi thành công."
+rating_failure: "Gửi đánh giá thất bại. Vui lòng thử lại sau."
+
+### Lệnh báo cáo ####
+report_provide_desc: "Ồ! Lệnh không hợp lệ. Vui lòng cung cấp mô tả"
+report_failure: "Gửi báo cáo thất bại. Vui lòng thử lại sau."
+report_success: "Cảm ơn vì đã báo cáo.\nBáo cáo đã được gửi để xử lý."
+
+### Lệnh góp ý ####
+suggestions_provide_desc: "Ồ! Lệnh không hợp lệ. Vui lòng cung cấp mô tả"
+suggestions_failure: "Gửi góp ý thất bại. Vui lòng thử lại sau."
+suggestions_success: "Cảm ơn vì góp ý!\nGóp ý của bạn đã được gửi thành công."
+
+### Lệnh kick! ###
+kick_user_not_found: "Người dùng đó không tồn tại trên máy chủ này"
+kick_user_ownerid: "Bạn không thể kick người này vì họ là chủ máy chủ"
+kick_user_higher_role: "Bạn không thể kick người này vì họ có vai trò cao hơn bạn"
+kick_bot_higher_role: "Mình không thể kick người này vì họ có vai trò cao hơn mình"
+kick_error: "Đã xảy ra lỗi khi cố gắng kick người dùng đó"
+kick_success: "**%{user} đã bị kick bởi %{moderator}**"
+kick_success_dm: |
+  Bạn đã bị %{moderator} kick khỏi máy chủ %{guild}. ```Lý do: %{reason}```
+  Liên hệ quản trị viên máy chủ nếu bạn có thắc mắc hoặc muốn khiếu nại.
+
+### Lệnh ban! ###
+ban_user_not_found: "Người dùng đó không tồn tại trên máy chủ này"
+ban_user_ownerid: "Bạn không thể kick người này vì họ là chủ máy chủ"
+ban_user_higher_role: "Bạn không thể kick người này vì họ có vai trò cao hơn bạn"
+ban_bot_higher_role: "Mình không thể kick người này vì họ có vai trò cao hơn mình"
+ban_error: "Đã xảy ra lỗi khi cố gắng kick người dùng đó"
+banned_success: "**%{user} đã bị ban bởi %{moderator}**"
+ban_success_dm: |
+  Bạn đã bị %{moderator} ban khỏi máy chủ %{guild}. ```Lý do: %{reason}```
+  Liên hệ quản trị viên máy chủ nếu bạn có thắc mắc hoặc muốn khiếu nại.
+
+### Lệnh dọn (Purge)! ###
+purge_invalid_amount: "Vui lòng cung cấp một số hợp lệ"
+purge_error: "Dọn tin nhắn thất bại"
+purge_success: "Đã dọn thành công %{amount} tin nhắn"
+purge_older_than_14_days: "Bạn không thể dọn tin nhắn cũ hơn 14 ngày"
+
+### Lệnh Cat #####
+provide_categories_cat: "Ồ! Lệnh không hợp lệ. Vui lòng cung cấp danh mục\nDanh mục có sẵn: %{categories}"
+invalid_categories_cat: "Danh mục không hợp lệ\nDanh mục có sẵn: %{categories}"
+cat_error: "Đã xảy ra lỗi khi gửi hình! Vui lòng thử lại."
+
+### Lệnh Quote #####
+provide_categories_quote: "Ồ! Lệnh không hợp lệ. Vui lòng cung cấp danh mục\nDanh mục có sẵn: %{categories}"
+invalid_categories_quote: "Danh mục không hợp lệ\nDanh mục có sẵn: %{categories}"
+quote_error: "Đã xảy ra lỗi khi gửi câu trích dẫn! Vui lòng thử lại."
+
+### Kiểm tra Premium cho người dùng!
+premium_check_premium_button: "Nâng cấp lên Premium"
+premium_check_guild_profile_error_desc: "Có vẻ máy chủ này chưa có gói Premium."
+premium_check_user_profile_error_desc: "Có vẻ bạn chưa có gói Premium."
+premium_check_invalid: "Loại hồ sơ không hợp lệ. Vui lòng chọn 'user' hoặc 'guild'"
+premium_check_owner_profile_author: "Hồ sơ Chủ Premium"
+premium_check_admin_profile_author: "Hồ sơ Quản trị Premium"
+premium_check_user_profile_author: "Hồ sơ Người dùng Premium"
+premium_check_user_profile_desc: |
+  **Người dùng:** %{user}
+  **Gói:** %{plan}
+  **Hết hạn:** %{expires}
+
+### Kiểm tra Premium cho máy chủ!
+premium_check_guild_profile_author: "Hồ sơ Máy chủ Premium"
+premium_check_guild_profile_desc: |
+  **Máy chủ:** %{guild}
+  **Gói:** %{plan}
+  **Hết hạn:** %{expires}

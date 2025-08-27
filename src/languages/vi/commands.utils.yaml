@@ -1,0 +1,44 @@
+### Lệnh kick! ###
+kick_user_not_found: "Người dùng đó không tồn tại trên máy chủ này"
+kick_user_ownerid: "Bạn không thể kick người này vì họ là chủ máy chủ"
+kick_user_higher_role: "Bạn không thể kick người này vì họ có vai trò cao hơn bạn"
+kick_bot_higher_role: "Mình không thể kick người này vì họ có vai trò cao hơn mình"
+kick_error: "Đã xảy ra lỗi khi cố gắng kick người dùng đó"
+kick_success: "**%{user} đã bị %{moderator} kick**"
+kick_success_dm: |
+  Bạn đã bị %{moderator} kick khỏi máy chủ %{guild}. ```Lý do: %{reason}```
+  Liên hệ quản trị viên máy chủ nếu bạn có thắc mắc hoặc muốn khiếu nại.
+
+### Lệnh ban! ###
+ban_user_not_found: "Người dùng đó không tồn tại trên máy chủ này"
+ban_user_ownerid: "Bạn không thể ban người này vì họ là chủ máy chủ"
+ban_user_higher_role: "Bạn không thể ban người này vì họ có vai trò cao hơn bạn"
+ban_bot_higher_role: "Mình không thể ban người này vì họ có vai trò cao hơn mình"
+ban_error: "Đã xảy ra lỗi khi cố gắng ban người dùng đó"
+banned_success: "**%{user} đã bị %{moderator} ban**"
+ban_success_dm: |
+  Bạn đã bị %{moderator} ban khỏi máy chủ %{guild}. ```Lý do: %{reason}```
+  Liên hệ quản trị viên máy chủ nếu bạn có thắc mắc hoặc muốn khiếu nại.
+
+### Lệnh dọn (Purge)! ###
+purge_invalid_amount: "Vui lòng cung cấp một số hợp lệ"
+purge_success: "Đã dọn thành công %{amount} tin nhắn"
+purge_older_than_14_days: "Bạn không thể dọn tin nhắn cũ hơn 14 ngày"
+purge_error: "Dọn tin nhắn thất bại"
+
+### Lệnh Cat #####
+cat_error: "Đã xảy ra lỗi khi gửi hình! Vui lòng thử lại."
+
+### Lệnh Quote ####
+provide_categories_quote: "Ồ! Lệnh không hợp lệ. Vui lòng cung cấp danh mục\nCác danh mục có sẵn: %{categories}"
+invalid_categories_quote: "Danh mục không hợp lệ\nCác danh mục có sẵn: %{categories}"
+quote_error: "Đã xảy ra lỗi khi gửi câu trích dẫn! Vui lòng thử lại."
+
+### Lệnh MyStats ####
+mystats_error: "Đã xảy ra lỗi khi tạo thống kê. Vui lòng thử lại sau."
+
+### Lệnh TopStats ####
+topstats_error: "Đã xảy ra lỗi khi tạo thống kê. Vui lòng thử lại sau."
+
+### Lệnh hồ sơ (profile) ###
+user_arg_error: "<:m_wrong:1193112008124530738> Tham số không hợp lệ. Vui lòng dùng %{text}"

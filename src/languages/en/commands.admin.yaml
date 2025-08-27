@@ -1,0 +1,106 @@
+### Modlogs Setup command!
+modlogs_invalid_channel: "The selected channel is not a valid text channel."
+modlogs_setup_channel: "Mod log channel has been set to %{channel}"
+
+### Modlogs Toggle command!
+modlogs_toggle_not_setup: "The mod log channel has not been configured for this server. Please set it up first using the appropriate command."
+modlogs_toggle_collector_active: "A mod log selection is already in progress. Please wait 60 seconds."
+modlogs_toggle_notfound: "Mod log settings could not be found."
+modlogs_toggle_select_category: "## Select a category to view its events"
+modlogs_toggle_category_not_valid: "Category not valid"
+modlogs_toggle_select_event: "### Select an event from `%{categories}`"
+modlogs_toggle_event_not_valid: "Event not valid"
+modlogs_toggle_selected: "**Event `%{events}` in %{categories} is now %{state}.**"
+modlogs_toggle_timeout: "### %{user}, you didn't select a modlogs in time.\nGive it another go!"
+
+### Announcement to all server bot
+announcement_desc: "*Enter a description for this announcement*"
+announcement_invalidURL: "*Invalid image URL provided or no URL was given. Please provide a valid image URL.*"
+announcement_timeout: "*No input received within the given time. Command cancelled.*"
+announcement_failure: "*Failed to send the announcement in any guild.*`No guilds were found.`"
+announcement_success: "*Announcement has been sent successfully in %{successfulGuilds} guild%{plural}!*"
+
+### Blacklist Guild
+blacklist_guild_not_found: <:warning:1291142143993446412> "I couldn't find that Guild..."
+blacklist_guild_already: <:warning:1291142143993446412> "It looks like %{id} is already blacklisted, so I can't do anything."
+blacklist_guild_add: <:ok:1291155671596929097> "Sayonara, %{id}! I added them to the blacklist. Guess it wasn't meant to be..."
+blacklist_guild_not_exist: <:warning:1291142143993446412> "You said you were looking for %{id}? I couldn't find them in my tour routes..."
+blacklist_guild_delete: <:ok:1291155671596929097> "Welcome back, %{id}! I can go on tour there again, they're no longer blacklisted."
+
+### Blacklist User
+blacklist_user_bot_owner: <:warning:1291142143993446412> "Woah! I can't blacklist my own creator! Are you trying to get me in trouble?"
+blacklist_user_not_found: <:warning:1291142143993446412> "I couldn't find that fan..."
+blacklist_user_already: <:warning:1291142143993446412> "It looks like %{id} is already blacklisted, so I can't do anything."
+blacklist_user_add: <:ok:1291155671596929097> "See ya, %{id}! Sad I have to add a fan to the blacklist, but I guess it's for the best..."
+blacklist_user_not_exist: <:warning:1291142143993446412> "%{id}? Who's that? I couldn't find them in my fan club..."
+blacklist_user_delete: <:ok:1291155671596929097> "Awesome! %{id} has been reinstated as a fan! I can't wait to see them at the next concert!"
+
+### Premium / Generate command!
+premium_code_arg_error: "<:wrong:1220876213896216686> Invalid argument. Please use %{text}"
+premium_code_desc: |
+  **Generated %{codes_length} codes**
+  `%{codes}`
+
+### Premium Code Logs ###
+premium_code_plan: Plan
+premium_code_expired: Expire
+premium_code_generateby: Generate By
+
+### Remove command!
+premium_remove_desc: "<:okee:1220876098456256512> **Successfully removed %{user}'s from Premium user**"
+premium_remove_already: "<:warnings:1220876158254710936> %{user} already removed"
+premium_remove_invalid_params: "<:warnings:1220876158254710936> Invalid, Example %{example}"
+premium_remove_404: "<:wrong:1220876213896216686> **Not found %{id} in type %{type}**"
+premium_remove_invalid_type: "<:warnings:1220876158254710936> Invalid, Type %{type}"
+premium_remove_footer: "Successfully removed %{user}"
+premium_remove_id: "Id"
+premium_remove_by: "Remove by"
+display_name: "Display Name"
+
+### Update command!
+update_provide_desc: "*Enter a description for this update*"
+update_cancelled: "*No description provided. Command canceled.*"
+update_length_exceeded: "*The description is too long. maks 2000 characters allowed.*"
+update_success: "*The update has been sent successfully*"
+update_failure: "*Failed to send the update.*"
+update_timeout_failure: "*Timed out. Please try again.*"
+
+### Maintenance Commands! ###
+maintenance_arg_error: "<:wrong:1220876213896216686> Invalid argument. Please use %{text}"
+maintenance_true: "<:okee:1220876098456256512> Maintenance Mode has been set **True**"
+maintenance_false: "<:okee:1220876098456256512> Maintenance Mode has been **False**"
+
+### Premium List command!
+premiumlist_invalid_page_number: <:warning:1291142143993446412> "I can't really list that many codes... Please provide a valid number!"
+premiumlist_guild_list_title: "List Premium Servers!"
+premiumlist_user_list_title: "List Premium Users"
+premiumlist_page_not_found: "<:warning:1291142143993446412> Only **%{page} pages** are available!"
+premiumlist_invalid_type: "<:warning:1291142143993446412> Oopss! That's not a valid type?\nExample: %{example}"
+
+### Redeem Premium Code command! ###
+redeem_title: "Redeem Premium!"
+
+redeem_desc: |
+  **Type:** %{type}
+  **Name:** %{name}
+  **Plan:** %{plan}
+  **Expire:** %{expires}
+
+redeem_footer: "Redeem Successfully!"
+redeem_invalid_guild: "<:warnings:1220876158254710936> Invalid! Please use invalid guildId"
+redeem_invalid_user: "<:warnings:1220876158254710936> Invalid! Please use invalid userId"
+redeem_invalid_mode: "<:warnings:1220876158254710936> Invalid! Use `guild` or `user`"
+redeem_invalid: "<:wrong:1220876213896216686> **Invalid Premium code. Please use a valid code**"
+redeem_already_guild: "<:wrong:1220876213896216686> This guild already in **Premium**"
+redeem_already: "<:warnings:1220876158254710936> **You are already a Premium User**"
+
+### Redeem logs ###
+display_names: "Display name"
+username: "Username"
+createdAt: "Created At"
+redeemedAt: "Redeemed At"
+expiresAt: "Expires At"
+plan: "Plan"
+title: "Successfully redeem premium User"
+guild_title: "Successfully redeem premium Server"
+code: "History Code"

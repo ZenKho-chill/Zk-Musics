@@ -1,0 +1,15 @@
+joined_title: "📥 Joined a Guild!"
+leave_title: "📥 Left a Guild!"
+guild_name: "Name"
+guild_id: "ID"
+guild_owner: "Owner"
+guild_member_count: "Member count"
+guild_creation_date: "Creation date"
+guild_join_date: "Joined date"
+current_server_count: "Current server count"
+
+### message that the bot will send if it has just joined the server
+join_msg_title: "OMG! Hii guys ✧(≧◡≦) ♡"
+join_msg_desc: |
+  ### Thank you for inviting me to hang with yall (*≧▽≦)
+  ### you can ping me to use commands too! Type </help:1219594142951149634> to view my slash commands ♡

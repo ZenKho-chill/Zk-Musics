@@ -1,0 +1,44 @@
+### Tùy chọn filter cho phát nhạc!
+filter_menu_on: "<:pop:1220849334606626946> **Đã bật filter %{name}! Nhạc sẽ nghe 'chất' hơn ngay thôi!**"
+no_player_filter: "<:wrong:1220876213896216686> Hiện không có trình phát nào đang hoạt động!"
+### Các lệnh filter!
+filter_on: |
+  <:pop:1220849334606626946> **Đã bật filter %{name}!**
+  <:blankers:1220848705289064669><:sparkle:1220846124961890304> **Nhạc của bạn sẽ nghe hay hơn đó!**
+
+filter_already: "<:warnings:1220876158254710936> **Filter %{name} đã được bật rồi**"
+filter_number: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
+filter_greater: "<:warnings:1220876158254710936> Số phải lớn hơn **0**"
+filter_less: "<:warnings:1220876158254710936> Số phải nhỏ hơn **10**"
+
+### Lệnh Bassboost!
+bassboost_set: "<:pop:1220849334606626946> **Bassboost đã đặt thành %{amount}dB**"
+bassboost_limit: "<:warnings:1220876158254710936> Vui lòng dùng số trong khoảng **-10** đến **10**"
+
+### Lệnh Equalizer!
+eq_author: "Equalizer"
+eq_icon: "https://i.pinimg.com/originals/cb/17/b8/cb17b80a942d7c317a35ff1324fae12f.gif"
+eq_desc: "Có **14 băng tần** có thể đặt từ **-10** đến **10**. Không bắt buộc phải đặt tất cả!"
+eq_field_title: "Ví dụ:"
+eq_field_value: "%{prefix}eq 2 3 0 8 0 5 0 -5 0 0"
+eq_footer: "Đặt lại Equalizer • %{prefix}eq reset"
+eq_on: "<:music:1220842323760648443> Equalizer đã được đặt thành **%{bands}**"
+eq_number: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
+eq_greater: "<:warnings:1220876158254710936> Số phải lớn hơn **-10**"
+eq_than: "<:warnings:1220876158254710936> Số phải nhỏ hơn **10**"
+
+### Lệnh Pitch!
+pitch_on: "<:pop:1220849334606626946> **Pitch đã đặt thành %{amount}**"
+
+### Lệnh Rate!
+rate_on: "<:pop:1220849334606626946> **Tốc độ phát (Rate) đã đặt thành %{amount}x**"
+
+### Lệnh Speed!
+speed_on: "<:pop:1220849334606626946> **Tốc độ phát (Speed) đã đặt thành %{amount}x**"
+
+### Lệnh Đặt lại!
+reset_on: "<:okee:1220876098456256512> **Các filter đã được đặt lại**"
+reset_already: "<:warnings:1220876158254710936> **Filter đã được đặt lại trước đó**"
+
+# Số không hợp lệ
+number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"

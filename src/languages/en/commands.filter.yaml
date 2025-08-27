@@ -1,0 +1,44 @@
+### All filter Select menu music playback!
+filter_menu_on: "<:pop:1220849334606626946> **Filter %{name} on!, Your music is going to sound even cooler now!**"
+no_player_filter: "<:wrong:1220876213896216686> No player is playing!"
+### All filter command!
+filter_on: |
+  <:pop:1220849334606626946> **Filter %{name} on!** 
+  <:blankers:1220848705289064669><:sparkle:1220846124961890304> **Your music is going to sound even cooler now!**
+
+filter_already: "<:warnings:1220876158254710936> **%{name} filter is already enabled**"
+filter_number: "<:warnings:1220876158254710936> Please provide a valid number!"
+filter_greater: "<:warnings:1220876158254710936> Number must be greater than **0**"
+filter_less: "<:warnings:1220876158254710936> Number must be lesser than **10**"
+
+### Bassboost command!
+bassboost_set: "<:pop:1220849334606626946> **Bassboost has been set to %{amount}dB**"
+bassboost_limit: "<:warnings:1220876158254710936> Please use a number between **-10** and **10**"
+
+### Equalizer command!
+eq_author: "Equalizer"
+eq_icon: "https://i.pinimg.com/originals/cb/17/b8/cb17b80a942d7c317a35ff1324fae12f.gif"
+eq_desc: "There are **14 Bands** that can be set from **-10** to **10**. It is not mandatory to set all of them!"
+eq_field_title: "Example:"
+eq_field_value: "%{prefix}eq 2 3 0 8 0 5 0 -5 0 0"
+eq_footer: "Reset Equalizer • %{prefix}eq reset"
+eq_on: "<:music:1220842323760648443> Equalizer has been set to **%{bands}**"
+eq_number: "<:warnings:1220876158254710936> Please provide a valid number!"
+eq_greater: "<:warnings:1220876158254710936> Number must be greater than **-10**"
+eq_than: "<:warnings:1220876158254710936> Number must be lesser than **10**"
+
+### Pitch command!
+pitch_on: "<:pop:1220849334606626946> **Pitch has been set to %{amount}**"
+
+### Rate command!
+rate_on: "<:pop:1220849334606626946> **Rate has been set to %{amount}x**"
+
+### Speed command!
+speed_on: "<:pop:1220849334606626946> **Speed has been set to %{amount}x**"
+
+### Reset command!
+reset_on: "<:okee:1220876098456256512> **Filter has been Reset**"
+reset_already: "<:warnings:1220876158254710936> **Filter has already been Reset**"
+
+# Invalid Number
+number_invalid: "<:warnings:1220876158254710936> Please provide a valid number!"

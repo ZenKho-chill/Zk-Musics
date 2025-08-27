@@ -1,0 +1,92 @@
+# Mode
+enable: "Enabled"
+disable: "Disabled"
+
+# maintenance
+maintenance_title: "Maintenance"
+maintenance_desc: |
+  %{bot} is currently undergoing maintenance. Please try again later. 
+  For further information, please join our [support server](%{serversupport}). Thank you!
+  
+# Getting error!
+unexpected_error: "<:warnings:1220876158254710936> Something went wrong. Please try again later!"
+
+### Rate limit!
+ratelimit: "<:warnings:1220876158254710936> You are performing actions too quickly. Please wait for **%{time} Seconds**"
+
+# No permission!
+no_perms: |
+  <:warnings:1220876158254710936> I don't have **%{perm}** permission!
+  <:blankers:1220848705289064669><:okee:1220876098456256512> Please grant me the **%{perm}** permission to execute this command.
+
+no_manage_guild_perms: |
+  <:warnings:1220876158254710936> This command requires **%{perm}** permission!
+  <:blankers:1220848705289064669><:wrong:1220876213896216686> you don't have permission to execute this command!
+
+no_admin_perms: |
+  <:warnings:1220876158254710936> This command requires **%{perm}** permission!
+  <:blankers:1220848705289064669><:wrong:1220876213896216686> you don't have permission to execute this command!
+
+# No permission!
+no_perms_channel: "<:warnings:1220876158254710936> I don't have **%{perm}** permission to execute this command!"
+
+# Execute when invalid
+no_node: "<:warnings:1220876158254710936> **No Lavalink server was found. Please try again after 5 Minutes**"
+
+# Client owner!
+owner_only: "<:warnings:1220876158254710936> This command can only be executed by the bot **Owner**"
+
+# Need to join voice & same voice to use command!
+no_player: "<:warnings:1220876158254710936> No song is currently playing!"
+no_same_voice: "<:wrong:1220876213896216686> You are not in the same voice channel as me!"
+no_in_voice: "<:wrong:1220876213896216686> You are not in a voice channel!"
+
+# Blacklist User
+blacklist_user: |
+  <:warnings:1220876158254710936> It looks like you are blacklisted! You are not allowed to use commands.
+  <:blankers:1220848705289064669><:okee:1220876098456256512> Please contact **[developer](%{serversupport})** if you think this is an error.
+
+# Blacklist Guild
+blacklist_guild: |
+  <:warnings:1220876158254710936> This server is blacklisted! You are not allowed to use commands in this server.
+  <:blankers:1220848705289064669><:okee:1220876098456256512> Please contact **[developer](%{serversupport})** if you think this is an error.
+
+### No user premium Event!
+no_user_premium_button: "Upgrade to premium"
+no_user_premium_plan_author: "No User premium plan"
+no_user_premium_plan_desc: "Oops! This command can only be executed by the Premium Users. it looks like you don't have a premium plan yet."
+
+### No guild premium Event!
+no_guild_premium_button: "Upgrade to premium"
+no_guild_premium_plan_author: "No Server premium plan"
+no_guild_premium_plan_desc: "Oops! This command can only be executed by the Premium Server. it looks like you don't have a premium plan yet."
+
+### No Premium Role Event!
+no_premium_role_button: "Upgrade to premium"
+no_premium_role_author: "No Premium Role"
+no_premium_role_desc: "Oops! This command can only be executed by the Premium Role. it looks like you don't have a premium plan yet."
+
+### No Premium Event!
+no_premium_button: "Upgrade to premium"
+no_premium_author: "No Premium Plan"
+no_premium_desc: "Oops! It looks like you don't have a premium plan yet. This feature is not accessible without one."
+
+# Top.gg error
+topgg_error_author: "Vote Top.gg error"
+topgg_error_desc: |
+  An error occurred while verifying your vote on top.gg, possibly due to Top.gg being down. Please try again in 5-10 minutes.
+  If this issue persists, please contact our [support server](%{serversupport}) for further assistance.
+
+# Top.gg unvote
+topgg_unvote_button: "Vote to unlock"
+premium_button: "Upgrade to premium"
+topgg_unvote_author: "Vote Required"
+topgg_unvote_desc: |
+  You need to Vote to access this command! It’s quick and free.
+
+  Alternatively, get premium on our [Premium Page](%{premium}) to skip this message and unlock extra features.
+
+### Mention Desc ###
+mention_content: |
+  Hey %{user}, my prefix for this server `%{prefix}`
+  you can ping me to use commands too or type **/help** to view my slash commands ♡

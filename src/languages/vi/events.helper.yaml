@@ -1,0 +1,79 @@
+## Helper setup ##
+setup_helper_content: |
+  ## Chào mừng bạn đến với cộng đồng %{guild}!
+  *Nếu bạn mới dùng Discord thì đây chính là nơi tuyệt vời để bắt đầu! Kênh này được tạo ra để giúp bạn làm quen với server.*  
+  ⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤  
+  %{bot} là một bot nhạc Discord chất lượng cao. Thưởng thức những bài hát yêu thích ngay trên Discord với hỗ trợ nhiều trình phát nhạc.  
+  Hãy thử các lệnh đa tính năng và tận hưởng nhạc mượt mà nha! 🎶
+
+  Đây là nơi lý tưởng để trò chuyện trong cộng đồng %{guild}.  
+  Cùng nhau tám chuyện, chia sẻ gợi ý nhạc hay và khám phá hết mọi tính năng mà bot %{bots} mang lại nhé!  
+
+  Muốn mời bạn bè vào server à? Gửi cho họ link này: %{serversupport}
+
+disable_helper: "Helper đã bị tắt"
+invalid_channel_helper: "Kênh bạn đưa vào không hợp lệ"
+channel_viewable_helper: "Tôi không thể nhìn thấy kênh mà bạn chọn"
+setup_helper_succes: "Helper đã được cài đặt thành công vào %{channel}."
+
+## RULES Events ##
+rules_title: "Nội quy server cộng đồng %{guild}!"
+rules_desc: |
+  - **Hãy tôn trọng nhau**
+    Luôn tuân theo [Điều khoản dịch vụ](https://discord.com/terms) và [Nguyên tắc cộng đồng](https://discord.com/guidelines) của Discord.
+  - **Khi cần giúp đỡ**
+    Hãy mô tả chi tiết nhất có thể về lỗi hoặc vấn đề bạn gặp phải.
+  - **Không ngôn từ thù ghét hoặc quấy rối**
+    Không được phép bàn luận có nội dung xúc phạm, thù ghét hay công kích cá nhân/nhóm.
+  - **Không troll hay gây hấn**
+    Tránh mọi hành động làm loạn hoặc châm ngòi mâu thuẫn.
+  - **Tôn trọng bản quyền**
+    Hãy tôn trọng quyền sở hữu trí tuệ: bản quyền, nhãn hiệu, bằng sáng chế...
+  - **Không spoil nếu chưa cảnh báo**
+    Nếu nói về nội dung chưa ai xem, nhớ cảnh báo spoil để tránh làm tụt mood người khác.
+  - **Dùng kênh đúng mục đích**
+    Nói chuyện đúng chỗ, đừng lạc đề trong kênh không liên quan.
+  - **Không spam hoặc viết IN HOA quá nhiều**
+    Đừng lạm dụng chữ in hoa hay spam tin nhắn liên tục.
+  - **Giữ voice chat trong lành**
+    Khi tham gia voice, hãy nói chuyện lịch sự, tránh gây ồn ào.
+  - **Không dùng bot lạ hoặc auto không được duyệt**
+    Chỉ bot được mod cho phép mới được hoạt động trong server.
+  - **Báo cáo vi phạm**
+    Nếu thấy ai vi phạm, hãy báo cho mod hoặc admin.
+  - **Vui vẻ là chính!**
+    Quan trọng nhất: hãy tận hưởng thời gian ở đây và cùng nhau tạo môi trường tích cực.
+
+  Cảm ơn bạn đã tham gia, chúc bạn có khoảng thời gian vui vẻ ở đây! ✨
+
+### SUPPORT US BUTTON ###
+support_us_title: "Làm sao để ủng hộ %{bot}"
+support_us_desc: "Bạn có thể ủng hộ tôi bằng cách vote cho %{bot}, mời %{bot} vào server của bạn, hoặc tham gia gói premium."
+support_us_footer: "Cảm ơn bạn đã cân nhắc ủng hộ %{bot}! Tôi rất trân trọng điều này ❤️"
+
+## ROLES EVENTS ##
+role_title: "Bạn có thể thêm hoặc gỡ role từ danh sách bên dưới."
+role_added: "<:okee:1220876098456256512> **[Thành công]** Role %{rolename} đã được thêm thành công!"
+role_removed: "<:bin:1220831964890927235> **[Đã gỡ]** Role %{rolename} đã bị gỡ bỏ."
+role_rules_added: "%{user} chúc bạn sẽ tuân thủ mọi nội quy, giờ bạn đã có quyền truy cập toàn server!"
+role_rules_already: "%{user} bạn đã chấp nhận nội quy trước đó rồi nha"
+role_desc: "Chúng tôi chỉ muốn chắc rằng bạn là người thật chứ không phải bot 🤖. Vui lòng giúp xác nhận bằng cách hoàn thành một bước kiểm tra nhỏ."
+
+### Top gg vote logs event ###
+vote_desc: |
+  <:topgg:1220879943177605241> %{voteuser} vừa vote cho %{votebot} trên **[Top.gg](%{voteurl})**  
+  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Cảm ơn bạn đã ủng hộ! Chúc bạn một ngày thật tuyệt ✨
+vote_footer: "Tổng số vote %{count}, bay cùng trí tưởng tượng nhé!"
+
+### Top gg vote logs reminder event ###
+reminder_label_name: "Nhắc nhở vote"
+reminder_label_emoji: "⏰"
+reminder_title: "Nhắc bạn đi vote nè"
+reminder_desc: "Tới giờ rồi! Bạn có thể vote lại trên **[Top.gg](%{voteurl})**."
+reminder_set_content: "Đã đặt nhắc nhở! Tôi sẽ nhắc bạn vote lại sau 12 giờ"
+reminder_cancel_content: "Đã hủy nhắc nhở. Bạn sẽ không còn được nhắc vote nữa"
+reminder_no_vote_warning: "Bạn cần vote ít nhất một lần trước khi đặt nhắc nhở"
+
+### Welcomer events! ###
+welcome_desc: "Chào mừng bạn đến với %{guildname} %{member}, bay cùng trí tưởng tượng nào! 🌈"
+leave_desc: "Cảm ơn bạn đã đồng hành cùng tụi mình! Tạm biệt %{member} 👋"

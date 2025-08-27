@@ -1,0 +1,33 @@
+### Button Music Request ! ###
+stop_msg: "Song has been **stopped**"
+skip_notfound: "Currently, there's no song to skip to"
+skip_msg: "Song has been **skipped**"
+previous_msg: "Back to the **previous** song"
+previous_notfound: "No Previous song found in the queue!"
+resume_msg: "Playback has been **resumed**"
+pause_msg: "Song has been **paused**"
+loop_current: "Looping current **Song**"
+loop_all: "Looping **Queue**"
+unloop_all: "Loop is now **Disabled**"
+
+# Need to join voice & same voice to use command!
+no_player: "<:warnings:1220876158254710936> No song is currently playing!"
+no_same_voice: "<:wrong:1220876213896216686> You are not in the same voice channel as me!"
+no_in_voice: "<:wrong:1220876213896216686> You are not in a voice channel!"
+
+### HANDLER MUSIC REQUEST ###
+### load update ###
+player_setup_author: "NOW PLAYING"
+player_setup_icon_author: "https://media.tenor.com/Sb0yPHMgNaUAAAAi/music-disc.gif"
+setup_content_queue: "%{index}. **%{title}** Requested by %{request}"
+setup_footer: "Tracks Left • %{totalsong} | Total Duration • %{duration}"
+setup_queuemsg: "**Join a voice channel and play songs using name or URL in here!**"
+setup_playembed_author: "Just throw a track name or URL below and I'll handle the rest!"
+
+### load content ###
+player_setup_title: "**%{title}**"
+play_track: "Added **%{title}** • %{request}"
+play_playlist: "Added **%{title}** • (**%{songs} Tracks**) • %{request}"
+play_result: "Added **%{title}** • %{request}"
+play_emoji: "I'm not sure how to play that... It's not a track or a playlist."
+setup_content: "**Hey! My deck's ready for your music! Just throw something here!**"
