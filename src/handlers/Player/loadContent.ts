@@ -9,7 +9,7 @@ import { ButtonStop } from "./ButtonCommands/Stop.js";
 import { ButtonLoop } from "./ButtonCommands/Loop.js";
 import { ButtonPause } from "./ButtonCommands/Pause.js";
 import { RateLimitManager } from "@sapphire/ratelimits";
-import { ZkslinkTrack } from "../../zklink/main.js";
+import { ZklinkTrack } from "../../zklink/main.js";
 const rateLimitManager = new RateLimitManager(2000);
 
 /**
@@ -322,7 +322,7 @@ export class PlayerContentLoader {
       msg?.reply({ content: " ", embeds: [embed] });
     }
 
-    function getTitle(tracks: ZkslinkTrack[]): string {
+    function getTitle(tracks: ZklinkTrack[]): string {
       if (client.config.features.HIDE_LINK)
         return `${tracks[0].title} bởi ${tracks[0].author}`;
       else {

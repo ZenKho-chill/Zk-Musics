@@ -1,10 +1,10 @@
 import { Manager } from "../../manager.js";
-import { ZkslinkPlayer } from "../../zklink/main.js";
+import { ZklinkPlayer } from "../../zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import chalk from "chalk";
 
 export default class {
-  async execute(client: Manager, player: ZkslinkPlayer) {
+  async execute(client: Manager, player: ZklinkPlayer) {
     const guild = await client.guilds
       .fetch(player.guildId)
       .catch(() => undefined);

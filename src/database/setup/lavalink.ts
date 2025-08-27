@@ -1,7 +1,7 @@
 import { Manager } from "../../manager.js";
 import { AutoReconnect } from "../schema/AutoReconnect.js";
 import { VoiceChannel } from "discord.js";
-import { ZkslinkLoopMode, ZkslinkPlayer } from "../../zklink/main.js";
+import { ZklinkLoopMode, ZklinkPlayer } from "../../zklink/main.js";
 
 export class AutoReconnectLavalinkService {
   client: Manager;
@@ -132,12 +132,12 @@ export class AutoReconnectLavalinkService {
         await this.previousDataPush(data.value.previous, player);
 
       if (data.value.config.loop !== "none")
-        player.setLoop(data.value.config.loop as ZkslinkLoopMode);
+        player.setLoop(data.value.config.loop as ZklinkLoopMode);
       await player.play(search.tracks[0]);
     }
   }
 
-  async queueDataPush(query: string[], player: ZkslinkPlayer) {
+  async queueDataPush(query: string[], player: ZklinkPlayer) {
     const SongAdd = [];
     let SongLoad = 0;
 
@@ -163,7 +163,7 @@ export class AutoReconnectLavalinkService {
     }
   }
 
-  async previousDataPush(query: string[], player: ZkslinkPlayer) {
+  async previousDataPush(query: string[], player: ZklinkPlayer) {
     const SongAdd = [];
     let SongLoad = 0;
 

@@ -2,13 +2,13 @@ import { Manager } from "../../manager.js";
 import { TextChannel, EmbedBuilder, MessageFlags } from "discord.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
-import { ZkslinkPlayer, ZkslinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 export default class {
   async execute(
     client: Manager,
-    player: ZkslinkPlayer,
-    track: ZkslinkTrack,
+    player: ZklinkPlayer,
+    track: ZklinkTrack,
     message: string
   ) {
     if (!client.isDatabaseConnected)
@@ -79,7 +79,7 @@ export default class {
 
     const currentPlayer = client.zklink.players.get(
       player.guildId
-    ) as ZkslinkPlayer;
+    ) as ZklinkPlayer;
     if (!currentPlayer) return;
     if (currentPlayer.queue.length > 0)
       return await player.skip().catch(() => {});

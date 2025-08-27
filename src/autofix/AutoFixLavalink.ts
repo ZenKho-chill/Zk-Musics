@@ -58,10 +58,10 @@ export class AutoFixLavalink {
 
   checkLavalink() {
     if (
-      this.client.zkslink.nodes.size !== 0 &&
+      this.client.Zklink.nodes.size !== 0 &&
       this.client.lavalinkUsing.length == 0
     ) {
-      this.client.zkslink.nodes.forEach((data, index) => {
+      this.client.Zklink.nodes.forEach((data, index) => {
         this.client.lavalinkUsing.push({
           host: data.options.host,
           port: data.options.port,
@@ -100,19 +100,19 @@ export class AutoFixLavalink {
 
     // Logic xóa lavalink khỏi nodes
     if (
-      this.client.zkslink.nodes.size == 0 &&
+      this.client.Zklink.nodes.size == 0 &&
       this.client.lavalinkUsing.length != 0
     ) {
       this.client.lavalinkUsing.splice(lavalinkIndex, 1);
     } else if (
-      this.client.zkslink.nodes.size !== 0 &&
+      this.client.Zklink.nodes.size !== 0 &&
       this.client.lavalinkUsing.length !== 0
     ) {
-      const isLavalinkExist = this.client.zkslink.nodes.get(
+      const isLavalinkExist = this.client.Zklink.nodes.get(
         targetLavalink.name
       );
       if (isLavalinkExist) {
-        this.client.zkslink.nodes.remove(targetLavalink.name);
+        this.client.Zklink.nodes.remove(targetLavalink.name);
       }
       this.client.lavalinkUsing.splice(lavalinkIndex, 1);
     }
@@ -127,7 +127,7 @@ export class AutoFixLavalink {
 
     const nodeInfo = onlineList[Math.floor(Math.random() * onlineList.length)];
 
-    this.client.zkslink.nodes.add({
+    this.client.Zklink.nodes.add({
       port: nodeInfo.port,
       host: nodeInfo.host,
       auth: nodeInfo.pass,

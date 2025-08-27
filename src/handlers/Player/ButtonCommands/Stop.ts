@@ -1,5 +1,5 @@
 import { Manager } from "../../../manager.js";
-import { ZkslinkPlayer } from "../../../zklink/main.js";
+import { ZklinkPlayer } from "../../../zklink/main.js";
 import {
   ButtonInteraction,
   TextChannel,
@@ -17,14 +17,14 @@ export class ButtonStop {
   interaction: ButtonInteraction;
   channel: VoiceBasedChannel | null;
   language: string;
-  player: ZkslinkPlayer;
+  player: ZklinkPlayer;
   accessableby: string;
   constructor(
     client: Manager,
     interaction: ButtonInteraction,
     channel: VoiceBasedChannel | null,
     language: string,
-    player: ZkslinkPlayer
+    player: ZklinkPlayer
   ) {
     this.channel = channel;
     this.client = client;

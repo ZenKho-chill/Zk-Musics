@@ -1,4 +1,4 @@
-import { ZkslinkNodeOptions } from "../zklink/main.js";
+import { ZklinkNodeOptions } from "../zklink/main.js";
 import { ClusterManagerOptions } from "../shard/ClusterManager.js";
 export interface Config {
   bot: Bot;
@@ -415,7 +415,7 @@ export interface LAST_FM_SCROBBLED {
 export interface Lavalink {
   APPLE_TOKEN: string;
   SPOTIFY: Spotify;
-  NODES: ZkslinkNodeOptions[];
+  NODES: ZklinkNodeOptions[];
 }
 
 export interface Spotify {

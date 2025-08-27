@@ -13,9 +13,9 @@ import { PlayerButton } from "../@types/Button.js";
 import { Manager } from "../manager.js";
 import { ReplyInteractionService } from "../services/ReplyInteractionService.js";
 import {
-  ZkslinkLoopMode,
-  ZkslinkPlayer,
-  ZkslinkTrack,
+  ZklinkLoopMode,
+  ZklinkPlayer,
+  ZklinkTrack,
 } from "../zklink/main.js";
 import { Config } from "../@types/Config.js";
 import { ConfigData } from "../services/ConfigData.js";
@@ -29,7 +29,7 @@ export default class implements PlayerButton {
     client: Manager,
     message: ButtonInteraction<CacheType>,
     language: string,
-    player: ZkslinkPlayer,
+    player: ZklinkPlayer,
     nplaying: Message<boolean>,
     collector: InteractionCollector<ButtonInteraction<"cached">>
   ): Promise<any> {
@@ -418,10 +418,10 @@ export default class implements PlayerButton {
     const currentTrack = player.queue.current;
     switch (player.loop) {
       case "none":
-        player.setLoop(ZkslinkLoopMode.SONG);
+        player.setLoop(ZklinkLoopMode.SONG);
 
         if (client.config.features.AUTO_RESUME)
-          setLoop247(ZkslinkLoopMode.SONG);
+          setLoop247(ZklinkLoopMode.SONG);
 
         new ReplyInteractionService(
           client,
@@ -445,10 +445,10 @@ export default class implements PlayerButton {
         break;
 
       case "song":
-        player.setLoop(ZkslinkLoopMode.QUEUE);
+        player.setLoop(ZklinkLoopMode.QUEUE);
 
         if (client.config.features.AUTO_RESUME)
-          setLoop247(ZkslinkLoopMode.QUEUE);
+          setLoop247(ZklinkLoopMode.QUEUE);
 
         new ReplyInteractionService(
           client,
@@ -469,10 +469,10 @@ export default class implements PlayerButton {
         break;
 
       case "queue":
-        player.setLoop(ZkslinkLoopMode.NONE);
+        player.setLoop(ZklinkLoopMode.NONE);
 
         if (client.config.features.AUTO_RESUME)
-          setLoop247(ZkslinkLoopMode.NONE);
+          setLoop247(ZklinkLoopMode.NONE);
 
         new ReplyInteractionService(
           client,
@@ -494,7 +494,7 @@ export default class implements PlayerButton {
     }
   }
 
-  getTitle(client: Manager, tracks: ZkslinkTrack): string {
+  getTitle(client: Manager, tracks: ZklinkTrack): string {
     const truncate = (str: string, maxLength: number): string =>
       str.length > maxLength ? str.substring(0, maxLength - 3) + "..." : str;
     const title = truncate(tracks.title, 25);

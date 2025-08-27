@@ -12,7 +12,7 @@ import {
 } from "discord.js";
 import { Manager } from "../../manager.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
-import { ZkslinkPlayerState } from "../../zklink/main.js";
+import { ZklinkPlayerState } from "../../zklink/main.js";
 
 export default class {
   async execute(client: Manager, oldState: VoiceState, newState: VoiceState) {
@@ -32,7 +32,7 @@ export default class {
       newState.member?.user.id === client.user?.id
     ) {
       player.data.set("sudo-destroy", true);
-      player.state !== ZkslinkPlayerState.DESTROYED ? player.destroy() : true;
+      player.state !== ZklinkPlayerState.DESTROYED ? player.destroy() : true;
     }
 
     if (oldState.member?.user.bot || newState.member?.user.bot) return;
@@ -58,7 +58,7 @@ export default class {
 
     if (!isInVoice || !isInVoice.voice.channelId) {
       player.data.set("sudo-destroy", true);
-      player.state !== ZkslinkPlayerState.DESTROYED ? player.destroy() : true;
+      player.state !== ZklinkPlayerState.DESTROYED ? player.destroy() : true;
     }
 
     if (

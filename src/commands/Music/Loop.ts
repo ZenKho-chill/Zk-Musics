@@ -4,9 +4,9 @@ import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import {
-  ZkslinkLoopMode,
-  ZkslinkPlayer,
-  ZkslinkTrack,
+  ZklinkLoopMode,
+  ZklinkPlayer,
+  ZklinkTrack,
 } from "../../zklink/main.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
 import { Config } from "../../@types/Config.js";
@@ -53,7 +53,7 @@ export default class implements Command {
 
     const player = client.zklink.players.get(
       handler.guild!.id
-    ) as ZkslinkPlayer;
+    ) as ZklinkPlayer;
     const currentTrack = player.queue.current;
 
     if (!currentTrack) {
@@ -98,7 +98,7 @@ export default class implements Command {
       });
 
     if (
-      (mode == "song" && player.loop == ZkslinkLoopMode.SONG) ||
+      (mode == "song" && player.loop == ZklinkLoopMode.SONG) ||
       mode == player.loop
     )
       return handler.editReply({
@@ -119,9 +119,9 @@ export default class implements Command {
       });
 
     if (mode == "song") {
-      player.setLoop(ZkslinkLoopMode.SONG);
+      player.setLoop(ZklinkLoopMode.SONG);
       if (client.config.features.AUTO_RESUME)
-        this.setLoop247(client, player, ZkslinkLoopMode.SONG);
+        this.setLoop247(client, player, ZklinkLoopMode.SONG);
 
       const looped = new EmbedBuilder()
         .setDescription(
@@ -138,9 +138,9 @@ export default class implements Command {
         .setColor(client.color_main);
       handler.editReply({ content: " ", embeds: [looped] });
     } else if (mode == "queue") {
-      player.setLoop(ZkslinkLoopMode.QUEUE);
+      player.setLoop(ZklinkLoopMode.QUEUE);
       if (client.config.features.AUTO_RESUME)
-        this.setLoop247(client, player, ZkslinkLoopMode.QUEUE);
+        this.setLoop247(client, player, ZklinkLoopMode.QUEUE);
 
       const looped_queue = new EmbedBuilder()
         .setDescription(
@@ -151,9 +151,9 @@ export default class implements Command {
         .setColor(client.color_main);
       handler.editReply({ content: " ", embeds: [looped_queue] });
     } else if (mode === "none") {
-      player.setLoop(ZkslinkLoopMode.NONE);
+      player.setLoop(ZklinkLoopMode.NONE);
       if (client.config.features.AUTO_RESUME)
-        this.setLoop247(client, player, ZkslinkLoopMode.NONE);
+        this.setLoop247(client, player, ZklinkLoopMode.NONE);
 
       const looped = new EmbedBuilder()
         .setDescription(
@@ -170,7 +170,7 @@ export default class implements Command {
     });
   }
 
-  async setLoop247(client: Manager, player: ZkslinkPlayer, loop: string) {
+  async setLoop247(client: Manager, player: ZklinkPlayer, loop: string) {
     const data = await new Mode247Builder(client, player).execute(
       player.guildId
     );
@@ -187,7 +187,7 @@ export default class implements Command {
     return res;
   }
 
-  getTitle(client: Manager, tracks: ZkslinkTrack): string {
+  getTitle(client: Manager, tracks: ZklinkTrack): string {
     const truncate = (str: string, maxLength: number): string =>
       str.length > maxLength ? str.substring(0, maxLength - 3) + "..." : str;
     const title = truncate(tracks.title, 25);

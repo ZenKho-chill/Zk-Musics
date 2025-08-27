@@ -5,10 +5,10 @@ import {
 } from "../../utilities/PlayerControlButton.js";
 import { Manager } from "../../manager.js";
 import { TextChannel } from "discord.js";
-import { ZkslinkPlayer } from "../../zklink/main.js";
+import { ZklinkPlayer } from "../../zklink/main.js";
 
 export default class {
-  async execute(client: Manager, player: ZkslinkPlayer) {
+  async execute(client: Manager, player: ZklinkPlayer) {
     if (player.voiceId == null) return;
 
     const nowPlaying = client.nplayingMsg.get(`${player.guildId}`);

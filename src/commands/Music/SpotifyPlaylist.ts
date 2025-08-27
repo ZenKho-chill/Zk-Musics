@@ -9,9 +9,9 @@ import {
   MessageFlags,
 } from "discord.js";
 import {
-  ZkslinkPlayer,
-  ZkslinkTrack,
-  ZkslinkSearchResultType,
+  ZklinkPlayer,
+  ZklinkTrack,
+  ZklinkSearchResultType,
 } from "../../zklink/main.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
@@ -68,7 +68,7 @@ export default class implements Command {
       }
     }
 
-    let player = client.zklink.players.get(handler.guild!.id) as ZkslinkPlayer;
+    let player = client.zklink.players.get(handler.guild!.id) as ZklinkPlayer;
 
     const spotifyID = await client.db.SpotifyId.get(handler.user!.id);
     if (!spotifyID) {
@@ -400,8 +400,8 @@ export default class implements Command {
 
   getTitle(
     client: Manager,
-    type: ZkslinkSearchResultType,
-    tracks: ZkslinkTrack[],
+    type: ZklinkSearchResultType,
+    tracks: ZklinkTrack[],
     value?: string
   ): string {
     const truncate = (str: string, maxLength: number): string =>

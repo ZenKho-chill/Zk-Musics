@@ -6,7 +6,7 @@ import {
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZkslinkPlayer } from "../../zklink/main.js";
+import { ZklinkPlayer } from "../../zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -102,7 +102,7 @@ export default class implements Command {
       let successfulGuilds = 0;
 
       for (const guild of client.guilds.cache.values()) {
-        const player: ZkslinkPlayer | undefined = client.zklink.players.get(
+        const player: ZklinkPlayer | undefined = client.zklink.players.get(
           guild.id
         );
 

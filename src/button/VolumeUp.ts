@@ -12,7 +12,7 @@ import {
 import { PlayerButton } from "../@types/Button.js";
 import { Manager } from "../manager.js";
 import { ReplyInteractionService } from "../services/ReplyInteractionService.js";
-import { ZkslinkPlayer } from "../zkslink/main.js";
+import { ZklinkPlayer } from "../Zklink/main.js";
 import { Config } from "../@types/Config.js";
 import { ConfigData } from "../services/ConfigData.js";
 import { TopggServiceEnum } from "../services/TopggService.js";
@@ -25,7 +25,7 @@ export default class implements PlayerButton {
     client: Manager,
     message: ButtonInteraction<CacheType>,
     language: string,
-    player: ZkslinkPlayer,
+    player: ZklinkPlayer,
     nplaying: Message<boolean>,
     collector: InteractionCollector<ButtonInteraction<"cached">>
   ): Promise<any> {

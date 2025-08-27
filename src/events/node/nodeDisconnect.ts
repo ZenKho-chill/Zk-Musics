@@ -1,5 +1,5 @@
 import { Manager } from "../../manager.js";
-import { ZkslinkNode } from "../../zklink/main.js";
+import { ZklinkNode } from "../../zklink/main.js";
 import chalk from "chalk";
 
 export default class {

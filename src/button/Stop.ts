@@ -13,7 +13,7 @@ import { FormatDuration } from "../utilities/FormatDuration.js";
 import { PlayerButton } from "../@types/Button.js";
 import { Manager } from "../manager.js";
 import { ReplyInteractionService } from "../services/ReplyInteractionService.js";
-import { ZkslinkPlayer, ZkslinkTrack } from "../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../zklink/main.js";
 import { Config } from "../@types/Config.js";
 import { ConfigData } from "../services/ConfigData.js";
 import { TopggServiceEnum } from "../services/TopggService.js";
@@ -26,7 +26,7 @@ export default class implements PlayerButton {
     client: Manager,
     message: ButtonInteraction<CacheType>,
     language: string,
-    player: ZkslinkPlayer,
+    player: ZklinkPlayer,
     nplaying: Message<boolean>,
     collector: InteractionCollector<ButtonInteraction<"cached">>
   ): Promise<any> {
@@ -420,7 +420,7 @@ export default class implements PlayerButton {
     );
   }
 
-  getTitle(client: Manager, tracks: ZkslinkTrack): string {
+  getTitle(client: Manager, tracks: ZklinkTrack): string {
     const truncate = (str: string, maxLength: number): string =>
       str.length > maxLength ? str.substring(0, maxLength - 3) + "..." : str;
     const title = truncate(tracks.title, 25);

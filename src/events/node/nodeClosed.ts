@@ -1,10 +1,10 @@
 import { AutoFixLavalink } from "../../autofix/AutoFixLavalink.js";
 import { Manager } from "../../manager.js";
-import { ZkslinkNode } from "../../zklink/main.js";
+import { ZklinkNode } from "../../zklink/main.js";
 import chalk from "chalk";
 
 export default class {
-  async execute(client: Manager, node: ZkslinkNode) {
+  async execute(client: Manager, node: ZklinkNode) {
     client.logger.debug(
       "NodeClosed",
       chalk.rgb(255, 165, 0)(`Lavalink ${node.options.name}: Đã đóng`)

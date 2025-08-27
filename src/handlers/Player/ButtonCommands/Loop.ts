@@ -8,20 +8,20 @@ import {
 } from "discord.js";
 import { Manager } from "../../../manager.js";
 import { Mode247Builder } from "../../../services/Mode247Builder.js";
-import { ZkslinkLoopMode, ZkslinkPlayer } from "../../../zklink/main.js";
+import { ZklinkLoopMode, ZklinkPlayer } from "../../../zklink/main.js";
 import { TopggServiceEnum } from "../../../services/TopggService.js";
 import axios from "axios";
 export class ButtonLoop {
   client: Manager;
   interaction: ButtonInteraction;
   language: string;
-  player: ZkslinkPlayer;
+  player: ZklinkPlayer;
   accessableby: string;
   constructor(
     client: Manager,
     interaction: ButtonInteraction,
     language: string,
-    player: ZkslinkPlayer
+    player: ZklinkPlayer
   ) {
     this.client = client;
     this.language = language;
@@ -459,10 +459,10 @@ export class ButtonLoop {
 
     switch (this.player.loop) {
       case "none":
-        await this.player.setLoop(ZkslinkLoopMode.SONG);
+        await this.player.setLoop(ZklinkLoopMode.SONG);
 
         if (this.client.config.features.AUTO_RESUME)
-          this.setLoop247(String(ZkslinkLoopMode.SONG));
+          this.setLoop247(String(ZklinkLoopMode.SONG));
 
         const looptrack = new EmbedBuilder()
           .setDescription(
@@ -487,10 +487,10 @@ export class ButtonLoop {
         break;
 
       case "song":
-        await this.player.setLoop(ZkslinkLoopMode.QUEUE);
+        await this.player.setLoop(ZklinkLoopMode.QUEUE);
 
         if (this.client.config.features.AUTO_RESUME)
-          this.setLoop247(String(ZkslinkLoopMode.QUEUE));
+          this.setLoop247(String(ZklinkLoopMode.QUEUE));
 
         const loopall = new EmbedBuilder()
           .setDescription(
@@ -515,10 +515,10 @@ export class ButtonLoop {
         break;
 
       case "queue":
-        await this.player.setLoop(ZkslinkLoopMode.NONE);
+        await this.player.setLoop(ZklinkLoopMode.NONE);
 
         if (this.client.config.features.AUTO_RESUME)
-          this.setLoop247(String(ZkslinkLoopMode.NONE));
+          this.setLoop247(String(ZklinkLoopMode.NONE));
 
         const unloopall = new EmbedBuilder()
           .setDescription(

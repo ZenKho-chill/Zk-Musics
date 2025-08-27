@@ -2,11 +2,11 @@ import { Manager } from "../../manager.js";
 import { EmbedBuilder, TextChannel, MessageFlags } from "discord.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
-import { ZkslinkPlayer } from "../../zklink/main.js";
+import { ZklinkPlayer } from "../../zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import chalk from "chalk";
 export default class {
-  async execute(client: Manager, player: ZkslinkPlayer) {
+  async execute(client: Manager, player: ZklinkPlayer) {
     if (!client.isDatabaseConnected)
       return client.logger.warn(
         "DatabaseService",

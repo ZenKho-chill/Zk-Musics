@@ -1,7 +1,7 @@
 import { Manager } from "../manager.js";
 import { Headers } from "../@types/Lavalink.js";
 import { GetLavalinkServer } from "./GetLavalinkServer.js";
-import { ZkslinkWebsocket } from "../zklink/main.js";
+import { ZklinkWebsocket } from "../zklink/main.js";
 
 export class CheckLavalinkServer {
   client: Manager;
@@ -60,7 +60,7 @@ export class CheckLavalinkServer {
 
   checkServerStatus(url: string, headers: Headers) {
     return new Promise((resolve, reject) => {
-      const ws = new ZkslinkWebsocket(url, { headers });
+      const ws = new ZklinkWebsocket(url, { headers });
       ws.on("open", () => {
         resolve(true);
         ws.close();

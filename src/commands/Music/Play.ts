@@ -12,7 +12,7 @@ import {
   GlobalInteraction,
 } from "../../@types/Interaction.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZkslinkSearchResultType, ZkslinkTrack } from "../../zklink/main.js";
+import { ZklinkSearchResultType, ZklinkTrack } from "../../zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -361,8 +361,8 @@ export default class implements Command {
 
   getTitle(
     client: Manager,
-    type: ZkslinkSearchResultType,
-    tracks: ZkslinkTrack[],
+    type: ZklinkSearchResultType,
+    tracks: ZklinkTrack[],
     value?: string
   ): string {
     const truncate = (str: string, maxLength: number): string =>

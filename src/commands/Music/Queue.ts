@@ -4,7 +4,7 @@ import { PageQueue } from "../../structures/PageQueue.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZkslinkPlayer, ZkslinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -53,7 +53,7 @@ export default class implements Command {
 
     const player = client.zklink.players.get(
       handler.guild!.id
-    ) as ZkslinkPlayer;
+    ) as ZklinkPlayer;
 
     const source = player.queue.current?.source || "unknown";
     let src = client.config.PLAYER_SOURCENAME.UNKNOWN; // Mặc định là UNKNOWN nếu nguồn không xác định
@@ -205,7 +205,7 @@ export default class implements Command {
     }
   }
 
-  getTitle(client: Manager, tracks: ZkslinkTrack): string {
+  getTitle(client: Manager, tracks: ZklinkTrack): string {
     const truncate = (str: string, maxLength: number): string =>
       str.length > maxLength ? str.substring(0, maxLength - 3) + "..." : str;
     const title = truncate(tracks.title, 25);

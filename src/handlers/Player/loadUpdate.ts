@@ -7,7 +7,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
-import { ZkslinkPlayer, ZkslinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
 import { TrackTitle } from "../../utilities/TrackTitle.js";
 import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
 import { zkcard } from "zkcard";
@@ -19,7 +19,7 @@ export class PlayerUpdateLoader {
   }
 
   async loader(client: Manager) {
-    client.UpdateQueueMsg = async function (player: ZkslinkPlayer) {
+    client.UpdateQueueMsg = async function (player: ZklinkPlayer) {
       let data = await client.db.setup.get(`${player.guildId}`);
       if (!data) return;
       if (data.enable === false) return;
@@ -295,7 +295,7 @@ export class PlayerUpdateLoader {
      *
      * @param {Player} player
      */
-    client.UpdateMusic = async function (player: ZkslinkPlayer) {
+    client.UpdateMusic = async function (player: ZklinkPlayer) {
       let data = await client.db.setup.get(`${player.guildId}`);
       if (!data) return;
       if (data.enable === false) return;

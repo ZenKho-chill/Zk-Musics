@@ -2,14 +2,14 @@ import { ApplicationCommandOptionType, EmbedBuilder } from "discord.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZkslinkTrack } from "../../zklink/main.js";
+import { ZklinkTrack } from "../../zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
 
-const TrackAdd: ZkslinkTrack[] = [];
+const TrackAdd: ZklinkTrack[] = [];
 const TrackExist: string[] = [];
-let Result: ZkslinkTrack[] | null = null;
+let Result: ZklinkTrack[] | null = null;
 
 export default class implements Command {
   public name = ["pl", "savequeue"];
@@ -103,7 +103,7 @@ export default class implements Command {
         ],
       });
 
-    TrackAdd.push(current as ZkslinkTrack);
+    TrackAdd.push(current as ZklinkTrack);
     TrackAdd.push(...queue!);
 
     if (!playlist) Result = TrackAdd;

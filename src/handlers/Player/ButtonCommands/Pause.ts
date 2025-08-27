@@ -9,7 +9,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { Manager } from "../../../manager.js";
-import { ZkslinkPlayer } from "../../../zklink/main.js";
+import { ZklinkPlayer } from "../../../zklink/main.js";
 import { TopggServiceEnum } from "../../../services/TopggService.js";
 import axios from "axios";
 export class ButtonPause {
@@ -17,14 +17,14 @@ export class ButtonPause {
   interaction: ButtonInteraction;
   channel: VoiceBasedChannel | null;
   language: string;
-  player: ZkslinkPlayer;
+  player: ZklinkPlayer;
   accessableby: string;
   constructor(
     client: Manager,
     interaction: ButtonInteraction,
     channel: VoiceBasedChannel | null,
     language: string,
-    player: ZkslinkPlayer
+    player: ZklinkPlayer
   ) {
     this.channel = channel;
     this.client = client;

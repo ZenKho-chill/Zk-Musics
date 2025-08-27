@@ -12,7 +12,7 @@ import {
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZkslinkPlayer, ZkslinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -101,7 +101,7 @@ export default class implements Command {
       }
     }
 
-    let player = client.zklink.players.get(handler.guild!.id) as ZkslinkPlayer;
+    let player = client.zklink.players.get(handler.guild!.id) as ZklinkPlayer;
 
     const query = handler.args.join(" ");
     if (!query)
@@ -250,7 +250,7 @@ export default class implements Command {
     }
     const limitedResults = searchResults.tracks.slice(0, 15);
     const countSong = limitedResults.length;
-    const options = limitedResults.map((song: ZkslinkTrack, index: number) => {
+    const options = limitedResults.map((song: ZklinkTrack, index: number) => {
       const truncatedTitle =
         song.title.length > 50 ? song.title.slice(0, 47) + "..." : song.title;
       const truncatedAuthor = song.author
@@ -326,7 +326,7 @@ export default class implements Command {
     });
 
     isCollectorActive = true; // Đặt cờ true khi collector bắt đầu
-    let selectedSong: ZkslinkTrack | null = null; // Biến lưu bài hát được chọn
+    let selectedSong: ZklinkTrack | null = null; // Biến lưu bài hát được chọn
 
     const collector = (
       handler?.channel! as TextChannel

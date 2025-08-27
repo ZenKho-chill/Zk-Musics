@@ -1,8 +1,8 @@
 import { Manager } from "../../manager.js";
-import { ZkslinkPlayer } from "../../zkslink/main.js";
+import { ZklinkPlayer } from "../../Zklink/main.js";
 
 export default class {
-  async execute(client: Manager, player: ZkslinkPlayer) {
+  async execute(client: Manager, player: ZklinkPlayer) {
     client.wsl.get(player.guildId)?.send({
       op: "playerResume",
       guild: player.guildId,
