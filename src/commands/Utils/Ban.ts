@@ -16,7 +16,7 @@ const data: Config = new ConfigData().data;
 
 export default class implements Command {
   public name = ["ban"];
-  public description = "Ban a user from the server";
+  public description = "Cấm một người dùng khỏi máy chủ";
   public category = "Utils";
   public accessableby = data.COMMANDS_ACCESS.UTILS.Ban;
   public usage = "<mention>";

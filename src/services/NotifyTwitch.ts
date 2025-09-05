@@ -19,11 +19,11 @@ type LiveData = {
 };
 
 type ErrorResponse =
-  | "Error getting access token"
-  | "Error checking stream status"
-  | "User not found"
-  | "User is offline"
-  | "Invalid Webhook";
+  | "Lỗi khi lấy access token"
+  | "Lỗi khi kiểm tra trạng thái stream"
+  | "Không tìm thấy người dùng"
+  | "Người dùng đang offline"
+  | "Webhook không hợp lệ";
 
 export default class NotifyTwitch {
   async execute(client: Manager) {
@@ -145,7 +145,7 @@ export default class NotifyTwitch {
       tokenAccess,
       Number(expiresIn)
     );
-    if (!accessToken) return "Error getting access token";
+    if (!accessToken) return "Lỗi khi lấy access token";
 
     try {
       const twitchAPI = axios.create({
@@ -157,7 +157,7 @@ export default class NotifyTwitch {
       twitchAPI.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
       const userResponse = await twitchAPI.get(`users?login=${username}`);
 
-      if (userResponse.data.data.length === 0) return "User not found";
+      if (userResponse.data.data.length === 0) return "Không tìm thấy người dùng";
 
       const user = userResponse.data.data[0];
       const userId = user.id;
@@ -184,7 +184,7 @@ export default class NotifyTwitch {
           profileImage: user.profile_image_url,
         };
       } else {
-        return "User is offline";
+        return "Người dùng đang offline";
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -194,13 +194,13 @@ export default class NotifyTwitch {
         );
         // Ép làm mới token nếu không được ủy quyền
         await this.updateTokenInDB(client, "", 0);
-        return "Error getting access token";
+        return "Lỗi khi lấy access token";
       }
       client.logger.warn(
         NotifyTwitch.name,
         `Lỗi khi kiểm tra stream: ${error}`
       );
-      return "Error checking stream status";
+      return "Lỗi khi kiểm tra trạng thái stream";
     }
   }
 
@@ -210,9 +210,9 @@ export default class NotifyTwitch {
     setup: any,
     TwitchUsername: string
   ) {
-    if (error === "User not found") {
+    if (error === "Không tìm thấy người dùng") {
       await client.db.NotifyTwitch.delete(setup.id);
-    } else if (error === "User is offline") {
+    } else if (error === "Người dùng đang offline") {
       const notifications = setup.value.Notifications;
       for (const notification of notifications) {
         if (notification.TwitchUsername === TwitchUsername) {

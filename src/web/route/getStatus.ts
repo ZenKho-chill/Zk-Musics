@@ -17,7 +17,7 @@ export async function getStatus(
   const player = client.Zklink.players.get(guildId);
   if (!player) {
     res.code(400);
-    res.send({ error: "Current player not found!" });
+    res.send({ error: "Không tìm thấy trình phát hiện tại!" });
     return;
   }
   if (req.headers["user-id"]) {

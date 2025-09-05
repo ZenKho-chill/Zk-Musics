@@ -16,7 +16,7 @@ const data: Config = new ConfigData().data;
 
 export default class implements Command {
   public name = ["notify", "twitch"];
-  public description = "Manage Twitch stream notifications";
+  public description = "Quản lý thông báo stream Twitch";
   public category = "Settings";
   public accessableby = data.COMMANDS_ACCESS.SETTINGS.NotifyTwitch;
   public usage = "";

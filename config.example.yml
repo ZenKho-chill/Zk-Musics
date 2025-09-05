@@ -1,12 +1,12 @@
 bot:
   # Đổi tên file .env.example thành .env
   # Thêm token của bạn vào file .env theo định dạng sau:
-  # DISCORD_APP_TOKEN=your-discord-bot-token
+  # DISCORD_APP_TOKEN=token-discord-bot-cua-ban
   TOKEN: ${DISCORD_APP_TOKEN} # Token sẽ được lấy từ file .env
   EMBED_COLOR_MAIN: "#FFFFFF"
   EMBED_COLOR_SECOND: "#2F3136"
-  OWNER_ID: "YOUR OWNER ID"
-  ADMIN: ["YOUR TRUSTED ID1", "YOUR TRUSTED ID2", "YOUR TRUSTED ID3"]
+  OWNER_ID: "ID CHỦ SỞ HỮU CỦA BẠN"
+  ADMIN: ["ID NGƯỜI TIN CẬY 1", "ID NGƯỜI TIN CẬY 2", "ID NGƯỜI TIN CẬY 3"]
   DEFAULT_VOLUME: 50 # Không được vượt quá 100, nếu không bot có thể gặp lỗi
   LANGUAGE: "en" # Bạn có thể đặt 'en' hoặc thêm ngôn ngữ tuỳ chỉnh
   DEBUG_MODE: false
@@ -57,8 +57,8 @@ lavalink:
 
 # Nếu bạn muốn sử dụng hệ thống premium theo role
 PremiumRole:
-  GuildID: "YOUR GUILD ID"
-  RoleID: "YOUR ROLE ID"
+  GuildID: "ID MÁY CHỦ CỦA BẠN"
+  RoleID: "ID VAI TRÒ CỦA BẠN"
 
 utilities:
   TicketSystem:
@@ -69,12 +69,12 @@ utilities:
   GeminiChat:
     Enable: false
     ApiKey: "YOUR API KEY"  # APIKEY FROM https://aistudio.google.com/app/apikey
-    ChannelId: "YOUR CHANNEL ID"
+    ChannelId: "ID KÊNH CỦA BẠN"
   CatAndQuotes:
     Enable: false
     ApiKey: "YOUR API KEY"  # APIKEY FROM https://api-ninjas.com/
-    CatChannelId: "YOUR CHANNEL ID"
-    QuoteChannelId: "YOUR CHANNEL ID"
+    CatChannelId: "ID KÊNH MÈO"
+    QuoteChannelId: "ID KÊNH TRÍCH DẪN"
   NotifyYoutube:
     Enable: false
     Schedule: "*/10 * * * *"
@@ -88,20 +88,20 @@ utilities:
     Enable: false
     Schedule: "*/10 * * * *"
     GlobalChannelID: "CHANNEL ID"
-    ClientId: "YOUR TWITCH CLIEND ID"  # get https://dev.twitch.tv/console/
-    ClientSecret: "YOUR TWITCH CLIENT SECRET"
+    ClientId: "ID CLIENT TWITCH CỦA BẠN"  # get https://dev.twitch.tv/console/
+    ClientSecret: "CLIENT SECRET TWITCH CỦA BẠN"
     LimitPremium: 5
     LimitNonPremium: 2
 
 logchannel:
-  UpdateChannelId: "YOUR CHANEL ID"
-  RedeemChannelID: "YOUR CHANEL ID"
-  RemoveChannelID: "YOUR CHANEL ID"
-  GenerateCodeChannelID: "YOUR CHANEL ID"
-  RatingChannelID: "YOUR CHANEL ID"
-  BugReportChannelID: "YOUR CHANEL ID"
-  SuggestionChannelID: "YOUR CHANEL ID"
-  ErrorChannelID: "YOUR CHANEL ID"
+  UpdateChannelId: "ID KÊNH CẬP NHẬT"
+  RedeemChannelID: "ID KÊNH ĐỔI THƯỞNG"
+  RemoveChannelID: "ID KÊNH XÓA"
+  GenerateCodeChannelID: "ID KÊNH TẠO MÃ"
+  RatingChannelID: "ID KÊNH ĐÁNH GIÁ"
+  BugReportChannelID: "ID KÊNH BÁO LỖI"
+  SuggestionChannelID: "ID KÊNH GỢI Ý"
+  ErrorChannelID: "ID KÊNH LỖI"
   GuildJoinChannelID: "YOUR CHANEL ID"
   GuildLeaveChannelID: "YOUR CHANEL ID"
   PremiumExpireChannelID: "YOUR CHANEL ID"

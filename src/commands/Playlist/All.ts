@@ -11,7 +11,7 @@ const data: Config = new ConfigData().data;
 
 export default class implements Command {
   public name = ["pl", "all"];
-  public description = "View all your playlists";
+  public description = "Xem tất cả danh sách phát của bạn";
   public category = "Playlist";
   public accessableby = data.COMMANDS_ACCESS.PLAYLIST.All;
   public usage = "<number>";

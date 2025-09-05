@@ -49,9 +49,9 @@ loop_already: "<:warnings:1220876158254710936> Chế độ lặp hiện đã là
 ### Lệnh Lyrics!
 provide_lyrics: "Vui lòng cung cấp **tên bài hát** hợp lệ"
 lyrics_title: "Lời bài hát cho **%{song}**"
-lyrics_notfound: "<:wrong:1291138140681273396> **Không tìm thấy lời bài hát cho bài này!**"
-lyrics_toolong: "**Lời bài hát quá dài, tối đa 4048 ký tự!**"
-lyrics_disable: "**Lời bài hát hiện đang bị tắt!**"
+lyrics_notfound: "<:wrong:1291138140681273396> **Ôi không, mình không tìm thấy lời bài hát cho bài này!**"
+lyrics_toolong: "**Ôi, lời bài hát này quá dài! Mình chỉ có thể hiển thị tối đa 4048 ký tự thôi!**"
+lyrics_disable: "**Ôi, tính năng lời bài hát hiện đang bị tắt!**"
 lyrics_noquery: "**Vui lòng cung cấp **tên bài hát** hợp lệ"
 lyrics_error: "**Lỗi: %{error}**"
 
@@ -71,8 +71,8 @@ pause_msg: |
 play_no_same_voice: "<:wrong:1220876213896216686> Bạn không ở cùng kênh thoại với mình!"
 play_no_in_voice: "<:wrong:1220876213896216686> Bạn chưa vào kênh thoại!"
 play_arg: "<:warnings:1220876158254710936> Vui lòng cung cấp tên bài hoặc URL hợp lệ!"
-play_emoji: "<:wrong:1220876213896216686> **Ồ! Đây là emoji, không thể phát nhạc từ emoji**"
-play_match: "<:wrong:1220876213896216686> **Ôi! Xin lỗi, không tìm thấy bài! Vui lòng thử lại**"
+play_emoji: "<:wrong:1220876213896216686> **Ối! Đây là emoji, mình không thể phát nhạc từ emoji được**"
+play_match: "<:wrong:1220876213896216686> **Ôi không! Xin lỗi bạn, mình không tìm thấy bài hát này. Thử lại nhé!**"
 
 play_track: "### %{title} thưởng thức nhé ♥"
 play_result: "### %{title} thưởng thức nhé ♥"

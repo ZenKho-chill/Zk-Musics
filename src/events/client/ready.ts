@@ -12,7 +12,7 @@ export default class {
     let channels = client.channels.cache.size;
 
     const activities = [
-  `${client.config.bot.BOT_ACTIVITY1}` || `với ${guilds} server!`,
+  `${client.config.bot.BOT_ACTIVITY1}` || `với ${guilds} máy chủ!`,
   `${client.config.bot.BOT_ACTIVITY2}` || `với ${members} người dùng!`,
   `${client.config.bot.BOT_ACTIVITY3}` || `với ${channels} kênh!`,
     ];
