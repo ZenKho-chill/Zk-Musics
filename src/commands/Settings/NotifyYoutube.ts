@@ -3,11 +3,13 @@ import {
   CommandInteractionOptionResolver,
   ChannelType,
   EmbedBuilder,
+  ChatInputCommandInteraction,
 } from "discord.js";
 import Parser from "rss-parser";
 import { Manager } from "../../manager.js";
 import { Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
+import { NotifyYoutube } from "../../database/schema/NotifyYoutube.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 
@@ -51,8 +53,7 @@ export default class implements Command {
     },
     {
       name: "content",
-      description:
-        "Nội dung hiển thị trong thông báo. Mention role để ping (chỉ khi thêm)",
+      description: "Nội dung hiển thị trong thông báo. Mention role để ping (chỉ khi thêm)",
       required: false,
       type: ApplicationCommandOptionType.String,
     },
@@ -61,27 +62,33 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
     await handler.deferReply();
-    const options = handler.interaction
+    const options = (handler.interaction as ChatInputCommandInteraction)
       .options as CommandInteractionOptionResolver;
     const action = options.getString("action");
     const YouTubeChannelId = options.getString("youtubeid");
     const channel = options.getChannel("channel");
     const content = options.getString("content") || " ";
 
+    // Validate required parameters
+    if (!YouTubeChannelId) {
+      return handler.editReply({
+        embeds: [
+          new EmbedBuilder()
+            .setDescription("❌ YouTube Channel ID is required.")
+            .setColor(client.color_main),
+        ],
+      });
+    }
+
     if (!client.config.utilities.NotifyYoutube.Enable) {
       await handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.settings",
-                "notify_youtube_disabled",
-                {
-                  user: String(handler.user?.displayName || handler.user?.tag),
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.settings", "notify_youtube_disabled", {
+                user: String(handler.user?.displayName || handler.user?.tag),
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -94,8 +101,8 @@ export default class implements Command {
       const feed = await parser.parseURL(YOUTUBE_RSS_URL);
       const latestVideo = feed.items[0];
       const lastVideoId = latestVideo.id.replace("yt:video:", "");
-      const publishDate = latestVideo.isoDate;
-      const channelName = feed.title;
+      const publishDate = latestVideo.isoDate || new Date().toISOString();
+      const channelName = feed.title || "Unknown Channel";
 
       // Lấy các thông báo YouTube hiện tại
       let youtube = await client.db.NotifyYoutube.get(`${handler.guild!.id}`);
@@ -124,11 +131,8 @@ export default class implements Command {
                     "notify_youtube_not_found",
                     {
                       ytchannel: channelName,
-                      user: String(
-                        handler.user?.displayName || handler.user?.tag
-                      ),
-                      botname:
-                        client.user!.username || client.user!.displayName,
+                      user: String(handler.user?.displayName || handler.user?.tag),
+                      botname: client.user!.username || client.user!.displayName,
                     }
                   )}`
                 )
@@ -152,9 +156,7 @@ export default class implements Command {
                   "notify_youtube_removed",
                   {
                     ytchannel: channelName,
-                    user: String(
-                      handler.user?.displayName || handler.user?.tag
-                    ),
+                    user: String(handler.user?.displayName || handler.user?.tag),
                     botname: client.user!.username || client.user!.displayName,
                   }
                 )}`
@@ -199,11 +201,7 @@ export default class implements Command {
             );
 
         await handler.editReply({
-          embeds: [
-            new EmbedBuilder()
-              .setDescription(description)
-              .setColor(client.color_main),
-          ],
+          embeds: [new EmbedBuilder().setDescription(description).setColor(client.color_main)],
         });
         return;
       }
@@ -221,11 +219,8 @@ export default class implements Command {
                     "notify_youtube_invalid_channel",
                     {
                       ytchannel: channelName,
-                      user: String(
-                        handler.user?.displayName || handler.user?.tag
-                      ),
-                      botname:
-                        client.user!.username || client.user!.displayName,
+                      user: String(handler.user?.displayName || handler.user?.tag),
+                      botname: client.user!.username || client.user!.displayName,
                     }
                   )}`
                 )
@@ -250,11 +245,8 @@ export default class implements Command {
                     "notify_youtube_already",
                     {
                       ytchannel: channelName,
-                      user: String(
-                        handler.user?.displayName || handler.user?.tag
-                      ),
-                      botname:
-                        client.user!.username || client.user!.displayName,
+                      user: String(handler.user?.displayName || handler.user?.tag),
+                      botname: client.user!.username || client.user!.displayName,
                     }
                   )}`
                 )
@@ -281,19 +273,12 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.settings",
-                  "notify_youtube_set",
-                  {
-                    ytchannel: channelName,
-                    channelid: `<#${channel.id}>`,
-                    user: String(
-                      handler.user?.displayName || handler.user?.tag
-                    ),
-                    botname: client.user!.username || client.user!.displayName,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.settings", "notify_youtube_set", {
+                  ytchannel: channelName,
+                  channelid: `<#${channel.id}>`,
+                  user: String(handler.user?.displayName || handler.user?.tag),
+                  botname: client.user!.username || client.user!.displayName,
+                })}`
               )
               .setColor(client.color_main),
           ],
@@ -305,15 +290,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.settings",
-                "notify_youtube_404",
-                {
-                  user: String(handler.user?.displayName || handler.user?.tag),
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.settings", "notify_youtube_404", {
+                user: String(handler.user?.displayName || handler.user?.tag),
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],

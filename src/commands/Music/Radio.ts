@@ -10,10 +10,7 @@ import {
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import {
-  RadioStationNewInterface,
-  RadioStationArray,
-} from "../../utilities/RadioStations.js";
+import { RadioStationNewInterface, RadioStationArray } from "../../utilities/RadioStations.js";
 import { ConvertTime } from "../../utilities/ConvertTime.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
@@ -42,7 +39,7 @@ export default class implements Command {
   ];
 
   public async execute(client: Manager, handler: CommandHandler) {
-    let player = client.zklink.players.get(handler.guild!.id);
+    let player = client.Zklink.players.get(handler.guild!.id);
     const radioList = RadioStationNewInterface();
     const radioArrayList = RadioStationArray();
     const radioListKeys = Object.keys(radioList);
@@ -50,12 +47,10 @@ export default class implements Command {
     await handler.deferReply();
 
     const getNum = handler.args[0] ? Number(handler.args[0]) : undefined;
-    if (!getNum)
-      return this.sendHelp(client, handler, radioList, radioListKeys);
+    if (!getNum) return this.sendHelp(client, handler, radioList, radioListKeys);
 
     const radioData = radioArrayList[getNum - 1];
-    if (!radioData)
-      return this.sendHelp(client, handler, radioList, radioListKeys);
+    if (!radioData) return this.sendHelp(client, handler, radioList, radioListKeys);
 
     const { channel } = handler.member!.voice;
     if (!channel)
@@ -63,31 +58,24 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.radio",
-                "radio_no_voice"
-              )}`
+              `${client.i18n.get(handler.language, "commands.radio", "radio_no_voice")}`
             )
             .setColor(client.color_main),
         ],
       });
 
     if (!player)
-      player = await client.zklink.create({
+      player = await client.Zklink.create({
         guildId: handler.guild!.id,
         voiceId: handler.member!.voice.channel!.id,
         textId: handler.channel!.id,
         shardId: handler.guild?.shardId ?? 0,
         deaf: true,
         mute: false,
-        region: handler.member!.voice.channel!.rtcRegion ?? null,
+        region: handler.member!.voice.channel!.rtcRegion ?? undefined,
         volume: client.config.bot.DEFAULT_VOLUME,
       });
-    else if (
-      player &&
-      !this.checkSameVoice(client, handler, handler.language)
-    ) {
+    else if (player && !this.checkSameVoice(client, handler, handler.language)) {
       return;
     }
 
@@ -102,22 +90,15 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.radio",
-                "radio_match",
-                {
-                  serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.radio", "radio_match", {
+                serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
-    if (result.type === "PLAYLIST")
-      for (let track of result.tracks) player.queue.add(track);
-    else if (player.playing && result.type === "SEARCH")
-      player.queue.add(result.tracks[0]);
+    if (result.type === "PLAYLIST") for (let track of result.tracks) player.queue.add(track);
+    else if (player.playing && result.type === "SEARCH") player.queue.add(result.tracks[0]);
     else if (player.playing && result.type !== "SEARCH")
       for (let track of result.tracks) player.queue.add(track);
     else player.queue.add(result.tracks[0]);
@@ -126,21 +107,14 @@ export default class implements Command {
 
     if (!player.playing) player.play();
     const embed = new EmbedBuilder().setColor(client.color_main).setDescription(
-      `${client.i18n.get(
-        handler.language,
-        "commands.radio",
-        "radio_play_track",
-        {
-          title: radioData.name || handler.guild!.name,
-          duration: new ConvertTime().parse(
-            result.tracks[0].duration as number
-          ),
-          request: String(result.tracks[0].requester),
-          user: String(handler.user!.displayName || handler.user!.tag),
-          url: String(result.tracks[0].uri),
-          serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
-        }
-      )}`
+      `${client.i18n.get(handler.language, "commands.radio", "radio_play_track", {
+        title: radioData.name || handler.guild!.name,
+        duration: new ConvertTime().parse(result.tracks[0].duration as number),
+        request: String(result.tracks[0].requester),
+        user: String(handler.user!.displayName || handler.user!.tag),
+        url: String(result.tracks[0].uri),
+        serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
+      })}`
     );
 
     handler.editReply({ content: " ", embeds: [embed] });
@@ -173,13 +147,7 @@ export default class implements Command {
       new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
         new StringSelectMenuBuilder()
           .setCustomId("provider")
-          .setPlaceholder(
-            client.i18n.get(
-              handler.language,
-              "commands.radio",
-              "radio_placeholder"
-            )
-          )
+          .setPlaceholder(client.i18n.get(handler.language, "commands.radio", "radio_placeholder"))
           .addOptions(this.getOptionBuilder(radioListKeys))
           .setDisabled(disable)
       );
@@ -188,6 +156,8 @@ export default class implements Command {
       embeds: [pages[0]],
       components: [providerSelector(false)],
     });
+
+    if (!msg) return;
 
     const collector = msg.createMessageComponentCollector({
       componentType: ComponentType.StringSelect,
@@ -232,20 +202,16 @@ export default class implements Command {
 
   protected getOptionBuilder(radioListKeys: string[]) {
     const data: Config = new ConfigData().data;
-    const result = [];
+    const result: StringSelectMenuOptionBuilder[] = [];
     for (let i = 0; i < radioListKeys.length; i++) {
       const key = radioListKeys[i];
-      result.push(
-        new StringSelectMenuOptionBuilder().setLabel(key).setValue(String(i))
-      );
+      result.push(new StringSelectMenuOptionBuilder().setLabel(key).setValue(String(i)));
     }
     return result;
   }
 
-  protected stringConverter(
-    array: { no: number; name: string; link: string }[]
-  ) {
-    const radioStrings = [];
+  protected stringConverter(array: { no: number; name: string; link: string }[]) {
+    const radioStrings: { name: string; value: string; inline: boolean }[] = [];
     for (let i = 0; i < array.length; i++) {
       const radio = array[i];
       radioStrings.push({
@@ -258,18 +224,12 @@ export default class implements Command {
   }
 
   checkSameVoice(client: Manager, handler: CommandHandler, language: string) {
-    if (
-      handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel
-    ) {
+    if (handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel) {
       handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.radio",
-                "radio_no_same_voice"
-              )}`
+              `${client.i18n.get(handler.language, "commands.radio", "radio_no_same_voice")}`
             )
             .setColor(client.color_main),
         ],

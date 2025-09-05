@@ -42,7 +42,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.SilentDeferReply();
 
-    let player = client.zklink.players.get(handler.guild!.id);
+    let player = client.Zklink.players.get(handler.guild!.id);
 
     const value = handler.args[0];
 
@@ -114,14 +114,14 @@ export default class implements Command {
       }
 
       if (!player) {
-        player = await client.zklink.create({
+        player = await client.Zklink.create({
           guildId: handler.guild!.id,
           voiceId: handler.member!.voice.channel!.id,
           textId: String(handler.channel?.id),
           shardId: handler.guild?.shardId ?? 0,
           deaf: true,
           mute: false,
-          region: handler.member!.voice.channel!.rtcRegion ?? null,
+          region: handler.member!.voice.channel!.rtcRegion ?? undefined,
           volume: client.config.bot.DEFAULT_VOLUME ?? 80,
         });
       }

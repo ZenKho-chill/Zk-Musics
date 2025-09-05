@@ -25,34 +25,16 @@ export class MessageEventsHandler {
   private init() {
     this.client.on("messageDelete", this.handleMessageDelete.bind(this));
     this.client.on("messageUpdate", this.handleMessageUpdate.bind(this));
-    this.client.on(
-      "messageDeleteBulk",
-      this.handleMessageDeleteBulk.bind(this)
-    );
-    this.client.on(
-      "messageReactionAdd",
-      this.handleMessageReactionAdd.bind(this)
-    );
-    this.client.on(
-      "messageReactionRemove",
-      this.handleMessageReactionRemove.bind(this)
-    );
+    this.client.on("messageDeleteBulk", this.handleMessageDeleteBulk.bind(this));
+    this.client.on("messageReactionAdd", this.handleMessageReactionAdd.bind(this));
+    this.client.on("messageReactionRemove", this.handleMessageReactionRemove.bind(this));
     this.client.on("messagePinned", this.handleMessagePinned.bind(this));
     this.client.on("messageUnpinned", this.handleMessageUnpinned.bind(this));
   }
 
   // Xử lý việc xoá từng tin nhắn
-  private async handleMessageDelete(
-    message: Message<boolean> | PartialMessage
-  ) {
-    if (
-      !(await isEventEnabled(
-        message.guild?.id || "",
-        "messageDelete",
-        this.client.db
-      ))
-    )
-      return;
+  private async handleMessageDelete(message: Message<boolean> | PartialMessage) {
+    if (!(await isEventEnabled(message.guild?.id || "", "messageDelete", this.client.db))) return;
     if (!message.guild || message.author?.bot) return;
 
     const logChannel = await getModLogChannel(message.guild.id, this.client);
@@ -66,10 +48,7 @@ export class MessageEventsHandler {
       .setColor(0xff0000) // màu đỏ
       .setAuthor({
         name: `${message.author?.username || this.client.user?.username}`,
-        iconURL: `${
-          message.author?.displayAvatarURL() ||
-          this.client.user?.displayAvatarURL()
-        }`,
+        iconURL: `${message.author?.displayAvatarURL() || this.client.user?.displayAvatarURL()}`,
       })
       .setTitle("🗑️ Tin nhắn đã bị xóa")
       .setDescription(content.slice(0, 1024))
@@ -108,8 +87,7 @@ export class MessageEventsHandler {
     channel: GuildTextBasedChannel
   ) {
     const guild = channel.guild;
-    if (!(await isEventEnabled(guild.id, "messageDeleteBulk", this.client.db)))
-      return;
+    if (!(await isEventEnabled(guild.id, "messageDeleteBulk", this.client.db))) return;
 
     const logChannel = await getModLogChannel(guild.id, this.client);
     if (!logChannel) return;
@@ -132,15 +110,11 @@ export class MessageEventsHandler {
         new EmbedBuilder()
           .setColor(0xff0000) // màu đỏ
           .setAuthor({
-            name: executor?.username || this.client.user?.username,
-            iconURL:
-              executor?.displayAvatarURL() ||
-              this.client.user?.displayAvatarURL(),
+            name: executor?.username || this.client.user?.username || "Unknown",
+            iconURL: executor?.displayAvatarURL() || this.client.user?.displayAvatarURL(),
           })
           .setTitle("🗑️ Nhiều tin nhắn đã bị xóa")
-          .setDescription(
-            `**${messageCount}** tin nhắn đã bị xóa ở <#${channel.id}>`
-          )
+          .setDescription(`**${messageCount}** tin nhắn đã bị xóa ở <#${channel.id}>`)
           .addFields(
             { name: "Lý do", value: reason, inline: false },
             {
@@ -165,13 +139,7 @@ export class MessageEventsHandler {
     oldMessage: Message<boolean> | PartialMessage,
     newMessage: Message<boolean> | PartialMessage
   ) {
-    if (
-      !(await isEventEnabled(
-        oldMessage.guild?.id || "",
-        "messageUpdate",
-        this.client.db
-      ))
-    )
+    if (!(await isEventEnabled(oldMessage.guild?.id || "", "messageUpdate", this.client.db)))
       return;
     if (!oldMessage.guild || oldMessage.author?.bot) return;
 
@@ -245,11 +213,7 @@ export class MessageEventsHandler {
     if (user.partial) await user.fetch(); // Lấy đầy đủ user nếu là partial
 
     const guild = reaction.message.guild;
-    if (
-      !guild ||
-      !(await isEventEnabled(guild.id, "messageReactionAdd", this.client.db))
-    )
-      return;
+    if (!guild || !(await isEventEnabled(guild.id, "messageReactionAdd", this.client.db))) return;
 
     const logChannel = await getModLogChannel(guild.id, this.client);
     if (!logChannel) return;
@@ -259,9 +223,8 @@ export class MessageEventsHandler {
         new EmbedBuilder()
           .setColor(0x32cd32)
           .setAuthor({
-            name: user?.username || this.client.user?.username,
-            iconURL:
-              user?.displayAvatarURL() || this.client.user?.displayAvatarURL(),
+            name: user?.username || this.client.user?.username || "Unknown",
+            iconURL: user?.displayAvatarURL() || this.client.user?.displayAvatarURL(),
           })
           .setTitle("✅ Đã thêm phản ứng")
           .setDescription(
@@ -272,8 +235,7 @@ export class MessageEventsHandler {
             value: `[Jump to Message](${reaction.message.url})`,
           })
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không rõ",
+            text: this.client.user?.username || this.client.user?.tag || "Không rõ",
             iconURL:
               this.client.user?.displayAvatarURL() ||
               "https://raw.githubusercontent.com/ZenKho-chill/zkcard/main/build/structures/images/avatar.png",
@@ -292,10 +254,7 @@ export class MessageEventsHandler {
     if (user.partial) await user.fetch(); // Lấy đầy đủ user nếu là partial
 
     const guild = reaction.message.guild;
-    if (
-      !guild ||
-      !(await isEventEnabled(guild.id, "messageReactionRemove", this.client.db))
-    )
+    if (!guild || !(await isEventEnabled(guild.id, "messageReactionRemove", this.client.db)))
       return;
 
     const logChannel = await getModLogChannel(guild.id, this.client);
@@ -306,9 +265,8 @@ export class MessageEventsHandler {
         new EmbedBuilder()
           .setColor(0xff4500)
           .setAuthor({
-            name: user?.username || this.client.user?.username,
-            iconURL:
-              user?.displayAvatarURL() || this.client.user?.displayAvatarURL(),
+            name: user?.username || this.client.user?.username || "Unknown",
+            iconURL: user?.displayAvatarURL() || this.client.user?.displayAvatarURL(),
           })
           .setTitle("❌ Phản ứng đã bị xóa")
           .setDescription(
@@ -319,8 +277,7 @@ export class MessageEventsHandler {
             value: `[Jump to Message](${reaction.message.url})`,
           })
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không rõ",
+            text: this.client.user?.username || this.client.user?.tag || "Không rõ",
             iconURL:
               this.client.user?.displayAvatarURL() ||
               "https://raw.githubusercontent.com/ZenKho-chill/zkcard/main/build/structures/images/avatar.png",
@@ -331,15 +288,9 @@ export class MessageEventsHandler {
   }
 
   // Xử lý tin nhắn được ghim
-  private async handleMessagePinned(
-    message: Message<boolean> | PartialMessage
-  ) {
+  private async handleMessagePinned(message: Message<boolean> | PartialMessage) {
     const guild = message.guild;
-    if (
-      !guild ||
-      !(await isEventEnabled(guild.id, "messagePinned", this.client.db))
-    )
-      return;
+    if (!guild || !(await isEventEnabled(guild.id, "messagePinned", this.client.db))) return;
 
     const logChannel = await getModLogChannel(guild.id, this.client);
     if (!logChannel) return;
@@ -348,19 +299,14 @@ export class MessageEventsHandler {
       embeds: [
         new EmbedBuilder()
           .setAuthor({
-            name: message.author.username || this.client.user?.username,
-            iconURL:
-              message.author.displayAvatarURL() ||
-              this.client.user?.displayAvatarURL(),
+            name: message.author?.username || this.client.user?.username || "Unknown",
+            iconURL: message.author?.displayAvatarURL() || this.client.user?.displayAvatarURL(),
           })
           .setColor(0xffd700)
           .setTitle("📌 Tin nhắn đã được ghim")
-          .setDescription(
-            `Một tin nhắn trong <#${message.channel.id}> đã được ghim.`
-          )
+          .setDescription(`Một tin nhắn trong <#${message.channel.id}> đã được ghim.`)
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không rõ",
+            text: this.client.user?.username || this.client.user?.tag || "Không rõ",
             iconURL:
               this.client.user?.displayAvatarURL() ||
               "https://raw.githubusercontent.com/ZenKho-chill/zkcard/main/build/structures/images/avatar.png",
@@ -371,15 +317,9 @@ export class MessageEventsHandler {
   }
 
   // Xử lý tin nhắn bị bỏ ghim
-  private async handleMessageUnpinned(
-    message: Message<boolean> | PartialMessage
-  ) {
+  private async handleMessageUnpinned(message: Message<boolean> | PartialMessage) {
     const guild = message.guild;
-    if (
-      !guild ||
-      !(await isEventEnabled(guild.id, "messageUnpinned", this.client.db))
-    )
-      return;
+    if (!guild || !(await isEventEnabled(guild.id, "messageUnpinned", this.client.db))) return;
 
     const logChannel = await getModLogChannel(guild.id, this.client);
     if (!logChannel) return;
@@ -388,19 +328,14 @@ export class MessageEventsHandler {
       embeds: [
         new EmbedBuilder()
           .setAuthor({
-            name: message.author.username || this.client.user?.username,
-            iconURL:
-              message.author.displayAvatarURL() ||
-              this.client.user?.displayAvatarURL(),
+            name: message.author?.username || this.client.user?.username || "Unknown",
+            iconURL: message.author?.displayAvatarURL() || this.client.user?.displayAvatarURL(),
           })
           .setColor(0xffd700)
           .setTitle("📌 Tin nhắn đã được bỏ ghim")
-          .setDescription(
-            `Một tin nhắn trong <#${message.channel.id}> đã được bỏ ghim.`
-          )
+          .setDescription(`Một tin nhắn trong <#${message.channel.id}> đã được bỏ ghim.`)
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không rõ",
+            text: this.client.user?.username || this.client.user?.tag || "Không rõ",
             iconURL:
               this.client.user?.displayAvatarURL() ||
               "https://raw.githubusercontent.com/ZenKho-chill/zkcard/main/build/structures/images/avatar.png",

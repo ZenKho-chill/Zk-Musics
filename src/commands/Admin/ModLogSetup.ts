@@ -35,7 +35,7 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
-    const interaction = handler.interaction as CommandInteraction;
+    const interaction = handler.interaction as any;
 
     const channelOption = interaction.options.get("channel");
     const channel = channelOption?.channel as TextChannel;
@@ -45,15 +45,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "modlogs_invalid_channel",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "modlogs_invalid_channel", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -71,16 +66,11 @@ export default class implements Command {
       embeds: [
         new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get(
-              handler.language,
-              "commands.admin",
-              "modlogs_setup_channel",
-              {
-                user: handler.user!.displayName || handler.user!.tag,
-                botname: client.user!.username || client.user!.displayName,
-                channel: `<#${channel.id}>`,
-              }
-            )}`
+            `${client.i18n.get(handler.language, "commands.admin", "modlogs_setup_channel", {
+              user: handler.user!.displayName || handler.user!.tag,
+              botname: client.user!.username || client.user!.displayName,
+              channel: `<#${channel.id}>`,
+            })}`
           )
           .setColor(client.color_main),
       ],

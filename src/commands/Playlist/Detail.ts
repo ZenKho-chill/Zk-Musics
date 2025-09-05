@@ -1,8 +1,4 @@
-import {
-  EmbedBuilder,
-  ApplicationCommandOptionType,
-  Message,
-} from "discord.js";
+import { EmbedBuilder, ApplicationCommandOptionType, Message } from "discord.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
 import { PageQueue } from "../../structures/PageQueue.js";
 import { Manager } from "../../manager.js";
@@ -67,11 +63,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_detail_notfound"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_detail_notfound")}`
             )
             .setColor(client.color_main),
         ],
@@ -84,11 +76,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_detail_notfound"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_detail_notfound")}`
             )
             .setColor(client.color_main),
         ],
@@ -98,11 +86,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_detail_private"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_detail_private")}`
             )
             .setColor(client.color_main),
         ],
@@ -111,45 +95,32 @@ export default class implements Command {
     let pagesNum = Math.ceil(playlist.tracks!.length / 10);
     if (pagesNum === 0) pagesNum = 1;
 
-    const playlistStrings = [];
+    const playlistStrings: string[] = [];
     for (let i = 0; i < playlist.tracks!.length; i++) {
       const playlists = playlist.tracks![i];
       playlistStrings.push(
-        `${client.i18n.get(
-          handler.language,
-          "commands.playlist",
-          "pl_detail_track",
-          {
-            num: String(i + 1),
-            title: this.getTitle(client, playlists),
-            author: String(playlists.author),
-            duration: new FormatDuration().parse(playlists.length),
-          }
-        )}
+        `${client.i18n.get(handler.language, "commands.playlist", "pl_detail_track", {
+          num: String(i + 1),
+          title: this.getTitle(client, playlists),
+          author: String(playlists.author),
+          duration: new FormatDuration().parse(playlists.length),
+        })}
                 `
       );
     }
 
     const totalDuration = new FormatDuration().parse(
-      playlist.tracks!.reduce(
-        (acc: number, cur: PlaylistTrack) => acc + cur.length!,
-        0
-      )
+      playlist.tracks!.reduce((acc: number, cur: PlaylistTrack) => acc + cur.length!, 0)
     );
 
-    const pages = [];
+    const pages: EmbedBuilder[] = [];
     for (let i = 0; i < pagesNum; i++) {
       const str = playlistStrings.slice(i * 10, i * 10 + 10).join(`\n`);
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_detail_embed_title",
-            {
-              name: playlist.name,
-            }
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_detail_embed_title", {
+            name: playlist.name,
+          })}`,
           iconURL: handler.user?.displayAvatarURL(),
         })
         .setDescription(`${str == "" ? "  Không có gì" : "\n" + str}`)
@@ -196,11 +167,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.playlist",
-                  "pl_detail_notnumber"
-                )}`
+                `${client.i18n.get(handler.language, "commands.playlist", "pl_detail_notnumber")}`
               )
               .setColor(client.color_main),
           ],
@@ -228,10 +195,11 @@ export default class implements Command {
   }
 
   getTitle(client: Manager, tracks: PlaylistTrack): string {
-    const title =
-      tracks.title.length > 25
+    const title = tracks.title
+      ? tracks.title.length > 25
         ? tracks.title.substring(0, 22) + "..."
-        : tracks.title;
+        : tracks.title
+      : "Unknown Title";
     const author = tracks.author;
 
     if (client.config.features.HIDE_LINK) {

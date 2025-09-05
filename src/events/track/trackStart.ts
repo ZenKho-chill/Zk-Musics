@@ -25,7 +25,7 @@ import {
 } from "../../utilities/PlayerControlButton.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ControlButtonEnum } from "../../database/schema/ControlButton.js";
-import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import chalk from "chalk";
 import { cli } from "winston/lib/winston/config/index.js";
 export function scheduleScrobble(client: Manager, player: ZklinkPlayer) {

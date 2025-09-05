@@ -43,7 +43,7 @@ export default class implements Command {
         ],
       });
 
-    const player = client.zklink.players.get(handler.guild!.id);
+    const player = client.Zklink.players.get(handler.guild!.id);
 
     if (Number(value) < 0)
       return handler.editReply({

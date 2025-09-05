@@ -30,51 +30,39 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "join_no_in_voice",
-                {
-                  channel: String(channel),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "join_no_in_voice", {
+                channel: String(channel),
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
-    if (
-      handler.member!.voice.channel === handler.guild!.members.me!.voice.channel
-    ) {
+    if (handler.member!.voice.channel === handler.guild!.members.me!.voice.channel) {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "join_already",
-                {
-                  channel: String(handler.member!.voice.channel),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "join_already", {
+                channel: String(handler.member!.voice.channel),
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
     }
 
-    const player = client.zklink.players.get(handler.guild!.id);
+    const player = client.Zklink.players.get(handler.guild!.id);
 
     if (!player) {
       // Nếu player chưa tồn tại, tạo player mới và thiết lập kênh thoại
-      await client.zklink.create({
+      await client.Zklink.create({
         guildId: handler.guild!.id,
         voiceId: handler.member!.voice.channel!.id,
         textId: handler.channel!.id,
         shardId: handler.guild?.shardId ?? 0,
         deaf: true,
         mute: false,
-        region: handler.member!.voice.channel!.rtcRegion ?? null,
+        region: handler.member!.voice.channel!.rtcRegion ?? undefined,
         volume: client.config.bot.DEFAULT_VOLUME ?? 100,
       });
     } else {

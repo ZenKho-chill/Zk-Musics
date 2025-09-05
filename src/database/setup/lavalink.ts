@@ -1,7 +1,7 @@
 import { Manager } from "../../manager.js";
 import { AutoReconnect } from "../schema/AutoReconnect.js";
 import { VoiceChannel } from "discord.js";
-import { ZklinkLoopMode, ZklinkPlayer } from "../../zklink/main.js";
+import { ZklinkLoopMode, ZklinkPlayer } from "../../Zklink/main.js";
 
 export class AutoReconnectLavalinkService {
   client: Manager;
@@ -42,7 +42,7 @@ export class AutoReconnectLavalinkService {
     let retry_interval = setInterval(async () => {
       if (
         this.client.lavalinkUsing.length == 0 ||
-        this.client.zklink.nodes.size == 0
+        this.client.Zklink.nodes.size == 0
       )
         return this.client.logger.info(
           AutoReconnectLavalinkService.name,
@@ -101,12 +101,12 @@ export class AutoReconnectLavalinkService {
       return this.client.db.autoreconnect.delete(data.value.guild);
     }
 
-    const player = await this.client.zklink.create({
+    const player = await this.client.Zklink.create({
       guildId: data.value.guild,
       voiceId: data.value.voice,
       textId: data.value.text,
       shardId: guild ? guild.shardId : 0,
-      nodeName: (await this.client.zklink.nodes.getLeastUsed()).options.name,
+      nodeName: (await this.client.Zklink.nodes.getLeastUsed()).options.name,
       deaf: true,
       mute: false,
       region: voice.rtcRegion ?? null,

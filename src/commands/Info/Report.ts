@@ -1,8 +1,4 @@
-import {
-  EmbedBuilder,
-  Attachment,
-  ApplicationCommandOptionType,
-} from "discord.js";
+import { EmbedBuilder, Attachment, ApplicationCommandOptionType } from "discord.js";
 import moment from "moment";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
@@ -51,19 +47,13 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.info",
-                  "report_failure"
-                )}`
+                `${client.i18n.get(handler.language, "commands.info", "report_failure")}`
               ),
           ],
         });
       }
 
-      const channel = await client.channels
-        .fetch(BugReportChannelID)
-        .catch(() => undefined);
+      const channel = await client.channels.fetch(BugReportChannelID).catch(() => undefined);
       if (!channel || !channel.isTextBased()) {
         // Nếu kênh không tồn tại hoặc không phải kênh văn bản
         return handler.editReply({
@@ -71,11 +61,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.info",
-                  "report_failure"
-                )}`
+                `${client.i18n.get(handler.language, "commands.info", "report_failure")}`
               ),
           ],
         });
@@ -88,11 +74,7 @@ export default class implements Command {
         const errorEmbed = new EmbedBuilder()
           .setColor(client.color_main)
           .setDescription(
-            `${client.i18n.get(
-              handler.language,
-              "commands.info",
-              "report_provide_desc"
-            )}`
+            `${client.i18n.get(handler.language, "commands.info", "report_provide_desc")}`
           );
         await handler.editReply({
           embeds: [errorEmbed],
@@ -101,9 +83,7 @@ export default class implements Command {
       }
 
       const truncatedDescription =
-        description.length > 2048
-          ? description.slice(0, 2045) + "..."
-          : description;
+        description.length > 2048 ? description.slice(0, 2045) + "..." : description;
 
       const reportEmbed = new EmbedBuilder()
         .setAuthor({
@@ -133,17 +113,11 @@ export default class implements Command {
         reportEmbed.setImage(attachmentURL);
       }
 
-      await channel.send({ embeds: [reportEmbed] });
+      await (channel as any).send({ embeds: [reportEmbed] });
 
       const successEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.info",
-            "report_success"
-          )}`
-        );
+        .setDescription(`${client.i18n.get(handler.language, "commands.info", "report_success")}`);
 
       return handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
@@ -153,11 +127,7 @@ export default class implements Command {
           new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.info",
-                "report_failure"
-              )}`
+              `${client.i18n.get(handler.language, "commands.info", "report_failure")}`
             ),
         ],
       });

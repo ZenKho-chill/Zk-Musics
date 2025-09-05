@@ -12,7 +12,7 @@ import {
   ZklinkPlayer,
   ZklinkTrack,
   ZklinkSearchResultType,
-} from "../../zklink/main.js";
+} from "../../Zklink/main.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
@@ -68,7 +68,7 @@ export default class implements Command {
       }
     }
 
-    let player = client.zklink.players.get(handler.guild!.id) as ZklinkPlayer;
+    let player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
 
     const spotifyID = await client.db.SpotifyId.get(handler.user!.id);
     if (!spotifyID) {
@@ -105,12 +105,12 @@ export default class implements Command {
       });
 
     if (!player)
-      player = await client.zklink.create({
+      player = await client.Zklink.create({
         guildId: handler.guild!.id,
         voiceId: handler.member!.voice.channel!.id,
         textId: handler.channel!.id,
         shardId: handler.guild?.shardId ?? 0,
-        nodeName: (await client.zklink.nodes.getLeastUsed()).options.name,
+        nodeName: (await client.Zklink.nodes.getLeastUsed()).options.name,
         deaf: true,
         volume: client.config.bot.DEFAULT_VOLUME ?? 100,
       });

@@ -21,18 +21,9 @@ export class ReactionEventsHandler {
   }
 
   private init() {
-    this.client.on(
-      "messageReactionAdd",
-      this.handleMessageReactionAdd.bind(this)
-    );
-    this.client.on(
-      "messageReactionRemove",
-      this.handleMessageReactionRemove.bind(this)
-    );
-    this.client.on(
-      "messageReactionRemoveAll",
-      this.handleMessageReactionRemoveAll.bind(this)
-    ); // Sự kiện đúng
+    this.client.on("messageReactionAdd", this.handleMessageReactionAdd.bind(this));
+    this.client.on("messageReactionRemove", this.handleMessageReactionRemove.bind(this));
+    this.client.on("messageReactionRemoveAll", this.handleMessageReactionRemoveAll.bind(this)); // Sự kiện đúng
   }
 
   // Xử lý khi có phản ứng được thêm
@@ -43,8 +34,7 @@ export class ReactionEventsHandler {
     if (!reaction.message.guild || !user) return;
     const guildId = reaction.message.guild.id;
 
-    if (!(await isEventEnabled(guildId, "messageReactionAdd", this.client.db)))
-      return;
+    if (!(await isEventEnabled(guildId, "messageReactionAdd", this.client.db))) return;
 
     if (reaction.partial) {
       try {
@@ -71,8 +61,8 @@ export class ReactionEventsHandler {
       embeds: [
         new EmbedBuilder()
           .setAuthor({
-            name: user.username,
-            iconURL: user.avatarURL(),
+            name: user.username || "Unknown User",
+            iconURL: user.avatarURL() || undefined,
           })
           .setColor(0x00ff00)
           .setTitle("👍 Đã thêm phản ứng")
@@ -88,9 +78,8 @@ export class ReactionEventsHandler {
             }
           )
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không rõ",
-            iconURL: this.client.user.displayAvatarURL(),
+            text: this.client.user?.username || this.client.user?.tag || "Không rõ",
+            iconURL: this.client.user?.displayAvatarURL(),
           })
           .setTimestamp(new Date()),
       ],
@@ -105,10 +94,7 @@ export class ReactionEventsHandler {
     if (!reaction.message.guild || !user) return;
     const guildId = reaction.message.guild.id;
 
-    if (
-      !(await isEventEnabled(guildId, "messageReactionRemove", this.client.db))
-    )
-      return;
+    if (!(await isEventEnabled(guildId, "messageReactionRemove", this.client.db))) return;
 
     if (reaction.partial) {
       try {
@@ -135,7 +121,7 @@ export class ReactionEventsHandler {
       embeds: [
         new EmbedBuilder()
           .setAuthor({
-            name: user.username,
+            name: user.username || "Unknown User",
             iconURL: user.displayAvatarURL(),
           })
           .setColor(0xff0000)
@@ -152,9 +138,8 @@ export class ReactionEventsHandler {
             }
           )
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không rõ",
-            iconURL: this.client.user.displayAvatarURL(),
+            text: this.client.user?.username || this.client.user?.tag || "Không rõ",
+            iconURL: this.client.user?.displayAvatarURL(),
           })
           .setTimestamp(new Date()),
       ],
@@ -162,20 +147,11 @@ export class ReactionEventsHandler {
   }
 
   // Xử lý khi tất cả phản ứng trên 1 tin nhắn bị gỡ
-  private async handleMessageReactionRemoveAll(
-    message: Message<boolean> | PartialMessage
-  ) {
+  private async handleMessageReactionRemoveAll(message: Message<boolean> | PartialMessage) {
     if (!message.guild) return;
     const guildId = message.guild.id;
 
-    if (
-      !(await isEventEnabled(
-        guildId,
-        "messageReactionRemoveAll",
-        this.client.db
-      ))
-    )
-      return;
+    if (!(await isEventEnabled(guildId, "messageReactionRemoveAll", this.client.db))) return;
 
     const channel = await getModLogChannel(guildId, this.client);
     if (!channel) return;
@@ -184,8 +160,8 @@ export class ReactionEventsHandler {
       embeds: [
         new EmbedBuilder()
           .setAuthor({
-            name: message.author.username,
-            iconURL: message.author.displayAvatarURL(),
+            name: message.author?.username || "Unknown User",
+            iconURL: message.author?.displayAvatarURL(),
           })
           .setColor(0xffa500)
           .setTitle("🚫 Tất cả phản ứng đã bị gỡ")
@@ -198,9 +174,8 @@ export class ReactionEventsHandler {
             inline: true,
           })
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không rõ",
-            iconURL: this.client.user.displayAvatarURL(),
+            text: this.client.user?.username || this.client.user?.tag || "Không rõ",
+            iconURL: this.client.user?.displayAvatarURL(),
           })
           .setTimestamp(new Date()),
       ],

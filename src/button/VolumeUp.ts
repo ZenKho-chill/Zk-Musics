@@ -29,6 +29,10 @@ export default class implements PlayerButton {
     nplaying: Message<boolean>,
     collector: InteractionCollector<ButtonInteraction<"cached">>
   ): Promise<any> {
+    if (!client.user) {
+      throw new Error("Người dùng client không có sẵn");
+    }
+
     const response = await axios.get(
       `https://discord.com/api/v10/applications/${client.user.id}/entitlements`,
       {
@@ -39,24 +43,18 @@ export default class implements PlayerButton {
     );
     let PremiumStore = false;
     response.data.forEach((data) => {
-      if (data.guild_id === message.guild.id) {
+      if (message.guild && data.guild_id === message.guild.id) {
         PremiumStore = true;
       }
     });
     /////////////////////////////// Kiểm tra Vai trò Premium - bắt đầu ////////////////////////////////
     const PremiumGuildID = client.config.PremiumRole.GuildID;
     const PremiumRoleID = client.config.PremiumRole.RoleID;
-    const supportGuild = await client.guilds
-      .fetch(PremiumGuildID)
-      .catch(() => null);
+    const supportGuild = await client.guilds.fetch(PremiumGuildID).catch(() => null);
     const supportMember = supportGuild
-      ? await supportGuild.members
-          .fetch(String(message.user?.id))
-          .catch(() => null)
+      ? await supportGuild.members.fetch(String(message.user?.id)).catch(() => null)
       : null;
-    const isPremiumRole = supportMember
-      ? supportMember.roles.cache.has(PremiumRoleID)
-      : false;
+    const isPremiumRole = supportMember ? supportMember.roles.cache.has(PremiumRoleID) : false;
     /////////////////////////////// Kiểm tra Vai trò Premium - kết thúc ////////////////////////////////
     const User = await client.db.premium.get(message.user.id);
     const Guild = await client.db.preGuild.get(String(message.guild?.id));
@@ -72,12 +70,7 @@ export default class implements PlayerButton {
       UserPremium: isOwner || isAdmin || isPremiumUser,
       GuildPremium: isOwner || isAdmin || isPremiumGuild,
       Premium:
-        isOwner ||
-        isAdmin ||
-        isPremiumUser ||
-        isPremiumGuild ||
-        isPremiumRole ||
-        PremiumStore,
+        isOwner || isAdmin || isPremiumUser || isPremiumGuild || isPremiumRole || PremiumStore,
     };
     if (
       this.accessableby === "Voter" &&
@@ -94,11 +87,7 @@ export default class implements PlayerButton {
       if (voteChecker == TopggServiceEnum.ERROR) {
         const embed = new EmbedBuilder()
           .setAuthor({
-            name: client.i18n.get(
-              language,
-              "interaction",
-              "topgg_error_author"
-            ),
+            name: client.i18n.get(language, "interaction", "topgg_error_author"),
           })
           .setDescription(
             client.i18n.get(language, "interaction", "topgg_error_desc", {
@@ -117,11 +106,7 @@ export default class implements PlayerButton {
       if (voteChecker == TopggServiceEnum.UNVOTED) {
         const embed = new EmbedBuilder()
           .setAuthor({
-            name: client.i18n.get(
-              language,
-              "interaction",
-              "topgg_unvote_author"
-            ),
+            name: client.i18n.get(language, "interaction", "topgg_unvote_author"),
           })
           .setDescription(
             client.i18n.get(language, "interaction", "topgg_unvote_desc", {
@@ -137,23 +122,16 @@ export default class implements PlayerButton {
         if (client.config.MENU_HELP_EMOJI.E_VOTE) {
           VoteButton.addComponents(
             new ButtonBuilder()
-              .setLabel(
-                client.i18n.get(language, "interaction", "topgg_unvote_button")
-              )
+              .setLabel(client.i18n.get(language, "interaction", "topgg_unvote_button"))
               .setStyle(ButtonStyle.Link)
               .setEmoji(client.config.MENU_HELP_EMOJI.E_VOTE)
               .setURL(`https://top.gg/bot/${client.user?.id}/vote`)
           );
         }
-        if (
-          client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-          client.config.bot.PREMIUM_URL
-        ) {
+        if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
           VoteButton.addComponents(
             new ButtonBuilder()
-              .setLabel(
-                client.i18n.get(language, "interaction", "premium_button")
-              )
+              .setLabel(client.i18n.get(language, "interaction", "premium_button"))
               .setStyle(ButtonStyle.Link)
               .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
               .setURL(client.config.bot.PREMIUM_URL)
@@ -171,11 +149,7 @@ export default class implements PlayerButton {
     if (this.accessableby === "PremiumRole" && !userPerm.PremiumRole) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(
-            language,
-            "interaction",
-            "no_premium_role_author"
-          ),
+          name: client.i18n.get(language, "interaction", "no_premium_role_author"),
         })
         .setDescription(
           `${client.i18n.get(language, "interaction", "no_premium_role_desc", {
@@ -188,15 +162,10 @@ export default class implements PlayerButton {
         )
         .setColor(client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        client.config.bot.PREMIUM_URL
-      ) {
+      if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              client.i18n.get(language, "interaction", "no_premium_role_button")
-            )
+            .setLabel(client.i18n.get(language, "interaction", "no_premium_role_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -206,9 +175,7 @@ export default class implements PlayerButton {
       return message.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -229,15 +196,10 @@ export default class implements PlayerButton {
         )
         .setColor(client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        client.config.bot.PREMIUM_URL
-      ) {
+      if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              client.i18n.get(language, "interaction", "no_premium_button")
-            )
+            .setLabel(client.i18n.get(language, "interaction", "no_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -247,9 +209,7 @@ export default class implements PlayerButton {
       return message.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -257,37 +217,23 @@ export default class implements PlayerButton {
     if (this.accessableby === "UserPremium" && !userPerm.UserPremium) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(
-            language,
-            "interaction",
-            "no_user_premium_plan_author"
-          ),
+          name: client.i18n.get(language, "interaction", "no_user_premium_plan_author"),
         })
         .setDescription(
-          `${client.i18n.get(
-            language,
-            "interaction",
-            "no_user_premium_plan_desc",
-            {
-              user: message.user?.id
-                ? `<@${message.user.id}>`
-                : `${message.user?.tag || "Người dùng không rõ"}`,
-              serversupport: client.config.bot.SERVER_SUPPORT_URL,
-              premium: client.config.bot.PREMIUM_URL,
-            }
-          )}`
+          `${client.i18n.get(language, "interaction", "no_user_premium_plan_desc", {
+            user: message.user?.id
+              ? `<@${message.user.id}>`
+              : `${message.user?.tag || "Người dùng không rõ"}`,
+            serversupport: client.config.bot.SERVER_SUPPORT_URL,
+            premium: client.config.bot.PREMIUM_URL,
+          })}`
         )
         .setColor(client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        client.config.bot.PREMIUM_URL
-      ) {
+      if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              client.i18n.get(language, "interaction", "no_user_premium_button")
-            )
+            .setLabel(client.i18n.get(language, "interaction", "no_user_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -297,9 +243,7 @@ export default class implements PlayerButton {
       return message.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -307,41 +251,23 @@ export default class implements PlayerButton {
     if (this.accessableby === "GuildPremium" && !userPerm.GuildPremium) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(
-            language,
-            "interaction",
-            "no_guild_premium_plan_author"
-          ),
+          name: client.i18n.get(language, "interaction", "no_guild_premium_plan_author"),
         })
         .setDescription(
-          `${client.i18n.get(
-            language,
-            "interaction",
-            "no_guild_premium_plan_desc",
-            {
-              user: message.user?.id
-                ? `<@${message.user.id}>`
-                : `${message.user?.tag || "Người dùng không rõ"}`,
-              serversupport: client.config.bot.SERVER_SUPPORT_URL,
-              premium: client.config.bot.PREMIUM_URL,
-            }
-          )}`
+          `${client.i18n.get(language, "interaction", "no_guild_premium_plan_desc", {
+            user: message.user?.id
+              ? `<@${message.user.id}>`
+              : `${message.user?.tag || "Người dùng không rõ"}`,
+            serversupport: client.config.bot.SERVER_SUPPORT_URL,
+            premium: client.config.bot.PREMIUM_URL,
+          })}`
         )
         .setColor(client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        client.config.bot.PREMIUM_URL
-      ) {
+      if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              client.i18n.get(
-                language,
-                "interaction",
-                "no_guild_premium_button"
-              )
-            )
+            .setLabel(client.i18n.get(language, "interaction", "no_guild_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -351,9 +277,7 @@ export default class implements PlayerButton {
       return message.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -374,15 +298,10 @@ export default class implements PlayerButton {
         )
         .setColor(client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        client.config.bot.PREMIUM_URL
-      ) {
+      if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              client.i18n.get(language, "interaction", "no_premium_button")
-            )
+            .setLabel(client.i18n.get(language, "interaction", "no_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -392,9 +311,7 @@ export default class implements PlayerButton {
       return message.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -403,14 +320,9 @@ export default class implements PlayerButton {
       collector.stop();
     }
 
-    const reply_msg = `${client.i18n.get(
-      language,
-      "button.player.music",
-      "volup_msg",
-      {
-        volume: `${player.volume + 10}`,
-      }
-    )}`;
+    const reply_msg = `${client.i18n.get(language, "button.player.music", "volup_msg", {
+      volume: `${player.volume + 10}`,
+    })}`;
 
     if (player.volume >= 100) {
       new ReplyInteractionService(

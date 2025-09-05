@@ -1,8 +1,4 @@
-import {
-  ApplicationCommandOptionType,
-  EmbedBuilder,
-  WebhookClient,
-} from "discord.js";
+import { ApplicationCommandOptionType, EmbedBuilder, WebhookClient } from "discord.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
@@ -94,15 +90,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "premium_remove_404",
-                {
-                  id: id as string,
-                  type: `${(type as string).toUpperCase()}`,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "premium_remove_404", {
+                id: id as string,
+                type: `${(type as string).toUpperCase()}`,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -137,43 +128,24 @@ export default class implements Command {
             inline: false,
           },
           {
-            name: `${client.i18n.get(
-              handler.language,
-              "commands.admin",
-              "premium_remove_id"
-            )}`,
+            name: `${client.i18n.get(handler.language, "commands.admin", "premium_remove_id")}`,
             value: `\`${db.redeemedBy.id}\``,
             inline: false,
           },
           {
-            name: `${client.i18n.get(
-              handler.language,
-              "commands.admin",
-              "premium_remove_by"
-            )}`,
+            name: `${client.i18n.get(handler.language, "commands.admin", "premium_remove_by")}`,
             value: `\`${handler.user?.displayName}\``,
             inline: false,
           },
         ])
         .setFooter({
-          text: `${client.i18n.get(
-            handler.language,
-            "commands.admin",
-            "premium_remove_footer",
-            {
-              user: userDescription,
-            }
-          )}`,
+          text: `${client.i18n.get(handler.language, "commands.admin", "premium_remove_footer", {
+            user: userDescription,
+          })}`,
         })
         .setColor(client.color_main);
       handler.editReply({ embeds: [embed] });
-      await this.sendRemoveLog(
-        client,
-        handler,
-        type,
-        userDescription,
-        db.redeemedBy.id
-      );
+      await this.sendRemoveLog(client, handler, type, userDescription, db.redeemedBy.id);
     } else {
       let userDescription;
       if ("username" in db.redeemedBy) {
@@ -184,14 +156,9 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.admin",
-            "premium_remove_already",
-            {
-              user: userDescription,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.admin", "premium_remove_already", {
+            user: userDescription,
+          })}`
         )
         .setColor(client.color_main);
 
@@ -224,20 +191,12 @@ export default class implements Command {
           inline: false,
         },
         {
-          name: `${client.i18n.get(
-            language,
-            "commands.admin",
-            "premium_remove_id"
-          )}`,
+          name: `${client.i18n.get(language, "commands.admin", "premium_remove_id")}`,
           value: `\`${id}\``,
           inline: false,
         },
         {
-          name: `${client.i18n.get(
-            language,
-            "commands.admin",
-            "premium_remove_by"
-          )}`,
+          name: `${client.i18n.get(language, "commands.admin", "premium_remove_by")}`,
           value: `\`${handler.user?.displayName}\``,
           inline: false,
         },
@@ -249,10 +208,9 @@ export default class implements Command {
       const channel = await client.channels
         .fetch(client.config.logchannel.RemoveChannelID)
         .catch(() => undefined);
-      if (!channel || (channel && !channel.isTextBased())) return;
-      channel.messages.channel.send({ embeds: [embed] });
+      if (!channel || !channel.isTextBased()) return;
+      await (channel as any).send({ embeds: [embed] });
     } catch {}
-
     return;
   }
 }

@@ -7,12 +7,9 @@ import {
 import { ConvertTime } from "../../utilities/ConvertTime.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
-import {
-  AutocompleteInteractionChoices,
-  GlobalInteraction,
-} from "../../@types/Interaction.js";
+import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZklinkSearchResultType, ZklinkTrack } from "../../zklink/main.js";
+import { ZklinkSearchResultType, ZklinkTrack } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -45,35 +42,28 @@ export default class implements Command {
     /////////////////////////////// Kiểm tra vai trò Premium bắt đầu ////////////////////////////////
     const PremiumGuildID = client.config.PremiumRole.GuildID;
     const PremiumRoleID = client.config.PremiumRole.RoleID;
-    const supportGuild = await client.guilds
-      .fetch(PremiumGuildID)
-      .catch(() => null);
+    const supportGuild = await client.guilds.fetch(PremiumGuildID).catch(() => null);
     const supportMember = supportGuild
-      ? await supportGuild.members
-          .fetch(String(handler.user?.id))
-          .catch(() => null)
+      ? await supportGuild.members.fetch(String(handler.user?.id)).catch(() => null)
       : null;
-    const isPremiumRole = supportMember
-      ? supportMember.roles.cache.has(PremiumRoleID)
-      : false;
+    const isPremiumRole = supportMember ? supportMember.roles.cache.has(PremiumRoleID) : false;
     /////////////////////////////// Kiểm tra vai trò Premium kết thúc ////////////////////////////////
-    const User = await client.db.premium.get(handler.user.id);
+    const User = await client.db.premium.get(handler.user?.id ?? "");
     const Guild = await client.db.preGuild.get(String(handler.guild?.id));
     const isPremiumUser = User && User.isPremium;
     const isPremiumGuild = Guild && Guild.isPremium;
-    const isOwner = handler.user.id == client.owner;
-    const isAdmin = client.config.bot.ADMIN.includes(handler.user.id);
+    const isOwner = handler.user?.id == client.owner;
+    const isAdmin = client.config.bot.ADMIN.includes(handler.user?.id ?? "");
     const userPerm = {
       owner: isOwner,
       admin: isOwner || isAdmin,
       PremiumRole: isOwner || isAdmin || isPremiumRole,
       UserPremium: isOwner || isAdmin || isPremiumUser,
       GuildPremium: isOwner || isAdmin || isPremiumGuild,
-      Premium:
-        isOwner || isAdmin || isPremiumUser || isPremiumGuild || isPremiumRole,
+      Premium: isOwner || isAdmin || isPremiumUser || isPremiumGuild || isPremiumRole,
     };
 
-    let player = client.zklink.players.get(handler.guild!.id);
+    let player = client.Zklink.players.get(handler.guild!.id);
 
     const value = handler.args.join(" ");
 
@@ -82,15 +72,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_arg",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "play_arg", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -102,45 +87,33 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_no_in_voice",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "play_no_in_voice", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
 
-    const emotes = (str: string) =>
-      str.match(/<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu);
+    const emotes = (str: string) => str.match(/<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu);
 
     if (emotes(value) !== null)
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_emoji",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "play_emoji", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
 
     const isYouTubeLink = (value: string): boolean => {
-      const youtubeRegex =
-        /(?:https?:\/\/)?(?:www\.)?(?:youtube|youtu)\.(?:com|be)\/(?:[^ ]+)/i;
+      const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube|youtu)\.(?:com|be)\/(?:[^ ]+)/i;
       return youtubeRegex.test(value);
     };
     if (isYouTubeLink(value) && !client.config.features.YOUTUBE_LINK) {
@@ -148,16 +121,11 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "youtube_disabled",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                  serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "youtube_disabled", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+                serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -165,21 +133,18 @@ export default class implements Command {
     }
 
     if (!player)
-      player = await client.zklink.create({
+      player = await client.Zklink.create({
         guildId: handler.guild!.id,
         voiceId: handler.member!.voice.channel!.id,
         textId: handler.channel!.id,
         shardId: handler.guild?.shardId ?? 0,
-        nodeName: (await client.zklink.nodes.getLeastUsed()).options.name,
+        nodeName: (await client.Zklink.nodes.getLeastUsed()).options.name,
         deaf: true,
         mute: false,
-        region: handler.member!.voice.channel!.rtcRegion ?? null,
+        region: handler.member!.voice.channel!.rtcRegion ?? undefined,
         volume: client.config.bot.DEFAULT_VOLUME ?? 100,
       });
-    else if (
-      player &&
-      !this.checkSameVoice(client, handler, handler.language)
-    ) {
+    else if (player && !this.checkSameVoice(client, handler, handler.language)) {
       return;
     }
 
@@ -201,40 +166,27 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_match",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "play_match", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
 
     // Kiểm tra độ dài hàng đợi và quyền của người dùng
-    if (
-      player.queue.length >= client.config.features.MAX_QUEUE &&
-      !userPerm.Premium
-    )
+    if (player.queue.length >= client.config.features.MAX_QUEUE && !userPerm.Premium)
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_queue_max",
-                {
-                  limitqueue: String(client.config.features.MAX_QUEUE),
-                  premium: client.config.bot.PREMIUM_URL,
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "play_queue_max", {
+                limitqueue: String(client.config.features.MAX_QUEUE),
+                premium: client.config.bot.PREMIUM_URL,
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -249,26 +201,19 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_playlist_max",
-                {
-                  limitqueue: String(client.config.features.MAX_QUEUE),
-                  premium: client.config.bot.PREMIUM_URL,
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "play_playlist_max", {
+                limitqueue: String(client.config.features.MAX_QUEUE),
+                premium: client.config.bot.PREMIUM_URL,
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
 
-    if (result.type === "PLAYLIST")
-      for (let track of tracks) player.queue.add(track);
-    else if (player.playing && result.type === "SEARCH")
-      player.queue.add(tracks[0]);
+    if (result.type === "PLAYLIST") for (let track of tracks) player.queue.add(track);
+    else if (player.playing && result.type === "SEARCH") player.queue.add(tracks[0]);
     else if (player.playing && result.type !== "SEARCH")
       for (let track of tracks) player.queue.add(track);
     else player.queue.add(tracks[0]);
@@ -277,7 +222,7 @@ export default class implements Command {
 
     const embed = new EmbedBuilder().setColor(client.color_second);
     if (tracks[0]?.uri && tracks[0].uri.includes("soundcloud")) {
-      embed.setThumbnail(client.user?.displayAvatarURL({ extension: "png" }));
+      embed.setThumbnail(client.user?.displayAvatarURL({ extension: "png" }) ?? null);
     } else if (tracks[0]?.artworkUrl) {
       embed.setThumbnail(tracks[0].artworkUrl);
     }
@@ -299,21 +244,16 @@ export default class implements Command {
       if (!player.playing) player.play();
     } else if (result.type === "PLAYLIST") {
       embed.setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "commands.music",
-          "play_playlist",
-          {
-            title: this.getTitle(client, result.type, tracks, value),
-            duration: new ConvertTime().parse(TotalDuration),
-            songs: String(tracks.length),
-            request: String(tracks[0].requester),
-            serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
-            author: tracks[0]?.author || handler.guild!.name,
-            url: String(tracks[0].uri || client.config.bot.SERVER_SUPPORT_URL),
-            user: handler.user!.displayName || handler.user!.tag,
-          }
-        )}`
+        `${client.i18n.get(handler.language, "commands.music", "play_playlist", {
+          title: this.getTitle(client, result.type, tracks, value),
+          duration: new ConvertTime().parse(TotalDuration),
+          songs: String(tracks.length),
+          request: String(tracks[0].requester),
+          serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
+          author: tracks[0]?.author || handler.guild!.name,
+          url: String(tracks[0].uri || client.config.bot.SERVER_SUPPORT_URL),
+          user: handler.user!.displayName || handler.user!.tag,
+        })}`
       );
 
       handler.editReply({ content: " ", embeds: [embed] });
@@ -337,18 +277,12 @@ export default class implements Command {
   }
 
   checkSameVoice(client: Manager, handler: CommandHandler, language: string) {
-    if (
-      handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel
-    ) {
+    if (handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel) {
       handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_no_same_voice"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "play_no_same_voice")}`
             )
             .setColor(client.color_main),
         ],
@@ -392,21 +326,13 @@ export default class implements Command {
   }
 
   // Hàm autocomplete
-  async autocomplete(
-    client: Manager,
-    interaction: GlobalInteraction,
-    language: string
-  ) {
+  async autocomplete(client: Manager, interaction: GlobalInteraction, language: string) {
     let choice: AutocompleteInteractionChoices[] = [];
-    const url = String(
-      (interaction as CommandInteraction).options.get("search")!.value
-    );
+    const url = String((interaction as any).options.get("search")!.value);
 
     const Random =
       client.config.features.AUTOCOMPLETE_SEARCH[
-        Math.floor(
-          Math.random() * client.config.features.AUTOCOMPLETE_SEARCH.length
-        )
+        Math.floor(Math.random() * client.config.features.AUTOCOMPLETE_SEARCH.length)
       ];
 
     const match = client.REGEX.some((match) => {
@@ -415,9 +341,7 @@ export default class implements Command {
 
     if (match == true) {
       choice.push({ name: url, value: url });
-      await (interaction as AutocompleteInteraction)
-        .respond(choice)
-        .catch(() => {});
+      await (interaction as AutocompleteInteraction).respond(choice).catch(() => {});
       return;
     }
 
@@ -430,7 +354,7 @@ export default class implements Command {
     }
     const engines = client.config.features.PLAY_COMMAND_ENGINE;
     const randomEngine = engines[Math.floor(Math.random() * engines.length)];
-    const searchRes = await client.zklink.search(url || Random, {
+    const searchRes = await client.Zklink.search(url || Random, {
       engine: randomEngine,
     });
 
@@ -446,8 +370,6 @@ export default class implements Command {
       });
     }
 
-    await (interaction as AutocompleteInteraction)
-      .respond(choice)
-      .catch(() => {});
+    await (interaction as AutocompleteInteraction).respond(choice).catch(() => {});
   }
 }

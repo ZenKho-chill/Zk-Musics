@@ -17,14 +17,7 @@ export class InviteEventsHandler {
 
   // Xử lý tạo invite
   private async handleInviteCreate(invite: Invite) {
-    if (
-      !(await isEventEnabled(
-        invite.guild?.id || "",
-        "inviteCreate",
-        this.client.db
-      ))
-    )
-      return;
+    if (!(await isEventEnabled(invite.guild?.id || "", "inviteCreate", this.client.db))) return;
 
     const channel = await getModLogChannel(invite.guild!.id, this.client);
     if (!channel) return;
@@ -35,12 +28,15 @@ export class InviteEventsHandler {
       ? `<t:${Math.floor(invite.expiresAt.getTime() / 1000)}:R>`
       : "Không bao giờ";
 
+    const inviterName = invite.inviter ? invite.inviter.username : "Không rõ";
+    const inviterIcon = invite.inviter ? invite.inviter.displayAvatarURL() : undefined;
+
     await channel.send({
       embeds: [
         new EmbedBuilder()
           .setAuthor({
-            name: invite.inviter.username,
-            iconURL: invite.inviter.displayAvatarURL() || null,
+            name: inviterName,
+            iconURL: inviterIcon,
           })
           .setColor(0x32cd32)
           .setTitle("Đã tạo invite")
@@ -56,8 +52,7 @@ export class InviteEventsHandler {
             { name: "Hết hạn", value: expiration, inline: true }
           )
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không xác định",
+            text: this.client.user?.username || this.client.user?.tag || "Không xác định",
             iconURL:
               this.client.user?.displayAvatarURL() ||
               "https://raw.githubusercontent.com/ZenKho-chill/zkcard/main/build/structures/images/avatar.png",
@@ -69,19 +64,12 @@ export class InviteEventsHandler {
 
   // Xử lý xóa invite
   private async handleInviteDelete(invite: Invite) {
-    if (
-      !(await isEventEnabled(
-        invite.guild?.id || "",
-        "inviteDelete",
-        this.client.db
-      ))
-    )
-      return;
+    if (!(await isEventEnabled(invite.guild?.id || "", "inviteDelete", this.client.db))) return;
 
     const channel = await getModLogChannel(invite.guild!.id, this.client);
     if (!channel) return;
 
-    let executor = null;
+    let executor: any = null;
     try {
       const auditLogs = await channel.guild.fetchAuditLogs({
         type: AuditLogEvent.InviteDelete,
@@ -92,28 +80,29 @@ export class InviteEventsHandler {
         executor = logEntry.executor;
       }
     } catch (error) {
-      this.client.logger.error(
-        "handleInviteDelete",
-        "Không thể lấy audit logs"
-      );
+      this.client.logger.error("handleInviteDelete", "Không thể lấy audit logs");
     }
+
+    const executorName = executor ? executor.username : "Người dùng không rõ";
+    const executorIcon = executor ? executor.displayAvatarURL() : undefined;
+    const executorMention = executor ? `<@${executor.id}>` : "Không rõ";
+
     await channel.send({
       embeds: [
         new EmbedBuilder()
           .setAuthor({
-            name: executor ? executor.username : "Người dùng không rõ",
-            iconURL: executor?.displayAvatarURL() || undefined,
+            name: executorName,
+            iconURL: executorIcon,
           })
           .setColor(0xff4500)
           .setTitle("Invite đã bị xóa")
           .addFields(
             { name: "Mã", value: invite.code, inline: true },
             { name: "Kênh", value: `<#${invite.channel!.id}>`, inline: true },
-            { name: "Xóa bởi", value: `<@${executor?.id}>`, inline: true }
+            { name: "Xóa bởi", value: executorMention, inline: true }
           )
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không xác định",
+            text: this.client.user?.username || this.client.user?.tag || "Không xác định",
             iconURL:
               this.client.user?.displayAvatarURL() ||
               "https://raw.githubusercontent.com/ZenKho-chill/zkcard/main/build/structures/images/avatar.png",

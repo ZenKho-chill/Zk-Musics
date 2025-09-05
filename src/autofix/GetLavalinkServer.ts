@@ -1,8 +1,10 @@
 import MarkdownIt from "markdown-it";
+import { LavalinkDataType } from "../@types/Lavalink.js";
+
 var md = new MarkdownIt();
-import Token from "markdown-it/lib/token.js";
+
 export class GetLavalinkServer {
-  async execute() {
+  async execute(): Promise<LavalinkDataType[]> {
     const res = await fetch(
       "https://raw.githubusercontent.com/DarrenOfficial/lavalink-list/master/docs/NoSSL/Lavalink-NonSSL.md"
     );
@@ -15,7 +17,7 @@ export class GetLavalinkServer {
 
     var result = md.parse(data, "");
 
-    result.filter(async (data: Token) => {
+    result.filter(async (data: any) => {
       if (data.tag == "code") {
         MdCodeTagFilter.push(data.content);
       }
@@ -56,11 +58,10 @@ export class GetLavalinkServer {
     return LavalinkCredentailsFilter;
   }
 
-  async commitData(LavalinkCredentailsFilter: string[]) {
-    const FinalData = [];
+  async commitData(LavalinkCredentailsFilter: string[]): Promise<LavalinkDataType[]> {
+    const FinalData: LavalinkDataType[] = [];
     for (let i = 0; i < LavalinkCredentailsFilter.length; i++) {
-      const regexExtract =
-        /:(.{0,99999}):([0-9]{0,99999}):(.{0,99999}):(false|true)/;
+      const regexExtract = /:(.{0,99999}):([0-9]{0,99999}):(.{0,99999}):(false|true)/;
       const element = LavalinkCredentailsFilter[i];
       const res = regexExtract.exec(element);
       res

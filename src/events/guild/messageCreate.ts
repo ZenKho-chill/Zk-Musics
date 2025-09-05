@@ -219,7 +219,7 @@ export default class {
     }
 
     if (command.playerCheck) {
-      const player = client.zklink.players.get(message.guild!.id);
+      const player = client.Zklink.players.get(message.guild!.id);
       const twentyFourBuilder = new Mode247Builder(client);
       const is247 = await twentyFourBuilder.get(message.guild!.id);
       if (

@@ -14,7 +14,7 @@ export class SongRequesterCleanSetup {
 
     for (let data of guilds) {
       const extractData = data.value;
-      const player = this.client.zklink.players.get(extractData.guild);
+      const player = this.client.Zklink.players.get(extractData.guild);
       if (!extractData.enable) return;
       if (player) return;
       await this.restore(extractData);

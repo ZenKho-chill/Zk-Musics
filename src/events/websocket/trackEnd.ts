@@ -1,10 +1,10 @@
 import { User } from "discord.js";
 import { Manager } from "../../manager.js";
-import { ZklinkPlayer } from "../../zklink/main.js";
+import { ZklinkPlayer } from "../../Zklink/main.js";
 
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
-    const song = player.queue.previous.at(-1);
+    const song = player.queue.previous[player.queue.previous.length - 1];
     const requesterQueue = song!.requester as User;
 
     const currentData = song

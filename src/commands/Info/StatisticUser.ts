@@ -45,7 +45,7 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
-    const interaction = handler.interaction as CommandInteraction;
+    const interaction = handler.interaction as any;
 
     // Phân tích các tuỳ chọn
     const user1 = interaction.options.get("user1")?.user || interaction.user;
@@ -54,32 +54,17 @@ export default class implements Command {
     await handler.deferReply();
 
     const guildId = handler.guild?.id;
+    if (!guildId) return;
 
     // Lấy thống kê cho người dùng thứ nhất
-    const user1Stats = await fetchUserStats(
-      client,
-      guildId,
-      user1.id,
-      interaction.guild
-    );
+    const user1Stats = await fetchUserStats(client, guildId, user1.id, interaction.guild);
 
     if (user2) {
       // Lấy thống kê cho người dùng thứ hai nếu có
-      const user2Stats = await fetchUserStats(
-        client,
-        guildId,
-        user2.id,
-        interaction.guild
-      );
+      const user2Stats = await fetchUserStats(client, guildId, user2.id, interaction.guild);
 
       // So sánh thống kê
-      const comparisonEmbed = buildComparisonEmbed(
-        user1,
-        user1Stats,
-        user2,
-        user2Stats,
-        client
-      );
+      const comparisonEmbed = buildComparisonEmbed(user1, user1Stats, user2, user2Stats, client);
       await handler.editReply({ embeds: [comparisonEmbed] });
     } else {
       // Hiển thị thống kê cho một người dùng
@@ -90,12 +75,7 @@ export default class implements Command {
 }
 
 // Hàm lấy thống kê người dùng từ cơ sở dữ liệu
-async function fetchUserStats(
-  client: Manager,
-  guildId: string,
-  userId: string,
-  guild: Guild
-) {
+async function fetchUserStats(client: Manager, guildId: string, userId: string, guild: Guild) {
   let stats = await client.db.UserStatistics.get(`${userId}`);
 
   if (!stats) {
@@ -201,7 +181,7 @@ function buildComparisonEmbed(
 
   return new EmbedBuilder()
     .setColor(client.color_main)
-    .setThumbnail(client.user?.displayAvatarURL({ size: 512 }))
+    .setThumbnail(client.user?.displayAvatarURL({ size: 512 }) ?? null)
     .addFields(
       {
         name: `Thống kê`,
@@ -306,31 +286,23 @@ function formatTime(minutes: number): string {
   return `${hours}h ${remainingMinutes}m`;
 }
 
-async function fetchFirstMessageDate(
-  guild: Guild,
-  userId: Snowflake
-): Promise<string> {
-  const channels = guild.channels.cache.filter(
-    (channel): channel is GuildTextBasedChannel => channel.isTextBased()
+async function fetchFirstMessageDate(guild: Guild, userId: Snowflake): Promise<string> {
+  const channels = guild.channels.cache.filter((channel): channel is GuildTextBasedChannel =>
+    channel.isTextBased()
   );
   let earliestMessageDate: number | null = null;
 
   for (const channel of channels.values()) {
     try {
       const messages = await channel.messages.fetch({ limit: 100 });
-      const userMessages = messages.filter(
-        (msg: Message) => msg.author.id === userId
-      );
+      const userMessages = messages.filter((msg: Message) => msg.author.id === userId);
 
       const firstMessage = userMessages
         .sort((a, b) => a.createdTimestamp - b.createdTimestamp)
         .first();
 
       if (firstMessage) {
-        if (
-          !earliestMessageDate ||
-          firstMessage.createdTimestamp < earliestMessageDate
-        ) {
+        if (!earliestMessageDate || firstMessage.createdTimestamp < earliestMessageDate) {
           earliestMessageDate = firstMessage.createdTimestamp;
         }
       }
@@ -340,7 +312,5 @@ async function fetchFirstMessageDate(
     }
   }
 
-  return earliestMessageDate
-    ? new Date(earliestMessageDate).toLocaleDateString()
-    : "Không có";
+  return earliestMessageDate ? new Date(earliestMessageDate).toLocaleDateString() : "Không có";
 }

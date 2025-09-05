@@ -72,7 +72,7 @@ export default class implements Command {
         ],
       });
 
-    const player = client.zklink.players.get(handler.guild!.id);
+    const player = client.Zklink.players.get(handler.guild!.id);
 
     await player?.filter.setTimescale({ speed: Number(value) });
     player?.data.set("filter-mode", this.name[0]);

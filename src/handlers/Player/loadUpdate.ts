@@ -7,7 +7,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
-import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { TrackTitle } from "../../utilities/TrackTitle.js";
 import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
 import { zkcard } from "zkcard";

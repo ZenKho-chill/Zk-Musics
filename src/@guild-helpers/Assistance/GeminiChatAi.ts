@@ -32,7 +32,7 @@ export class GeminiChatAi {
 
   constructor(client: Manager) {
     this.client = client;
-    this.execure();
+    this.execute();
   }
 
   async execute() {
@@ -116,7 +116,7 @@ export class GeminiChatAi {
         }
         await message.reply(reply);
       } catch (error) {
-        this.client.logger.console.warn("Gemini Chat", error as string);
+        this.client.logger.warn("Gemini Chat", error as string);
         const errorMessages = [
           "ơ t hong biết nói gì luôn ¯\\_(ツ)_/¯",
           "ơ chết, đầu t cháy luôn r 🫠",

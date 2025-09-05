@@ -8,6 +8,7 @@ import {
   TextChannel,
   NewsChannel,
   MessageFlags,
+  ChatInputCommandInteraction,
 } from "discord.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
@@ -36,18 +37,14 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
     try {
-      const amount = await (
-        handler.interaction.options as CommandInteractionOptionResolver
-      ).getInteger("amount");
+      const options = (handler.interaction as ChatInputCommandInteraction)
+        .options as CommandInteractionOptionResolver;
+      const amount = await options.getInteger("amount");
 
       if (amount === null || isNaN(amount) || amount <= 0) {
         return handler.interaction.reply({
           flags: MessageFlags.Ephemeral,
-          content: client.i18n.get(
-            handler.language,
-            "commands.utils",
-            "purge_invalid_amount"
-          ),
+          content: client.i18n.get(handler.language, "commands.utils", "purge_invalid_amount"),
         });
       }
 
@@ -56,20 +53,14 @@ export default class implements Command {
       if (channel instanceof TextChannel || channel instanceof NewsChannel) {
         const messages = await channel.messages.fetch({ limit: msgAmount + 1 }); // Lấy các tin nhắn cần xóa
         const filteredMessages = messages.filter(
-          (message) =>
-            Date.now() - message.createdTimestamp < 14 * 24 * 60 * 60 * 1000
+          (message) => Date.now() - message.createdTimestamp < 14 * 24 * 60 * 60 * 1000
         ); // Lọc các tin nhắn cũ hơn 14 ngày
         await channel.bulkDelete(filteredMessages); // Xóa các tin nhắn
         await handler.interaction.reply({
           flags: MessageFlags.Ephemeral,
-          content: client.i18n.get(
-            handler.language,
-            "commands.utils",
-            "purge_success",
-            {
-              amount: String(filteredMessages.size),
-            }
-          ),
+          content: client.i18n.get(handler.language, "commands.utils", "purge_success", {
+            amount: String(filteredMessages.size),
+          }),
         });
       }
     } catch (error) {
@@ -77,20 +68,12 @@ export default class implements Command {
       if (error === 50034) {
         return handler.interaction.reply({
           flags: MessageFlags.Ephemeral,
-          content: client.i18n.get(
-            handler.language,
-            "commands.utils",
-            "purge_older_than_14_days"
-          ),
+          content: client.i18n.get(handler.language, "commands.utils", "purge_older_than_14_days"),
         });
       } else {
         return handler.interaction.reply({
           flags: MessageFlags.Ephemeral,
-          content: client.i18n.get(
-            handler.language,
-            "commands.utils",
-            "purge_error"
-          ),
+          content: client.i18n.get(handler.language, "commands.utils", "purge_error"),
         });
       }
     }

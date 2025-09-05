@@ -55,8 +55,8 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
 
-    const options = handler.interaction
-      .options as CommandInteractionOptionResolver;
+    const interaction = handler.interaction as any;
+    const options = interaction.options as CommandInteractionOptionResolver;
     const target = options.getString("target") as "user" | "guild";
     const type = options.getString("type") as "add" | "delete";
     const id = options.getString("id")!;
@@ -67,8 +67,7 @@ export default class implements Command {
         : await client.db.BlacklistGuild.get(id);
 
     const entityType = target === "user" ? "user" : "guild";
-    const dbAction =
-      target === "user" ? client.db.BlacklistUser : client.db.BlacklistGuild;
+    const dbAction = target === "user" ? client.db.BlacklistUser : client.db.BlacklistGuild;
 
     if (type === "add") {
       if (isBlacklisted) {

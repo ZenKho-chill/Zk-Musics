@@ -1,4 +1,8 @@
-import { ZklinkEvents, ZklinkLoopMode, ZklinkPlayerState } from "../Interface/Constants.js";
+import {
+  ZklinkEvents,
+  ZklinkLoopMode,
+  ZklinkPlayerState,
+} from "../Interface/Constants.js";
 import { LavalinkEventsEnum } from "../Interface/LavalinkEvents.js";
 import { Zklink } from "../Zklink.js";
 
@@ -19,7 +23,8 @@ export class ZklinkPlayerEvents {
   }
 
   public initial(data: Record<string, any>, manager: Zklink) {
-    if (data.op == LavalinkEventsEnum.PlayerUpdate) return this.PlayerUpdate(manager, data);
+    if (data.op == LavalinkEventsEnum.PlayerUpdate)
+      return this.PlayerUpdate(manager, data);
     const _function = this.methods[data.type];
     if (_function !== undefined) _function(manager, data);
   }
@@ -34,7 +39,8 @@ export class ZklinkPlayerEvents {
       // @ts-ignore
       manager.emit(
         ZklinkEvents.Debug,
-        `[Zklink] / [Player @ ${data.guildId}] / [Events] / [Start] | ` + JSON.stringify(data)
+        `[Zklink] / [Người phát @ ${data.guildId}] / [Sự kiện] / [Bắt đầu] | ` +
+          JSON.stringify(data)
       );
     }
     return;
@@ -43,18 +49,18 @@ export class ZklinkPlayerEvents {
   protected TrackEndEvent(manager: Zklink, data: Record<string, any>) {
     const player = manager.players.get(data.guildId);
     if (player) {
-      // This event emits STOPPED reason when destroying, so return to prevent double emit
+      // Sự kiện này phát reason 'STOPPED' khi bị huỷ, nên return để tránh phát trùng
       if (player.state === ZklinkPlayerState.DESTROYED)
         // @ts-ignore
         return manager.emit(
           ZklinkEvents.Debug,
-          `[Zklink] / [Player @ ${data.guildId}] / [Events] / [End] | Player ${player.guildId} destroyed from end event`
+          `[Zklink] / [Người phát @ ${data.guildId}] / [Sự kiện] / [Kết thúc] | Player ${player.guildId} đã bị huỷ do sự kiện kết thúc`
         );
       // @ts-ignore
       manager.emit(
         ZklinkEvents.Debug,
-        `[Zklink] / [Player @ ${data.guildId}] / [Events] / [End] | ` +
-          `Tracks: ${player.queue.length} ` +
+        `[Zklink] / [Người phát @ ${data.guildId}] / [Sự kiện] / [Kết thúc] | ` +
+          `Bài: ${player.queue.length} ` +
           JSON.stringify(data)
       );
 
@@ -63,10 +69,15 @@ export class ZklinkPlayerEvents {
 
       if (data.reason === "replaced") {
         // @ts-ignore
-        return manager.emit(ZklinkEvents.TrackEnd, player, player.queue.current);
+        return manager.emit(
+          ZklinkEvents.TrackEnd,
+          player,
+          player.queue.current
+        );
       }
       if (["loadFailed", "cleanup"].includes(data.reason)) {
-        if (player.queue.current) player.queue.previous.push(player.queue.current);
+        if (player.queue.current)
+          player.queue.previous.push(player.queue.current);
         if (!player.queue.length && !player.sudoDestroy)
           // @ts-ignore
           return manager.emit(ZklinkEvents.QueueEmpty, player);
@@ -81,7 +92,8 @@ export class ZklinkPlayerEvents {
       if (player.loop == ZklinkLoopMode.QUEUE && player.queue.current)
         player.queue.push(player.queue.current);
 
-      if (player.queue.current) player.queue.previous.push(player.queue.current);
+      if (player.queue.current)
+        player.queue.previous.push(player.queue.current);
       const currentSong = player.queue.current;
       player.queue.current = null;
 
@@ -106,7 +118,8 @@ export class ZklinkPlayerEvents {
       // @ts-ignore
       manager.emit(
         ZklinkEvents.Debug,
-        `[Zklink] / [Player @ ${data.guildId}] / [Events] / [Exception] | ` + JSON.stringify(data)
+        `[Zklink] / [Người phát @ ${data.guildId}] / [Sự kiện] / [Ngoại lệ] | ` +
+          JSON.stringify(data)
       );
     }
     return;
@@ -120,7 +133,8 @@ export class ZklinkPlayerEvents {
       // @ts-ignore
       manager.emit(
         ZklinkEvents.Debug,
-        `[Zklink] / [Player @ ${data.guildId}] / [Events] / [Stuck] | ` + JSON.stringify(data)
+        `[Zklink] / [Người phát @ ${data.guildId}] / [Sự kiện] / [Bị kẹt] | ` +
+          JSON.stringify(data)
       );
     }
     return;
@@ -134,7 +148,7 @@ export class ZklinkPlayerEvents {
       // @ts-ignore
       manager.emit(
         ZklinkEvents.Debug,
-        `[Zklink] / [Player @ ${data.guildId}] / [Events] / [WebsocketClosed] | ` +
+        `[Zklink] / [Người phát @ ${data.guildId}] / [Sự kiện] / [Websocket đóng] | ` +
           JSON.stringify(data)
       );
     }
@@ -148,7 +162,8 @@ export class ZklinkPlayerEvents {
       // @ts-ignore
       manager.emit(
         ZklinkEvents.Debug,
-        `[Zklink] / [Player @ ${data.guildId}] / [Events] / [Updated] | ` + JSON.stringify(data)
+        `[Zklink] / [Người phát @ ${data.guildId}] / [Sự kiện] / [Cập nhật] | ` +
+          JSON.stringify(data)
       );
       // @ts-ignore
       manager.emit(ZklinkEvents.PlayerUpdate, player, data);

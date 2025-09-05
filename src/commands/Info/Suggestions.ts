@@ -1,8 +1,4 @@
-import {
-  EmbedBuilder,
-  Attachment,
-  ApplicationCommandOptionType,
-} from "discord.js";
+import { EmbedBuilder, Attachment, ApplicationCommandOptionType } from "discord.js";
 import moment from "moment";
 import { Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
@@ -52,19 +48,13 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.info",
-                  "suggestions_failure"
-                )}`
+                `${client.i18n.get(handler.language, "commands.info", "suggestions_failure")}`
               ),
           ],
         });
       }
 
-      const channel = await client.channels
-        .fetch(SuggestionChannelID)
-        .catch(() => undefined);
+      const channel = await client.channels.fetch(SuggestionChannelID).catch(() => undefined);
       if (!channel || !channel.isTextBased()) {
         // Nếu kênh không tồn tại hoặc không phải kênh văn bản
         return handler.editReply({
@@ -72,11 +62,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.info",
-                  "suggestions_failure"
-                )}`
+                `${client.i18n.get(handler.language, "commands.info", "suggestions_failure")}`
               ),
           ],
         });
@@ -91,20 +77,14 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.info",
-                  "suggestions_provide_desc"
-                )}`
+                `${client.i18n.get(handler.language, "commands.info", "suggestions_provide_desc")}`
               ),
           ],
         });
       }
 
       const truncatedDescription =
-        description.length > 2048
-          ? `${description.slice(0, 2045)}...`
-          : description;
+        description.length > 2048 ? `${description.slice(0, 2045)}...` : description;
 
       const suggestionEmbed = new EmbedBuilder()
         .setAuthor({
@@ -116,9 +96,7 @@ export default class implements Command {
           {
             name: `Gợi ý bởi`,
             value:
-              `<@${handler.user?.id}>` ||
-              handler.user?.displayName ||
-              "Người dùng không xác định",
+              `<@${handler.user?.id}>` || handler.user?.displayName || "Người dùng không xác định",
             inline: true,
           },
           {
@@ -133,16 +111,12 @@ export default class implements Command {
         suggestionEmbed.setImage(images.url);
       }
 
-      await channel.send({ embeds: [suggestionEmbed] });
+      await (channel as any).send({ embeds: [suggestionEmbed] });
 
       const successEmbed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.info",
-            "suggestions_success"
-          )}`
+          `${client.i18n.get(handler.language, "commands.info", "suggestions_success")}`
         );
 
       return handler.editReply({ embeds: [successEmbed] });
@@ -153,11 +127,7 @@ export default class implements Command {
           new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.info",
-                "suggestions_failure"
-              )}`
+              `${client.i18n.get(handler.language, "commands.info", "suggestions_failure")}`
             ),
         ],
       });

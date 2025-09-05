@@ -1,11 +1,8 @@
-import {
-  EmbedBuilder,
-  ApplicationCommandOptionType,
-  Message,
-} from "discord.js";
+import { EmbedBuilder, ApplicationCommandOptionType, Message } from "discord.js";
 import { ConvertTime } from "../../utilities/ConvertTime.js";
 import { Manager } from "../../manager.js";
 import { Playlist } from "../../database/schema/Playlist.js";
+import { ZklinkTrack } from "../../Zklink/main.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
@@ -40,18 +37,14 @@ export default class implements Command {
 
     const value = handler.args[0] ? handler.args[0] : null;
 
-    let player = client.zklink.players.get(handler.guild!.id);
+    let player = client.Zklink.players.get(handler.guild!.id);
 
     if (value == null)
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_import_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_import_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -66,11 +59,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_import_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_import_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -81,11 +70,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_import_private"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_import_private")}`
             )
             .setColor(client.color_main),
         ],
@@ -99,16 +84,12 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_import_voice"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_import_voice")}`
             )
             .setColor(client.color_main),
         ],
       });
-    const SongAdd = [];
+    const SongAdd: ZklinkTrack[] = [];
     let SongLoad = 0;
 
     const totalDuration = new ConvertTime().parse(
@@ -120,26 +101,22 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_import_empty"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_import_empty")}`
             )
             .setColor(client.color_main),
         ],
       });
 
     if (!player)
-      player = await client.zklink.create({
+      player = await client.Zklink.create({
         guildId: handler.guild!.id,
         voiceId: handler.member!.voice.channel!.id,
         textId: handler.channel!.id,
         shardId: handler.guild?.shardId ?? 0,
-        nodeName: (await client.zklink.nodes.getLeastUsed()).options.name,
+        nodeName: (await client.Zklink.nodes.getLeastUsed()).options.name,
         deaf: true,
         mute: false,
-        region: handler.member!.voice.channel!.rtcRegion ?? null,
+        region: handler.member!.voice.channel!.rtcRegion ?? undefined,
         volume: client.config.bot.DEFAULT_VOLUME ?? 100,
       });
 
@@ -166,17 +143,12 @@ export default class implements Command {
         const embed = new EmbedBuilder()
           .setThumbnail(client.user!.displayAvatarURL({ size: 512 }))
           .setDescription(
-            `${client.i18n.get(
-              handler.language,
-              "commands.playlist",
-              "pl_import_imported_desc",
-              {
-                name: playlist.name,
-                tracks: String(playlist.tracks!.length),
-                duration: totalDuration,
-                user: String(handler.user),
-              }
-            )}`
+            `${client.i18n.get(handler.language, "commands.playlist", "pl_import_imported_desc", {
+              name: playlist.name,
+              tracks: String(playlist.tracks!.length),
+              duration: totalDuration,
+              user: String(handler.user),
+            })}`
           )
           .setFooter({
             text: `${client.i18n.get(

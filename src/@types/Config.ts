@@ -1,4 +1,4 @@
-import { ZklinkNodeOptions } from "../zklink/main.js";
+import { ZklinkNodeOptions } from "../Zklink/main.js";
 import { ClusterManagerOptions } from "../shard/ClusterManager.js";
 export interface Config {
   bot: Bot;

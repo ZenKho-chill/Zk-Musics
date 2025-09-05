@@ -1,7 +1,7 @@
 export class Collection<G = unknown> {
   protected cache: Record<string, G> = {};
 
-  get<D = G>(key: string):D | undefined {
+  get<D = G>(key: string): D | undefined {
     return (this.cache[key] as unknown as D) ?? undefined;
   }
 
@@ -21,7 +21,7 @@ export class Collection<G = unknown> {
   }
 
   get size(): number {
-    return Object.values(this.cache).length;
+    return Object.keys(this.cache).length;
   }
 
   get values(): G[] {

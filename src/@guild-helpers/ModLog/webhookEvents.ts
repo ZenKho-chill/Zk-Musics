@@ -24,19 +24,10 @@ export class WebhookEventsHandler {
 
   // Xử lý sự kiện cập nhật webhook
   private async handleWebhookUpdate(
-    channel:
-      | NewsChannel
-      | TextChannel
-      | VoiceChannel
-      | ForumChannel
-      | MediaChannel
+    channel: NewsChannel | TextChannel | VoiceChannel | ForumChannel | MediaChannel
   ) {
     const guild = channel.guild;
-    if (
-      !guild ||
-      !(await isEventEnabled(guild.id, "webhookUpdate", this.client.db))
-    )
-      return;
+    if (!guild || !(await isEventEnabled(guild.id, "webhookUpdate", this.client.db))) return;
 
     const modLogChannel = await getModLogChannel(guild.id, this.client);
     if (!modLogChannel) return;
@@ -65,8 +56,8 @@ export class WebhookEventsHandler {
         new EmbedBuilder()
           .setColor(0x1e90ff)
           .setAuthor({
-            name: this.client.user.username || this.client.user.tag,
-            iconURL: this.client.user?.displayAvatarURL(),
+            name: this.client.user?.username || this.client.user?.tag || "Không rõ",
+            iconURL: this.client.user?.displayAvatarURL() || "",
           })
           .setDescription(
             `🔗 **Webhook đã được cập nhật**\nMột webhook đã được cập nhật ở <#${channel.id}>.`

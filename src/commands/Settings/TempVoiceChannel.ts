@@ -2,7 +2,7 @@ import { Manager } from "../../manager.js";
 import { Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import {
-  CommandInteraction,
+  ChatInputCommandInteraction,
   ApplicationCommandOptionType,
   ChannelType,
   MessageFlags,
@@ -38,13 +38,11 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
-    const interaction = handler.interaction as CommandInteraction;
+    const interaction = handler.interaction as ChatInputCommandInteraction;
     const guildId = interaction.guildId!;
 
     const status = interaction.options.get("status", true).value as string;
-    const guildSettings = (await client.db.TempVoiceChannelSetting.get(
-      guildId
-    )) || {
+    const guildSettings = (await client.db.TempVoiceChannelSetting.get(guildId)) || {
       guildId,
       tempVoiceEnabled: false,
       createVoiceChannelId: null,
@@ -53,9 +51,7 @@ export default class implements Command {
     if (status === "create") {
       guildSettings.tempVoiceEnabled = true;
       const existingChannel = interaction.guild?.channels.cache.find(
-        (channel) =>
-          channel.name === "Tạo kênh thoại" &&
-          channel.type === ChannelType.GuildVoice
+        (channel) => channel.name === "Tạo kênh thoại" && channel.type === ChannelType.GuildVoice
       );
 
       if (!existingChannel) {
@@ -78,16 +74,10 @@ export default class implements Command {
 
       // Xóa "Tạo kênh thoại" nếu nó tồn tại
       if (guildSettings.createVoiceChannelId) {
-        const channel = interaction.guild?.channels.cache.get(
-          guildSettings.createVoiceChannelId
-        );
+        const channel = interaction.guild?.channels.cache.get(guildSettings.createVoiceChannelId);
         if (channel) {
           await channel.delete(
-            `${client.i18n.get(
-              handler.language,
-              "commands.settings",
-              "tempvoice_disabled"
-            )}`
+            `${client.i18n.get(handler.language, "commands.settings", "tempvoice_disabled")}`
           );
         }
       }
@@ -98,14 +88,9 @@ export default class implements Command {
     }
 
     await interaction.reply({
-      content: `${client.i18n.get(
-        handler.language,
-        "commands.settings",
-        "tempvoice_setup",
-        {
-          status: status === "create" ? "kích hoạt" : "vô hiệu",
-        }
-      )}`,
+      content: `${client.i18n.get(handler.language, "commands.settings", "tempvoice_setup", {
+        status: status === "create" ? "kích hoạt" : "vô hiệu",
+      })}`,
       flags: MessageFlags.Ephemeral,
     });
   }

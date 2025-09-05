@@ -32,9 +32,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
-    const geniusClient = new Genius.Client(
-      client.config.utilities.LyricsGenius.ApiKey
-    );
+    const geniusClient = new Genius.Client(client.config.utilities.LyricsGenius.ApiKey);
 
     let query = handler.args.join(" ");
 
@@ -43,15 +41,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "lyrics_disable",
-                {
-                  user: String(handler.user?.displayName || handler.user?.tag),
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "lyrics_disable", {
+                user: String(handler.user?.displayName || handler.user?.tag),
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -60,7 +53,7 @@ export default class implements Command {
     }
 
     if (!query) {
-      const player = client.zklink.players.get(String(handler.guild?.id));
+      const player = client.Zklink.players.get(String(handler.guild?.id));
       if (player && player.queue.current) {
         query = player.queue.current.title;
       } else {
@@ -68,15 +61,10 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.music",
-                  "lyrics_noquery",
-                  {
-                    user: handler.user.username,
-                    botname: client.user!.username,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.music", "lyrics_noquery", {
+                  user: handler.user?.username ?? "Unknown User",
+                  botname: client.user!.username,
+                })}`
               )
               .setColor(client.color_main),
           ],
@@ -91,15 +79,10 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.music",
-                  "lyrics_notfound",
-                  {
-                    user: handler.user.username,
-                    botname: client.user!.username,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.music", "lyrics_notfound", {
+                  user: handler.user?.username ?? "Unknown User",
+                  botname: client.user!.username,
+                })}`
               )
               .setColor(client.color_main),
           ],
@@ -114,15 +97,10 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.music",
-                  "lyrics_notfound",
-                  {
-                    user: handler.user.username,
-                    botname: client.user!.username,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.music", "lyrics_notfound", {
+                  user: handler.user?.username ?? "Unknown User",
+                  botname: client.user!.username,
+                })}`
               )
               .setColor(client.color_main),
           ],
@@ -137,14 +115,9 @@ export default class implements Command {
 
       if (lyrics.length > 4096) {
         embed.setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "lyrics_toolong",
-            {
-              url: song.url,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "lyrics_toolong", {
+            url: song.url,
+          })}`
         );
       } else {
         embed.setDescription(lyrics);
@@ -157,16 +130,11 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "lyrics_error",
-                {
-                  user: handler.user.username,
-                  botname: client.user!.username,
-                  error: error.message,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "lyrics_error", {
+                user: handler.user?.username ?? "Unknown User",
+                botname: client.user!.username,
+                error: error.message,
+              })}`
             )
             .setColor(client.color_main),
         ],

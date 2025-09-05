@@ -1,7 +1,7 @@
 import { Manager } from "../../manager.js";
 import { TextChannel } from "discord.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
-import { ZklinkPlayer } from "../../zklink/main.js";
+import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import chalk from "chalk";
 export default class {
@@ -40,7 +40,7 @@ export default class {
       if (player.loop !== "none") return new CleanUpMessage(client, channel, player);
     }
 
-    const currentPlayer = client.zklink.players.get(player.guildId) as ZklinkPlayer;
+    const currentPlayer = client.Zklink.players.get(player.guildId) as ZklinkPlayer;
     if (!currentPlayer) return;
     if (!currentPlayer.sudoDestroy) await player.destroy().catch(() => {});
   }

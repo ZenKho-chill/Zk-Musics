@@ -2,7 +2,7 @@ import { Manager } from "../../manager.js";
 import { TextChannel, EmbedBuilder, MessageFlags } from "discord.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
-import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 export default class {
   async execute(
@@ -77,7 +77,7 @@ export default class {
     if (data247 !== null && data247 && data247.twentyfourseven && channel)
       new CleanUpMessage(client, channel, player);
 
-    const currentPlayer = client.zklink.players.get(
+    const currentPlayer = client.Zklink.players.get(
       player.guildId
     ) as ZklinkPlayer;
     if (!currentPlayer) return;

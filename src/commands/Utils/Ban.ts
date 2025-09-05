@@ -8,6 +8,7 @@ import {
   PermissionFlagsBits,
   CommandInteractionOptionResolver,
   GuildMemberRoleManager,
+  ChatInputCommandInteraction,
 } from "discord.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
@@ -43,22 +44,16 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
     await handler.deferReply();
-    const targetUser = (
-      handler.interaction.options as CommandInteractionOptionResolver
-    ).getUser("user") as User;
-    const reason =
-      ((await (
-        handler.interaction.options as CommandInteractionOptionResolver
-      ).getString("reason")) as string) || "Không có lý do được cung cấp";
+    const options = (handler.interaction as ChatInputCommandInteraction)
+      .options as CommandInteractionOptionResolver;
+    const targetUser = options.getUser("user") as User;
+    const reason = (await options.getString("reason")) || "Không có lý do được cung cấp";
 
     const guild = handler.interaction.guild!;
     const memberToBan = guild.members.cache.get(targetUser.id);
-    const targetUserRolePosition = (
-      memberToBan?.roles as GuildMemberRoleManager
-    )?.highest.position;
-    const requestUserRolePosition = (
-      handler.interaction.member?.roles as GuildMemberRoleManager
-    )?.highest.position;
+    const targetUserRolePosition = (memberToBan?.roles as GuildMemberRoleManager)?.highest.position;
+    const requestUserRolePosition = (handler.interaction.member?.roles as GuildMemberRoleManager)
+      ?.highest.position;
     const botMember = await guild.members.fetch(client.user!.id);
     const botRolePosition = botMember?.roles.highest?.position;
 
@@ -67,14 +62,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.utils",
-                "ban_user_not_found",
-                {
-                  user: `<@${targetUser.id}>`,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.utils", "ban_user_not_found", {
+                user: `<@${targetUser.id}>`,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -86,14 +76,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.utils",
-                "ban_user_ownerid",
-                {
-                  user: `<@${targetUser.id}>`,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.utils", "ban_user_ownerid", {
+                user: `<@${targetUser.id}>`,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -105,11 +90,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.utils",
-                "ban_user_higher_role"
-              )}`
+              `${client.i18n.get(handler.language, "commands.utils", "ban_user_higher_role")}`
             )
             .setColor(client.color_main),
         ],
@@ -121,11 +102,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.utils",
-                "ban_bot_higher_role"
-              )}`
+              `${client.i18n.get(handler.language, "commands.utils", "ban_bot_higher_role")}`
             )
             .setColor(client.color_main),
         ],
@@ -137,14 +114,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.utils",
-                "ban_error",
-                {
-                  user: `<@${targetUser.id}>`,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.utils", "ban_error", {
+                user: `<@${targetUser.id}>`,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -159,41 +131,28 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.utils",
-                "ban_success_dm",
-                {
-                  moderator: `<@${handler.user!.id}>`,
-                  guild: guild.name,
-                  reason: reason || "No reason provided",
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.utils", "ban_success_dm", {
+                moderator: `<@${handler.user!.id}>`,
+                guild: guild.name,
+                reason: reason || "No reason provided",
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
     } catch (error) {
-      client.logger.info(
-        "Ban",
-        `Không thể gửi DM cho người dùng bị cấm ${targetUser.displayName}`
-      );
+      client.logger.info("Ban", `Không thể gửi DM cho người dùng bị cấm ${targetUser.displayName}`);
     }
 
     handler.editReply({
       embeds: [
         new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get(
-              handler.language,
-              "commands.utils",
-              "banned_success",
-              {
-                user: `<@${targetUser.id}>`,
-                reason: reason || "Không có lý do được cung cấp",
-                moderator: `<@${handler.user!.id}>`,
-              }
-            )}`
+            `${client.i18n.get(handler.language, "commands.utils", "banned_success", {
+              user: `<@${targetUser.id}>`,
+              reason: reason || "Không có lý do được cung cấp",
+              moderator: `<@${handler.user!.id}>`,
+            })}`
           )
           .setColor(client.color_main),
       ],

@@ -6,6 +6,7 @@ import {
   ButtonStyle,
   ActionRowBuilder,
   MessageFlags,
+  ChatInputCommandInteraction,
 } from "discord.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
@@ -77,56 +78,35 @@ export default class implements Command {
     }
 
     const user = handler.user;
-    const type = (await (
-      handler.interaction?.options as CommandInteractionOptionResolver
-    ).getString("type")) as "login" | "logout";
+    const options = (handler.interaction as ChatInputCommandInteraction)
+      .options as CommandInteractionOptionResolver;
+    const type = options.getString("type") as "login" | "logout";
 
     if (type === "login") {
       const authUrl = `https://www.last.fm/api/auth?api_key=${
         client.config.features.WebServer.LAST_FM_SCROBBLED.ApiKey
       }&cb=${encodeURIComponent(
-        `${client.config.features.WebServer.LAST_FM_SCROBBLED.Callback}?user=${user.id}`
+        `${client.config.features.WebServer.LAST_FM_SCROBBLED.Callback}?user=${user?.id || ""}`
       )}`;
 
       const LastFMButton = new ActionRowBuilder<ButtonBuilder>();
       LastFMButton.addComponents(
-        new ButtonBuilder()
-          .setLabel("Đăng nhập")
-          .setStyle(ButtonStyle.Link)
-          .setURL(authUrl)
+        new ButtonBuilder().setLabel("Đăng nhập").setStyle(ButtonStyle.Link).setURL(authUrl)
       );
 
       const embed = new EmbedBuilder()
-        .setTitle(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "lastfm_login_title"
-          )}`
-        )
+        .setTitle(`${client.i18n.get(handler.language, "commands.settings", "lastfm_login_title")}`)
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "lastfm_login_desc",
-            {
-              url: authUrl,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "lastfm_login_desc", {
+            url: authUrl,
+          })}`
         )
         .setFooter({
-          text: `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "lastfm_login_footer",
-            {
-              expired:
-                String(
-                  client.config.features.WebServer.LAST_FM_SCROBBLED
-                    .ExpiredLink / 1000
-                ) + " giây",
-            }
-          )}`,
+          text: `${client.i18n.get(handler.language, "commands.settings", "lastfm_login_footer", {
+            expired:
+              String(client.config.features.WebServer.LAST_FM_SCROBBLED.ExpiredLink / 1000) +
+              " giây",
+          })}`,
         })
         .setColor(client.color_main);
 
@@ -145,46 +125,33 @@ export default class implements Command {
       }, client.config.features.WebServer.LAST_FM_SCROBBLED.ExpiredLink);
 
       // Lưu bản ghi tạm thời vào cơ sở dữ liệu để chờ callback
-      await client.db.LastFm.set(user!.id, { userId: user!.id });
+      await client.db.LastFm.set(user?.id || "", { userId: user?.id || "" });
     } else if (type === "logout") {
       // Kiểm tra xem người dùng đã đăng nhập chưa
-      const lastFmData = await client.db.LastFm.get(user.id);
+      const lastFmData = await client.db.LastFm.get(user?.id || "");
 
       if (!lastFmData || !lastFmData.sessionKey) {
         return handler.editReply({
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.settings",
-                  "lastfm_not_login_desc",
-                  {
-                    name: this.name[0],
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.settings", "lastfm_not_login_desc", {
+                  name: this.name[0],
+                })}`
               )
               .setColor(client.color_main),
           ],
         });
       }
       // Xóa dữ liệu Last.fm của người dùng khỏi cơ sở dữ liệu
-      await client.db.LastFm.delete(user.id);
+      await client.db.LastFm.delete(user?.id || "");
 
       const embed = new EmbedBuilder()
         .setTitle(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "lastfm_logout_title"
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "lastfm_logout_title")}`
         )
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "lastfm_logout_desc"
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "lastfm_logout_desc")}`
         )
         .setColor(client.color_main);
 

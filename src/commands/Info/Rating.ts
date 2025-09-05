@@ -1,11 +1,7 @@
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
-import {
-  ApplicationCommandOptionType,
-  EmbedBuilder,
-  WebhookClient,
-} from "discord.js";
+import { ApplicationCommandOptionType, EmbedBuilder, WebhookClient } from "discord.js";
 import moment from "moment";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
@@ -71,22 +67,14 @@ export default class implements Command {
       // Tạo Embed cho lỗi
       const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.info",
-            "rating_failure"
-          )}`
-        );
+        .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_failure")}`);
 
       if (!RatingChannelID || RatingChannelID.length === 0) {
         // Nếu RatingChannelID không được cấu hình
         return handler.editReply({ embeds: [errorEmbed] });
       }
 
-      const channel = await client.channels
-        .fetch(RatingChannelID)
-        .catch(() => undefined);
+      const channel = await client.channels.fetch(RatingChannelID).catch(() => undefined);
 
       if (!channel || (channel && !channel.isTextBased())) {
         // Nếu kênh không tồn tại hoặc không phải kênh văn bản
@@ -102,14 +90,9 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.info",
-                  "rating_failure",
-                  {
-                    prefix: client.prefix,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.info", "rating_failure", {
+                  prefix: client.prefix,
+                })}`
               )
               .setColor(client.color_main),
           ],
@@ -155,29 +138,17 @@ export default class implements Command {
         .setColor(client.color_main);
 
       // Gửi Embed tới kênh
-      channel.send({ embeds: [RatingEmbed] });
+      (channel as any).send({ embeds: [RatingEmbed] });
 
       const successEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.info",
-            "rating_succes"
-          )}`
-        );
+        .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_succes")}`);
       handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
       client.logger.warn("Rating", "Lỗi khi thực thi lệnh Rating");
       const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.info",
-            "rating_failure"
-          )}`
-        );
+        .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_failure")}`);
 
       handler.editReply({ embeds: [errorEmbed] });
     }

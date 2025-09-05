@@ -39,19 +39,16 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
-    const data = await (
-      handler.interaction.options as CommandInteractionOptionResolver
-    ).getChannel("channel");
+    const interaction = handler.interaction as any;
+    const data = await (interaction.options as CommandInteractionOptionResolver).getChannel(
+      "channel"
+    );
 
     const channel = handler.interaction.guild?.channels.cache.get(data?.id!);
 
     if (!client.config.HELPDESK.Enable) {
       await handler.interaction.reply({
-        content: `${client.i18n.get(
-          handler.language,
-          "events.helpdesk",
-          "disable_helpdesk"
-        )}`,
+        content: `${client.i18n.get(handler.language, "events.helpdesk", "disable_helpdesk")}`,
         flags: MessageFlags.Ephemeral,
       });
       return;
@@ -81,14 +78,9 @@ export default class implements Command {
 
     const embed1 = new EmbedBuilder();
     embed1.setAuthor({
-      name: client.i18n.get(
-        handler.language,
-        "events.helpdesk",
-        "embed1_title",
-        {
-          bot: client.user!.username,
-        }
-      ),
+      name: client.i18n.get(handler.language, "events.helpdesk", "embed1_title", {
+        bot: client.user!.username,
+      }),
     });
     embed1.setDescription(
       client.i18n.get(handler.language, "events.helpdesk", "embed1_desc", {
@@ -96,27 +88,17 @@ export default class implements Command {
       })
     );
     embed1.setFooter({
-      text: client.i18n.get(
-        handler.language,
-        "events.helpdesk",
-        "embed1_footer",
-        {
-          bot: client.user!.username,
-        }
-      ),
+      text: client.i18n.get(handler.language, "events.helpdesk", "embed1_footer", {
+        bot: client.user!.username,
+      }),
     });
     embed1.setColor(client.color_main);
 
     const embed2 = new EmbedBuilder();
     embed2.setAuthor({
-      name: client.i18n.get(
-        handler.language,
-        "events.helpdesk",
-        "embed2_title",
-        {
-          bot: client.user!.username,
-        }
-      ),
+      name: client.i18n.get(handler.language, "events.helpdesk", "embed2_title", {
+        bot: client.user!.username,
+      }),
     });
     embed2.setDescription(
       client.i18n.get(handler.language, "events.helpdesk", "embed2_desc", {
@@ -135,49 +117,23 @@ export default class implements Command {
     );
     embed2.addFields(
       {
-        name: client.i18n.get(
-          handler.language,
-          "events.helpdesk",
-          "embed2_field1_name"
-        ),
-        value: client.i18n.get(
-          handler.language,
-          "events.helpdesk",
-          "embed2_field1_value",
-          {
-            website: client.config.HELPDESK.WEBSITE_URL,
-          }
-        ),
+        name: client.i18n.get(handler.language, "events.helpdesk", "embed2_field1_name"),
+        value: client.i18n.get(handler.language, "events.helpdesk", "embed2_field1_value", {
+          website: client.config.HELPDESK.WEBSITE_URL,
+        }),
         inline: true,
       },
       {
-        name: client.i18n.get(
-          handler.language,
-          "events.helpdesk",
-          "embed2_field2_name"
-        ),
-        value: client.i18n.get(
-          handler.language,
-          "events.helpdesk",
-          "embed2_field2_value"
-        ),
+        name: client.i18n.get(handler.language, "events.helpdesk", "embed2_field2_name"),
+        value: client.i18n.get(handler.language, "events.helpdesk", "embed2_field2_value"),
         inline: true,
       },
       {
-        name: client.i18n.get(
-          handler.language,
-          "events.helpdesk",
-          "embed2_field3_name"
-        ),
-        value: client.i18n.get(
-          handler.language,
-          "events.helpdesk",
-          "embed2_field3_value",
-          {
-            vote: client.config.HELPDESK.VOTE_URL,
-            premium: client.config.HELPDESK.PREMIUM_URL,
-          }
-        ),
+        name: client.i18n.get(handler.language, "events.helpdesk", "embed2_field3_name"),
+        value: client.i18n.get(handler.language, "events.helpdesk", "embed2_field3_value", {
+          vote: client.config.HELPDESK.VOTE_URL,
+          premium: client.config.HELPDESK.PREMIUM_URL,
+        }),
         inline: true,
       }
     );
@@ -249,14 +205,9 @@ export default class implements Command {
 
     // Gửi phản hồi xác nhận
     await handler.interaction.reply({
-      content: `${client.i18n.get(
-        handler.language,
-        "events.helpdesk",
-        "setup_helpdesk_succes",
-        {
-          channel: `${channel}`,
-        }
-      )}`,
+      content: `${client.i18n.get(handler.language, "events.helpdesk", "setup_helpdesk_succes", {
+        channel: `${channel}`,
+      })}`,
       flags: MessageFlags.Ephemeral,
     });
 

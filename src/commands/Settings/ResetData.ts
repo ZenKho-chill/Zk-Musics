@@ -68,7 +68,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
 
-    const options = handler.interaction
+    const options = (handler.interaction as import("discord.js").ChatInputCommandInteraction)
       .options as CommandInteractionOptionResolver;
     const type = options.getString("type");
     const category = options.getString("categories");
@@ -97,8 +97,7 @@ export default class implements Command {
               client.db.TempVoiceChannel.delete(guildId!),
               client.db.TempVoiceChannelSetting.delete(guildId!),
             ]);
-            resultMessage =
-              "Đã xóa thành công tất cả danh mục cơ sở dữ liệu của máy chủ.";
+            resultMessage = "Đã xóa thành công tất cả danh mục cơ sở dữ liệu của máy chủ.";
             break;
           case "language":
             await client.db.language.delete(guildId!);
@@ -106,8 +105,7 @@ export default class implements Command {
             break;
           case "twentyfourseven":
             await client.db.autoreconnect.delete(guildId!);
-            resultMessage =
-              "Đã xóa thành công cơ sở dữ liệu Twenty Four Seven.";
+            resultMessage = "Đã xóa thành công cơ sở dữ liệu Twenty Four Seven.";
             break;
           case "setup":
             await client.db.setup.delete(guildId!);
@@ -115,8 +113,7 @@ export default class implements Command {
             break;
           case "controlmode":
             await client.db.ControlButton.delete(guildId!);
-            resultMessage =
-              "Đã xóa thành công cơ sở dữ liệu Chế độ điều khiển.";
+            resultMessage = "Đã xóa thành công cơ sở dữ liệu Chế độ điều khiển.";
             break;
           case "prefix":
             await client.db.prefix.delete(guildId!);
@@ -146,8 +143,7 @@ export default class implements Command {
               client.db.UserStatistics.delete(`${userId!}`),
               client.db.playlist.delete(userId!),
             ]);
-            resultMessage =
-              "Đã xóa thành công tất cả danh mục cơ sở dữ liệu của người dùng.";
+            resultMessage = "Đã xóa thành công tất cả danh mục cơ sở dữ liệu của người dùng.";
             break;
           case "themes":
             await client.db.Themes.delete(userId!);
@@ -155,8 +151,7 @@ export default class implements Command {
             break;
           case "commandusage":
             await client.db.CommandUserUsage.delete(userId!);
-            resultMessage =
-              "Đã xóa thành công cơ sở dữ liệu Lịch sử dùng lệnh.";
+            resultMessage = "Đã xóa thành công cơ sở dữ liệu Lịch sử dùng lệnh.";
             break;
           case "playedsong":
             await client.db.PlayedSongUser.delete(userId!);
@@ -184,13 +179,11 @@ export default class implements Command {
             break;
           case "votereminder":
             await client.db.VoteReminders.delete(userId!);
-            resultMessage =
-              "Đã xóa thành công cơ sở dữ liệu Nhắc nhớ bình chọn.";
+            resultMessage = "Đã xóa thành công cơ sở dữ liệu Nhắc nhớ bình chọn.";
             break;
           case "userstatistics":
             await client.db.UserStatistics.delete(`${userId!}`);
-            resultMessage =
-              "Đã xóa thành công cơ sở dữ liệu Thống kê người dùng.";
+            resultMessage = "Đã xóa thành công cơ sở dữ liệu Thống kê người dùng.";
             break;
           case "playlist":
             await client.db.playlist.delete(userId!);
@@ -207,10 +200,7 @@ export default class implements Command {
         flags: MessageFlags.Ephemeral,
       });
     } catch (error) {
-      client.logger.info(
-        "Đặt lại dữ liệu",
-        `Lỗi khi xóa cơ sở dữ liệu, ${error}`
-      );
+      client.logger.info("Đặt lại dữ liệu", `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
       await handler.interaction.reply({
         content: `Đã xảy ra lỗi khi xóa cơ sở dữ liệu\n\`${error.message}\``,
         flags: MessageFlags.Ephemeral,
@@ -218,4 +208,3 @@ export default class implements Command {
     }
   }
 }
-s;

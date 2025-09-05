@@ -2,7 +2,7 @@ import { Manager } from "../../manager.js";
 import { EmbedBuilder, TextChannel, MessageFlagsBitField } from "discord.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
-import { ZklinkPlayer } from "../../zklink/main.js";
+import { ZklinkPlayer } from "../../Zklink/main.js";
 import chalk from "chalk";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 export default class {

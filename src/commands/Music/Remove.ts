@@ -4,7 +4,7 @@ import { ConvertTime } from "../../utilities/ConvertTime.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
@@ -35,7 +35,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
-    const player = client.zklink.players.get(
+    const player = client.Zklink.players.get(
       handler.guild!.id
     ) as ZklinkPlayer;
     const currentTrack = player.queue.current;

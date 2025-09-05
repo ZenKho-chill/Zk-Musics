@@ -50,29 +50,24 @@ export default class implements Command {
     let pagesNum = Math.ceil(playlists.length / 10);
     if (pagesNum === 0) pagesNum = 1;
 
-    const playlistStrings = [];
+    const playlistStrings: string[] = [];
     for (let i = 0; i < playlists.length; i++) {
       const playlist = playlists[i];
       const created = humanizeDuration(Date.now() - playlists[i].created, {
         largest: 1,
       });
       playlistStrings.push(
-        `${client.i18n.get(
-          handler.language,
-          "commands.playlist",
-          "pl_all_view_embed_playlist",
-          {
-            num: String(i + 1),
-            name: playlist.id,
-            tracks: String(playlist.tracks!.length),
-            create: created,
-          }
-        )}
+        `${client.i18n.get(handler.language, "commands.playlist", "pl_all_view_embed_playlist", {
+          num: String(i + 1),
+          name: playlist.id,
+          tracks: String(playlist.tracks!.length),
+          create: created,
+        })}
                 `
       );
     }
 
-    const pages = [];
+    const pages: EmbedBuilder[] = [];
     for (let i = 0; i < pagesNum; i++) {
       const str = playlistStrings.slice(i * 10, i * 10 + 10).join(`\n`);
       const embed = new EmbedBuilder()
@@ -134,11 +129,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.playlist",
-                  "pl_all_view_notnumber"
-                )}`
+                `${client.i18n.get(handler.language, "commands.playlist", "pl_all_view_notnumber")}`
               )
               .setColor(client.color_main),
           ],

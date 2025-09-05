@@ -1,6 +1,6 @@
 import { AutoFixLavalink } from "../../autofix/AutoFixLavalink.js";
 import { Manager } from "../../manager.js";
-import { ZklinkNode } from "../../zklink/main.js";
+import { ZklinkNode } from "../../Zklink/main.js";
 import chalk from "chalk";
 
 export default class {

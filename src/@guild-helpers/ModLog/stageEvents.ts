@@ -11,18 +11,9 @@ export class StageEventsHandler {
   }
 
   private init() {
-    this.client.on(
-      "stageInstanceCreate",
-      this.handleStageInstanceCreate.bind(this)
-    );
-    this.client.on(
-      "stageInstanceUpdate",
-      this.handleStageInstanceUpdate.bind(this)
-    );
-    this.client.on(
-      "stageInstanceDelete",
-      this.handleStageInstanceDelete.bind(this)
-    );
+    this.client.on("stageInstanceCreate", this.handleStageInstanceCreate.bind(this));
+    this.client.on("stageInstanceUpdate", this.handleStageInstanceUpdate.bind(this));
+    this.client.on("stageInstanceDelete", this.handleStageInstanceDelete.bind(this));
   }
 
   // Xử lý tạo stage instance
@@ -30,10 +21,7 @@ export class StageEventsHandler {
     const guild = stage.guild;
 
     if (!guild) return; // Thoát nếu không có guild
-    if (
-      !(await isEventEnabled(guild.id, "stageInstanceCreate", this.client.db))
-    )
-      return;
+    if (!(await isEventEnabled(guild.id, "stageInstanceCreate", this.client.db))) return;
 
     const channel = await getModLogChannel(guild.id, this.client);
     if (!channel) return;
@@ -43,31 +31,23 @@ export class StageEventsHandler {
         new EmbedBuilder()
           .setColor(0x32cd32)
           .setTitle("🎤 Đã tạo Stage Instance")
-          .setDescription(
-            `**Chủ đề:** ${stage.topic}\n**Kênh:** <#${stage.channelId}>`
-          )
+          .setDescription(`**Chủ đề:** ${stage.topic}\n**Kênh:** <#${stage.channelId}>`)
           .setTimestamp(new Date()),
       ],
     });
   }
 
   // Xử lý cập nhật stage instance
-  private async handleStageInstanceUpdate(
-    oldStage: StageInstance | null,
-    newStage: StageInstance
-  ) {
+  private async handleStageInstanceUpdate(oldStage: StageInstance | null, newStage: StageInstance) {
     const guild = newStage.guild;
 
     if (!guild) return; // Thoát nếu không có guild
-    if (
-      !(await isEventEnabled(guild.id, "stageInstanceUpdate", this.client.db))
-    )
-      return;
+    if (!(await isEventEnabled(guild.id, "stageInstanceUpdate", this.client.db))) return;
 
     const channel = await getModLogChannel(guild.id, this.client);
     if (!channel) return;
 
-    const changes = [];
+    const changes: string[] = [];
 
     // Chỉ kiểm tra thay đổi nếu oldStage tồn tại
     if (oldStage) {
@@ -94,10 +74,7 @@ export class StageEventsHandler {
     const guild = stage.guild;
 
     if (!guild) return; // Thoát nếu không có guild
-    if (
-      !(await isEventEnabled(guild.id, "stageInstanceDelete", this.client.db))
-    )
-      return;
+    if (!(await isEventEnabled(guild.id, "stageInstanceDelete", this.client.db))) return;
 
     const channel = await getModLogChannel(guild.id, this.client);
     if (!channel) return;
@@ -107,9 +84,7 @@ export class StageEventsHandler {
         new EmbedBuilder()
           .setColor(0xff4500)
           .setTitle("🗑️ Đã xoá Stage Instance")
-          .setDescription(
-            `**Chủ đề:** ${stage.topic}\n**Kênh:** <#${stage.channelId}>`
-          )
+          .setDescription(`**Chủ đề:** ${stage.topic}\n**Kênh:** <#${stage.channelId}>`)
           .setTimestamp(new Date()),
       ],
     });

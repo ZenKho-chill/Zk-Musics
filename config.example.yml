@@ -1,0 +1,517 @@
+bot:
+  # Đổi tên file .env.example thành .env
+  # Thêm token của bạn vào file .env theo định dạng sau:
+  # DISCORD_APP_TOKEN=your-discord-bot-token
+  TOKEN: ${DISCORD_APP_TOKEN} # Token sẽ được lấy từ file .env
+  EMBED_COLOR_MAIN: "#FFFFFF"
+  EMBED_COLOR_SECOND: "#2F3136"
+  OWNER_ID: "YOUR OWNER ID"
+  ADMIN: ["YOUR TRUSTED ID1", "YOUR TRUSTED ID2", "YOUR TRUSTED ID3"]
+  DEFAULT_VOLUME: 50 # Không được vượt quá 100, nếu không bot có thể gặp lỗi
+  LANGUAGE: "en" # Bạn có thể đặt 'en' hoặc thêm ngôn ngữ tuỳ chỉnh
+  DEBUG_MODE: false
+  SHARDING_SYSTEM:
+    shardsPerClusters: 1
+    totalClusters: 1
+  # Cấu hình trạng thái (presence) cho bot
+  BOT_ACTIVITY1: "trái tim bạn 💖"
+  BOT_ACTIVITY2: "giấc mơ của bạn 🌙"
+  BOT_ACTIVITY3: "cuộc sống của bạn 🍀"
+  BOT_ACTIVITY_TYPE: 4 # 0 = PLAYING, 1 = STREAMING, 2 = LISTENING, 3 = WATCHING, 4 = CUSTOM, 5 = COMPETING
+  STREAM_URL: "https://www.youtube.com/watch?v=jfKfPfyJRdk" # URL stream (hỗ trợ youtube, twitch)
+  BOT_STATUS: "online" # online, idle, dnd, invisible
+  CUSTOM_STATUS: "♪ Zk Music's" # Trạng thái tuỳ chỉnh khi type = 4
+
+# Ảnh dùng cho menu trợ giúp
+  IMAGES_URL_HELPMENU: "https://assetsme.vercel.app/madebytragic/intro.gif"
+  IMAGES_URL_COMMAND: "https://assetsme.vercel.app/madebytragic/intro.gif"
+  IMAGES_URL_ABOUT: "https://assetsme.vercel.app/madebytragic/intro.gif"
+  IMAGES_URL_REQUEST_MUSIC: "https://assetsme.vercel.app/madebytragic/req.png"
+
+  # liên kết nút
+  WEBSITE_URL: "https://zenkho.top"
+  SERVER_SUPPORT_URL: "https://dsteam.store/discord"
+  TEAM_NAME: "DST Team"
+  TEAM_URL: "https://dsteam.store"
+  PREMIUM_URL: "https://zkmusic/zenkho.top/premium"
+  VOTE_URL: "https://zkmusic/zenkho.top/topgg"
+  COMMANDS_URL: "https://zkmusic/zenkho.top/commands"
+
+lavalink:
+  APPLE_TOKEN: "YOUR TOKEN" # https://youtu.be/oQW6Z1UEcJg
+  SPOTIFY:
+  # ID và Secret Spotify của bạn, lấy từ: https://developer.spotify.com
+    enable: false
+    id: "YOUR SPOTIFY ID"
+    secret: "YOUR SPOTIFY SECRET"
+
+  # Bạn có thể thêm nhiều server Lavalink!
+  # Nếu bạn chưa có, có thể lấy tại: https://lavalink-list.darrennathanael.com/NoSSL/Lavalink-NonSSL/
+  NODES:
+    - host: "HOST"
+      port: PORT
+      name: "zkmusic"
+      auth: "PASSWORD"
+      secure: false
+      driver: "lavalink/v4" # lavalink/v4, lavalink/v3
+
+# Nếu bạn muốn sử dụng hệ thống premium theo role
+PremiumRole:
+  GuildID: "YOUR GUILD ID"
+  RoleID: "YOUR ROLE ID"
+
+utilities:
+  TicketSystem:
+    Enable: false
+  LyricsGenius:
+    Enable: false
+    ApiKey: "YOUR GENIUS API KEY" # get from https://genius.com/api-clients
+  GeminiChat:
+    Enable: false
+    ApiKey: "YOUR API KEY"  # APIKEY FROM https://aistudio.google.com/app/apikey
+    ChannelId: "YOUR CHANNEL ID"
+  CatAndQuotes:
+    Enable: false
+    ApiKey: "YOUR API KEY"  # APIKEY FROM https://api-ninjas.com/
+    CatChannelId: "YOUR CHANNEL ID"
+    QuoteChannelId: "YOUR CHANNEL ID"
+  NotifyYoutube:
+    Enable: false
+    Schedule: "*/10 * * * *"
+    GlobalChannelID: "CHANNEL ID"
+    ApiKey1: "YOUTUBE DATA API KEY"  # https://console.cloud.google.com/
+    ApiKey2: "YOUTUBE DATA API KEY"
+    ApiKey3: "YOUTUBE DATA API KEY"
+    LimitPremium: 5
+    LimitNonPremium: 2
+  NotifyTwitch:
+    Enable: false
+    Schedule: "*/10 * * * *"
+    GlobalChannelID: "CHANNEL ID"
+    ClientId: "YOUR TWITCH CLIEND ID"  # get https://dev.twitch.tv/console/
+    ClientSecret: "YOUR TWITCH CLIENT SECRET"
+    LimitPremium: 5
+    LimitNonPremium: 2
+
+logchannel:
+  UpdateChannelId: "YOUR CHANEL ID"
+  RedeemChannelID: "YOUR CHANEL ID"
+  RemoveChannelID: "YOUR CHANEL ID"
+  GenerateCodeChannelID: "YOUR CHANEL ID"
+  RatingChannelID: "YOUR CHANEL ID"
+  BugReportChannelID: "YOUR CHANEL ID"
+  SuggestionChannelID: "YOUR CHANEL ID"
+  ErrorChannelID: "YOUR CHANEL ID"
+  GuildJoinChannelID: "YOUR CHANEL ID"
+  GuildLeaveChannelID: "YOUR CHANEL ID"
+  PremiumExpireChannelID: "YOUR CHANEL ID"
+
+features:
+  PLAY_COMMAND_ENGINE: ["apple", "tidal", "soundcloud", "spotify", "youtube", "youtube_music"] # engine phát ngẫu nhiên cho lệnh play
+  SEARCH_COMMAND_ENGINE: ["apple", "tidal", "soundcloud", "spotify", "youtube", "youtube_music"] # engine cho lệnh tìm kiếm
+  AUTOCOMPLETE_SEARCH: ["twice", "blackpink", "vvup"] # Gợi ý tìm kiếm mặc định cho autocomplete; để trống để dùng mặc định
+  MAX_QUEUE: 30 # Số hàng đợi tối đa cho member
+  LIMIT_TRACK: 50 # Số bản nhạc tối đa cho tính năng playlist
+  LIMIT_PLAYLIST: 20 # Số playlist tối đa cho tính năng playlist
+  DELETE_MSG_TIMEOUT: 3000 # (mili-giây)
+  LEAVE_TIMEOUT: 90000 # Thời gian rời kênh (mili-giây)
+  SEARCH_TIMEOUT: 30000 # Timeout cho collector tìm kiếm (mili-giây)
+  AUTO_RESUME: false
+  AUTOPLAY_SUPPORT: true
+  YOUTUBE_LINK: false # cần cài lavalink với plugin youtube & bật IPv6 Rotation
+  HIDE_LINK: false # Bật để ẩn link bài hát
+  REPLACE_LINK: false # Bật để thay link nguồn bằng link server hỗ trợ
+  CONVERT_LINK: 
+    Enable: false # Bật để chuyển link nguồn (vd: từ Spotify sang Apple) và tìm/phát theo nguồn đã chọn
+    Engine: "dzsearch" # Nguồn muốn chuyển sang (vd: dzsearch, amsearch, scsearch, spsearch, tdsearch)
+  # Cấu hình UI player khi bắt đầu bài hát
+  FilterMenu: true
+  ButtonLabel: true
+  MusicCard:
+  # Các theme khả dụng: themes1 - themes20 hoặc miko, kobokanaeru, vestiazeta, yui, cute
+    Enable: true
+    Themes: "zk"
+
+  DATABASE:
+    ClearCache: "*/60 * * * * *" # Xóa cache sau mỗi 1 phút
+    # Lưu ý: nếu nhập driver không hợp lệ, bot sẽ dùng json làm mặc định
+    # Cấu hình phụ thuộc driver; xem mẫu ở src/database/driver hoặc README.md
+    driver: "json" # mongodb, mysql, json, postgres
+    config: { path: "./zk.database.json" }
+    # Backup cơ sở dữ liệu chỉ hoạt động khi dùng driver MySQL
+    MYSQLBACKUP:
+      Enable: false
+      Schedule: "0 0 * * *"
+      Timezone: "Asia/Jakarta"
+      ChannelId: "YOUR CHANNEL ID"
+
+  MESSAGE_CONTENT:
+    enable: true
+    commands:
+      enable: false
+  prefix: "me" # Tiền tố bạn muốn dùng
+
+  AUTOFIX_LAVALINK: # Sửa server Lavalink khi server hiện tại gặp sự cố
+    enable: false
+    retryCount: 5
+    retryTimeout: 3000
+    defaultSearchEngine: "soundcloud"
+
+  RestAPI: # Cấu hình cho REST API server
+    enable: false # Bật/tắt REST API (true để bật, false để tắt)
+    port: 2555 # Cổng mà REST API sẽ chạy
+    whitelist: [] # Danh sách domain hoặc IP được phép truy cập REST API (vd: ["zenkho.top"])
+    auth: "youshallnotpass" # Khóa xác thực cần để truy cập REST API
+
+  WebServer:
+    enable: false
+    Port: 2444
+    TOPGG_VOTELOGS:
+      Enable: false
+      TopGgAuth: "YOUR AUTH/PASSWORD"
+      LogVoteChannelID: "YOUR CHANNEL ID"
+      TopGgToken: "YOUR TOKEN TOP.GG"
+  LAST_FM_SCROBBLED: # Lấy API key từ https://www.last.fm/api/account/create
+      Enable: false
+      ApiKey: "YOUR API KEY LAST FM"
+      Secret: "YOUR SECRET KEY LAST FM"
+  Callback: "https://ws.zenkho.top/lastfm" # Dùng địa chỉ nơi bot chạy, endpoint /callback (vd: http://localhost:2444/lastfm)
+  scheduleScrobble: 60000 # Lịch cập nhật để đẩy scrobble mỗi 1 phút khi phát bài
+  ExpiredLink: 30000 # Thời gian hết hạn của link đăng nhập nút
+  RedirectOnSuccess: "https://zkmusic/zenkho.top//lastfm"
+  RedirectOnError: "https://zkmusic/zenkho.top/lastfm-error"
+
+# WELCOMER LOGS MEMBER JOIN & LEAVE
+WELCOMER_EVENTS:
+  Enable: false
+  WELCOMER_GUILD_ID: "YOUR GUILD ID"
+  WELCOME_CHANNEL_ID: "YOUR CHANNEL ID"
+  LEAVE_CHANNEL_ID: "YOUR CHANNEL ID"
+  SUBTITLE: "Ai muốn hát luôn tìm thấy một bài hát"
+  GREETINGS:
+    welcome: [ "Chào", "Xin chào", "Heyho", "Hola" ]
+    bye: [ "Tạm biệt", "Bye", "Cảm ơn rất nhiều" ]
+  COLOR_GREETINGS: "#ffffff"
+  COLOR_USERNAME: "#f4e0c7"
+  COLOR_SUBTITLE: "#f4e0c7"
+  BUTTON_NAME: "Zk Music's ♪"
+  EMOJI_ID: "<:premium:1220842373614010420>"
+  BUTTON_URL: "https://zkmusic/zenkho.top//premium"
+
+IMAGES_WELCOMER:
+  IMAGES1: "https://assetsme.vercel.app/welcomer/1.png"
+  IMAGES2: "https://assetsme.vercel.app/welcomer/2.png"
+  IMAGES3: "https://assetsme.vercel.app/welcomer/3.png"
+  IMAGES4: "https://assetsme.vercel.app/welcomer/4.png"
+  IMAGES5: "https://assetsme.vercel.app/welcomer/5.png"
+  IMAGES6: "https://assetsme.vercel.app/welcomer/6.png"
+  IMAGES7: "https://assetsme.vercel.app/welcomer/7.png"
+  IMAGES8: "https://assetsme.vercel.app/welcomer/8.png"
+  IMAGES9: "https://assetsme.vercel.app/welcomer/9.png"
+  IMAGES10: "https://assetsme.vercel.app/welcomer/10.png"
+
+HELPDESK:
+  Enable: false
+  WEBSITE_URL: "https://zkmusic/zenkho.top/"
+  SERVER_SUPPORT_URL: "https://zkmusic/zenkho.top/support"
+  PREMIUM_URL: "https://zkmusic/zenkho.top/premium"
+  VOTE_URL: "https://zkmusic/zenkho.top//topgg"
+  HELPDESK_LOGS_CHANNEL_ID: "YOUR CHANNEL ID"
+  EMOJI1: "<:1_:1225102816960446515>"
+  EMOJI2: "<:2_:1225102818822721598>"
+  EMOJI3: "<:3_:1225102823386255380>"
+  EMOJI4: "<:4_:1225102825197932624>"
+  EMOJI5: "<:5_:1225102827068723361>"
+  EMOJI6: "<:6_:1225102828666622034>"
+  EMOJI7: "<:7_:1225102830734413916>"
+  EMOJI8: "<:8_:1225102832558931968>"
+  EMOJI9: "<:9_:1225102834379395132>"
+  EMOJI10: "<:10_:1225102836430405693>"
+  BUTTON_HELPDESK10:
+    NAME1: "Mời"
+    NAME2: "Vote"
+    NAME3: "Patreon"
+    URL1: "https://zkmusic/zenkho.top/invite"
+    URL2: "https://zkmusic/zenkho.top/topgg"
+    URL3: "https://zkmusic/zenkho.top/premium"
+
+HELPER_SETUP:
+  Enable: false
+  SERVER_SUPPORT_URL: "https://zkmusic/zenkho.top/support"
+  NAME1: "Xem Quy Định"
+  NAME2: "Chọn Vai Trò"
+  NAME3: "Hỗ Trợ Chúng Tôi"
+  VIEW_RULES:
+    ROLE_ID: "YOUR ROLE ID"
+    ROLE_NAME: "Accept"
+  NAME1: "Điều Khoản & Dịch Vụ Discord"
+  NAME2: "Hướng Dẫn Cộng Đồng Discord"
+  NAME3: "Trang Zk Music's"
+  NAME4: "Điều Khoản & Dịch Vụ Zk Music's"
+  NAME5: "Chính Sách Bảo Mật Zk Music's"
+  URL1: "https://discord.com/terms"
+  URL2: "https://discord.com/guidelines"
+  URL3: "https://zkmusic/zenkho.top"
+  URL4: "https://zkmusic/zenkho.top/termsofservice"
+  URL5: "https://zkmusic/zenkho.top/privacy"
+  SELECT_ROLES:
+    NAME1: "Tên Vai Trò"
+    NAME2: "Tên Vai Trò"
+    NAME3: "Tên Vai Trò"
+    NAME4: "Tên Vai Trò"
+    ID1: "ID ROLE CỦA BẠN"
+    ID2: "ID ROLE CỦA BẠN"
+    ID3: "ID ROLE CỦA BẠN"
+    ID4: "ID ROLE CỦA BẠN"
+  SUPPORT_US:
+    NAME1: "Mời Bot"
+    NAME2: "Vote Bot"
+    NAME3: "Trang Patreon"
+    URL1: "https://zkmusic/zenkho.top/invite"
+    URL2: "https://zkmusic/zenkho.top/topgg"
+    URL3: "https://zkmusic/zenkho.top/premium"
+
+# Cấu hình emoji cho nội dung message trong select menu
+# https://dsteam.store/discord — Tham gia server nếu bạn muốn dùng emoji có sẵn
+MENU_HELP_EMOJI:
+  E_HOME: "<:home:1220841898449703052>"
+  E_INFO: "<:info:1220848388455661608>"
+  E_MUSIC: "<:music:1220842323760648443>"
+  E_FILTER: "<:filters:1252602140472508476>"
+  E_PLAYLIST: "<:queue:1220834363818770432>"
+  E_UTILS: "<:utils:1220842590123851866>"
+  E_SETTING: "<:setting:1220842034726830280>"
+  E_ADMIN: "<:dev:1220842814200352819>"
+  E_ALLCMD: "<:allcmd:1220841924936601704>"
+  E_INVITE: "<:plus:1220882444119703552>"
+  E_SUPPORT: "<:supports:1220844767236198510>"
+  E_VOTE: "<:topgg:1220879943177605241>"
+  E_WEBSITE: "<:m_web:1212011799420076182>"
+  E_PREMIUM: "<:premium:1220842373614010420>"
+  E_ALLCATEGORIES: "<:sparkle:1220846124961890304>"
+
+PLAYER_SOURCENAME:
+  UNKNOWN: "<:sam:1253960817519493150> Lofi/Radio"
+  HTTP: "<:seek:1220881026302345355> Phát trực tiếp"
+  YOUTUBE: "<:syt:1253961019383087145> Nhạc YouTube"
+  YOUTUBE_MUSIC: "<:syt:1253961019383087145> Nhạc YouTube"
+  SOUNDCLOUD: "<:scs:1253961119064789022> Soundcloud"
+  SPOTIFY: "<:sps:1253960964718727202> Spotify"
+  DEEZER: "<:sdz:1253961079437135902> Deezer"
+  TWITCH: "<:stw:1253961210953470014> Twitch"
+  APPLE_MUSIC: "<:sam:1253960817519493150> Apple Music"
+  TIDAL: "<:tdl:1310064648090943519> Tidal"
+
+SEARCH_COMMANDS_EMOJI:
+  UNKNOWN: "<:sam:1253960817519493150>"
+  YOUTUBE: "<:syt:1253961019383087145>"
+  YOUTUBE_MUSIC: "<:syt:1253961019383087145>"
+  SOUNDCLOUD: "<:scs:1253961119064789022>"
+  SPOTIFY: "<:sps:1253960964718727202>"
+  DEEZER: "<:sdz:1253961079437135902>"
+  TWITCH: "<:stw:1253961210953470014>"
+  APPLE_MUSIC: "<:sam:1253960817519493150>"
+  TIDAL: "<:tdl:1310064648090943519>"
+
+TRACKS_EMOJI:
+  Author: "<:pop:1220849334606626946>"
+  Volume: "<:vols:1253961282802024550>"
+  Autoplay: "<:autoplay:1253965063040270457>"
+  Timers: "<:times:1253961346870153246>"
+
+# Bạn có thể tùy chỉnh emoji ở đây!
+emojis:
+  PLAYER:
+    PLAY: "<:play:1220839345938763978>"
+    PAUSE: "<:pause:1220831927595175949>"
+    LOOP: "<:loop:1220832757496811570>"
+    SHUFFLE: "<:shuffle:1220832098651340810>"
+    STOP: "<:stop:1220831796430897272>"
+    SKIP: "<:skip:1220831656143753317>"
+    PREVIOUS: "<:previous:1220831746325479436>"
+    VOLDOWN: "<:voldown:1220831827825135637>"
+    VOLUP: "<:volup:1220831844766060554>"
+    QUEUE: "<:queue:1220834363818770432>"
+    RESUME: "<:pause:1220831927595175949>"
+    AUTOPLAY: "<:replay:1220881274378653787>"
+  GLOBAL:
+    ARROW_NEXT: "<:next:1220832036101820508>"
+    ARROW_PREVIOUS: "<:back:1220832007303594086>"
+    LOADING: "<a:loading:1220847288331538522>"
+
+# Kiểm tra quyền cho nút player: "Member", "Voter", hoặc "UserPremium", "GuildPremium", "PremiumStore", "PremiumRole", "Premium"
+PLAYER_BUTTON:
+  autoplay: "Member"
+  loop: "Member"
+  pause: "Member"
+  previous: "Member"
+  queue: "Member"
+  shuffle: "Member"
+  skip: "Member"
+  stop: "Member"
+  volume_down: "Member"
+  volume_up: "Member"
+
+# Kiểm tra quyền cho nút thiết lập: "Member", "Voter", hoặc "UserPremium", "GuildPremium", "PremiumStore", "PremiumRole", "Premium"
+SETUP_BUTTON:
+  loop: "Member"
+  pause: "Member"
+  previous: "Member"
+  skip: "Member"
+  stop: "Member"
+
+# Kiểm tra quyền cho menu chọn bộ lọc: "Member", "Voter", hoặc "UserPremium", "GuildPremium", "PremiumStore", "PremiumRole", "Premium"
+SELECT_MENU_FILTER:
+  placeholder: "Hiệu ứng bộ lọc của Zk Music's ♪"
+  emoji_reset: "<:loop:1220832757496811570>"
+  emoji_filter: "<:pop:1220849334606626946>"
+  reset: "Member"
+  threed: "Member"
+  bass: "Member"
+  bassboost: "Member"
+  chipmunk: "Member"
+  darthvader: "Member"
+  daycore: "Member"
+  doubletime: "Member"
+  earrape: "Member"
+  karaoke: "Member"
+  nightcore: "Member"
+  pitch: "Member"
+  pop: "Member"
+  rate: "Member"
+  slowmotion: "Member"
+  soft: "Member"
+  speed: "Member"
+  superbass: "Member"
+  china: "Member"
+  televison: "Member"
+  treblebass: "Member"
+  tremolo: "Member"
+  vaporwave: "Member"
+  vibrate: "Member"
+  vibrato: "Member"
+
+# Kiểm tra quyền cho lệnh: "Owner", "Admin", "Manager", "Member", "Voter", hoặc "UserPremium", "GuildPremium", "PremiumStore", "PremiumRole", "Premium"
+# Vui lòng kiểm tra README.md
+COMMANDS_ACCESS:
+  ADMIN: # for admin = only set Owner or Admin
+    Announcement: ["Admin"]
+    BlackList: ["Admin"]
+    ClearDatabase: ["Owner"]
+    Helpdesk: ["Owner"]
+    Helper: ["Owner"]
+    Maintenance: ["Admin"]
+    PremiumCode: ["Admin"]
+    PremiumList: ["Admin"]
+    PremiumReedem: ["Admin"]
+    PremiumRemove: ["Admin"]
+    ModLogSetup: ["Admin"]
+    ModLogToggle: ["Admin"]
+    TicketSetup: ["Owner"]
+    Update: ["Admin"]
+
+  FILTER:
+    ThreeD: ["Member"]
+    Bass: ["Member"]
+    Bassboost: ["Member"]
+    China: ["Member"]
+    Chipmunk: ["Member"]
+    Darthvader: ["Member"]
+    Daycore: ["Member"]
+    Doubletime: ["Member"]
+    Earrape: ["Member"]
+    Equalizer: ["Member"]
+    Karaoke: ["Member"]
+    Nightcore: ["Member"]
+    Pitch: ["Member"]
+    Pop: ["Member"]
+    Rate: ["Member"]
+    Reset: ["Member"]
+    Slowmotion: ["Member"]
+    Soft: ["Member"]
+    Speed: ["Member"]
+    Superbass: ["Member"]
+    Television: ["Member"]
+    Treblebass: ["Member"]
+    Tremolo: ["Member"]
+    Vaporwave: ["Member"]
+    Vibrate: ["Member"]
+    Vibrato: ["Member"]
+
+  INFO:
+    About: ["Member"]
+    Help: ["Member"]
+    Info: ["Member"]
+    PremiumCheck: ["Member"]
+    PrivacyPolicy: ["Member"]
+    Rating: ["Member"]
+    Report: ["Member"]
+    Suggestions: ["Member"]
+    StatisticUser: ["Member"]
+    TermsOfServices: ["Member"]
+
+  MUSIC:
+    Autoplay: ["Member"]
+    ClearQueue: ["Member"]
+    ForceJoin: ["Member"]
+    Forward: ["Member"]
+    Join: ["Member"]
+    Loop: ["Member"]
+    Lyrics: ["Member"]
+    NowPlaying: ["Member"]
+    Pause: ["Member"]
+    Play: ["Member"]
+    PlayNext: ["Member"]
+    Previous: ["Member"]
+    Queue: ["Member"]
+    Radio: ["Member"]
+    Remove: ["Member"]
+    Replay: ["Member"]
+    Resume: ["Member"]
+    Rewind: ["Member"]
+    Search: ["Member"]
+    Seek: ["Member"]
+    Shuffle: ["Member"]
+    Skip: ["Member"]
+    SkipTo: ["Member"]
+    SpotifyPlaylist: ["Member"]
+    Stop: ["Member"]
+    Volume: ["Member"]
+
+  PLAYLIST:
+    Add: ["Member"]
+    All: ["Member"]
+    Create: ["Member"]
+    Delete: ["Member"]
+    Detail: ["Member"]
+    Editor: ["Member"]
+    Import: ["Member"]
+    Info: ["Member"]
+    Remove: ["Member"]
+    SaveQueue: ["Member"]
+
+  SETTINGS:
+    TwentyFourSeven: ["Manager"]
+    ControlMode: ["Manager"]
+    Language: ["Manager"]
+    LastFm: ["Member"]
+    Prefix: ["Manager"]
+    ResetData: ["Member"]
+    Setup: ["Manager"]
+    Spotify: ["Member"]
+    Themes: ["Member"]
+    TempVoiceChannel: ["Manager"]
+    NotifyTwitch: ["Manager"]
+    NotifyYoutube: ["Manager"]
+    StatusVoiceChannel: ["Manager"]
+
+  UTILS:
+    Ban: ["Manager"]
+    Cat: ["Member"]
+    Kick: ["Manager"]
+    Purge: ["Manager"]
+    Quotes: ["Member"]
+    Ticket: ["Owner"]
+    TopStats: ["Member"]
+    MyStats: ["Member"]
+    Profile: ["Member"]

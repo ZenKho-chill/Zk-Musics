@@ -23,7 +23,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.SilentDeferReply();
 
-    const player = client.zklink.players.get(handler.guild!.id);
+    const player = client.Zklink.players.get(handler.guild!.id);
 
     if (player?.data.get("filter-mode") == this.name[0])
       return handler.editReply({

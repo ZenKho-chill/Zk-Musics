@@ -1,8 +1,4 @@
-import {
-  EmbedBuilder,
-  ApplicationCommandOptionType,
-  WebhookClient,
-} from "discord.js";
+import { EmbedBuilder, ApplicationCommandOptionType, WebhookClient } from "discord.js";
 import moment from "moment";
 import voucher_codes from "voucher-code-generator";
 import { Accessableby, Command } from "../../structures/Command.js";
@@ -72,14 +68,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "premium_code_arg_error",
-                {
-                  text: "**Hàng ngày**, **Hàng tuần**, **Hàng tháng**, **Hàng năm**, **Trọn đời**",
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "premium_code_arg_error", {
+                text: "**Hàng ngày**, **Hàng tuần**, **Hàng tháng**, **Hàng năm**, **Trọn đời**",
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -89,20 +80,15 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "premium_code_arg_error",
-                {
-                  text: "**Số**",
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "premium_code_arg_error", {
+                text: "**Số**",
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
 
-    let codes = [];
+    let codes: string[] = [];
 
     const plan = name;
 
@@ -156,54 +142,27 @@ export default class implements Command {
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "commands.admin",
-          "premium_code_desc",
-          {
-            codes_length: String(codes.length),
-            codes: codes.join("\n"),
-            plan: String(plan),
-            expires:
-              time == "lifetime"
-                ? "lifetime"
-                : moment(time).format("dddd, MMMM Do YYYY (HH:mm:ss)"),
-          }
-        )}`
+        `${client.i18n.get(handler.language, "commands.admin", "premium_code_desc", {
+          codes_length: String(codes.length),
+          codes: codes.join("\n"),
+          plan: String(plan),
+          expires:
+            time == "lifetime" ? "lifetime" : moment(time).format("dddd, MMMM Do YYYY (HH:mm:ss)"),
+        })}`
       )
       .addFields([
         {
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.admin",
-            "premium_code_plan"
-          )}`,
-          value: `${
-            plan === "lifetime"
-              ? "Trọn đời"
-              : `<t:${Math.floor(time / 1000)}:R>`
-          }`,
+          name: `${client.i18n.get(handler.language, "commands.admin", "premium_code_plan")}`,
+          value: `${plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(time / 1000)}:R>`}`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.admin",
-            "premium_code_expired"
-          )}`,
-          value: `${
-            plan === "lifetime"
-              ? "Trọn đời"
-              : `<t:${Math.floor(time / 1000)}:F>`
-          }`,
+          name: `${client.i18n.get(handler.language, "commands.admin", "premium_code_expired")}`,
+          value: `${plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(time / 1000)}:F>`}`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.admin",
-            "premium_code_generateby"
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.admin", "premium_code_generateby")}`,
           value: `${handler.user!.displayName} - ${handler.user!.id}`,
           inline: false,
         },
@@ -244,37 +203,21 @@ export default class implements Command {
       )
       .addFields([
         {
-          name: `${client.i18n.get(
-            language,
-            "commands.admin",
-            "premium_code_plan"
-          )}`,
+          name: `${client.i18n.get(language, "commands.admin", "premium_code_plan")}`,
           value: `${
-            plan === "lifetime"
-              ? "Trọn đời"
-              : `<t:${Math.floor(Number(expiresAt) / 1000)}:R>`
+            plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(Number(expiresAt) / 1000)}:R>`
           }`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(
-            language,
-            "commands.admin",
-            "premium_code_expired"
-          )}`,
+          name: `${client.i18n.get(language, "commands.admin", "premium_code_expired")}`,
           value: `${
-            plan === "lifetime"
-              ? "Trọn đời"
-              : `<t:${Math.floor(Number(expiresAt) / 1000)}:F>`
+            plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(Number(expiresAt) / 1000)}:F>`
           }`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(
-            language,
-            "commands.admin",
-            "premium_code_generateby"
-          )}`,
+          name: `${client.i18n.get(language, "commands.admin", "premium_code_generateby")}`,
           value: `${handler.user!.displayName} - ${handler.user!.id}`,
           inline: false,
         },
@@ -286,8 +229,8 @@ export default class implements Command {
       const channel = await client.channels
         .fetch(client.config.logchannel.GenerateCodeChannelID)
         .catch(() => undefined);
-      if (!channel || (channel && !channel.isTextBased())) return;
-      channel.messages.channel.send({ embeds: [embed] });
+      if (!channel || !channel.isTextBased()) return;
+      await (channel as any).send({ embeds: [embed] });
     } catch {}
 
     return;

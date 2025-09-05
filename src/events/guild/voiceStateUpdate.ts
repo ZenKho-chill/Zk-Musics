@@ -12,7 +12,7 @@ import {
 } from "discord.js";
 import { Manager } from "../../manager.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
-import { ZklinkPlayerState } from "../../zklink/main.js";
+import { ZklinkPlayerState } from "../../Zklink/main.js";
 
 export default class {
   async execute(client: Manager, oldState: VoiceState, newState: VoiceState) {
@@ -22,7 +22,7 @@ export default class {
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
 
-    const player = client.zklink?.players.get(newState.guild.id);
+    const player = client.Zklink?.players.get(newState.guild.id);
     if (!player) return;
 
     const is247 = await client.db.autoreconnect.get(`${newState.guild.id}`);
@@ -178,7 +178,7 @@ export default class {
             (m) => !m.user.bot
           ).size;
         if (!vcMembers || vcMembers === 1) {
-          const newPlayer = client.zklink?.players.get(newState.guild.id);
+          const newPlayer = client.Zklink?.players.get(newState.guild.id);
           player.data.set("sudo-destroy", true);
           if (newPlayer)
             player.stop(is247 && is247.twentyfourseven ? false : true);

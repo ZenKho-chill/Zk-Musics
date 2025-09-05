@@ -8,11 +8,8 @@ import { ConvertTime } from "../../utilities/ConvertTime.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import {
-  AutocompleteInteractionChoices,
-  GlobalInteraction,
-} from "../../@types/Interaction.js";
-import { ZklinkSearchResultType, ZklinkTrack } from "../../zklink/main.js";
+import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
+import { ZklinkSearchResultType, ZklinkTrack } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -58,11 +55,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_add_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_add_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -77,19 +70,14 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_add_match"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_add_match")}`
             )
             .setColor(client.color_main),
         ],
       });
 
     const isYouTubeLink = (input: string): boolean => {
-      const youtubeRegex =
-        /(?:https?:\/\/)?(?:www\.)?(?:youtube|youtu)\.(?:com|be)\/(?:[^ ]+)/i;
+      const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube|youtu)\.(?:com|be)\/(?:[^ ]+)/i;
       return youtubeRegex.test(input);
     };
 
@@ -98,16 +86,11 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "youtube_disabled",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                  serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "youtube_disabled", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+                serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -117,7 +100,7 @@ export default class implements Command {
     const engines = client.config.features.PLAY_COMMAND_ENGINE;
     const randomEngine = engines[Math.floor(Math.random() * engines.length)];
 
-    const result = await client.zklink.search(input, {
+    const result = await client.Zklink.search(input, {
       engine: randomEngine,
       requester: handler.user,
     });
@@ -129,17 +112,12 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_add_match"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_add_match")}`
             )
             .setColor(client.color_main),
         ],
       });
-    if (result.type === "PLAYLIST")
-      for (let track of tracks) TrackAdd.push(track);
+    if (result.type === "PLAYLIST") for (let track of tracks) TrackAdd.push(track);
     else TrackAdd.push(tracks[0]);
 
     const Duration = new ConvertTime().parse(tracks[0].duration as number);
@@ -151,55 +129,40 @@ export default class implements Command {
     if (result.type === "PLAYLIST") {
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_add_playlist",
-            {
-              title: this.getTitle(client, result.type, tracks, Inputed),
-              duration: new ConvertTime().parse(TotalDuration),
-              track: String(tracks.length),
-              user: String(handler.user),
-              author: String(tracks[0].author),
-              serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.playlist", "pl_add_playlist", {
+            title: this.getTitle(client, result.type, tracks, Inputed),
+            duration: new ConvertTime().parse(TotalDuration),
+            track: String(tracks.length),
+            user: String(handler.user),
+            author: String(tracks[0].author),
+            serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
+          })}`
         )
         .setColor(client.color_main);
       handler.editReply({ content: " ", embeds: [embed] });
     } else if (result.type === "TRACK") {
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_add_track",
-            {
-              title: this.getTitle(client, result.type, tracks),
-              duration: Duration,
-              user: String(handler.user),
-              author: String(tracks[0].author),
-              serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.playlist", "pl_add_track", {
+            title: this.getTitle(client, result.type, tracks),
+            duration: Duration,
+            user: String(handler.user),
+            author: String(tracks[0].author),
+            serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
+          })}`
         )
         .setColor(client.color_main);
       handler.editReply({ content: " ", embeds: [embed] });
     } else if (result.type === "SEARCH") {
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_add_search",
-            {
-              title: this.getTitle(client, result.type, tracks),
-              duration: Duration,
-              user: String(handler.user),
-              author: String(tracks[0].author),
-              serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.playlist", "pl_add_search", {
+            title: this.getTitle(client, result.type, tracks),
+            duration: Duration,
+            user: String(handler.user),
+            author: String(tracks[0].author),
+            serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
+          })}`
         )
         .setColor(client.color_main);
       handler.editReply({ content: " ", embeds: [embed] });
@@ -209,11 +172,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_add_match"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_add_match")}`
             )
             .setColor(client.color_main),
         ],
@@ -227,11 +186,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_add_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_add_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -242,11 +197,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_add_owner"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_add_owner")}`
             )
             .setColor(client.color_main),
         ],
@@ -261,14 +212,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_add_limit_track",
-                {
-                  limit: String(client.config.features.LIMIT_TRACK),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_add_limit_track", {
+                limit: String(client.config.features.LIMIT_TRACK),
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -290,15 +236,10 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "commands.playlist",
-          "pl_add_added",
-          {
-            count: String(TrackAdd.length),
-            playlist: value,
-          }
-        )}`
+        `${client.i18n.get(handler.language, "commands.playlist", "pl_add_added", {
+          count: String(TrackAdd.length),
+          playlist: value,
+        })}`
       )
       .setColor(client.color_main);
 
@@ -339,21 +280,13 @@ export default class implements Command {
   }
 
   // Hàm autocomplete
-  public async autocomplete(
-    client: Manager,
-    interaction: GlobalInteraction,
-    language: string
-  ) {
+  public async autocomplete(client: Manager, interaction: GlobalInteraction, language: string) {
     let choice: AutocompleteInteractionChoices[] = [];
-    const url = String(
-      (interaction as CommandInteraction).options.get("search")!.value
-    );
+    const url = String((interaction as AutocompleteInteraction).options.getString("search"));
 
     const Random =
       client.config.features.AUTOCOMPLETE_SEARCH[
-        Math.floor(
-          Math.random() * client.config.features.AUTOCOMPLETE_SEARCH.length
-        )
+        Math.floor(Math.random() * client.config.features.AUTOCOMPLETE_SEARCH.length)
       ];
 
     const match = client.REGEX.some((match) => {
@@ -362,30 +295,20 @@ export default class implements Command {
 
     if (match == true) {
       choice.push({ name: url, value: url });
-      await (interaction as AutocompleteInteraction)
-        .respond(choice)
-        .catch(() => {});
+      await (interaction as AutocompleteInteraction).respond(choice).catch(() => {});
       return;
     }
 
     if (client.lavalinkUsing.length == 0) {
       choice.push({
-        name: `${client.i18n.get(
-          language,
-          "commands.playlist",
-          "pl_error_no_node"
-        )}`,
-        value: `${client.i18n.get(
-          language,
-          "commands.playlist",
-          "pl_error_no_node"
-        )}`,
+        name: `${client.i18n.get(language, "commands.playlist", "pl_error_no_node")}`,
+        value: `${client.i18n.get(language, "commands.playlist", "pl_error_no_node")}`,
       });
       return;
     }
     const engines = client.config.features.PLAY_COMMAND_ENGINE;
     const randomEngine = engines[Math.floor(Math.random() * engines.length)];
-    const searchRes = await client.zklink.search(url || Random, {
+    const searchRes = await client.Zklink.search(url || Random, {
       engine: randomEngine,
     });
 
@@ -404,8 +327,6 @@ export default class implements Command {
       });
     }
 
-    await (interaction as AutocompleteInteraction)
-      .respond(choice)
-      .catch(() => {});
+    await (interaction as AutocompleteInteraction).respond(choice).catch(() => {});
   }
 }

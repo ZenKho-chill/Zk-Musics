@@ -1,6 +1,6 @@
 import { ButtonInteraction, CacheType, InteractionCollector, Message } from "discord.js";
 import { Manager } from "../manager.js";
-import { ZklinkPlayer } from "../zklink/main.js";
+import { ZklinkPlayer } from "../Zklink/main.js";
 
 export class PlayerButton {
   name: string = "";

@@ -3,11 +3,7 @@ import { Manager } from "../../manager.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import {
-  ZklinkLoopMode,
-  ZklinkPlayer,
-  ZklinkTrack,
-} from "../../zklink/main.js";
+import { ZklinkLoopMode, ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
@@ -51,9 +47,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
-    const player = client.zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
     const currentTrack = player.queue.current;
 
     if (!currentTrack) {
@@ -61,14 +55,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "no_songs_playing",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+                user: handler.user!.displayName || handler.user!.tag,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -84,35 +73,22 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "loop_invalid",
-                {
-                  mode: this.changeBold(mode_array).join(", "),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "loop_invalid", {
+                mode: this.changeBold(mode_array).join(", "),
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
 
-    if (
-      (mode == "song" && player.loop == ZklinkLoopMode.SONG) ||
-      mode == player.loop
-    )
+    if ((mode == "song" && player.loop == ZklinkLoopMode.SONG) || mode == player.loop)
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "loop_already",
-                {
-                  mode: mode,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "loop_already", {
+                mode: mode,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -120,27 +96,20 @@ export default class implements Command {
 
     if (mode == "song") {
       player.setLoop(ZklinkLoopMode.SONG);
-      if (client.config.features.AUTO_RESUME)
-        this.setLoop247(client, player, ZklinkLoopMode.SONG);
+      if (client.config.features.AUTO_RESUME) this.setLoop247(client, player, ZklinkLoopMode.SONG);
 
       const looped = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "loop_current",
-            {
-              user: handler.user!.displayName || handler.user!.tag,
-              title: this.getTitle(client, currentTrack),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "loop_current", {
+            user: handler.user!.displayName || handler.user!.tag,
+            title: this.getTitle(client, currentTrack),
+          })}`
         )
         .setColor(client.color_main);
       handler.editReply({ content: " ", embeds: [looped] });
     } else if (mode == "queue") {
       player.setLoop(ZklinkLoopMode.QUEUE);
-      if (client.config.features.AUTO_RESUME)
-        this.setLoop247(client, player, ZklinkLoopMode.QUEUE);
+      if (client.config.features.AUTO_RESUME) this.setLoop247(client, player, ZklinkLoopMode.QUEUE);
 
       const looped_queue = new EmbedBuilder()
         .setDescription(
@@ -152,13 +121,10 @@ export default class implements Command {
       handler.editReply({ content: " ", embeds: [looped_queue] });
     } else if (mode === "none") {
       player.setLoop(ZklinkLoopMode.NONE);
-      if (client.config.features.AUTO_RESUME)
-        this.setLoop247(client, player, ZklinkLoopMode.NONE);
+      if (client.config.features.AUTO_RESUME) this.setLoop247(client, player, ZklinkLoopMode.NONE);
 
       const looped = new EmbedBuilder()
-        .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "unloop_all")}`
-        )
+        .setDescription(`${client.i18n.get(handler.language, "commands.music", "unloop_all")}`)
         .setColor(client.color_main);
       handler.editReply({ content: " ", embeds: [looped] });
     }
@@ -171,16 +137,14 @@ export default class implements Command {
   }
 
   async setLoop247(client: Manager, player: ZklinkPlayer, loop: string) {
-    const data = await new Mode247Builder(client, player).execute(
-      player.guildId
-    );
+    const data = await new Mode247Builder(client, player).execute(player.guildId);
     if (data) {
       await client.db.autoreconnect.set(`${player.guildId}.config.loop`, loop);
     }
   }
 
   changeBold(arrayMode: string[]) {
-    const res = [];
+    const res: string[] = [];
     for (const data of arrayMode) {
       res.push(`**${data}**`);
     }

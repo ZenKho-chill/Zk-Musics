@@ -1,10 +1,4 @@
-import {
-  GuildMember,
-  PartialGuildMember,
-  Presence,
-  EmbedBuilder,
-  AuditLogEvent,
-} from "discord.js";
+import { GuildMember, PartialGuildMember, Presence, EmbedBuilder, AuditLogEvent } from "discord.js";
 import { isEventEnabled, getModLogChannel } from "../ModLogEventUtils.js";
 import { Manager } from "../../manager.js";
 
@@ -18,31 +12,18 @@ export class MemberEventsHandler {
 
   private init() {
     this.client.on("guildMemberAdd", this.handleGuildMemberAdd.bind(this));
-    this.client.on(
-      "guildMemberRemove",
-      this.handleGuildMemberRemove.bind(this)
-    );
-    this.client.on(
-      "guildMemberUpdate",
-      this.handleGuildMemberUpdate.bind(this)
-    );
+    this.client.on("guildMemberRemove", this.handleGuildMemberRemove.bind(this));
+    this.client.on("guildMemberUpdate", this.handleGuildMemberUpdate.bind(this));
     this.client.on("guildMemberBoost", this.handleGuildMemberBoost.bind(this));
     this.client.on("presenceUpdate", this.handlePresenceUpdate.bind(this));
   }
 
   // Xử lý cập nhật trạng thái online (presence)
-  private async handlePresenceUpdate(
-    oldPresence: Presence | null,
-    newPresence: Presence
-  ) {
+  private async handlePresenceUpdate(oldPresence: Presence | null, newPresence: Presence) {
     const member = newPresence.member as GuildMember;
     if (
       !member ||
-      !(await isEventEnabled(
-        member.guild.id,
-        "guildMemberOnlineStatusUpdate",
-        this.client.db
-      ))
+      !(await isEventEnabled(member.guild.id, "guildMemberOnlineStatusUpdate", this.client.db))
     )
       return;
 
@@ -69,24 +50,15 @@ export class MemberEventsHandler {
 
   // Xử lý sự kiện thành viên tham gia
   private async handleGuildMemberAdd(member: GuildMember | PartialGuildMember) {
-    if (
-      !(await isEventEnabled(member.guild.id, "guildMemberAdd", this.client.db))
-    )
-      return;
+    if (!(await isEventEnabled(member.guild.id, "guildMemberAdd", this.client.db))) return;
 
     const channel = await getModLogChannel(member.guild.id, this.client);
     if (!channel) return;
 
     const memberInfo =
-      member instanceof GuildMember
-        ? `<@${member.id}> (${member.id})`
-        : `${member.user.tag}`;
-    const accountCreationTimestamp = `<t:${Math.floor(
-      member.user.createdTimestamp / 1000
-    )}:F>`;
-    const accountCreationRelative = `<t:${Math.floor(
-      member.user.createdTimestamp / 1000
-    )}:R>`;
+      member instanceof GuildMember ? `<@${member.id}> (${member.id})` : `${member.user.tag}`;
+    const accountCreationTimestamp = `<t:${Math.floor(member.user.createdTimestamp / 1000)}:F>`;
+    const accountCreationRelative = `<t:${Math.floor(member.user.createdTimestamp / 1000)}:R>`;
     await channel.send({
       embeds: [
         new EmbedBuilder()
@@ -97,7 +69,8 @@ export class MemberEventsHandler {
           })
           .setThumbnail(
             member.user.displayAvatarURL({ size: 512 }) ||
-              this.client.user?.displayAvatarURL({ size: 512 })
+              this.client.user?.displayAvatarURL({ size: 512 }) ||
+              null
           )
           .setDescription(`📥 <@${member.id}> **đã tham gia máy chủ.**`)
           .addFields(
@@ -124,25 +97,14 @@ export class MemberEventsHandler {
   }
 
   // Xử lý sự kiện thành viên rời
-  private async handleGuildMemberRemove(
-    member: GuildMember | PartialGuildMember
-  ) {
-    if (
-      !(await isEventEnabled(
-        member.guild.id,
-        "guildMemberRemove",
-        this.client.db
-      ))
-    )
-      return;
+  private async handleGuildMemberRemove(member: GuildMember | PartialGuildMember) {
+    if (!(await isEventEnabled(member.guild.id, "guildMemberRemove", this.client.db))) return;
 
     const channel = await getModLogChannel(member.guild.id, this.client);
     if (!channel) return;
 
     const memberInfo =
-      member instanceof GuildMember
-        ? `<@${member.id}> (${member.id})`
-        : `${member.user.tag}`;
+      member instanceof GuildMember ? `<@${member.id}> (${member.id})` : `${member.user.tag}`;
 
     await channel.send({
       embeds: [
@@ -154,7 +116,8 @@ export class MemberEventsHandler {
           })
           .setThumbnail(
             member.user.displayAvatarURL({ size: 512 }) ||
-              this.client.user?.displayAvatarURL({ size: 512 })
+              this.client.user?.displayAvatarURL({ size: 512 }) ||
+              null
           )
           .setDescription(`📤 <@${member.id}> **đã rời máy chủ.**`)
           .addFields({
@@ -178,14 +141,7 @@ export class MemberEventsHandler {
     oldMember: GuildMember | PartialGuildMember,
     newMember: GuildMember
   ) {
-    if (
-      !(await isEventEnabled(
-        newMember.guild.id,
-        "guildMemberUpdate",
-        this.client.db
-      ))
-    )
-      return;
+    if (!(await isEventEnabled(newMember.guild.id, "guildMemberUpdate", this.client.db))) return;
 
     const logChannel = await getModLogChannel(newMember.guild.id, this.client);
     if (!logChannel) return;
@@ -200,9 +156,7 @@ export class MemberEventsHandler {
               name: newMember.user.tag,
               iconURL: newMember.user.displayAvatarURL(),
             })
-            .setThumbnail(
-              newMember.user.displayAvatarURL({ size: 512 }) || null
-            )
+            .setThumbnail(newMember.user.displayAvatarURL({ size: 512 }) || null)
             .setDescription(
               `🔢 **Nickname đã thay đổi**\n ${
                 oldMember.nickname || oldMember.user.username
@@ -214,8 +168,8 @@ export class MemberEventsHandler {
               inline: true,
             })
             .setFooter({
-              text: this.client.user.username || this.client.user.tag,
-              iconURL: this.client.user?.displayAvatarURL(),
+              text: this.client.user?.username || this.client.user?.tag || "Bot",
+              iconURL: this.client.user?.displayAvatarURL() || undefined,
             })
             .setTimestamp(new Date()),
         ],
@@ -247,13 +201,9 @@ export class MemberEventsHandler {
               name: newMember.user.tag,
               iconURL: newMember.user.displayAvatarURL(),
             })
-            .setThumbnail(
-              newMember.user.displayAvatarURL({ size: 512 }) || null
-            )
+            .setThumbnail(newMember.user.displayAvatarURL({ size: 512 }) || null)
             .setDescription(
-              `**Đã thêm role**\n+ ${addedRoles
-                .map((role) => `<@&${role.id}>`)
-                .join("\n+ ")}**`
+              `**Đã thêm role**\n+ ${addedRoles.map((role) => `<@&${role.id}>`).join("\n+ ")}**`
             )
             .addFields({
               name: "Các ID",
@@ -263,8 +213,8 @@ export class MemberEventsHandler {
               inline: true,
             })
             .setFooter({
-              text: this.client.user.username || this.client.user.tag,
-              iconURL: this.client.user?.displayAvatarURL(),
+              text: this.client.user?.username || this.client.user?.tag || "Bot",
+              iconURL: this.client.user?.displayAvatarURL() || undefined,
             })
             .setTimestamp(new Date()),
         ],
@@ -281,13 +231,9 @@ export class MemberEventsHandler {
               name: newMember.user.username,
               iconURL: newMember.user.displayAvatarURL(),
             })
-            .setThumbnail(
-              newMember.user.displayAvatarURL({ size: 512 }) || null
-            )
+            .setThumbnail(newMember.user.displayAvatarURL({ size: 512 }) || null)
             .setDescription(
-              `**Đã gỡ role**\n– ${removedRoles
-                .map((role) => `<@&${role.id}>`)
-                .join("\n- ")}**`
+              `**Đã gỡ role**\n– ${removedRoles.map((role) => `<@&${role.id}>`).join("\n- ")}**`
             )
             .addFields({
               name: "Các ID",
@@ -297,8 +243,8 @@ export class MemberEventsHandler {
               inline: true,
             })
             .setFooter({
-              text: this.client.user.username || this.client.user.tag,
-              iconURL: this.client.user?.displayAvatarURL(),
+              text: this.client.user?.username || this.client.user?.tag || "Bot",
+              iconURL: this.client.user?.displayAvatarURL() || undefined,
             })
             .setTimestamp(new Date()),
         ],
@@ -308,14 +254,7 @@ export class MemberEventsHandler {
 
   // Xử lý sự kiện boost máy chủ
   private async handleGuildMemberBoost(member: GuildMember) {
-    if (
-      !(await isEventEnabled(
-        member.guild.id,
-        "guildMemberBoost",
-        this.client.db
-      ))
-    )
-      return;
+    if (!(await isEventEnabled(member.guild.id, "guildMemberBoost", this.client.db))) return;
 
     const logChannel = await getModLogChannel(member.guild.id, this.client);
     if (!logChannel) return;
@@ -330,12 +269,10 @@ export class MemberEventsHandler {
           .setThumbnail(member.user.displayAvatarURL({ size: 512 }) || null)
           .setColor(0xff69b4)
           .setTitle("💎 Máy chủ đã được boost")
-          .setDescription(
-            `> **<@${member.id}> (${member.user.id}) đã boost máy chủ.**`
-          )
+          .setDescription(`> **<@${member.id}> (${member.user.id}) đã boost máy chủ.**`)
           .setFooter({
-            text: this.client.user.username || this.client.user.tag,
-            iconURL: this.client.user?.displayAvatarURL(),
+            text: this.client.user?.username || this.client.user?.tag || "Bot",
+            iconURL: this.client.user?.displayAvatarURL() || undefined,
           })
           .setTimestamp(new Date()),
       ],

@@ -17,474 +17,363 @@ import {
 export class TicketHandler {
   client: Manager;
 
-  // Khởi tạo class với client (bot)
+  // Hàm khởi tạo khởi tạo lớp với instance client
   constructor(client: Manager) {
     this.client = client;
     this.execute();
   }
 
   async execute() {
-    this.client.on(
-      "interactionCreate",
-      async (interaction: Interaction): Promise<void> => {
-        if (!interaction.guild) return;
-        const guildId = interaction.guild.id;
+    this.client.on("interactionCreate", async (interaction: Interaction): Promise<void> => {
+      if (!interaction.guild) return;
+      const guildId = interaction.guild.id;
 
-        // Lấy ngôn ngữ đã lưu của server từ database
-        let guildModel = await this.client.db.language.get(guildId);
-        const language = (guildModel = await this.client.db.language.set(
-          guildId,
-          this.client.config.bot.LANGUAGE
-        ));
+      // Lấy cài đặt ngôn ngữ của server từ cơ sở dữ liệu
+      let guildModel = await this.client.db.language.get(guildId);
+      const language = (guildModel = await this.client.db.language.set(
+        guildId,
+        this.client.config.bot.LANGUAGE
+      ));
 
-        // Lấy dữ liệu cấu hình Ticket (role hỗ trợ, category để đóng ticket)
-        const TicketSetupData = await this.client.db.TicketSetup.get(guildId);
-        const roleId = TicketSetupData?.roleId;
-        const closeCategoryId = TicketSetupData?.closeCategory;
+      // Lấy thông tin cấu hình ticket của server (role ID, category đóng)
+      const TicketSetupData = await this.client.db.TicketSetup.get(guildId);
+      const roleId = TicketSetupData?.roleId;
+      const closeCategoryId = TicketSetupData?.closeCategory;
 
-        if (interaction.isButton()) {
-          // Khi nhấn nút mở ticket mới
-          if (
-            interaction.customId.startsWith(
-              `ticket-setup-${interaction.guild.id}`
-            )
-          ) {
-            const id = interaction.customId.split("-")[3]; // lấy ID ticket setup
+      if (interaction.isButton()) {
+        // Xử lý tương tác nút để mở ticket mới
+        if (interaction.customId.startsWith(`ticket-setup-${interaction.guild.id}`)) {
+          const id = interaction.customId.split("-")[3]; // Lấy ID cấu hình ticket
 
-            const modal = new ModalBuilder()
-              .setCustomId(`modal-${interaction.guild.id}-${id}`)
-              .setTitle(`Ticket của ${interaction.guild.name}`);
+          const modal = new ModalBuilder()
+            .setCustomId(`modal-${interaction.guild.id}-${id}`)
+            .setTitle(`${interaction.guild.name} — Phiếu hỗ trợ`);
 
-            // Ô nhập lý do mở ticket
-            const ticketreason: TextInputBuilder = new TextInputBuilder()
-              .setCustomId(`ticket-reason`)
-              .setLabel("Lý do")
-              .setPlaceholder(
-                `${this.client.i18n.get(
-                  language,
-                  "events.ticket",
-                  "ticket_reason"
-                )}`
-              )
-              .setStyle(TextInputStyle.Short)
-              .setMinLength(10)
-              .setMaxLength(500);
+          // Tạo ô nhập để mô tả lý do mở ticket
+          const ticketreason: TextInputBuilder = new TextInputBuilder()
+            .setCustomId(`ticket-reason`)
+            .setLabel("Lý do")
+            .setPlaceholder(`${this.client.i18n.get(language, "events.ticket", "ticket_reason")}`)
+            .setStyle(TextInputStyle.Short)
+            .setMinLength(10)
+            .setMaxLength(500);
 
-            const firstActionRow: ActionRowBuilder<TextInputBuilder> =
-              new ActionRowBuilder<TextInputBuilder>().addComponents(
-                ticketreason
-              );
+          const firstActionRow: ActionRowBuilder<TextInputBuilder> =
+            new ActionRowBuilder<TextInputBuilder>().addComponents(ticketreason);
 
-            modal.addComponents([firstActionRow]);
+          modal.addComponents([firstActionRow]);
 
-            await interaction.showModal(modal); // hiển thị modal cho người dùng
+          await interaction.showModal(modal); // Hiển thị modal cho người dùng
+        }
+
+        // Xử lý tương tác nút để đóng ticket
+        if (interaction.customId.startsWith(`close-ticket`)) {
+          await interaction.deferUpdate(); // Xác nhận tương tác trước khi xử lý
+
+          const id = interaction.customId.split("-")[2]; // Lấy ID ticket
+          const ticketData = await this.client.db.TicketData.get(id); // Lấy dữ liệu ticket
+
+          if (!ticketData) {
+            interaction.followUp({
+              content: `${this.client.i18n.get(language, "events.ticket", "ticket_already_closed", {
+                id: id,
+              })}`,
+              flags: MessageFlags.Ephemeral,
+            });
+            return;
           }
 
-          // Khi nhấn nút đóng ticket
-          if (interaction.customId.startsWith(`close-ticket`)) {
-            await interaction.deferUpdate(); // xác nhận trước khi xử lý
+          const user = await interaction.guild.members.fetch(ticketData.userId).catch(() => null);
+          const channel = interaction.guild.channels.cache.get(
+            interaction.channelId
+          ) as TextChannel;
 
-            const id = interaction.customId.split("-")[2]; // lấy ID ticket
-            const ticketData = await this.client.db.TicketData.get(id); // lấy dữ liệu ticket
-
-            if (!ticketData) {
-              interaction.followUp({
-                content: `${this.client.i18n.get(
-                  language,
-                  "events.ticket",
-                  "ticket_already_closed",
-                  {
-                    id: id,
-                  }
-                )}`,
-                flags: MessageFlags.Ephemeral,
-              });
-              return;
-            }
-
-            const user = await interaction.guild.members
-              .fetch(ticketData.userId)
-              .catch(() => null);
-            const channel = interaction.guild.channels.cache.get(
-              interaction.channelId
-            ) as TextChannel;
-
-            // Kiểm tra quyền quản lý kênh
-            if (
-              !channel
-                ?.permissionsFor(interaction.user.id)
-                ?.has("ManageChannels")
-            ) {
-              interaction.followUp({
-                content: `${this.client.i18n.get(
-                  language,
-                  "events.ticket",
-                  "ticket_close_user"
-                )}`,
-                flags: MessageFlags.Ephemeral,
-              });
-              return;
-            }
-
-            // Xuất bản log hội thoại của ticket (transcript)
-            const attachment = await discordTranscripts.createTranscript(
-              channel as any,
-              {
-                limit: -1,
-                returnType: discordTranscripts.ExportReturnType.Attachment,
-                filename: `${ticketData.Username}.html`,
-                saveImages: true,
-                footerText: "Đã xuất {number} tin nhắn",
-                poweredBy: true,
-                hydrate: true,
-              }
-            );
-
-            const message = await channel.send({
-              files: [attachment],
+          // Kiểm tra xem người dùng có quyền quản lý kênh hay không
+          if (!channel?.permissionsFor(interaction.user.id)?.has("ManageChannels")) {
+            interaction.followUp({
+              content: `${this.client.i18n.get(language, "events.ticket", "ticket_close_user")}`,
+              flags: MessageFlags.Ephemeral,
             });
+            return;
+          }
 
-            const attachmentUrl = message.attachments.first().url; // link file transcript
+          // Tạo bản ghi (transcript) của cuộc trò chuyện trong ticket
+          const attachment = await discordTranscripts.createTranscript(channel as any, {
+            limit: -1,
+            returnType: discordTranscripts.ExportReturnType.Attachment,
+            filename: `${ticketData.Username}.html`,
+            saveImages: true,
+            footerText: "Đã xuất {number} tin nhắn",
+            poweredBy: true,
+            hydrate: true,
+          });
 
-            // Kiểm tra category đóng, nếu có thì di chuyển channel vào
-            const TicketSetupData = await this.client.db.TicketSetup.get(
-              guildId
+          const message = await channel.send({
+            files: [attachment],
+          });
+
+          const firstAttachment = message.attachments.first();
+          if (!firstAttachment) {
+            this.client.logger.error(
+              TicketHandler.name,
+              `Không thể lấy URL của file transcript cho ticket ${ticketData.Username}`
             );
-            const closeCategoryId = TicketSetupData?.closeCategory;
+            return;
+          }
+          
+          const attachmentUrl = firstAttachment.url; // URL của file transcript
 
-            if (!closeCategoryId) {
-              this.client.logger.warn(
-                TicketHandler.name,
-                `⚠️ Chưa cấu hình category đóng ticket cho server ${guildId}`
-              );
-              return;
+          // Kiểm tra category đóng và di chuyển kênh tới đó nếu tồn tại
+          const TicketSetupData = await this.client.db.TicketSetup.get(guildId);
+          const closeCategoryId = TicketSetupData?.closeCategory;
+
+          if (!closeCategoryId) {
+            this.client.logger.warn(
+              TicketHandler.name,
+              `Chưa đặt category đóng cho server ${guildId}`
+            );
+            return;
+          }
+
+          try {
+            // Di chuyển kênh vào category 'Closed'
+            const closeCategory = interaction.guild.channels.cache.get(closeCategoryId);
+            if (closeCategory && closeCategory.type === ChannelType.GuildCategory) {
+              await channel.setParent(closeCategory);
             }
+          } catch (error) {
+            this.client.logger.error(
+              TicketHandler.name,
+              `Di chuyển kênh ticket thất bại: ${error}`
+            );
+          }
 
+          // Gửi tin nhắn riêng (DM) cho người dùng kèm link transcript
+          const buttonDmUser = new ActionRowBuilder<ButtonBuilder>().addComponents(
+            new ButtonBuilder()
+              .setLabel(this.client.i18n.get(language, "events.ticket", "label_name_closed"))
+              .setURL(attachmentUrl)
+              .setStyle(ButtonStyle.Link)
+          );
+
+          const embedDmUser = new EmbedBuilder()
+            .setColor(this.client.color_main)
+            .setTitle(
+              `${this.client.i18n.get(language, "events.ticket", "ticket_closed_dm_title")}`
+            )
+            .setDescription(
+              `${this.client.i18n.get(language, "events.ticket", "ticket_closed_dm_desc", {
+                bot: this.client.user!.username,
+              })}`
+            );
+
+          if (user) {
             try {
-              // Chuyển channel vào category "Đã đóng"
-              const closeCategory =
-                interaction.guild.channels.cache.get(closeCategoryId);
-              if (
-                closeCategory &&
-                closeCategory.type === ChannelType.GuildCategory
-              ) {
-                await channel.setParent(closeCategory);
-              }
-            } catch (error) {
-              this.client.logger.error(
-                TicketHandler.name,
-                `❌ Lỗi khi di chuyển kênh ticket: ${error}`
-              );
-            }
-
-            // Gửi DM cho user kèm link transcript
-            const buttonDmUser =
-              new ActionRowBuilder<ButtonBuilder>().addComponents(
-                new ButtonBuilder()
-                  .setLabel(
-                    this.client.i18n.get(
-                      language,
-                      "events.ticket",
-                      "label_name_closed"
-                    )
-                  )
-                  .setURL(attachmentUrl)
-                  .setStyle(ButtonStyle.Link)
-              );
-
-            const embedDmUser = new EmbedBuilder()
-              .setColor(this.client.color_main)
-              .setTitle(
-                `${this.client.i18n.get(
-                  language,
-                  "events.ticket",
-                  "ticket_closed_dm_title"
-                )}`
-              )
-              .setDescription(
-                `${this.client.i18n.get(
-                  language,
-                  "events.ticket",
-                  "ticket_closed_dm_desc",
-                  {
-                    bot: this.client.user!.username,
-                  }
-                )}`
-              );
-
-            if (user) {
-              try {
-                await user.send({
-                  content: " ",
-                  components: [buttonDmUser],
-                  embeds: [embedDmUser],
-                });
-                this.client.logger.info(
-                  TicketHandler.name,
-                  `✅ Đã gửi DM cho người dùng ${user.user.tag} sau khi đóng ticket`
-                );
-              } catch (error) {
-                this.client.logger.info(
-                  TicketHandler.name,
-                  `⚠️ Không thể gửi DM cho ${user.user.tag}: ${error}`
-                );
-              }
-            } else {
+              await user.send({
+                content: " ",
+                components: [buttonDmUser],
+                embeds: [embedDmUser],
+              });
               this.client.logger.info(
                 TicketHandler.name,
-                `⚠️ Không tìm thấy user ID ${ticketData.userId} trong server, tiếp tục đóng ticket`
+                `Đã gửi DM thành công tới người dùng ${user.user.tag} khi đóng ticket.`
+              );
+            } catch (error) {
+              this.client.logger.info(
+                TicketHandler.name,
+                `Gửi tin nhắn tới người dùng ${user.user.tag} thất bại: ${error}`
               );
             }
+          } else {
+            this.client.logger.info(
+              TicketHandler.name,
+              `Không tìm thấy người dùng với ID ${ticketData.userId} trên server. Tiếp tục đóng ticket.`
+            );
+          }
 
-            // Cập nhật quyền, đổi tên kênh, gửi nút xóa cho staff
-            try {
-              await channel.permissionOverwrites.set([
+          // Cập nhật quyền và đổi tên kênh ticket, và gửi tin nhắn với nút XÓA
+          try {
+            const permissionOverwrites: any[] = [
+              {
+                id: interaction.guild.roles.everyone.id,
+                deny: ["ViewChannel"],
+              },
+              {
+                id: interaction.client.user.id,
+                allow: ["ManageChannels"],
+              },
+            ];
+
+            // Chỉ thêm quyền cho role nếu roleId tồn tại
+            if (roleId) {
+              permissionOverwrites.push({
+                id: roleId,
+                allow: ["ViewChannel", "SendMessages"],
+              });
+            }
+
+            await channel.permissionOverwrites.set(permissionOverwrites);
+
+            const newName = `closed-${ticketData.Username}`;
+            await channel.setName(newName);
+
+            // Gửi tin nhắn mới có nút XÓA cho nhân viên
+            const deleteButton = new ButtonBuilder()
+              .setCustomId(`delete-ticket-${ticketData.userId}`)
+              .setLabel(`${this.client.i18n.get(language, "events.ticket", "ticket_delete_label")}`)
+              .setStyle(ButtonStyle.Danger);
+
+            const linkButton = new ButtonBuilder()
+              .setLabel(this.client.i18n.get(language, "events.ticket", "label_name_closed"))
+              .setURL(attachmentUrl)
+              .setStyle(ButtonStyle.Link);
+
+            // Gom hai nút vào một hàng
+            const buttonRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+              deleteButton,
+              linkButton
+            );
+
+            const closedEmbed = new EmbedBuilder()
+              .setTitle(`${this.client.i18n.get(language, "events.ticket", "ticket_closed_title")}`)
+              .setDescription(
+                `${this.client.i18n.get(language, "events.ticket", "ticket_closed_desc")}`
+              )
+              .setColor(this.client.color_main);
+
+            await channel.send({
+              embeds: [closedEmbed],
+              components: [buttonRow],
+            });
+
+            await this.client.db.TicketData.delete(id);
+          } catch (error) {
+            this.client.logger.info(TicketHandler.name, `Cập nhật kênh thất bại: ${error}`);
+          }
+        }
+
+        // Handle button interaction to delete a ticket channel
+        if (interaction.customId.startsWith("delete-ticket")) {
+          // Đảm bảo chỉ nhân viên (có quyền ManageChannels) mới xóa ticket.
+          if (!interaction.channel) return;
+          const channel = interaction.channel as TextChannel;
+          if (!channel.permissionsFor(interaction.user.id)?.has("ManageChannels")) {
+            interaction.reply({
+              content: `${this.client.i18n.get(language, "events.ticket", "ticket_delete_user")}`,
+              flags: MessageFlags.Ephemeral,
+            });
+            return;
+          }
+
+          await interaction.reply({
+            content: `${this.client.i18n.get(language, "events.ticket", "ticket_deleting_action")}`,
+            flags: MessageFlags.Ephemeral,
+          });
+          try {
+            await channel.delete(); // Xóa kênh ticket
+          } catch (error) {
+            this.client.logger.warn(TicketHandler.name, `Xóa kênh ticket thất bại: ${error}`);
+          }
+        }
+      }
+
+      if (interaction.isModalSubmit()) {
+        if (interaction.customId.startsWith(`modal-${interaction.guild.id}`)) {
+          // Kiểm tra xem người dùng đã có ticket đang hoạt động chưa
+          const existingTicket = await this.client.db.TicketData.get(interaction.user.id);
+          if (existingTicket) {
+            await interaction.reply({
+              content: `${this.client.i18n.get(language, "events.ticket", "ticket_already_open", {
+                channel: `<#${existingTicket.ChannelId}>`,
+              })}`,
+              flags: MessageFlags.Ephemeral,
+            });
+            return;
+          }
+          const id = interaction.customId.split("-")[2];
+          const reason = interaction.fields.getTextInputValue("ticket-reason");
+          const category = interaction.guild.channels.cache.get(id);
+
+          // Lấy số lượng ticket đã lưu cho server
+          let ticketCount = await this.client.db.TicketCount.get(interaction.guild.id);
+          if (!ticketCount) ticketCount = 0;
+          ticketCount++; // Tăng số lượng ticket cho ticket mới
+
+          // Lưu số ticket mới cho server
+          await this.client.db.TicketCount.set(interaction.guild.id, ticketCount);
+
+          // Tạo tên kênh dùng số ticket và tên người dùng
+          const channelName = `${ticketCount}-${interaction.user.username}`;
+
+          await interaction.guild.channels
+            .create({
+              parent: category!.id,
+              name: `ticket-${channelName}`,
+              permissionOverwrites: [
                 {
-                  id: interaction.guild.roles.everyone.id,
-                  deny: ["ViewChannel"],
+                  id: interaction.user.id,
+                  allow: ["SendMessages", "ViewChannel"],
                 },
                 {
-                  id: roleId,
-                  allow: ["ViewChannel", "SendMessages"],
+                  id: interaction.guild.roles.everyone,
+                  deny: ["ViewChannel"],
                 },
                 {
                   id: interaction.client.user.id,
                   allow: ["ManageChannels"],
                 },
-              ]);
+              ],
+              type: ChannelType.GuildText,
+            })
+            .then(async (c: TextChannel) => {
+              // Lưu dữ liệu ticket vào cơ sở dữ liệu
+              await this.client.db.TicketData.set(interaction.user.id, {
+                userId: interaction.user.id,
+                Username: interaction.user.username,
+                ChannelId: c.id,
+                ticketCount,
+              });
 
-              const newName = `closed-${ticketData.Username}`;
-              await channel.setName(newName);
+              interaction.reply({
+                content: `${this.client.i18n.get(language, "events.ticket", "ticket_create", {
+                  channel: `<#${c.id}>`,
+                })}`,
+                flags: MessageFlags.Ephemeral,
+              });
 
-              // Nút xóa ticket (cho staff)
-              const deleteButton = new ButtonBuilder()
-                .setCustomId(`delete-ticket-${ticketData.userId}`)
-                .setLabel(
-                  `${this.client.i18n.get(
-                    language,
-                    "events.ticket",
-                    "ticket_delete_label"
-                  )}`
-                )
-                .setStyle(ButtonStyle.Danger);
-
-              const linkButton = new ButtonBuilder()
-                .setLabel(
-                  this.client.i18n.get(
-                    language,
-                    "events.ticket",
-                    "label_name_closed"
+              // Tạo nút đóng cho ticket
+              const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+                new ButtonBuilder()
+                  .setCustomId(`close-ticket-${interaction.user.id}`)
+                  .setLabel(
+                    `${this.client.i18n.get(language, "events.ticket", "ticket_closed_label")}`
                   )
-                )
-                .setURL(attachmentUrl)
-                .setStyle(ButtonStyle.Link);
+                  .setStyle(ButtonStyle.Danger)
+              );
 
-              const buttonRow =
-                new ActionRowBuilder<ButtonBuilder>().addComponents(
-                  deleteButton,
-                  linkButton
-                );
-
-              const closedEmbed = new EmbedBuilder()
+              const embed = new EmbedBuilder()
                 .setTitle(
-                  `${this.client.i18n.get(
-                    language,
-                    "events.ticket",
-                    "ticket_closed_title"
-                  )}`
+                  `${this.client.i18n.get(language, "events.ticket", "ticket_create_title")}`
                 )
+                .setAuthor({
+                  name: `${interaction.user.username} — Phiếu hỗ trợ`,
+                  iconURL: interaction.user.displayAvatarURL(),
+                })
                 .setDescription(
-                  `${this.client.i18n.get(
-                    language,
-                    "events.ticket",
-                    "ticket_closed_desc"
-                  )}`
+                  `${this.client.i18n.get(language, "events.ticket", "ticket_create_desc")}`
                 )
+                .setTimestamp()
+                .addFields({ name: "Lý do", value: `${reason}` })
                 .setColor(this.client.color_main);
 
-              await channel.send({
-                embeds: [closedEmbed],
-                components: [buttonRow],
+              c.send({
+                content: `${interaction.user} <@&${roleId}>`,
+                components: [row],
+                embeds: [embed],
               });
-
-              await this.client.db.TicketData.delete(id);
-            } catch (error) {
-              this.client.logger.info(
-                TicketHandler.name,
-                `❌ Lỗi khi cập nhật channel: ${error}`
-              );
-            }
-          }
-
-          // Khi nhấn nút xóa ticket
-          if (interaction.customId.startsWith("delete-ticket")) {
-            // Chỉ staff có quyền ManageChannels mới xóa được
-            if (!interaction.channel) return;
-            const channel = interaction.channel as TextChannel;
-            if (
-              !channel
-                .permissionsFor(interaction.user.id)
-                ?.has("ManageChannels")
-            ) {
-              interaction.reply({
-                content: `${this.client.i18n.get(
-                  language,
-                  "events.ticket",
-                  "ticket_delete_user"
-                )}`,
-                flags: MessageFlags.Ephemeral,
-              });
-              return;
-            }
-
-            await interaction.reply({
-              content: `${this.client.i18n.get(
-                language,
-                "events.ticket",
-                "ticket_deleting_action"
-              )}`,
-              flags: MessageFlags.Ephemeral,
             });
-            try {
-              await channel.delete(); // Xóa kênh ticket
-            } catch (error) {
-              this.client.logger.warn(
-                TicketHandler.name,
-                `❌ Lỗi khi xóa ticket: ${error}`
-              );
-            }
-          }
-        }
-
-        if (interaction.isModalSubmit()) {
-          if (
-            interaction.customId.startsWith(`modal-${interaction.guild.id}`)
-          ) {
-            // Kiểm tra user có ticket đang mở không
-            const existingTicket = await this.client.db.TicketData.get(
-              interaction.user.id
-            );
-            if (existingTicket) {
-              await interaction.reply({
-                content: `${this.client.i18n.get(
-                  language,
-                  "events.ticket",
-                  "ticket_already_open",
-                  {
-                    channel: `<#${existingTicket.ChannelId}>`,
-                  }
-                )}`,
-                flags: MessageFlags.Ephemeral,
-              });
-              return;
-            }
-            const id = interaction.customId.split("-")[2];
-            const reason =
-              interaction.fields.getTextInputValue("ticket-reason");
-            const category = interaction.guild.channels.cache.get(id);
-
-            // Lấy số lượng ticket đã tạo trong server
-            let ticketCount = await this.client.db.TicketCount.get(
-              interaction.guild.id
-            );
-            if (!ticketCount) ticketCount = 0;
-            ticketCount++; // tăng count khi tạo mới
-
-            await this.client.db.TicketCount.set(
-              interaction.guild.id,
-              ticketCount
-            );
-
-            // Tạo tên kênh theo số thứ tự + tên user
-            const channelName = `${ticketCount}-${interaction.user.username}`;
-
-            await interaction.guild.channels
-              .create({
-                parent: category!.id,
-                name: `ticket-${channelName}`,
-                permissionOverwrites: [
-                  {
-                    id: interaction.user.id,
-                    allow: ["SendMessages", "ViewChannel"],
-                  },
-                  {
-                    id: interaction.guild.roles.everyone,
-                    deny: ["ViewChannel"],
-                  },
-                  {
-                    id: interaction.client.user.id,
-                    allow: ["ManageChannels"],
-                  },
-                ],
-                type: ChannelType.GuildText,
-              })
-              .then(async (c: TextChannel) => {
-                // Lưu dữ liệu ticket vào database
-                await this.client.db.TicketData.set(interaction.user.id, {
-                  userId: interaction.user.id,
-                  Username: interaction.user.username,
-                  ChannelId: c.id,
-                  ticketCount,
-                });
-
-                interaction.reply({
-                  content: `${this.client.i18n.get(
-                    language,
-                    "events.ticket",
-                    "ticket_create",
-                    {
-                      channel: `<#${c.id}>`,
-                    }
-                  )}`,
-                  flags: MessageFlags.Ephemeral,
-                });
-
-                // Nút đóng ticket
-                const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-                  new ButtonBuilder()
-                    .setCustomId(`close-ticket-${interaction.user.id}`)
-                    .setLabel(
-                      `${this.client.i18n.get(
-                        language,
-                        "events.ticket",
-                        "ticket_closed_label"
-                      )}`
-                    )
-                    .setStyle(ButtonStyle.Danger)
-                );
-
-                const embed = new EmbedBuilder()
-                  .setTitle(
-                    `${this.client.i18n.get(
-                      language,
-                      "events.ticket",
-                      "ticket_create_title"
-                    )}`
-                  )
-                  .setAuthor({
-                    name: `Ticket của ${interaction.user.username}`,
-                    iconURL: interaction.user.displayAvatarURL(),
-                  })
-                  .setDescription(
-                    `${this.client.i18n.get(
-                      language,
-                      "events.ticket",
-                      "ticket_create_desc"
-                    )}`
-                  )
-                  .setTimestamp()
-                  .addFields({ name: "Lý do", value: `${reason}` })
-                  .setColor(this.client.color_main);
-
-                c.send({
-                  content: `${interaction.user} <@&${roleId}>`,
-                  components: [row],
-                  embeds: [embed],
-                });
-              });
-          }
         }
       }
-    );
+    });
   }
 }

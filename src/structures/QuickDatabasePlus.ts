@@ -1,6 +1,6 @@
-import { IQuickDBOptions, QuickDB} from 'zk.quick.db';
-import { Collection } from './Collection.js'
-import cron from 'node-cron';
+import { IQuickDBOptions, QuickDB } from "zk.quick.db";
+import { Collection } from "./Collection.js";
+import cron from "node-cron";
 
 export class QuickDatabasePlus<D = any> extends QuickDB {
   public cache: Collection<unknown>;
@@ -102,9 +102,11 @@ export class QuickDatabasePlus<D = any> extends QuickDB {
     return res;
   }
 
-  async table<T = any>(table: string): Promise<QuickDB<T>> {
-    if (typeof table != 'string') {
-      throw new Error(`Giá trị đầu tiên phải là một chuỗi dạng "${typeof table}"`);
+  async table<T = D>(table: string): Promise<QuickDatabasePlus<T>> {
+    if (typeof table != "string") {
+      throw new Error(
+        `Tham số đầu tiên (table) cần là một chuỗi, nhận được kiểu "${typeof table}"`
+      );
     }
     const options = { ...this.newOptions };
     options.table = table;

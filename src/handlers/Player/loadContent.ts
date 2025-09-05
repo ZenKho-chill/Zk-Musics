@@ -9,7 +9,7 @@ import { ButtonStop } from "./ButtonCommands/Stop.js";
 import { ButtonLoop } from "./ButtonCommands/Loop.js";
 import { ButtonPause } from "./ButtonCommands/Pause.js";
 import { RateLimitManager } from "@sapphire/ratelimits";
-import { ZklinkTrack } from "../../zklink/main.js";
+import { ZklinkTrack } from "../../Zklink/main.js";
 const rateLimitManager = new RateLimitManager(2000);
 
 /**
@@ -47,7 +47,7 @@ export class PlayerContentLoader {
       .catch(() => undefined);
     let channel = voiceMember!.voice.channel;
 
-    let player = client.zklink.players.get(interaction.guild.id);
+    let player = client.Zklink.players.get(interaction.guild.id);
     if (!player) return;
 
     const playChannel = await client.channels
@@ -94,7 +94,7 @@ export class PlayerContentLoader {
     )
       return;
     let database = await client.db.setup.get(`${message.guild?.id}`);
-    let player = client.zklink.players.get(`${message.guild?.id}`);
+    let player = client.Zklink.players.get(`${message.guild?.id}`);
 
     if (!database) {
       // Xóa mục khỏi cơ sở dữ liệu nếu nó không tồn tại
@@ -216,12 +216,12 @@ export class PlayerContentLoader {
     }
 
     if (!player)
-      player = await client.zklink.create({
+      player = await client.Zklink.create({
         guildId: message.guild.id,
         voiceId: message.member!.voice.channel!.id,
         textId: message.channel.id,
         shardId: message.guild.shardId,
-        nodeName: (await client.zklink.nodes.getLeastUsed()).options.name,
+        nodeName: (await client.Zklink.nodes.getLeastUsed()).options.name,
         deaf: true,
         mute: false,
         region: message.member!.voice.channel!.rtcRegion ?? null,

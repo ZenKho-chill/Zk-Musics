@@ -2,7 +2,7 @@ import { EmbedBuilder } from "discord.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZklinkPlayer } from "../../zklink/main.js";
+import { ZklinkPlayer } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -47,7 +47,7 @@ export default class implements Command {
       });
     }
 
-    const player = client.zklink.players.get(
+    const player = client.Zklink.players.get(
       handler.guild!.id
     ) as ZklinkPlayer;
 

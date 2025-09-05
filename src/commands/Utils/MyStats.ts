@@ -28,6 +28,17 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
+    // Check if user exists
+    if (!handler.user) {
+      return handler.editReply({
+        embeds: [
+          new EmbedBuilder()
+            .setDescription("❌ Unable to get user information.")
+            .setColor("#FF0000"),
+        ],
+      });
+    }
+
     const userId = handler.user.id;
 
     try {
@@ -43,12 +54,8 @@ export default class implements Command {
       const voteCount = voteData?.count || 0;
 
       // Đảm bảo dữ liệu ở định dạng mảng
-      const topTracksArray = Array.isArray(topTracksData?.Tracks)
-        ? topTracksData?.Tracks
-        : [];
-      const topArtistsArray = Array.isArray(topArtistsData?.Artists)
-        ? topArtistsData?.Artists
-        : [];
+      const topTracksArray = Array.isArray(topTracksData?.Tracks) ? topTracksData?.Tracks : [];
+      const topArtistsArray = Array.isArray(topArtistsData?.Artists) ? topArtistsData?.Artists : [];
 
       // Định dạng danh sách top bài hát và nghệ sĩ kèm đánh số
       const topTracks =
@@ -129,17 +136,11 @@ export default class implements Command {
 
       ctx.font = "24px Courage Road";
       ctx.fillStyle = "#a4815e";
-      ctx.fillText(
-        `SỐ LƯỢT BÌNH CHỌN TRÊN TOP.GG - ${voteCount}`.toUpperCase(),
-        208,
-        140
-      );
+      ctx.fillText(`SỐ LƯỢT BÌNH CHỌN TRÊN TOP.GG - ${voteCount}`.toUpperCase(), 208, 140);
 
       // Hàm tiện ích rút ngắn chuỗi tới độ dài tối đa
       function topTrackstruncateText(text: string, maxLength: number): string {
-        return text.length > maxLength
-          ? text.slice(0, maxLength - 3) + "..."
-          : text;
+        return text.length > maxLength ? text.slice(0, maxLength - 3) + "..." : text;
       }
 
       // Vẽ danh sách top bài hát
@@ -155,9 +156,7 @@ export default class implements Command {
 
       // Hàm tiện ích rút ngắn chuỗi tới độ dài tối đa
       function topArtiststruncateText(text: string, maxLength: number): string {
-        return text.length > maxLength
-          ? text.slice(0, maxLength - 3) + "..."
-          : text;
+        return text.length > maxLength ? text.slice(0, maxLength - 3) + "..." : text;
       }
       // Vẽ danh sách top nghệ sĩ
       ctx.fillStyle = "#f4d8ad";
@@ -188,11 +187,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.utils",
-                "mystats_error"
-              )}`
+              `${client.i18n.get(handler.language, "commands.utils", "mystats_error")}`
             )
             .setColor(client.color_main),
         ],

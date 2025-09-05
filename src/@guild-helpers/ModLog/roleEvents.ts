@@ -22,8 +22,7 @@ export class RoleEventsHandler {
 
   // Xử lý sự kiện tạo role
   private async handleRoleCreate(role: Role) {
-    if (!(await isEventEnabled(role.guild.id, "roleCreate", this.client.db)))
-      return;
+    if (!(await isEventEnabled(role.guild.id, "roleCreate", this.client.db))) return;
 
     const auditLogs = await role.guild.fetchAuditLogs({
       type: AuditLogEvent.RoleCreate,
@@ -38,7 +37,7 @@ export class RoleEventsHandler {
       embeds: [
         new EmbedBuilder()
           .setAuthor({
-            name: executor?.username,
+            name: executor?.username || "Unknown User",
             iconURL: executor?.displayAvatarURL(),
           })
           .setColor(0x32cd32)
@@ -54,9 +53,8 @@ export class RoleEventsHandler {
             }
           )
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không rõ",
-            iconURL: this.client.user.displayAvatarURL(),
+            text: this.client.user?.username || this.client.user?.tag || "Không rõ",
+            iconURL: this.client.user?.displayAvatarURL(),
           })
           .setTimestamp(new Date()),
       ],
@@ -65,8 +63,7 @@ export class RoleEventsHandler {
 
   // Xử lý sự kiện xoá role
   private async handleRoleDelete(role: Role) {
-    if (!(await isEventEnabled(role.guild.id, "roleDelete", this.client.db)))
-      return;
+    if (!(await isEventEnabled(role.guild.id, "roleDelete", this.client.db))) return;
 
     const auditLogs = await role.guild.fetchAuditLogs({
       type: AuditLogEvent.RoleDelete,
@@ -82,7 +79,7 @@ export class RoleEventsHandler {
         new EmbedBuilder()
           .setColor(0xff4500)
           .setAuthor({
-            name: executor?.username,
+            name: executor?.username || "Unknown User",
             iconURL: executor?.displayAvatarURL(),
           })
           .setTitle("➖ Đã xoá role")
@@ -97,9 +94,8 @@ export class RoleEventsHandler {
             }
           )
           .setFooter({
-            text:
-              this.client.user?.username || this.client.user?.tag || "Không rõ",
-            iconURL: this.client.user.displayAvatarURL(),
+            text: this.client.user?.username || this.client.user?.tag || "Không rõ",
+            iconURL: this.client.user?.displayAvatarURL(),
           })
           .setTimestamp(new Date()),
       ],
@@ -108,8 +104,7 @@ export class RoleEventsHandler {
 
   // Xử lý sự kiện cập nhật role
   private async handleRoleUpdate(oldRole: Role, newRole: Role) {
-    if (!(await isEventEnabled(newRole.guild.id, "roleUpdate", this.client.db)))
-      return;
+    if (!(await isEventEnabled(newRole.guild.id, "roleUpdate", this.client.db))) return;
 
     const auditLogs = await newRole.guild.fetchAuditLogs({
       type: AuditLogEvent.RoleUpdate,
@@ -120,7 +115,7 @@ export class RoleEventsHandler {
     const channel = await getModLogChannel(newRole.guild.id, this.client);
     if (!channel) return;
 
-    const changes = [];
+    const changes: string[] = [];
     if (oldRole.name !== newRole.name) {
       changes.push(`**Tên:** ${oldRole.name} → ${newRole.name}`);
     }
@@ -133,7 +128,7 @@ export class RoleEventsHandler {
         embeds: [
           new EmbedBuilder()
             .setAuthor({
-              name: executor?.username,
+              name: executor?.username || "Unknown User",
               iconURL: executor?.displayAvatarURL(),
             })
             .setColor(0x1e90ff)
@@ -145,11 +140,8 @@ export class RoleEventsHandler {
               inline: true,
             })
             .setFooter({
-              text:
-                this.client.user?.username ||
-                this.client.user?.tag ||
-                "Không rõ",
-              iconURL: this.client.user.displayAvatarURL(),
+              text: this.client.user?.username || this.client.user?.tag || "Không rõ",
+              iconURL: this.client.user?.displayAvatarURL(),
             })
             .setTimestamp(new Date()),
         ],
@@ -159,14 +151,7 @@ export class RoleEventsHandler {
 
   // Xử lý cập nhật quyền của role
   private async handleRolePermissionsUpdate(oldRole: Role, newRole: Role) {
-    if (
-      !(await isEventEnabled(
-        newRole.guild.id,
-        "rolePermissionsUpdate",
-        this.client.db
-      ))
-    )
-      return;
+    if (!(await isEventEnabled(newRole.guild.id, "rolePermissionsUpdate", this.client.db))) return;
 
     if (oldRole.permissions.bitfield !== newRole.permissions.bitfield) {
       const auditLogs = await newRole.guild.fetchAuditLogs({
@@ -182,7 +167,7 @@ export class RoleEventsHandler {
         embeds: [
           new EmbedBuilder()
             .setAuthor({
-              name: executor?.username,
+              name: executor?.username || "Unknown User",
               iconURL: executor?.displayAvatarURL(),
             })
             .setColor(0x1e90ff)
@@ -201,11 +186,8 @@ export class RoleEventsHandler {
               }
             )
             .setFooter({
-              text:
-                this.client.user?.username ||
-                this.client.user?.tag ||
-                "Không rõ",
-              iconURL: this.client.user.displayAvatarURL(),
+              text: this.client.user?.username || this.client.user?.tag || "Không rõ",
+              iconURL: this.client.user?.displayAvatarURL(),
             })
             .setTimestamp(new Date()),
         ],
@@ -215,14 +197,7 @@ export class RoleEventsHandler {
 
   // Xử lý cập nhật trạng thái có thể mention của role
   private async handleRoleMentionableUpdate(oldRole: Role, newRole: Role) {
-    if (
-      !(await isEventEnabled(
-        newRole.guild.id,
-        "roleMentionableUpdate",
-        this.client.db
-      ))
-    )
-      return;
+    if (!(await isEventEnabled(newRole.guild.id, "roleMentionableUpdate", this.client.db))) return;
 
     if (oldRole.mentionable !== newRole.mentionable) {
       const auditLogs = await newRole.guild.fetchAuditLogs({
@@ -238,7 +213,7 @@ export class RoleEventsHandler {
         embeds: [
           new EmbedBuilder()
             .setAuthor({
-              name: executor?.username,
+              name: executor?.username || "Unknown User",
               iconURL: executor?.displayAvatarURL(),
             })
             .setColor(0x1e90ff) // màu xanh cho cập nhật
@@ -257,11 +232,8 @@ export class RoleEventsHandler {
               }
             )
             .setFooter({
-              text:
-                this.client.user?.username ||
-                this.client.user?.tag ||
-                "Không rõ",
-              iconURL: this.client.user.displayAvatarURL(),
+              text: this.client.user?.username || this.client.user?.tag || "Không rõ",
+              iconURL: this.client.user?.displayAvatarURL(),
             })
             .setTimestamp(new Date()),
         ],

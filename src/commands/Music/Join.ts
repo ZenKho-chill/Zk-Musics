@@ -30,33 +30,26 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "join_no_in_voice"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "join_no_in_voice")}`
             )
             .setColor(client.color_main),
         ],
       });
 
-    let player = client.zklink.players.get(handler.guild!.id);
+    let player = client.Zklink.players.get(handler.guild!.id);
 
     if (!player)
-      player = await client.zklink.create({
+      player = await client.Zklink.create({
         guildId: handler.guild!.id,
         voiceId: handler.member!.voice.channel!.id,
         textId: handler.channel!.id,
         shardId: handler.guild?.shardId ?? 0,
         deaf: true,
         mute: false,
-        region: handler.member!.voice.channel!.rtcRegion ?? null,
+        region: handler.member!.voice.channel!.rtcRegion ?? undefined,
         volume: client.config.bot.DEFAULT_VOLUME ?? 100,
       });
-    else if (
-      player &&
-      !this.checkSameVoice(client, handler, handler.language)
-    ) {
+    else if (player && !this.checkSameVoice(client, handler, handler.language)) {
       return;
     }
 
@@ -74,38 +67,25 @@ export default class implements Command {
   }
 
   checkSameVoice(client: Manager, handler: CommandHandler, language: string) {
-    if (
-      handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel
-    ) {
+    if (handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel) {
       handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "join_no_same_voice"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "join_no_same_voice")}`
             )
             .setColor(client.color_main),
         ],
       });
       return false;
-    } else if (
-      handler.member!.voice.channel === handler.guild!.members.me!.voice.channel
-    ) {
+    } else if (handler.member!.voice.channel === handler.guild!.members.me!.voice.channel) {
       handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "join_already",
-                {
-                  channel: String(handler.member!.voice.channel),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "join_already", {
+                channel: String(handler.member!.voice.channel),
+              })}`
             )
             .setColor(client.color_main),
         ],

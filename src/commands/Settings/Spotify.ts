@@ -3,6 +3,7 @@ import {
   CommandInteractionOptionResolver,
   EmbedBuilder,
   MessageFlags,
+  ChatInputCommandInteraction,
 } from "discord.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
@@ -47,7 +48,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
 
-    const options = handler.interaction
+    const options = (handler.interaction as ChatInputCommandInteraction)
       .options as CommandInteractionOptionResolver;
     const action = options.getString("action");
     const spotifyID = options.getString("id");
@@ -96,14 +97,11 @@ export default class implements Command {
 
       try {
         const accessToken = await SpotifygetAccessToken(client);
-        const response = await axios.get(
-          `https://api.spotify.com/v1/users/${spotifyID}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await axios.get(`https://api.spotify.com/v1/users/${spotifyID}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
 
         const userProfile = response.data;
 
@@ -161,10 +159,7 @@ export default class implements Command {
           flags: MessageFlags.Ephemeral,
         });
       } catch (error) {
-        client.logger.warn(
-          "Spotify",
-          `Ngắt kết nối ID Spotify thất bại: ${error}`
-        );
+        client.logger.warn("Spotify", `Ngắt kết nối ID Spotify thất bại: ${error}`);
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,

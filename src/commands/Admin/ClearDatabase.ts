@@ -61,9 +61,10 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
 
-    const databaseCategory = (
-      handler.interaction?.options as CommandInteractionOptionResolver
-    ).getString("database");
+    const interaction = handler.interaction as any;
+    const databaseCategory = (interaction.options as CommandInteractionOptionResolver).getString(
+      "database"
+    );
 
     const dbName = this.options[0].choices.find(
       (choice) => choice.value === databaseCategory
@@ -216,10 +217,7 @@ export default class implements Command {
         flags: MessageFlags.Ephemeral,
       });
     } catch (error) {
-      client.logger.info(
-        "ClearDatabase",
-        `Lỗi khi xóa cơ sở dữ liệu, ${error}`
-      );
+      client.logger.info("ClearDatabase", `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
       await handler.interaction.reply({
         content: `Đã xảy ra lỗi khi xóa cơ sở dữ liệu: ${error.message}`,
         embeds: [],

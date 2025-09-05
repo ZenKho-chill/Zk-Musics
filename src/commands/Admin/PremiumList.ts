@@ -51,16 +51,11 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "premiumlist_invalid_type",
-                {
-                  example: `\`${client.prefix} pml <user|guild> <số trang>\``,
-                  user: String(handler.user?.displayName || handler.user?.tag),
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "premiumlist_invalid_type", {
+                example: `\`${client.prefix} pml <user|guild> <số trang>\``,
+                user: String(handler.user?.displayName || handler.user?.tag),
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -83,22 +78,17 @@ export default class implements Command {
 
     const dataList =
       type === "user"
-        ? Array.from(await client.db.premium.all<Premium>()).map(
-            (data) => data.value
-          )
-        : Array.from(await client.db.preGuild.all<GuildPremium>()).map(
-            (data) => data.value
-          );
+        ? Array.from(await client.db.premium.all<Premium>()).map((data) => data.value)
+        : Array.from(await client.db.preGuild.all<GuildPremium>()).map((data) => data.value);
 
     let pagesNum = Math.ceil(dataList.length / 10);
     if (pagesNum === 0) pagesNum = 1;
 
-    const strings = [];
+    const strings: string[] = [];
     for (let i = 0; i < dataList.length; i++) {
       const data = dataList[i];
       const redeemedBy = data.redeemedBy;
-      const name =
-        "username" in redeemedBy ? redeemedBy.username : redeemedBy.name;
+      const name = "username" in redeemedBy ? redeemedBy.username : redeemedBy.name;
       if (type === "user") {
         strings.push(`\`${i + 1}. ${name}/${data.id} - ${data.plan}\``);
       } else {
@@ -106,7 +96,7 @@ export default class implements Command {
       }
     }
 
-    const pages = [];
+    const pages: EmbedBuilder[] = [];
     for (let i = 0; i < pagesNum; i++) {
       const str = strings.slice(i * 10, i * 10 + 10).join("\n");
 
@@ -137,16 +127,11 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "premiumlist_page_not_found",
-                {
-                  page: String(pagesNum),
-                  user: String(handler.user?.displayName || handler.user?.tag),
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "premiumlist_page_not_found", {
+                page: String(pagesNum),
+                user: String(handler.user?.displayName || handler.user?.tag),
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -154,13 +139,9 @@ export default class implements Command {
 
     if (pages.length > 1 && dataList.length > 10) {
       if (handler.message) {
-        await new Page(client, pages, 60000, handler.language).prefixPage(
-          handler.message
-        );
+        await new Page(client, pages, 60000, handler.language).prefixPage(handler.message);
       } else if (handler.interaction) {
-        await new Page(client, pages, 60000, handler.language).slashPage(
-          handler.interaction
-        );
+        await new Page(client, pages, 60000, handler.language).slashPage(handler.interaction);
       } else return;
     } else {
       return handler.editReply({ embeds: [pages[pageNum]] });

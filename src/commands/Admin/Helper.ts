@@ -38,19 +38,16 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
-    const data = await (
-      handler.interaction.options as CommandInteractionOptionResolver
-    ).getChannel("channel");
+    const interaction = handler.interaction as any;
+    const data = await (interaction.options as CommandInteractionOptionResolver).getChannel(
+      "channel"
+    );
 
     const channel = handler.interaction.guild?.channels.cache.get(data?.id!);
 
     if (!client.config.HELPER_SETUP.Enable) {
       await handler.interaction.reply({
-        content: `${client.i18n.get(
-          handler.language,
-          "events.helper",
-          "disable_helper"
-        )}`,
+        content: `${client.i18n.get(handler.language, "events.helper", "disable_helper")}`,
         flags: MessageFlags.Ephemeral,
       });
       return;
@@ -58,22 +55,14 @@ export default class implements Command {
 
     if (!channel || channel.type !== ChannelType.GuildText) {
       return handler.interaction.reply({
-        content: `${client.i18n.get(
-          handler.language,
-          "events.helper",
-          "invalid_channel_helper"
-        )}`,
+        content: `${client.i18n.get(handler.language, "events.helper", "invalid_channel_helper")}`,
         flags: MessageFlags.Ephemeral,
       });
     }
 
     if (!channel.viewable) {
       return handler.interaction.reply({
-        content: `${client.i18n.get(
-          handler.language,
-          "events.helper",
-          "channel_viewable_helper"
-        )}`,
+        content: `${client.i18n.get(handler.language, "events.helper", "channel_viewable_helper")}`,
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -100,34 +89,24 @@ export default class implements Command {
 
     // Gửi phản hồi xác nhận
     await handler.interaction.reply({
-      content: `${client.i18n.get(
-        handler.language,
-        "events.helper",
-        "setup_helper_succes",
-        {
-          channel: `${channel}`,
-          bot: `<@${client.user!.id}>`,
-          bots: client.user!.username,
-          guild: handler.guild!.name,
-          serversupport: client.config.HELPER_SETUP.SERVER_SUPPORT_URL,
-        }
-      )}`,
+      content: `${client.i18n.get(handler.language, "events.helper", "setup_helper_succes", {
+        channel: `${channel}`,
+        bot: `<@${client.user!.id}>`,
+        bots: client.user!.username,
+        guild: handler.guild!.name,
+        serversupport: client.config.HELPER_SETUP.SERVER_SUPPORT_URL,
+      })}`,
       flags: MessageFlags.Ephemeral,
     });
 
     const textChannel = channel as TextChannel;
     textChannel.send({
-      content: `${client.i18n.get(
-        handler.language,
-        "events.helper",
-        "setup_helper_content",
-        {
-          bot: `<@${client.user!.id}>`,
-          bots: client.user!.username,
-          guild: handler.guild!.name,
-          serversupport: client.config.HELPER_SETUP.SERVER_SUPPORT_URL,
-        }
-      )}`,
+      content: `${client.i18n.get(handler.language, "events.helper", "setup_helper_content", {
+        bot: `<@${client.user!.id}>`,
+        bots: client.user!.username,
+        guild: handler.guild!.name,
+        serversupport: client.config.HELPER_SETUP.SERVER_SUPPORT_URL,
+      })}`,
       embeds: [],
       components: [AboutButton],
     });

@@ -12,7 +12,7 @@ import {
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -46,43 +46,30 @@ export default class implements Command {
     /////////////////////////////// Kiểm tra Premium Role bắt đầu ////////////////////////////////
     const PremiumGuildID = client.config.PremiumRole.GuildID;
     const PremiumRoleID = client.config.PremiumRole.RoleID;
-    const supportGuild = await client.guilds
-      .fetch(PremiumGuildID)
-      .catch(() => null);
+    const supportGuild = await client.guilds.fetch(PremiumGuildID).catch(() => null);
     const supportMember = supportGuild
-      ? await supportGuild.members
-          .fetch(String(handler.user?.id))
-          .catch(() => null)
+      ? await supportGuild.members.fetch(String(handler.user?.id)).catch(() => null)
       : null;
-    const isPremiumRole = supportMember
-      ? supportMember.roles.cache.has(PremiumRoleID)
-      : false;
+    const isPremiumRole = supportMember ? supportMember.roles.cache.has(PremiumRoleID) : false;
     /////////////////////////////// Kiểm tra Premium Role kết thúc ////////////////////////////////
-    const User = await client.db.premium.get(handler.user.id);
+    const User = await client.db.premium.get(handler.user?.id || "");
     const Guild = await client.db.preGuild.get(String(handler.guild?.id));
     const isPremiumUser = User && User.isPremium;
     const isPremiumGuild = Guild && Guild.isPremium;
-    const isOwner = handler.user.id == client.owner;
-    const isAdmin = client.config.bot.ADMIN.includes(handler.user.id);
+    const isOwner = handler.user?.id == client.owner;
+    const isAdmin = client.config.bot.ADMIN.includes(handler.user?.id || "");
     const userPerm = {
       owner: isOwner,
       admin: isOwner || isAdmin,
       PremiumRole: isOwner || isAdmin || isPremiumRole,
       UserPremium: isOwner || isAdmin || isPremiumUser,
       GuildPremium: isOwner || isAdmin || isPremiumGuild,
-      Premium:
-        isOwner || isAdmin || isPremiumUser || isPremiumGuild || isPremiumRole,
+      Premium: isOwner || isAdmin || isPremiumUser || isPremiumGuild || isPremiumRole,
     };
 
     if (isCollectorActive) {
       const responseEmbed = new EmbedBuilder()
-        .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "search_active"
-          )}`
-        )
+        .setDescription(`${client.i18n.get(handler.language, "commands.music", "search_active")}`)
         .setColor(client.color_main);
 
       if (handler.interaction) {
@@ -101,20 +88,14 @@ export default class implements Command {
       }
     }
 
-    let player = client.zklink.players.get(handler.guild!.id) as ZklinkPlayer;
+    let player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
 
     const query = handler.args.join(" ");
     if (!query)
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_arg"
-              )}`
-            )
+            .setDescription(`${client.i18n.get(handler.language, "commands.music", "play_arg")}`)
             .setColor(client.color_main),
         ],
       });
@@ -124,30 +105,17 @@ export default class implements Command {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "interaction",
-                "no_in_voice"
-              )}`
-            )
+            .setDescription(`${client.i18n.get(handler.language, "interaction", "no_in_voice")}`)
             .setColor(client.color_main),
         ],
       });
 
-    const emotes = (str: string) =>
-      str.match(/<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu);
+    const emotes = (str: string) => str.match(/<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu);
     if (emotes(query) !== null)
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_emoji"
-              )}`
-            )
+            .setDescription(`${client.i18n.get(handler.language, "commands.music", "play_emoji")}`)
             .setColor(client.color_main),
         ],
       });
@@ -164,11 +132,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.music",
-                  "url_no_allowed"
-                )}`
+                `${client.i18n.get(handler.language, "commands.music", "url_no_allowed")}`
               )
               .setColor(client.color_main),
           ],
@@ -187,15 +151,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_queue_max",
-                {
-                  limitqueue: String(client.config.features.MAX_QUEUE),
-                  premium: client.config.bot.PREMIUM_URL,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "play_queue_max", {
+                limitqueue: String(client.config.features.MAX_QUEUE),
+                premium: client.config.bot.PREMIUM_URL,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -203,21 +162,18 @@ export default class implements Command {
     }
 
     if (!player)
-      player = await client.zklink.create({
+      player = await client.Zklink.create({
         guildId: handler.guild!.id,
         voiceId: handler.member!.voice.channel!.id,
         textId: handler.channel!.id,
         shardId: handler.guild?.shardId ?? 0,
-        nodeName: (await client.zklink.nodes.getLeastUsed()).options.name,
+        nodeName: (await client.Zklink.nodes.getLeastUsed()).options.name,
         deaf: true,
         mute: false,
-        region: handler.member!.voice.channel!.rtcRegion ?? null,
+        region: handler.member!.voice.channel!.rtcRegion ?? undefined,
         volume: client.config.bot.DEFAULT_VOLUME ?? 80,
       });
-    else if (
-      player &&
-      !this.checkSameVoice(client, handler, handler.language)
-    ) {
+    else if (player && !this.checkSameVoice(client, handler, handler.language)) {
       return;
     }
 
@@ -234,15 +190,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "search_no_result",
-                {
-                  username: client.user!.username,
-                  support: client.config.bot.SERVER_SUPPORT_URL,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "search_no_result", {
+                username: client.user!.username,
+                support: client.config.bot.SERVER_SUPPORT_URL,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -251,8 +202,7 @@ export default class implements Command {
     const limitedResults = searchResults.tracks.slice(0, 15);
     const countSong = limitedResults.length;
     const options = limitedResults.map((song: ZklinkTrack, index: number) => {
-      const truncatedTitle =
-        song.title.length > 50 ? song.title.slice(0, 47) + "..." : song.title;
+      const truncatedTitle = song.title.length > 50 ? song.title.slice(0, 47) + "..." : song.title;
       const truncatedAuthor = song.author
         ? song.author.length > 50
           ? song.author.slice(0, 47) + "..."
@@ -288,13 +238,7 @@ export default class implements Command {
     const row1 = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId("select_song")
-        .setPlaceholder(
-          client.i18n.get(
-            handler.language,
-            "commands.music",
-            "search_placeholder"
-          )
-        )
+        .setPlaceholder(client.i18n.get(handler.language, "commands.music", "search_placeholder"))
         .setMinValues(1)
         .setMaxValues(1)
         .addOptions(options)
@@ -310,15 +254,10 @@ export default class implements Command {
         })}`
       )
       .setFooter({
-        text: `${client.i18n.get(
-          handler.language,
-          "commands.music",
-          "search_footer",
-          {
-            username: client.user!.username,
-            countSong: String(countSong),
-          }
-        )}`,
+        text: `${client.i18n.get(handler.language, "commands.music", "search_footer", {
+          username: client.user!.username,
+          countSong: String(countSong),
+        })}`,
       });
     await handler.editReply({
       embeds: [EmbedHome],
@@ -328,24 +267,17 @@ export default class implements Command {
     isCollectorActive = true; // Đặt cờ true khi collector bắt đầu
     let selectedSong: ZklinkTrack | null = null; // Biến lưu bài hát được chọn
 
-    const collector = (
-      handler?.channel! as TextChannel
-    ).createMessageComponentCollector({
+    const collector = (handler?.channel! as TextChannel).createMessageComponentCollector({
       componentType: ComponentType.StringSelect,
       filter: (message) => {
         if (
           message.guild!.members.me!.voice.channel &&
-          message.guild!.members.me!.voice.channelId ===
-            message.member!.voice.channelId
+          message.guild!.members.me!.voice.channelId === message.member!.voice.channelId
         )
           return true;
         else {
           message.reply({
-            content: `${client.i18n.get(
-              handler.language,
-              "interaction",
-              "no_same_voice"
-            )}`,
+            content: `${client.i18n.get(handler.language, "interaction", "no_same_voice")}`,
             flags: MessageFlags.Ephemeral,
           });
           return false;
@@ -354,70 +286,50 @@ export default class implements Command {
       time: client.config.features.SEARCH_TIMEOUT,
     });
 
-    collector.on(
-      "collect",
-      async (interaction: StringSelectMenuInteraction) => {
-        const selectedIndex = parseInt(interaction.values[0]);
-        selectedSong = limitedResults[selectedIndex];
+    collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
+      const selectedIndex = parseInt(interaction.values[0]);
+      selectedSong = limitedResults[selectedIndex];
 
-        if (player) {
-          player.queue.add(selectedSong);
-          if (!player.playing) await player.play();
+      if (player) {
+        player.queue.add(selectedSong);
+        if (!player.playing) await player.play();
 
-          const PlayTracksEmbed = new EmbedBuilder()
-            .setColor(client.color_second)
-            .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_search_track",
-                {
-                  title: selectedSong?.title
-                    ? (selectedSong.title.length > 15
-                        ? selectedSong.title.substring(0, 15) + "..."
-                        : selectedSong.title
-                      ).replace(/(?:https?|ftp):\/\/[\n\S]+/g, "Không rõ")
-                    : "Không rõ",
-                  author: selectedSong?.author || "Không rõ",
-                  url:
-                    selectedSong?.uri || client.config.bot.SERVER_SUPPORT_URL,
-                  user: handler.user!.displayName || handler.user!.tag,
-                  serversupport:
-                    client.config.bot.SERVER_SUPPORT_URL || "Không rõ",
-                }
-              )}`
-            );
+        const PlayTracksEmbed = new EmbedBuilder().setColor(client.color_second).setDescription(
+          `${client.i18n.get(handler.language, "commands.music", "play_search_track", {
+            title: selectedSong?.title
+              ? (selectedSong.title.length > 15
+                  ? selectedSong.title.substring(0, 15) + "..."
+                  : selectedSong.title
+                ).replace(/(?:https?|ftp):\/\/[\n\S]+/g, "Không rõ")
+              : "Không rõ",
+            author: selectedSong?.author || "Không rõ",
+            url: selectedSong?.uri || client.config.bot.SERVER_SUPPORT_URL,
+            user: handler.user!.displayName || handler.user!.tag,
+            serversupport: client.config.bot.SERVER_SUPPORT_URL || "Không rõ",
+          })}`
+        );
 
-          if (selectedSong?.uri && selectedSong?.uri.includes("soundcloud")) {
-            PlayTracksEmbed.setThumbnail(
-              client.user?.displayAvatarURL({ extension: "png" })
-            );
-          } else if (selectedSong?.artworkUrl) {
-            PlayTracksEmbed.setThumbnail(selectedSong?.artworkUrl);
-          }
-
-          await interaction.update({
-            embeds: [PlayTracksEmbed],
-            components: [row1],
-          });
-        } else {
-          await interaction.update({
-            embeds: [
-              new EmbedBuilder()
-                .setDescription(
-                  `${client.i18n.get(
-                    handler.language,
-                    "interaction",
-                    "no_player"
-                  )}`
-                )
-                .setColor(client.color_main),
-            ],
-            components: [],
-          });
+        if (selectedSong?.uri && selectedSong?.uri.includes("soundcloud")) {
+          PlayTracksEmbed.setThumbnail(client.user?.displayAvatarURL({ extension: "png" }) || null);
+        } else if (selectedSong?.artworkUrl) {
+          PlayTracksEmbed.setThumbnail(selectedSong?.artworkUrl);
         }
+
+        await interaction.update({
+          embeds: [PlayTracksEmbed],
+          components: [row1],
+        });
+      } else {
+        await interaction.update({
+          embeds: [
+            new EmbedBuilder()
+              .setDescription(`${client.i18n.get(handler.language, "interaction", "no_player")}`)
+              .setColor(client.color_main),
+          ],
+          components: [],
+        });
       }
-    );
+    });
 
     collector.on("end", async (_, reason) => {
       isCollectorActive = false;
@@ -426,31 +338,23 @@ export default class implements Command {
       if (reason === "time" && selectedSong) {
         const embeded = new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get(
-              handler.language,
-              "commands.music",
-              "search_end_desc1",
-              {
-                title: selectedSong?.title
-                  ? (selectedSong.title.length > 15
-                      ? selectedSong.title.substring(0, 15) + "..."
-                      : selectedSong.title
-                    ).replace(/(?:https?|ftp):\/\/[\n\S]+/g, "Không rõ")
-                  : "Không rõ",
-                author: selectedSong?.author || "Không rõ",
-                url: selectedSong?.uri || client.config.bot.SERVER_SUPPORT_URL,
-                user: handler.user!.displayName || handler.user!.tag,
-                serversupport:
-                  client.config.bot.SERVER_SUPPORT_URL || "Không rõ",
-              }
-            )}`
+            `${client.i18n.get(handler.language, "commands.music", "search_end_desc1", {
+              title: selectedSong?.title
+                ? (selectedSong.title.length > 15
+                    ? selectedSong.title.substring(0, 15) + "..."
+                    : selectedSong.title
+                  ).replace(/(?:https?|ftp):\/\/[\n\S]+/g, "Không rõ")
+                : "Không rõ",
+              author: selectedSong?.author || "Không rõ",
+              url: selectedSong?.uri || client.config.bot.SERVER_SUPPORT_URL,
+              user: handler.user!.displayName || handler.user!.tag,
+              serversupport: client.config.bot.SERVER_SUPPORT_URL || "Không rõ",
+            })}`
           )
           .setColor(client.color_second);
 
         if (selectedSong?.uri && selectedSong?.uri.includes("soundcloud")) {
-          embeded.setThumbnail(
-            client.user?.displayAvatarURL({ extension: "png" })
-          );
+          embeded.setThumbnail(client.user?.displayAvatarURL({ extension: "png" }) || null);
         } else if (selectedSong?.artworkUrl) {
           embeded.setThumbnail(selectedSong.artworkUrl);
         }
@@ -466,18 +370,11 @@ export default class implements Command {
               .setThumbnail(client.user!.displayAvatarURL())
               .setColor(client.color_second)
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.music",
-                  "search_end_desc2",
-                  {
-                    username: client.user!.username,
-                    user: String(
-                      handler.user?.displayName || handler.user?.tag
-                    ),
-                    support: client.config.bot.SERVER_SUPPORT_URL,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.music", "search_end_desc2", {
+                  username: client.user!.username,
+                  user: String(handler.user?.displayName || handler.user?.tag),
+                  support: client.config.bot.SERVER_SUPPORT_URL,
+                })}`
               ),
           ],
           components: [row1],
@@ -487,19 +384,11 @@ export default class implements Command {
   }
 
   checkSameVoice(client: Manager, handler: CommandHandler, language: string) {
-    if (
-      handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel
-    ) {
+    if (handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel) {
       handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "interaction",
-                "no_same_voice"
-              )}`
-            )
+            .setDescription(`${client.i18n.get(handler.language, "interaction", "no_same_voice")}`)
             .setColor(client.color_main),
         ],
       });

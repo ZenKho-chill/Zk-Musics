@@ -1,7 +1,7 @@
 import { Manager } from "../manager.js";
-import { Headers } from "../@types/Lavalink.js";
+import { Headers, LavalinkDataType } from "../@types/Lavalink.js";
 import { GetLavalinkServer } from "./GetLavalinkServer.js";
-import { ZklinkWebsocket } from "../zklink/main.js";
+import { ZklinkWebsocket } from "../Zklink/main.js";
 
 export class CheckLavalinkServer {
   client: Manager;
@@ -19,9 +19,9 @@ export class CheckLavalinkServer {
 
     const getLavalinkServerClass = new GetLavalinkServer();
 
-    const lavalink_data = await getLavalinkServerClass.execute();
+    const lavalink_data: LavalinkDataType[] = await getLavalinkServerClass.execute();
 
-  if (this.client.lavalinkList.length !== 0) this.client.lavalinkList.length = 0;
+    if (this.client.lavalinkList.length !== 0) this.client.lavalinkList.length = 0;
 
     lavalink_data.forEach((config) => {
       let headers = {
@@ -32,7 +32,7 @@ export class CheckLavalinkServer {
         "Resume-Key": "zkmusic@1.0.0(https://github.com/ZenKho-chill/Zk-Musics)",
       };
 
-  const url = `ws://${config.host}:${config.port}/v4/websocket`;
+      const url = `ws://${config.host}:${config.port}/v4/websocket`;
 
       this.checkServerStatus(url, headers)
         .then(() => {

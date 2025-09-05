@@ -8,7 +8,7 @@ import {
 } from "discord.js";
 import { Manager } from "../../../manager.js";
 import { Mode247Builder } from "../../../services/Mode247Builder.js";
-import { ZklinkLoopMode, ZklinkPlayer } from "../../../zklink/main.js";
+import { ZklinkLoopMode, ZklinkPlayer } from "../../../Zklink/main.js";
 import { TopggServiceEnum } from "../../../services/TopggService.js";
 import axios from "axios";
 export class ButtonLoop {

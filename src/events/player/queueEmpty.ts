@@ -1,7 +1,7 @@
 import { TextChannel } from "discord.js";
 import { Manager } from "../../manager.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
-import { ZklinkPlayer } from "../../zklink/main.js";
+import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import chalk from "chalk";
 

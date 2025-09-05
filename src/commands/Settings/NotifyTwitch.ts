@@ -3,10 +3,12 @@ import {
   CommandInteractionOptionResolver,
   ChannelType,
   EmbedBuilder,
+  ChatInputCommandInteraction,
 } from "discord.js";
 import { Manager } from "../../manager.js";
 import { Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
+import { NotifyTwitch } from "../../database/schema/NotifyTwitch.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 
@@ -49,8 +51,7 @@ export default class implements Command {
     },
     {
       name: "content",
-      description:
-        "Nội dung hiển thị trong thông báo. Mention role để ping (chỉ khi thêm)",
+      description: "Nội dung hiển thị trong thông báo. Mention role để ping (chỉ khi thêm)",
       required: false,
       type: ApplicationCommandOptionType.String,
     },
@@ -59,29 +60,35 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
     await handler.deferReply();
-    const options = handler.interaction
+    const options = (handler.interaction as ChatInputCommandInteraction)
       .options as CommandInteractionOptionResolver;
     const action = options.getString("action");
     const TwitchUsername = options.getString("username");
     const channel = options.getChannel("channel");
     const content = options.getString("content") || " ";
 
+    // Validate required parameters
+    if (!TwitchUsername) {
+      return handler.editReply({
+        embeds: [
+          new EmbedBuilder()
+            .setDescription("❌ Twitch username is required.")
+            .setColor(client.color_main),
+        ],
+      });
+    }
+
     if (!client.config.utilities.NotifyTwitch.Enable) {
       await handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.settings",
-                "notify_twitch_disabled",
-                {
-                  twitchusername: TwitchUsername,
-                  channelid: channel ? `<#${channel.id}>` : "N/A",
-                  user: String(handler.user?.displayName || handler.user?.tag),
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.settings", "notify_twitch_disabled", {
+                twitchusername: TwitchUsername,
+                channelid: channel ? `<#${channel.id}>` : "N/A",
+                user: String(handler.user?.displayName || handler.user?.tag),
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -90,15 +97,15 @@ export default class implements Command {
     }
 
     // Lấy các thông báo hiện có cho guild
-    let twitchData = await client.db.NotifyTwitch.get(`${handler.guild!.id}`);
+    let twitchData: NotifyTwitch | null = await client.db.NotifyTwitch.get(`${handler.guild!.id}`);
 
     if (!twitchData) {
       // Nếu chưa có dữ liệu, tạo cấu trúc mới
       twitchData = {
         GuildId: handler.guild!.id,
         GuildName: handler.guild!.name,
-        TokenAccess: twitchData?.TokenAccess || null,
-        ExpiresIn: twitchData?.ExpiresIn || null,
+        TokenAccess: null,
+        ExpiresIn: null,
         Notifications: [],
       };
     }
@@ -115,19 +122,12 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.settings",
-                  "notify_twitch_already",
-                  {
-                    twitchusername: TwitchUsername,
-                    channelid: channel ? `<#${channel.id}>` : "N/A",
-                    user: String(
-                      handler.user?.displayName || handler.user?.tag
-                    ),
-                    botname: client.user!.username || client.user!.displayName,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.settings", "notify_twitch_already", {
+                  twitchusername: TwitchUsername,
+                  channelid: channel ? `<#${channel.id}>` : "N/A",
+                  user: String(handler.user?.displayName || handler.user?.tag),
+                  botname: client.user!.username || client.user!.displayName,
+                })}`
               )
               .setColor(client.color_main),
           ],
@@ -173,11 +173,7 @@ export default class implements Command {
         }
 
         await handler.editReply({
-          embeds: [
-            new EmbedBuilder()
-              .setDescription(description)
-              .setColor(client.color_main),
-          ],
+          embeds: [new EmbedBuilder().setDescription(description).setColor(client.color_main)],
         });
         return;
       }
@@ -194,9 +190,7 @@ export default class implements Command {
                   {
                     twitchusername: TwitchUsername,
                     channelid: channel ? `<#${channel.id}>` : "Không có",
-                    user: String(
-                      handler.user?.displayName || handler.user?.tag
-                    ),
+                    user: String(handler.user?.displayName || handler.user?.tag),
                     botname: client.user!.username || client.user!.displayName,
                   }
                 )}`
@@ -222,17 +216,12 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.settings",
-                "notify_twitch_set",
-                {
-                  twitchusername: TwitchUsername,
-                  channelid: channel ? `<#${channel.id}>` : "N/A",
-                  user: String(handler.user?.displayName || handler.user?.tag),
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.settings", "notify_twitch_set", {
+                twitchusername: TwitchUsername,
+                channelid: channel ? `<#${channel.id}>` : "N/A",
+                user: String(handler.user?.displayName || handler.user?.tag),
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -256,9 +245,7 @@ export default class implements Command {
                   "notify_twitch_not_found",
                   {
                     twitchusername: TwitchUsername,
-                    user: String(
-                      handler.user?.displayName || handler.user?.tag
-                    ),
+                    user: String(handler.user?.displayName || handler.user?.tag),
                     botname: client.user!.username || client.user!.displayName,
                   }
                 )}`
@@ -279,16 +266,11 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.settings",
-                "notify_twitch_removed",
-                {
-                  twitchusername: TwitchUsername,
-                  user: String(handler.user?.displayName || handler.user?.tag),
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.settings", "notify_twitch_removed", {
+                twitchusername: TwitchUsername,
+                user: String(handler.user?.displayName || handler.user?.tag),
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -301,17 +283,12 @@ export default class implements Command {
       embeds: [
         new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get(
-              handler.language,
-              "commands.settings",
-              "notify_twitch_error",
-              {
-                twitchusername: TwitchUsername,
-                channelid: channel ? `<#${channel.id}>` : "Không có",
-                user: String(handler.user?.displayName || handler.user?.tag),
-                botname: client.user!.username || client.user!.displayName,
-              }
-            )}`
+            `${client.i18n.get(handler.language, "commands.settings", "notify_twitch_error", {
+              twitchusername: TwitchUsername,
+              channelid: channel ? `<#${channel.id}>` : "Không có",
+              user: String(handler.user?.displayName || handler.user?.tag),
+              botname: client.user!.username || client.user!.displayName,
+            })}`
           )
           .setColor(client.color_main),
       ],

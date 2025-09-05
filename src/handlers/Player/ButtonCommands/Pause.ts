@@ -9,7 +9,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { Manager } from "../../../manager.js";
-import { ZklinkPlayer } from "../../../zklink/main.js";
+import { ZklinkPlayer } from "../../../Zklink/main.js";
 import { TopggServiceEnum } from "../../../services/TopggService.js";
 import axios from "axios";
 export class ButtonPause {

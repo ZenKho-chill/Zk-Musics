@@ -4,7 +4,7 @@ import { PageQueue } from "../../structures/PageQueue.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -41,19 +41,13 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "queue_number_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "queue_number_invalid")}`
             )
             .setColor(client.color_main),
         ],
       });
 
-    const player = client.zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
 
     const source = player.queue.current?.source || "unknown";
     let src = client.config.PLAYER_SOURCENAME.UNKNOWN; // Mặc định là UNKNOWN nếu nguồn không xác định
@@ -80,14 +74,12 @@ export default class implements Command {
     }
 
     const song = player.queue.current;
-    const qduration = `${new FormatDuration().parse(
-      song!.duration + player.queue.duration
-    )}`;
+    const qduration = `${new FormatDuration().parse(song!.duration + player.queue.duration)}`;
 
     let pagesNum = Math.ceil(player.queue.length / 10);
     if (pagesNum === 0) pagesNum = 1;
 
-    const songStrings = [];
+    const songStrings: string[] = [];
     for (let i = 0; i < player.queue.length; i++) {
       const song = player.queue[i];
       songStrings.push(
@@ -98,53 +90,37 @@ export default class implements Command {
       );
     }
 
-    const pages = [];
+    const pages: EmbedBuilder[] = [];
     for (let i = 0; i < pagesNum; i++) {
       const str = songStrings.slice(i * 10, i * 10 + 10).join("\n");
 
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "queue_title"
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.music", "queue_title")}`,
         })
         .setThumbnail(
           // Dùng avatar bot nếu nguồn là soundcloud, nếu không dùng artworkUrl hoặc thumbnail mặc định
           source === "soundcloud"
             ? (client.user?.displayAvatarURL() as string)
-            : song?.artworkUrl ??
-                `https://img.youtube.com/vi/${song?.identifier}/hqdefault.jpg`
+            : (song?.artworkUrl ?? `https://img.youtube.com/vi/${song?.identifier}/hqdefault.jpg`)
         )
         .setColor(client.color_second)
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "queue_description",
-            {
-              title: this.getTitle(client, song!),
-              request: String(song!.requester),
-              duration: new FormatDuration().parse(song!.duration),
-              rest: str == "" ? "  `KHÔNG KHẢ DỤNG`" : "\n" + str,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "queue_description", {
+            title: this.getTitle(client, song!),
+            request: String(song!.requester),
+            duration: new FormatDuration().parse(song!.duration),
+            rest: str == "" ? "  `KHÔNG KHẢ DỤNG`" : "\n" + str,
+          })}`
         )
         .setFooter({
-          text: `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "queue_footer",
-            {
-              page: String(i + 1),
-              pages: String(pagesNum),
-              queue_lang: String(player.queue.length),
-              duration: qduration,
-            }
-          )}`,
+          text: `${client.i18n.get(handler.language, "commands.music", "queue_footer", {
+            page: String(i + 1),
+            pages: String(pagesNum),
+            queue_lang: String(player.queue.length),
+            duration: qduration,
+          })}`,
         });
-
       pages.push(embed);
     }
 
@@ -174,11 +150,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.music",
-                  "queue_notnumber"
-                )}`
+                `${client.i18n.get(handler.language, "commands.music", "queue_notnumber")}`
               )
               .setColor(client.color_main),
           ],
@@ -188,14 +160,9 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.music",
-                  "queue_page_notfound",
-                  {
-                    page: String(pagesNum),
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.music", "queue_page_notfound", {
+                  page: String(pagesNum),
+                })}`
               )
               .setColor(client.color_main),
           ],

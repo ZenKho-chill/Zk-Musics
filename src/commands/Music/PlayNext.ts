@@ -8,11 +8,8 @@ import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { ConvertTime } from "../../utilities/ConvertTime.js";
-import {
-  AutocompleteInteractionChoices,
-  GlobalInteraction,
-} from "../../@types/Interaction.js";
-import { ZklinkPlayer, ZklinkTrack } from "../../zklink/main.js";
+import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
+import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
@@ -44,9 +41,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
-    const player = client.zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
     const currentTrack = player.queue.current;
 
     if (!currentTrack) {
@@ -54,15 +49,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "no_songs_playing",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -75,23 +65,17 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "playnext_notfound",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "playnext_notfound", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
       });
 
     const isYouTubeLink = (value: string): boolean => {
-      const youtubeRegex =
-        /(?:https?:\/\/)?(?:www\.)?(?:youtube|youtu)\.(?:com|be)\/(?:[^ ]+)/i;
+      const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube|youtu)\.(?:com|be)\/(?:[^ ]+)/i;
       return youtubeRegex.test(value);
     };
     if (isYouTubeLink(song) && !client.config.features.YOUTUBE_LINK) {
@@ -99,16 +83,11 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "youtube_disabled",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                  serversupport: client.config.bot.SERVER_SUPPORT_URL,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "youtube_disabled", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+                serversupport: client.config.bot.SERVER_SUPPORT_URL,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -130,15 +109,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "playnext_notfound",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "playnext_notfound", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -150,15 +124,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "playnext_queue_empty",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "playnext_queue_empty", {
+                user: handler.user!.displayName || handler.user!.tag,
+                botname: client.user!.username || client.user!.displayName,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -179,7 +148,7 @@ export default class implements Command {
       })}`
     );
     if (track?.uri && track.uri.includes("soundcloud")) {
-      embed.setThumbnail(client.user?.displayAvatarURL({ size: 512 }));
+      embed.setThumbnail(client.user?.displayAvatarURL({ size: 512 }) ?? null);
     } else if (track?.artworkUrl) {
       embed.setThumbnail(track?.artworkUrl);
     }
@@ -199,8 +168,7 @@ export default class implements Command {
               id: (track.requester as any).id,
               username: (track.requester as any).username,
               globalName: (track.requester as any).globalName,
-              defaultAvatarURL:
-                (track.requester as any).defaultAvatarURL ?? null,
+              defaultAvatarURL: (track.requester as any).defaultAvatarURL ?? null,
             }
           : null,
       },
@@ -231,21 +199,13 @@ export default class implements Command {
   }
 
   // Chức năng tự động hoàn thành
-  async autocomplete(
-    client: Manager,
-    interaction: GlobalInteraction,
-    language: string
-  ) {
+  async autocomplete(client: Manager, interaction: GlobalInteraction, language: string) {
     let choice: AutocompleteInteractionChoices[] = [];
-    const url = String(
-      (interaction as CommandInteraction).options.get("search")!.value
-    );
+    const url = String((interaction as any).options.get("search")!.value);
 
     const Random =
       client.config.features.AUTOCOMPLETE_SEARCH[
-        Math.floor(
-          Math.random() * client.config.features.AUTOCOMPLETE_SEARCH.length
-        )
+        Math.floor(Math.random() * client.config.features.AUTOCOMPLETE_SEARCH.length)
       ];
 
     const match = client.REGEX.some((match) => {
@@ -254,9 +214,7 @@ export default class implements Command {
 
     if (match == true) {
       choice.push({ name: url, value: url });
-      await (interaction as AutocompleteInteraction)
-        .respond(choice)
-        .catch(() => {});
+      await (interaction as AutocompleteInteraction).respond(choice).catch(() => {});
       return;
     }
 
@@ -269,7 +227,7 @@ export default class implements Command {
     }
     const engines = client.config.features.PLAY_COMMAND_ENGINE;
     const randomEngine = engines[Math.floor(Math.random() * engines.length)];
-    const searchRes = await client.zklink.search(url || Random, {
+    const searchRes = await client.Zklink.search(url || Random, {
       engine: randomEngine,
     });
 
@@ -285,8 +243,6 @@ export default class implements Command {
       });
     }
 
-    await (interaction as AutocompleteInteraction)
-      .respond(choice)
-      .catch(() => {});
+    await (interaction as AutocompleteInteraction).respond(choice).catch(() => {});
   }
 }

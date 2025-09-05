@@ -39,7 +39,7 @@ export class PlayerEventLoader {
     };
 
     const eName = splitPath(path);
-    this.client.zklink.on(
+    this.client.Zklink.on(
       eName as "voiceEndSpeaking",
       events.execute.bind(null, this.client)
     );
