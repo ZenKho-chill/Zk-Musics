@@ -430,4 +430,4 @@ Congratulations! You have successfully installed and configured Zk Music's. Your
 - [Zk Music's Wiki](https://github.com/ZenKho-chill/Zk-Musics/wiki)
 
 If you encounter any issues, join our [Support Server](https://dsteam.store/discord) for help!</content>
-<parameter name="filePath">d:\Discord Bot\Zk Music's\TUTORIAL-en.md
+<parameter name="filePath">

@@ -430,4 +430,4 @@ Chúc mừng! Bạn đã hoàn thành việc cài đặt và cấu hình Zk Musi
 - [Zk Music's Wiki](https://github.com/ZenKho-chill/Zk-Musics/wiki)
 
 Nếu gặp vấn đề, hãy tham gia [Server Hỗ trợ](https://dsteam.store/discord) để được giúp đỡ!</content>
-<parameter name="filePath">d:\Discord Bot\Zk Music's\TUTORIAL.md
+<parameter name="filePath">
