@@ -1,7 +1,8 @@
 import util from "node:util";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
-import { ZklinkLoopMode, ZklinkPlayer } from "../../Zklink/main.js";
+import { ZklinkLoopMode } from "../../Zklink/Interface/Constants.js";
+import { ZklinkPlayer } from "../../Zklink/Player/ZklinkPlayer.js";
 
 export type TrackRes = {
   title: string;

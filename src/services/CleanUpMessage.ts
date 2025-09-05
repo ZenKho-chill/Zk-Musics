@@ -1,6 +1,6 @@
 import { Manager } from "../manager.js";
 import { TextChannel } from "discord.js";
-import { ZklinkPlayer } from "../Zklink/main.js";
+import { ZklinkPlayer } from "../Zklink/Player/ZklinkPlayer.js";
 
 export class CleanUpMessage {
   client: Manager;

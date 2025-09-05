@@ -29,7 +29,7 @@ import { Zklink } from "./Zklink/Zklink.js";
 import { Command } from "./structures/Command.js";
 import { PlayerButton } from "./@types/Button.js";
 import { GlobalMsg } from "./structures/CommandHandler.js";
-import { ZklinkPlayer } from "./Zklink/main.js";
+import { ZklinkPlayer } from "./Zklink/Player/ZklinkPlayer.js";
 import { TopggService } from "./services/TopggService.js";
 import FilterMenuService from "./services/FilterMenu.js";
 import NotifyTwitch from "./services/NotifyTwitch.js";

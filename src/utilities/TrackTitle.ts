@@ -1,5 +1,5 @@
 import { Manager } from "../manager.js";
-import { ZklinkTrack } from "../Zklink/main.js";
+import { ZklinkTrack } from "../Zklink/Player/ZklinkTrack.js";
 import { FormatDuration } from "./FormatDuration.js";
 
 export function TrackTitle(client: Manager, track: ZklinkTrack) {

@@ -1,11 +1,9 @@
 import { Manager } from "../manager.js";
-import {
-  Library,
-  Plugin,
-  Zklink,
-  ZklinkAdditionalOptions,
-  ZklinkPlugin,
-} from "../Zklink/main.js";
+import Library from "../Zklink/Libary/index.js";
+import Plugin from "../Zklink/Plugin/index.js";
+import { Zklink } from "../Zklink/Zklink.js";
+import { ZklinkAdditionalOptions } from "../Zklink/Interface/Manager.js";
+import { ZklinkPlugin } from "../Zklink/Plugin/ZklinkPlugin.js";
 
 export class ZklinkInit {
   client: Manager;

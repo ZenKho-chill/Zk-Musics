@@ -5,7 +5,7 @@ import {
   ButtonStyle,
   MessageFlags,
 } from "discord.js";
-import { ZklinkPlayer } from "../Zklink/main.js";
+import { ZklinkPlayer } from "../Zklink/Player/ZklinkPlayer.js";
 import chalk from "chalk";
 import { Manager } from "../manager.js";
 import { GuildMember, Interaction } from "discord.js";

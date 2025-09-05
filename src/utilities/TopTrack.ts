@@ -1,5 +1,5 @@
 import { Manager } from "../manager.js";
-import { ZklinkPlayer } from "../Zklink/main.js";
+import { ZklinkPlayer } from "../Zklink/Player/ZklinkPlayer.js";
 import { User } from "discord.js";
 
 export async function TopTrack(client: Manager, player: ZklinkPlayer) {

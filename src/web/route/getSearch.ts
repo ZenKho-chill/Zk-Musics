@@ -2,7 +2,7 @@ import util from "node:util";
 import { User } from "discord.js";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
-import { ZklinkSearchResultType } from "../../Zklink/main.js";
+import { ZklinkSearchResultType } from "../../Zklink/Interface/Manager.js";
 
 export async function getSearch(
   client: Manager,

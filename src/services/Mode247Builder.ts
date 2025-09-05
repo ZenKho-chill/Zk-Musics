@@ -1,5 +1,5 @@
 import { Manager } from "../manager.js";
-import { ZklinkPlayer } from "../Zklink/main.js";
+import { ZklinkPlayer } from "../Zklink/Player/ZklinkPlayer.js";
 
 export class Mode247Builder {
   client: Manager;
