@@ -2,12 +2,13 @@
 
 ## 🎯 Table of Contents
 1. [Basic Installation](#1-basic-installation)
-2. [Lavalink Configuration](#2-lavalink-configuration)
-3. [Database Configuration](#3-database-configuration)
-4. [Premium Setup](#4-premium-setup)
-5. [Web Dashboard Integration](#5-web-dashboard-integration)
-6. [UI Customization](#6-ui-customization)
-7. [Advanced Troubleshooting](#7-advanced-troubleshooting)
+2. [Docker Setup](#2-docker-setup)
+3. [Lavalink Configuration](#3-lavalink-configuration)
+4. [Database Configuration](#4-database-configuration)
+5. [Premium Setup](#5-premium-setup)
+6. [Web Dashboard Integration](#6-web-dashboard-integration)
+7. [UI Customization](#7-ui-customization)
+8. [Advanced Troubleshooting](#8-advanced-troubleshooting)
 
 ---
 
@@ -64,7 +65,167 @@ features:
 
 ---
 
-## 2. Lavalink Configuration
+## 2. Docker Setup
+
+### Docker Advantages
+- **Easy setup**: No need to install Node.js, Java
+- **Isolated environment**: No conflicts with system
+- **Auto-scaling**: Easy to scale and manage
+- **Easy deployment**: Fast and consistent deployment
+
+### Step 1: Install Docker
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install docker.io docker-compose -y
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# CentOS/RHEL
+sudo yum install docker docker-compose -y
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Check installation
+docker --version
+docker-compose --version
+```
+
+### Step 2: Prepare Project
+```bash
+git clone https://github.com/ZenKho-chill/Zk-Musics.git
+cd Zk-Musics
+
+# Copy configuration files
+cp .env.example .env
+cp config.example.yml config.yml
+```
+
+### Step 3: Configure Bot
+```bash
+# Edit .env
+nano .env
+```
+
+```env
+# Discord Bot Token
+DISCORD_APP_TOKEN=your_discord_bot_token_here
+
+# Database (optional)
+DB_PASSWORD=zkmusic123
+
+# Lavalink
+LAVALINK_PASSWORD=youshallnotpass
+```
+
+### Step 4: Run with Docker
+
+#### Simple Setup (no database)
+```bash
+# Run bot and Lavalink
+docker-compose -f docker-compose.simple.yml up -d
+
+# Check logs
+docker-compose -f docker-compose.simple.yml logs -f
+```
+
+#### Full Setup (with database)
+```bash
+# Run with PostgreSQL
+docker-compose --profile db up -d postgres zkmusic lavalink
+
+# Run with MySQL
+docker-compose --profile db up -d mysql zkmusic lavalink
+
+# Run with MongoDB
+docker-compose --profile db up -d mongodb zkmusic lavalink
+
+# Run everything
+docker-compose up -d
+```
+
+### Step 5: Manage Containers
+```bash
+# View status
+docker-compose ps
+
+# View logs
+docker-compose logs -f zkmusic
+docker-compose logs -f lavalink
+
+# Restart services
+docker-compose restart zkmusic
+
+# Stop services
+docker-compose down
+
+# Update bot
+docker-compose pull && docker-compose up -d --build
+```
+
+### Step 6: Backup and Restore
+```bash
+# Backup database
+docker exec zkmusic-postgres pg_dump -U zkmusic zkmusic > backup.sql
+
+# Restore database
+docker exec -i zkmusic-postgres psql -U zkmusic zkmusic < backup.sql
+
+# Backup volumes
+docker run --rm -v zkmusic_postgres_data:/data -v $(pwd):/backup alpine tar czf /backup/postgres_backup.tar.gz -C /data .
+```
+
+### Advanced Docker Configuration
+
+#### Custom Lavalink config
+```yaml
+# lavalink/application.yml
+server:
+  port: 2333
+  address: 0.0.0.0
+
+lavalink:
+  server:
+    password: "${LAVALINK_PASSWORD}"
+    sources:
+      youtube: true
+      spotify: true
+      soundcloud: true
+```
+
+#### Environment variables
+```env
+# Bot configuration
+NODE_ENV=production
+DEBUG_MODE=false
+
+# Database
+DB_HOST=postgres
+DB_PORT=5432
+DB_NAME=zkmusic
+DB_USER=zkmusic
+DB_PASSWORD=zkmusic123
+
+# Lavalink
+LAVALINK_HOST=lavalink
+LAVALINK_PORT=2333
+LAVALINK_PASSWORD=youshallnotpass
+```
+
+#### Volumes mapping
+```yaml
+services:
+  zkmusic:
+    volumes:
+      - ./config.yml:/app/config.yml:ro
+      - ./logs:/app/logs
+      - ./database:/app/database
+      - ./custom_emojis:/app/assets/emojis
+```
+
+---
+
+## 3. Lavalink Configuration
 
 ### Method 1: Use Free Lavalink
 ```yaml

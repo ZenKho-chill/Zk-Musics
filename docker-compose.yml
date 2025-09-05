@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  # Zk Music's Discord Bot
+  zkmusic:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zkmusic-bot
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - DISCORD_APP_TOKEN=${DISCORD_APP_TOKEN}
+    env_file:
+      - .env
+    volumes:
+      - ./config.yml:/app/config.yml:ro
+      - ./logs:/app/logs
+      - ./database:/app/database
+    depends_on:
+      - lavalink
+    networks:
+      - zkmusic-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health", "||", "exit", "1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Lavalink Audio Server
+  lavalink:
+    image: fredboat/lavalink:4.0.8
+    container_name: zkmusic-lavalink
+    restart: unless-stopped
+    ports:
+      - "2333:2333"
+    volumes:
+      - ./lavalink/application.yml:/opt/Lavalink/application.yml:ro
+      - ./lavalink/logs:/opt/Lavalink/logs
+    environment:
+      - JAVA_OPTS=-Xmx2G -Xms1G
+    networks:
+      - zkmusic-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2333/version", "||", "exit", "1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Optional: PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: zkmusic-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=zkmusic
+      - POSTGRES_USER=zkmusic
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-zkmusic123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - zkmusic-network
+    profiles:
+      - db
+
+  # Optional: MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: zkmusic-mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_DATABASE=zkmusic
+      - MYSQL_USER=zkmusic
+      - MYSQL_PASSWORD=${DB_PASSWORD:-zkmusic123}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-root123}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - zkmusic-network
+    command: --default-authentication-plugin=mysql_native_password
+    profiles:
+      - db
+
+  # Optional: MongoDB Database
+  mongodb:
+    image: mongo:7-jammy
+    container_name: zkmusic-mongodb
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_DATABASE=zkmusic
+      - MONGO_INITDB_ROOT_USERNAME=zkmusic
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD:-zkmusic123}
+    volumes:
+      - mongodb_data:/data/db
+      - ./database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    ports:
+      - "27017:27017"
+    networks:
+      - zkmusic-network
+    profiles:
+      - db
+
+  # Optional: Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: zkmusic-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - zkmusic-network
+    profiles:
+      - cache
+
+networks:
+  zkmusic-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mysql_data:
+  mongodb_data:
+  redis_data:

@@ -2,12 +2,13 @@
 
 ## 🎯 Mục lục
 1. [Cài đặt cơ bản](#1-cài-đặt-cơ-bản)
-2. [Cấu hình Lavalink](#2-cấu-hình-lavalink)
-3. [Cấu hình Database](#3-cấu-hình-database)
-4. [Cài đặt Premium](#4-cài-đặt-premium)
-5. [Tích hợp Web Dashboard](#5-tích-hợp-web-dashboard)
-6. [Tùy chỉnh giao diện](#6-tùy-chỉnh-giao-diện)
-7. [Troubleshooting nâng cao](#7-troubleshooting-nâng-cao)
+2. [Cài đặt với Docker](#2-cài-đặt-với-docker)
+3. [Cấu hình Lavalink](#3-cấu-hình-lavalink)
+4. [Cấu hình Database](#4-cấu-hình-database)
+5. [Cài đặt Premium](#5-cài-đặt-premium)
+6. [Tích hợp Web Dashboard](#6-tích-hợp-web-dashboard)
+7. [Tùy chỉnh giao diện](#7-tùy-chỉnh-giao-diện)
+8. [Troubleshooting nâng cao](#8-troubleshooting-nâng-cao)
 
 ---
 
@@ -64,7 +65,167 @@ features:
 
 ---
 
-## 2. Cấu hình Lavalink
+## 2. Cài đặt với Docker
+
+### Ưu điểm của Docker
+- **Dễ dàng setup**: Không cần cài đặt Node.js, Java
+- **Isolated environment**: Không conflict với hệ thống
+- **Auto-scaling**: Dễ dàng scale và manage
+- **Easy deployment**: Deploy nhanh chóng và consistent
+
+### Bước 1: Cài đặt Docker
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install docker.io docker-compose -y
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# CentOS/RHEL
+sudo yum install docker docker-compose -y
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Kiểm tra cài đặt
+docker --version
+docker-compose --version
+```
+
+### Bước 2: Chuẩn bị project
+```bash
+git clone https://github.com/ZenKho-chill/Zk-Musics.git
+cd Zk-Musics
+
+# Sao chép file cấu hình
+cp .env.example .env
+cp config.example.yml config.yml
+```
+
+### Bước 3: Cấu hình bot
+```bash
+# Chỉnh sửa .env
+nano .env
+```
+
+```env
+# Discord Bot Token
+DISCORD_APP_TOKEN=your_discord_bot_token_here
+
+# Database (tùy chọn)
+DB_PASSWORD=zkmusic123
+
+# Lavalink
+LAVALINK_PASSWORD=youshallnotpass
+```
+
+### Bước 4: Chạy với Docker
+
+#### Setup đơn giản (không cần database)
+```bash
+# Chạy bot và Lavalink
+docker-compose -f docker-compose.simple.yml up -d
+
+# Kiểm tra logs
+docker-compose -f docker-compose.simple.yml logs -f
+```
+
+#### Setup đầy đủ (có database)
+```bash
+# Chạy với PostgreSQL
+docker-compose --profile db up -d postgres zkmusic lavalink
+
+# Chạy với MySQL
+docker-compose --profile db up -d mysql zkmusic lavalink
+
+# Chạy với MongoDB
+docker-compose --profile db up -d mongodb zkmusic lavalink
+
+# Chạy tất cả
+docker-compose up -d
+```
+
+### Bước 5: Quản lý containers
+```bash
+# Xem trạng thái
+docker-compose ps
+
+# Xem logs
+docker-compose logs -f zkmusic
+docker-compose logs -f lavalink
+
+# Restart services
+docker-compose restart zkmusic
+
+# Dừng services
+docker-compose down
+
+# Cập nhật bot
+docker-compose pull && docker-compose up -d --build
+```
+
+### Bước 6: Backup và Restore
+```bash
+# Backup database
+docker exec zkmusic-postgres pg_dump -U zkmusic zkmusic > backup.sql
+
+# Restore database
+docker exec -i zkmusic-postgres psql -U zkmusic zkmusic < backup.sql
+
+# Backup volumes
+docker run --rm -v zkmusic_postgres_data:/data -v $(pwd):/backup alpine tar czf /backup/postgres_backup.tar.gz -C /data .
+```
+
+### Cấu hình nâng cao cho Docker
+
+#### Custom Lavalink config
+```yaml
+# lavalink/application.yml
+server:
+  port: 2333
+  address: 0.0.0.0
+
+lavalink:
+  server:
+    password: "${LAVALINK_PASSWORD}"
+    sources:
+      youtube: true
+      spotify: true
+      soundcloud: true
+```
+
+#### Environment variables
+```env
+# Bot configuration
+NODE_ENV=production
+DEBUG_MODE=false
+
+# Database
+DB_HOST=postgres
+DB_PORT=5432
+DB_NAME=zkmusic
+DB_USER=zkmusic
+DB_PASSWORD=zkmusic123
+
+# Lavalink
+LAVALINK_HOST=lavalink
+LAVALINK_PORT=2333
+LAVALINK_PASSWORD=youshallnotpass
+```
+
+#### Volumes mapping
+```yaml
+services:
+  zkmusic:
+    volumes:
+      - ./config.yml:/app/config.yml:ro
+      - ./logs:/app/logs
+      - ./database:/app/database
+      - ./custom_emojis:/app/assets/emojis
+```
+
+---
+
+## 3. Cấu hình Lavalink
 
 ### Phương pháp 1: Sử dụng Lavalink miễn phí
 ```yaml

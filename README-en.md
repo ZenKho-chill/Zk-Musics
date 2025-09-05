@@ -107,7 +107,79 @@ npm run start:prod
 npm run start:shards
 ```
 
-## 📖 Detailed Guide
+## � Docker Setup
+
+### System Requirements
+- **Docker**: 20.10.0 or higher
+- **Docker Compose**: 2.0.0 or higher
+
+### 1. Preparation
+```bash
+git clone https://github.com/ZenKho-chill/Zk-Musics.git
+cd Zk-Musics
+```
+
+### 2. Configuration
+```bash
+# Copy configuration files
+cp .env.example .env
+cp config.example.yml config.yml
+
+# Edit .env with your Discord token
+nano .env
+```
+
+### 3. Run with Docker Compose
+
+#### Full setup (with database)
+```bash
+# Run all services
+docker-compose up -d
+
+# Run only bot and Lavalink
+docker-compose up -d zkmusic lavalink
+
+# Run with PostgreSQL
+docker-compose --profile db up -d postgres
+
+# Run with MySQL
+docker-compose --profile db up -d mysql
+
+# Run with MongoDB
+docker-compose --profile db up -d mongodb
+```
+
+#### Simple setup (no database needed)
+```bash
+docker-compose -f docker-compose.simple.yml up -d
+```
+
+### 4. Check status
+```bash
+# View logs
+docker-compose logs -f zkmusic
+docker-compose logs -f lavalink
+
+# Check container status
+docker-compose ps
+
+# Restart services
+docker-compose restart zkmusic
+```
+
+### 5. Update bot
+```bash
+# Stop services
+docker-compose down
+
+# Pull latest changes
+git pull
+
+# Rebuild and restart
+docker-compose up -d --build
+```
+
+## �📖 Detailed Guide
 
 ### 🎯 Lavalink Setup
 

@@ -107,7 +107,79 @@ npm run start:prod
 npm run start:shards
 ```
 
-## 📖 Hướng dẫn chi tiết
+## � Cài đặt với Docker
+
+### Yêu cầu hệ thống
+- **Docker**: 20.10.0 hoặc cao hơn
+- **Docker Compose**: 2.0.0 hoặc cao hơn
+
+### 1. Chuẩn bị
+```bash
+git clone https://github.com/ZenKho-chill/Zk-Musics.git
+cd Zk-Musics
+```
+
+### 2. Cấu hình
+```bash
+# Sao chép file cấu hình
+cp .env.example .env
+cp config.example.yml config.yml
+
+# Chỉnh sửa .env với token Discord của bạn
+nano .env
+```
+
+### 3. Chạy với Docker Compose
+
+#### Chạy đầy đủ (có database)
+```bash
+# Chạy tất cả services
+docker-compose up -d
+
+# Chạy chỉ bot và Lavalink
+docker-compose up -d zkmusic lavalink
+
+# Chạy với PostgreSQL
+docker-compose --profile db up -d postgres
+
+# Chạy với MySQL
+docker-compose --profile db up -d mysql
+
+# Chạy với MongoDB
+docker-compose --profile db up -d mongodb
+```
+
+#### Chạy đơn giản (không cần database)
+```bash
+docker-compose -f docker-compose.simple.yml up -d
+```
+
+### 4. Kiểm tra trạng thái
+```bash
+# Xem logs
+docker-compose logs -f zkmusic
+docker-compose logs -f lavalink
+
+# Kiểm tra trạng thái containers
+docker-compose ps
+
+# Restart services
+docker-compose restart zkmusic
+```
+
+### 5. Cập nhật bot
+```bash
+# Dừng services
+docker-compose down
+
+# Pull latest changes
+git pull
+
+# Rebuild và chạy lại
+docker-compose up -d --build
+```
+
+## �📖 Hướng dẫn chi tiết
 
 ### 🎯 Thiết lập Lavalink
 
