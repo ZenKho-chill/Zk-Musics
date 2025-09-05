@@ -107,7 +107,7 @@ npm run start:prod
 npm run start:shards
 ```
 
-## � Docker Setup
+## Docker Setup
 
 ### System Requirements
 - **Docker**: 20.10.0 or higher

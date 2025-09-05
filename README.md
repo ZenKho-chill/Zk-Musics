@@ -107,7 +107,7 @@ npm run start:prod
 npm run start:shards
 ```
 
-## � Cài đặt với Docker
+## Cài đặt với Docker
 
 ### Yêu cầu hệ thống
 - **Docker**: 20.10.0 hoặc cao hơn
