@@ -105,7 +105,8 @@
     "ws": "^8.18.3",
     "xml2js": "^0.6.2",
     "zk.quick.db": "^9.0.0",
-    "zkcard": "^1.6.0"
+    "zkcard": "^1.6.0",
+    "typescript": "5.9.2"
   },
   "devDependencies": {
     "@types/chillout": "^5.0.6",
@@ -127,7 +128,6 @@
     "plsargs": "^0.1.6",
     "prettier": "^3.6.2",
     "tsx": "^4.20.5",
-    "typescript": "^5.9.2",
     "undici-types": "^7.15.0"
   },
   "pnpm": {

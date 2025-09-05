@@ -1,17 +1,4 @@
-export type Constructor<T> = new (...args: any[]) => T;
-
-export interface Structures {
-  rest?: Constructor<>;
-}
-
-export interface ZklinkNodeOptions {
-  name: string;
-  host: string;
-  port: number;
-  auth: string;
-  driver?: string;
-}
-import { AbstractLibrary } from "../Library/AbstractLibrary.js";
+import { AbstractLibrary } from "../Libary/AbstractLibrary.js";
 import { ZklinkPlugin } from "../Plugin/ZklinkPlugin.js";
 import { ZklinkTrack } from "../Player/ZklinkTrack.js";
 import { ZklinkNodeManager } from "../Manager/ZklinkNodeManager.js";
@@ -21,23 +8,11 @@ import { ZklinkPlayer } from "../Player/ZklinkPlayer.js";
 import { AbstractDriver } from "../Drivers/AbstractDriver.js";
 import { ZklinkQueue } from "../Player/ZklinkQueue.js";
 
-/**
- * Giao diện cấu trúc tùy chỉnh
- */
 export type Constructor<T> = new (...args: any[]) => T;
 
 export interface Structures {
-  /**
-   * Cấu trúc tùy chỉnh mở rộng lớp ZklinkRest
-   */
   rest?: Constructor<ZklinkRest>;
-  /**
-   * Cấu trúc tùy chỉnh mở rộng lớp ZklinkPlayer
-   */
   player?: Constructor<ZklinkPlayer>;
-  /**
-   * Cấu trúc tùy chỉnh mở rộng lớp ZklinkQueue
-   */
   queue?: Constructor<ZklinkQueue>;
 }
 

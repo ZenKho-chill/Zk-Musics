@@ -9,7 +9,7 @@ import { ZklinkNode } from "../Node/ZklinkNode.js";
 import { AbstractDriver } from "./AbstractDriver.js";
 import util from "node:util";
 import { ZklinkPlayer } from "../Player/ZklinkPlayer.js";
-import { ZklinkWebsocket } from "../Utilities/ZlslinkWebsocket.js";
+import { ZklinkWebsocket } from "../Utilities/ZklinkWebsocket.js";
 import { ZklinkDatabase } from "../Utilities/ZklinkDatabase.js";
 
 export enum Lavalink3loadType {
