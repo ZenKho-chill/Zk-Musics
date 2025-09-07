@@ -15,7 +15,7 @@ export class PlayerButtonsLoader {
   }
 
   async loader() {
-    let commandPath = resolve(join(__dirname, "..", "..", "buttons"));
+    let commandPath = resolve(join(__dirname, "..", "..", "button"));
     let commandFiles = await readdirRecursive(commandPath);
 
     for await (const commandFile of commandFiles) {

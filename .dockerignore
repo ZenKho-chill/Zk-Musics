@@ -116,9 +116,6 @@ README.md
 TUTORIAL.md
 *.md
 
-# Scripts
-script/
-
 # Database files
 *.db
 *.sqlite

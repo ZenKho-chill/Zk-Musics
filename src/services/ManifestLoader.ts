@@ -29,8 +29,8 @@ export class ManifestLoader {
         },
       },
       package: {
-        discordjs: jsonData.dependencies["discord.js"].substring(1),
-        typescript: jsonData.devDependencies["typescript"].substring(1),
+        discordjs: jsonData.dependencies["discord.js"] ? jsonData.dependencies["discord.js"].substring(1) : "unknown",
+        typescript: jsonData.devDependencies["typescript"] ? jsonData.devDependencies["typescript"].substring(1) : "unknown",
         globalAmount: countPackage,
         devAmount: countDevPackage,
         totalAmount: countDevPackage + countPackage,

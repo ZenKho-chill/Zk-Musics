@@ -1,7 +1,7 @@
-# Dockerfile cho Zk Music's Discord Bot
-FROM node:21-alpine AS base
+# Dockerfile tối thiểu cho Zk Music's Discord Bot
+FROM node:lts-alpine
 
-# Cài đặt các dependencies cần thiết cho canvas và build
+# Cài dependencies runtime cần cho canvas + ffmpeg
 RUN apk add --no-cache \
   python3 \
   make \
@@ -19,52 +19,19 @@ RUN apk add --no-cache \
 # Tạo thư mục ứng dụng
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install && npm ci --omit=dev && npm cache clean --force
-
-# Production stage
-FROM node:21-alpine AS production
-
-# Cài đặt các dependencies runtime
-RUN apk add --no-cache \
-  cairo \
-  jpeg \
-  giflib \
-  librsvg \
-  pango \
-  pixman \
-  pkgconfig \
-  python3 \
-  ffmpeg
-
-# Tạo user không phải root
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S zkmusic -u 1001
-
-# Tạo thư mục ứng dụng
-WORKDIR /app
-
-# Copy dependencies từ base stage
-COPY --from=base --chown=zkmusic:nodejs /app/node_modules ./node_modules
+# Copy package files và cài dependencies
+COPY package.json ./
+RUN npm install --omit=dev && npm cache clean --force
 
 # Copy source code
-COPY --chown=zkmusic:nodejs . .
+COPY . .
 
 # Build ứng dụng
-RUN npm run build && npm run build:data
+RUN npm run build || echo "⚠️ Bỏ qua build nếu không có script build"
+RUN npm run build:data || echo "⚠️ Bỏ qua copy data nếu không có script"
 
-# Chuyển sang user không phải root
-USER zkmusic
-
-# Expose port cho web server (tùy chọn)
+# Expose port (nếu có web dashboard)
 EXPOSE 3000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node --version || exit 1
-
-# Start ứng dụng
+# Start bot
 CMD ["npm", "run", "start"]

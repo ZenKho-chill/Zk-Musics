@@ -82,18 +82,10 @@ export class Manager extends Client {
   public aliases: Collection<string, string>;
   public plButton: Collection<string, PlayerButton>;
   public leaveDelay: Collection<string, NodeJS.Timeout>;
-  public nowPlaying: Collection<
-    string,
-    { interval: NodeJS.Timeout; msg: GlobalMsg }
-  >;
-  public wsl: Collection<
-    string,
-    { send: (data: Record<string, unknown>) => void }
-  >;
+  public nowPlaying: Collection<string, { interval: NodeJS.Timeout; msg: GlobalMsg }>;
+  public wsl: Collection<string, { send: (data: Record<string, unknown>) => void }>;
   public UpdateMusic!: (player: ZklinkPlayer) => Promise<void | Message<true>>;
-  public UpdateQueueMsg!: (
-    player: ZklinkPlayer
-  ) => Promise<void | Message<true>>;
+  public UpdateQueueMsg!: (player: ZklinkPlayer) => Promise<void | Message<true>>;
   public enSwitch!: ActionRowBuilder<ButtonBuilder>;
   public diSwitch!: ActionRowBuilder<ButtonBuilder>;
   public enSwitchMod!: ActionRowBuilder<ButtonBuilder>;
@@ -160,10 +152,8 @@ export class Manager extends Client {
     this.logger = new LogManager(this, this.cluster.id);
     this.manifest = new ManifestLoader().data;
     this.owner = this.config.bot.OWNER_ID;
-    this.color_main = (this.config.bot.EMBED_COLOR_MAIN ||
-      "#f4e0c7") as ColorResolvable;
-    this.color_second = (this.config.bot.EMBED_COLOR_SECOND ||
-      "#f4e0c7") as ColorResolvable;
+    this.color_main = (this.config.bot.EMBED_COLOR_MAIN || "#f4e0c7") as ColorResolvable;
+    this.color_second = (this.config.bot.EMBED_COLOR_SECOND || "#f4e0c7") as ColorResolvable;
     this.i18n = new Localization({
       defaultLocale: this.config.bot.LANGUAGE || "en",
       directory: resolve(join(__dirname, "languages")),
@@ -200,14 +190,8 @@ export class Manager extends Client {
     >();
     this.plButton = new Collection<string, PlayerButton>();
     this.leaveDelay = new Collection<string, NodeJS.Timeout>();
-    this.nowPlaying = new Collection<
-      string,
-      { interval: NodeJS.Timeout; msg: GlobalMsg }
-    >();
-    this.wsl = new Collection<
-      string,
-      { send: (data: Record<string, unknown>) => void }
-    >();
+    this.nowPlaying = new Collection<string, { interval: NodeJS.Timeout; msg: GlobalMsg }>();
+    this.wsl = new Collection<string, { send: (data: Record<string, unknown>) => void }>();
     this.isDatabaseConnected = false;
 
     // Cài đặt biểu tượng
@@ -233,15 +217,8 @@ export class Manager extends Client {
     return true;
   }
 
-  protected configSearchCheck(
-    data: string[] = this.config.features.AUTOCOMPLETE_SEARCH
-  ) {
-    const defaultSearch = [
-      "feby putry",
-      "biru baru",
-      "mahalini",
-      "ghea indrawari",
-    ];
+  protected configSearchCheck(data: string[] = this.config.features.AUTOCOMPLETE_SEARCH) {
+    const defaultSearch = ["feby putry", "biru baru", "mahalini", "ghea indrawari"];
     if (!data || data.length == 0) {
       this.config.features.AUTOCOMPLETE_SEARCH = defaultSearch;
       return false;
@@ -262,14 +239,8 @@ export class Manager extends Client {
 
   public start() {
     this.logger.info("ClientManager", "Đang khởi động client Zk Music's...");
-    this.logger.info(
-      "ClientManager",
-      `Phiên bản: ${this.manifest.metadata.bot.version}`
-    );
-    this.logger.info(
-      "ClientManager",
-      `Tên mã: ${this.manifest.metadata.bot.codename}`
-    );
+    this.logger.info("ClientManager", `Phiên bản: ${this.manifest.metadata.bot.version}`);
+    this.logger.info("ClientManager", `Tên mã: ${this.manifest.metadata.bot.codename}`);
     this.logger.info(
       "ClientManager",
       `Phiên bản Autofix: ${this.manifest.metadata.autofix.version}`
