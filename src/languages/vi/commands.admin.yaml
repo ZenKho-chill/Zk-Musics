@@ -1,18 +1,3 @@
-### Lệnh cấu hình Modlogs!
-modlogs_invalid_channel: "Kênh được chọn không phải là kênh văn bản hợp lệ."
-modlogs_setup_channel: "Kênh ghi nhật ký Mod đã được đặt thành %{channel}"
-
-### Lệnh bật/tắt Modlogs!
-modlogs_toggle_not_setup: "Kênh ghi nhật ký Mod chưa được cấu hình cho máy chủ này. Vui lòng thiết lập trước bằng lệnh phù hợp."
-modlogs_toggle_collector_active: "Đang có phiên chọn mod log đang diễn ra. Vui lòng đợi 60 giây."
-modlogs_toggle_notfound: "Không tìm thấy cài đặt mod log."
-modlogs_toggle_select_category: "## Chọn một danh mục để xem các sự kiện"
-modlogs_toggle_category_not_valid: "Danh mục không hợp lệ"
-modlogs_toggle_select_event: "### Chọn một sự kiện từ `%{categories}`"
-modlogs_toggle_event_not_valid: "Sự kiện không hợp lệ"
-modlogs_toggle_selected: "**Sự kiện `%{events}` trong %{categories} hiện là %{state}.**"
-modlogs_toggle_timeout: "### %{user}, bạn đã không chọn modlogs kịp thời.\nThử lại nhé!"
-
 ### Thông báo tới mọi máy chủ
 announcement_desc: "*Nhập nội dung cho thông báo này*"
 announcement_invalidURL: "*URL ảnh không hợp lệ hoặc chưa cung cấp. Vui lòng cung cấp URL ảnh hợp lệ.*"

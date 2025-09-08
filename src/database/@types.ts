@@ -25,8 +25,6 @@ import { TopTrack } from "./schema/TopTrack.js";
 import { TopArtist } from "./schema/TopArtist.js";
 import { TempVoiceChannel } from "./schema/TempVoiceChannel.js";
 import { TempVoiceChannelSetting } from "./schema/TempVoiceChannelSetting.js";
-import { ModLogChannel } from "./schema/ModLogChannel.js";
-import { ModLogToggle } from "./schema/ModLogToggle.js";
 import { UserStatistics } from "./schema/UserStatistics.js";
 import { StatusVoiceChannel } from "./schema/StatusVoiceChannel.js";
 
@@ -57,8 +55,6 @@ export interface DatabaseTable {
   TopArtist: QuickDatabasePlus<TopArtist>;
   TempVoiceChannel: QuickDatabasePlus<TempVoiceChannel>;
   TempVoiceChannelSetting: QuickDatabasePlus<TempVoiceChannelSetting>;
-  ModLogChannel: QuickDatabasePlus<ModLogChannel>;
-  ModLogToggle: QuickDatabasePlus<ModLogToggle>;
   UserStatistics: QuickDatabasePlus<UserStatistics>;
   StatusVoiceChannel: QuickDatabasePlus<StatusVoiceChannel>;
 }

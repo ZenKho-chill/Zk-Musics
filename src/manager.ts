@@ -40,7 +40,6 @@ import { ManifestInterface } from "./@types/Manifest.js";
 import chalk from "chalk";
 import TempVoiceService from "./services/TempVoiceService.js";
 import { AssistanceHandler } from "./@guild-helpers/AssistanceHandler.js";
-import { ModLogHandler } from "./@guild-helpers/ModLogHandler.js";
 import { StatisticsHandler } from "./@guild-helpers/StatisticsHandler.js";
 config();
 
@@ -270,7 +269,6 @@ export class Manager extends Client {
     }
 
     new StatisticsHandler(this);
-    new ModLogHandler(this);
     new AssistanceHandler(this);
     new CommandDeployer(this);
     new initHandler(this);

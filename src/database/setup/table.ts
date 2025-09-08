@@ -28,8 +28,6 @@ import { TopTrack } from "../schema/TopTrack.js";
 import { TopArtist } from "../schema/TopArtist.js";
 import { TempVoiceChannel } from "../schema/TempVoiceChannel.js";
 import { TempVoiceChannelSetting } from "../schema/TempVoiceChannelSetting.js";
-import { ModLogChannel } from "../schema/ModLogChannel.js";
-import { ModLogToggle } from "../schema/ModLogToggle.js";
 import { UserStatistics } from "../schema/UserStatistics.js";
 import { StatusVoiceChannel } from "../schema/StatusVoiceChannel.js";
 
@@ -97,8 +95,6 @@ export class TableSetup {
       TempVoiceChannelSetting: await baseDB.table<TempVoiceChannelSetting>(
         "TempVoiceChannelSetting"
       ),
-      ModLogChannel: await baseDB.table<ModLogChannel>("ModLogChannel"),
-      ModLogToggle: await baseDB.table<ModLogToggle>("ModLogToggle"),
       UserStatistics: await baseDB.table<UserStatistics>("UserStatistics"),
       StatusVoiceChannel: await baseDB.table<StatusVoiceChannel>(
         "StatusVoiceChannel"

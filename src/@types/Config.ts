@@ -12,8 +12,6 @@ export interface Config {
   MENU_HELP_EMOJI: MENU_HELP_EMOJI;
   PLAYER_BUTTON: PLAYER_BUTTON;
   SETUP_BUTTON: SETUP_BUTTON;
-  WELCOMER_EVENTS: WELCOMER_EVENTS;
-  IMAGES_WELCOMER: IMAGES_WELCOMER;
   SELECT_MENU_FILTER: SELECT_MENU_FILTER;
   SEARCH_COMMANDS_EMOJI: SEARCH_COMMANDS_EMOJI;
   PLAYER_SOURCENAME: PLAYER_SOURCENAME;
@@ -376,49 +374,6 @@ export interface GlobalEmojis {
   ARROW_NEXT: string;
   ARROW_PREVIOUS: string;
   LOADING: string;
-}
-
-export interface WELCOMER_EVENTS {
-  Enable: boolean;
-  WELCOMER_GUILD_ID: string;
-  LEAVE_CHANNEL_ID: string;
-  WELCOME_CHANNEL_ID: string;
-  GREETINGS: GREETINGS;
-  SUBTITLE: string;
-  COLOR_GREETINGS: string;
-  COLOR_USERNAME: string;
-  COLOR_SUBTITLE: string;
-  BUTTON_NAME: string;
-  EMOJI_ID: string;
-  BUTTON_URL: string;
-}
-
-export interface GREETINGS {
-  welcome: string[];
-  bye: string[];
-}
-
-export interface IMAGES_WELCOMER {
-  IMAGES1: string;
-  IMAGES2: string;
-  IMAGES3: string;
-  IMAGES4: string;
-  IMAGES5: string;
-  IMAGES6: string;
-  IMAGES7: string;
-  IMAGES8: string;
-  IMAGES9: string;
-  IMAGES10: string;
-  IMAGES11: string;
-  IMAGES12: string;
-  IMAGES13: string;
-  IMAGES14: string;
-  IMAGES15: string;
-  IMAGES16: string;
-  IMAGES17: string;
-  IMAGES18: string;
-  IMAGES19: string;
-  IMAGES20: string;
 }
 
 export interface COMMANDS_ACCESS {
