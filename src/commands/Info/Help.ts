@@ -359,27 +359,33 @@ export default class implements Command {
           });
 
           collector.on("end", async (collected, reason) => {
-            if (reason === "time") {
-              const timedMessage = `${client.i18n.get(
-                handler.language,
-                "commands.info",
-                "help_timeout",
-                {
-                  prefix: client.prefix,
-                }
-              )}`;
-              selectmenu.components[0].setDisabled(true);
-              // @ts-ignore
-              collector.removeAllListeners();
+            try {
+              if (reason === "time") {
+                const timedMessage = `${client.i18n.get(
+                  handler.language,
+                  "commands.info",
+                  "help_timeout",
+                  {
+                    prefix: client.prefix,
+                  }
+                )}`;
+                selectmenu.components[0].setDisabled(true);
 
-              handler.editReply({
-                content: timedMessage,
-                embeds: [EmbedHome],
-                components: [
-                  selectmenu,
-                  ...(ButtonHome.components.length ? [ButtonHome] : []),
-                ],
-              });
+                await handler.editReply({
+                  content: timedMessage,
+                  embeds: [EmbedHome],
+                  components: [
+                    selectmenu,
+                    ...(ButtonHome.components.length ? [ButtonHome] : []),
+                  ],
+                });
+              }
+            } catch (error) {
+              client.logger.error("Help Command", `Collector error: ${error}`);
+            } finally {
+              // Đảm bảo collector được cleanup
+              collector.removeAllListeners();
+              collector.stop();
             }
           });
         }

@@ -133,6 +133,9 @@ export class LogManager {
   }
 
   private async sendDiscord(type: string, message: string, className: string) {
+    // Kiểm tra xem logchannel có được cấu hình không
+    if (!this.client.config.logchannel) return;
+    
     const channelId = this.client.config.logchannel.ErrorChannelID;
     if (!channelId || channelId.length == 0) return;
     try {

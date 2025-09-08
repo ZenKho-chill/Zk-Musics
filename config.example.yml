@@ -7,9 +7,9 @@ bot:
   EMBED_COLOR_SECOND: "#2F3136"
   OWNER_ID: "ID CHỦ SỞ HỮU CỦA BẠN"
   ADMIN: ["ID NGƯỜI TIN CẬY 1", "ID NGƯỜI TIN CẬY 2", "ID NGƯỜI TIN CẬY 3"]
-  DEFAULT_VOLUME: 50 # Không được vượt quá 100, nếu không bot có thể gặp lỗi
-  LANGUAGE: "en" # Bạn có thể đặt 'en' hoặc thêm ngôn ngữ tuỳ chỉnh
-  DEBUG_MODE: false
+  DEFAULT_VOLUME: 50 # Không được vượt quá 100, nếu vượt quá bot sẽ tự đặt về 100
+  LANGUAGE: "vi" # Bạn có thể đặt 'en' hoặc thêm ngôn ngữ tuỳ chỉnh
+  DEBUG_MODE: true
   SHARDING_SYSTEM:
     shardsPerClusters: 1
     totalClusters: 1
@@ -48,10 +48,10 @@ lavalink:
   # Bạn có thể thêm nhiều server Lavalink!
   # Nếu bạn chưa có, có thể lấy tại: https://lavalink-list.darrennathanael.com/NoSSL/Lavalink-NonSSL/
   NODES:
-    - host: "HOST"
-      port: PORT
+    - host: "lavalink"
+      port: 2333
       name: "zkmusic"
-      auth: "PASSWORD"
+      auth: "youshallnotpass"
       secure: false
       driver: "lavalink/v4" # lavalink/v4, lavalink/v3
 
@@ -60,11 +60,7 @@ PremiumRole:
   GuildID: "ID MÁY CHỦ CỦA BẠN"
   RoleID: "ID VAI TRÒ CỦA BẠN"
 
-utilities:
-  LyricsGenius:
-    Enable: false
-    ApiKey: "YOUR GENIUS API KEY" # get from https://genius.com/api-clients
-
+# Cấu hình kênh log cho bot (để trống hoặc xóa section này nếu không dùng)
 logchannel:
   UpdateChannelId: "ID KÊNH CẬP NHẬT"
   RedeemChannelID: "ID KÊNH ĐỔI THƯỞNG"
@@ -77,6 +73,11 @@ logchannel:
   GuildJoinChannelID: "YOUR CHANEL ID"
   GuildLeaveChannelID: "YOUR CHANEL ID"
   PremiumExpireChannelID: "YOUR CHANEL ID"
+
+utilities:
+  LyricsGenius:
+    Enable: false
+    ApiKey: "YOUR GENIUS API KEY" # get from https://genius.com/api-clients
 
 features:
   PLAY_COMMAND_ENGINE: ["apple", "tidal", "soundcloud", "spotify", "youtube", "youtube_music"] # engine phát ngẫu nhiên cho lệnh play
@@ -109,7 +110,7 @@ features:
     # Lưu ý: nếu nhập driver không hợp lệ, bot sẽ dùng json làm mặc định
     # Cấu hình phụ thuộc driver; xem mẫu ở src/database/driver hoặc README.md
     driver: "json" # mongodb, mysql, json, postgres
-    config: { path: "./zk.database.json" }
+    config: { path: "./zkmusic.json" }
     # Backup cơ sở dữ liệu chỉ hoạt động khi dùng driver MySQL
     MYSQLBACKUP:
       Enable: false
@@ -153,35 +154,6 @@ features:
   RedirectOnSuccess: "https://zkmusic/zenkho.top//lastfm"
   RedirectOnError: "https://zkmusic/zenkho.top/lastfm-error"
 
-# WELCOMER LOGS MEMBER JOIN & LEAVE
-WELCOMER_EVENTS:
-  Enable: false
-  WELCOMER_GUILD_ID: "YOUR GUILD ID"
-  WELCOME_CHANNEL_ID: "YOUR CHANNEL ID"
-  LEAVE_CHANNEL_ID: "YOUR CHANNEL ID"
-  SUBTITLE: "Ai muốn hát luôn tìm thấy một bài hát"
-  GREETINGS:
-    welcome: [ "Chào", "Xin chào", "Heyho", "Hola" ]
-    bye: [ "Tạm biệt", "Bye", "Cảm ơn rất nhiều" ]
-  COLOR_GREETINGS: "#ffffff"
-  COLOR_USERNAME: "#f4e0c7"
-  COLOR_SUBTITLE: "#f4e0c7"
-  BUTTON_NAME: "Zk Music's ♪"
-  EMOJI_ID: "<:premium:1220842373614010420>"
-  BUTTON_URL: "https://zkmusic/zenkho.top//premium"
-
-IMAGES_WELCOMER:
-  IMAGES1: "https://assetsme.vercel.app/welcomer/1.png"
-  IMAGES2: "https://assetsme.vercel.app/welcomer/2.png"
-  IMAGES3: "https://assetsme.vercel.app/welcomer/3.png"
-  IMAGES4: "https://assetsme.vercel.app/welcomer/4.png"
-  IMAGES5: "https://assetsme.vercel.app/welcomer/5.png"
-  IMAGES6: "https://assetsme.vercel.app/welcomer/6.png"
-  IMAGES7: "https://assetsme.vercel.app/welcomer/7.png"
-  IMAGES8: "https://assetsme.vercel.app/welcomer/8.png"
-  IMAGES9: "https://assetsme.vercel.app/welcomer/9.png"
-  IMAGES10: "https://assetsme.vercel.app/welcomer/10.png"
-
 HELPER_SETUP:
   Enable: false
   SERVER_SUPPORT_URL: "https://zkmusic/zenkho.top/support"
@@ -191,16 +163,17 @@ HELPER_SETUP:
   VIEW_RULES:
     ROLE_ID: "YOUR ROLE ID"
     ROLE_NAME: "Accept"
-  NAME1: "Điều Khoản & Dịch Vụ Discord"
-  NAME2: "Hướng Dẫn Cộng Đồng Discord"
-  NAME3: "Trang Zk Music's"
-  NAME4: "Điều Khoản & Dịch Vụ Zk Music's"
-  NAME5: "Chính Sách Bảo Mật Zk Music's"
-  URL1: "https://discord.com/terms"
-  URL2: "https://discord.com/guidelines"
-  URL3: "https://zkmusic/zenkho.top"
-  URL4: "https://zkmusic/zenkho.top/termsofservice"
-  URL5: "https://zkmusic/zenkho.top/privacy"
+  LINKS:
+    NAME1: "Điều Khoản & Dịch Vụ Discord"
+    NAME2: "Hướng Dẫn Cộng Đồng Discord"
+    NAME3: "Trang Zk Music's"
+    NAME4: "Điều Khoản & Dịch Vụ Zk Music's"
+    NAME5: "Chính Sách Bảo Mật Zk Music's"
+    URL1: "https://discord.com/terms"
+    URL2: "https://discord.com/guidelines"
+    URL3: "https://zkmusic/zenkho.top"
+    URL4: "https://zkmusic/zenkho.top/termsofservice"
+    URL5: "https://zkmusic/zenkho.top/privacy"
   SELECT_ROLES:
     NAME1: "Tên Vai Trò"
     NAME2: "Tên Vai Trò"
