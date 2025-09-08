@@ -32,8 +32,6 @@ import { GlobalMsg } from "./structures/CommandHandler.js";
 import { ZklinkPlayer } from "./Zklink/Player/ZklinkPlayer.js";
 import { TopggService } from "./services/TopggService.js";
 import FilterMenuService from "./services/FilterMenu.js";
-import NotifyTwitch from "./services/NotifyTwitch.js";
-import NotifyYoutube from "./services/NotifyYoutube.js";
 import MysqlBackupService from "./services/MysqlBackup.js";
 import { Localization } from "./structures/Localization.js";
 import { ClusterManager } from "./shard/ClusterManager.js";
@@ -257,16 +255,6 @@ export class Manager extends Client {
     if (this.config.features.FilterMenu ?? false) {
       const FilterSelect = new FilterMenuService();
       FilterSelect.execute(this);
-    }
-
-    if (this.config.utilities.NotifyTwitch.Enable ?? false) {
-      const Twitch = new NotifyTwitch();
-      Twitch.execute(this);
-    }
-
-    if (this.config.utilities.NotifyYoutube.Enable ?? false) {
-      const Youtube = new NotifyYoutube();
-      Youtube.execute(this);
     }
 
     if (this.config.features.DATABASE.MYSQLBACKUP.Enable ?? false) {

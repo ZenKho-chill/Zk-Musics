@@ -61,8 +61,6 @@ PremiumRole:
   RoleID: "ID VAI TRÒ CỦA BẠN"
 
 utilities:
-  TicketSystem:
-    Enable: false
   LyricsGenius:
     Enable: false
     ApiKey: "YOUR GENIUS API KEY" # get from https://genius.com/api-clients
@@ -70,28 +68,6 @@ utilities:
     Enable: false
     ApiKey: "YOUR API KEY"  # APIKEY FROM https://aistudio.google.com/app/apikey
     ChannelId: "ID KÊNH CỦA BẠN"
-  CatAndQuotes:
-    Enable: false
-    ApiKey: "YOUR API KEY"  # APIKEY FROM https://api-ninjas.com/
-    CatChannelId: "ID KÊNH MÈO"
-    QuoteChannelId: "ID KÊNH TRÍCH DẪN"
-  NotifyYoutube:
-    Enable: false
-    Schedule: "*/10 * * * *"
-    GlobalChannelID: "CHANNEL ID"
-    ApiKey1: "YOUTUBE DATA API KEY"  # https://console.cloud.google.com/
-    ApiKey2: "YOUTUBE DATA API KEY"
-    ApiKey3: "YOUTUBE DATA API KEY"
-    LimitPremium: 5
-    LimitNonPremium: 2
-  NotifyTwitch:
-    Enable: false
-    Schedule: "*/10 * * * *"
-    GlobalChannelID: "CHANNEL ID"
-    ClientId: "ID CLIENT TWITCH CỦA BẠN"  # get https://dev.twitch.tv/console/
-    ClientSecret: "CLIENT SECRET TWITCH CỦA BẠN"
-    LimitPremium: 5
-    LimitNonPremium: 2
 
 logchannel:
   UpdateChannelId: "ID KÊNH CẬP NHẬT"
@@ -209,31 +185,6 @@ IMAGES_WELCOMER:
   IMAGES8: "https://assetsme.vercel.app/welcomer/8.png"
   IMAGES9: "https://assetsme.vercel.app/welcomer/9.png"
   IMAGES10: "https://assetsme.vercel.app/welcomer/10.png"
-
-HELPDESK:
-  Enable: false
-  WEBSITE_URL: "https://zkmusic/zenkho.top/"
-  SERVER_SUPPORT_URL: "https://zkmusic/zenkho.top/support"
-  PREMIUM_URL: "https://zkmusic/zenkho.top/premium"
-  VOTE_URL: "https://zkmusic/zenkho.top//topgg"
-  HELPDESK_LOGS_CHANNEL_ID: "YOUR CHANNEL ID"
-  EMOJI1: "<:1_:1225102816960446515>"
-  EMOJI2: "<:2_:1225102818822721598>"
-  EMOJI3: "<:3_:1225102823386255380>"
-  EMOJI4: "<:4_:1225102825197932624>"
-  EMOJI5: "<:5_:1225102827068723361>"
-  EMOJI6: "<:6_:1225102828666622034>"
-  EMOJI7: "<:7_:1225102830734413916>"
-  EMOJI8: "<:8_:1225102832558931968>"
-  EMOJI9: "<:9_:1225102834379395132>"
-  EMOJI10: "<:10_:1225102836430405693>"
-  BUTTON_HELPDESK10:
-    NAME1: "Mời"
-    NAME2: "Vote"
-    NAME3: "Patreon"
-    URL1: "https://zkmusic/zenkho.top/invite"
-    URL2: "https://zkmusic/zenkho.top/topgg"
-    URL3: "https://zkmusic/zenkho.top/premium"
 
 HELPER_SETUP:
   Enable: false
@@ -398,16 +349,11 @@ COMMANDS_ACCESS:
     Announcement: ["Admin"]
     BlackList: ["Admin"]
     ClearDatabase: ["Owner"]
-    Helpdesk: ["Owner"]
-    Helper: ["Owner"]
     Maintenance: ["Admin"]
     PremiumCode: ["Admin"]
     PremiumList: ["Admin"]
     PremiumReedem: ["Admin"]
     PremiumRemove: ["Admin"]
-    ModLogSetup: ["Admin"]
-    ModLogToggle: ["Admin"]
-    TicketSetup: ["Owner"]
     Update: ["Admin"]
 
   FILTER:
@@ -453,9 +399,7 @@ COMMANDS_ACCESS:
   MUSIC:
     Autoplay: ["Member"]
     ClearQueue: ["Member"]
-    ForceJoin: ["Member"]
     Forward: ["Member"]
-    Join: ["Member"]
     Loop: ["Member"]
     Lyrics: ["Member"]
     NowPlaying: ["Member"]
@@ -491,7 +435,6 @@ COMMANDS_ACCESS:
     SaveQueue: ["Member"]
 
   SETTINGS:
-    TwentyFourSeven: ["Manager"]
     ControlMode: ["Manager"]
     Language: ["Manager"]
     LastFm: ["Member"]
@@ -501,17 +444,11 @@ COMMANDS_ACCESS:
     Spotify: ["Member"]
     Themes: ["Member"]
     TempVoiceChannel: ["Manager"]
-    NotifyTwitch: ["Manager"]
-    NotifyYoutube: ["Manager"]
     StatusVoiceChannel: ["Manager"]
 
   UTILS:
     Ban: ["Manager"]
-    Cat: ["Member"]
     Kick: ["Manager"]
-    Purge: ["Manager"]
-    Quotes: ["Member"]
-    Ticket: ["Owner"]
     TopStats: ["Member"]
     MyStats: ["Member"]
     Profile: ["Member"]

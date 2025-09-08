@@ -353,8 +353,7 @@ features:
 - `/playlist delete` - Delete playlist
 - And many more...
 
-### ⚙️ Settings (10 commands)
-- `/247` - 24/7 mode
+### ⚙️ Settings (9 commands)
 - `/settings` - Bot settings
 - `/language` - Change language
 - `/prefix` - Change prefix

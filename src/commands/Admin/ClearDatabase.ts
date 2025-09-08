@@ -48,11 +48,8 @@ export default class implements Command {
         { name: "Giao diện (Themes)", value: "themes" },
         { name: "Số lượt vote", value: "votes" },
         { name: "Nhắc vote", value: "votereminders" },
-        { name: "Cài đặt Ticket", value: "ticketsetup" },
         { name: "Top Track", value: "toptrack" },
         { name: "Top Artist", value: "topartist" },
-        { name: "Thông báo Youtube", value: "notifyyoutube" },
-        { name: "Thông báo Twitch", value: "notifytwitch" },
         { name: "Tất cả cơ sở dữ liệu", value: "all" },
       ],
     },
@@ -97,14 +94,9 @@ export default class implements Command {
             client.db.Themes.deleteAll(),
             client.db.votes.deleteAll(),
             client.db.VoteReminders.deleteAll(),
-            client.db.TicketSetup.deleteAll(),
-            client.db.TicketData.deleteAll(),
-            client.db.TicketCount.deleteAll(),
             client.db.TopTrack.deleteAll(),
             client.db.TopArtist.deleteAll(),
             client.db.SpotifyId.deleteAll(),
-            client.db.NotifyTwitch.deleteAll(),
-            client.db.NotifyYoutube.deleteAll(),
           ]);
           resultMessage = "Đã xóa thành công tất cả các loại cơ sở dữ liệu.";
           break;
@@ -184,25 +176,12 @@ export default class implements Command {
           await client.db.VoteReminders.deleteAll();
           resultMessage = `Đã xóa thành công cơ sở dữ liệu ${dbName}.`;
           break;
-        case "ticketsetup":
-          await client.db.TicketSetup.deleteAll();
-          await client.db.TicketData.deleteAll();
-          resultMessage = `Đã xóa thành công cơ sở dữ liệu ${dbName}.`;
-          break;
         case "toptrack":
           await client.db.TopTrack.deleteAll();
           resultMessage = `Đã xóa thành công cơ sở dữ liệu ${dbName}.`;
           break;
         case "topartist":
           await client.db.TopArtist.deleteAll();
-          resultMessage = `Đã xóa thành công cơ sở dữ liệu ${dbName}.`;
-          break;
-        case "notifyyoutube":
-          await client.db.NotifyYoutube.deleteAll();
-          resultMessage = `Đã xóa thành công cơ sở dữ liệu ${dbName}.`;
-          break;
-        case "notifytwitch":
-          await client.db.NotifyTwitch.deleteAll();
           resultMessage = `Đã xóa thành công cơ sở dữ liệu ${dbName}.`;
           break;
         default:

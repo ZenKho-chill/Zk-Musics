@@ -26,11 +26,6 @@ import { SpotifyId } from "../schema/SpotifyId.js";
 import { VoteReminders } from "../schema/VoteReminders.js";
 import { TopTrack } from "../schema/TopTrack.js";
 import { TopArtist } from "../schema/TopArtist.js";
-import { NotifyTwitch } from "../schema/NotifyTwitch.js";
-import { NotifyYoutube } from "../schema/NotifyYoutube.js";
-import { TicketSetup } from "../schema/TicketSetup.js";
-import { TicketData } from "../schema/TicketData.js";
-import { TicketCount } from "../schema/TicketCount.js";
 import { TempVoiceChannel } from "../schema/TempVoiceChannel.js";
 import { TempVoiceChannelSetting } from "../schema/TempVoiceChannelSetting.js";
 import { ModLogChannel } from "../schema/ModLogChannel.js";
@@ -93,14 +88,9 @@ export class TableSetup {
       ),
       LastFm: await baseDB.table<LastFm>("LastFm"),
       SpotifyId: await baseDB.table<SpotifyId>("SpotifyId"),
-      TicketSetup: await baseDB.table<TicketSetup>("TicketSetup"),
-      TicketData: await baseDB.table<TicketData>("TicketData"),
-      TicketCount: await baseDB.table<TicketCount>("TicketCount"),
       VoteReminders: await baseDB.table<VoteReminders>("VoteReminders"),
       TopTrack: await baseDB.table<TopTrack>("TopTrack"),
       TopArtist: await baseDB.table<TopArtist>("TopArtist"),
-      NotifyTwitch: await baseDB.table<NotifyTwitch>("NotifyTwitch"),
-      NotifyYoutube: await baseDB.table<NotifyYoutube>("NotifyYoutube"),
       TempVoiceChannel: await baseDB.table<TempVoiceChannel>(
         "TempVoiceChannel"
       ),

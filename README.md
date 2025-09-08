@@ -353,8 +353,7 @@ features:
 - `/playlist delete` - Xóa playlist
 - Và nhiều lệnh khác...
 
-### ⚙️ Cài đặt (10 lệnh)
-- `/247` - Chế độ 24/7
+### ⚙️ Cài đặt (9 lệnh)
 - `/settings` - Cài đặt bot
 - `/language` - Đổi ngôn ngữ
 - `/prefix` - Đổi prefix

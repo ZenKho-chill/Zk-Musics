@@ -30,12 +30,6 @@ playnext_notfound: "<:wrong:1220876213896216686> Không tìm thấy bài!"
 # Thực thi khi không hợp lệ
 no_node: "<:warnings:1220876158254710936> **Không tìm thấy server Lavalink. Vui lòng thử lại sau 5 phút**"
 
-### Lệnh vào kênh (Join)!
-join_msg: "Trình phát đã được tạo và tham gia %{channel} thành công"
-join_already: "<:warnings:1220876158254710936> Mình đã có mặt ở %{channel} rồi"
-join_no_in_voice: "<:wrong:1220876213896216686> Bạn chưa vào kênh thoại!"
-join_no_same_voice: "<:wrong:1220876213896216686> Bạn không ở cùng kênh thoại với mình!"
-
 ### Lệnh Lặp (Loop)!
 loop_current: |
   <:loop:1220832757496811570> **Đang lặp %{title}

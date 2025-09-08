@@ -8,7 +8,6 @@ export interface Config {
   PremiumRole: PremiumRole;
   logchannel: LogChannel;
   emojis: Emojis;
-  HELPDESK: HELPDESK;
   HELPER_SETUP: HELPER_SETUP;
   MENU_HELP_EMOJI: MENU_HELP_EMOJI;
   PLAYER_BUTTON: PLAYER_BUTTON;
@@ -44,16 +43,7 @@ export interface LogChannel {
 
 export interface Utilities {
   GeminiChat: GeminiChat;
-  CatAndQuotes: CatAndQuotes;
-  NotifyTwitch: NotifyTwitch;
-  NotifyYoutube: NotifyYoutube;
   LyricsGenius: LyricsGenius;
-  TicketSystem: TicketSystem;
-}
-
-export interface TicketSystem {
-  Enable: boolean;
-  TranscriptTicketExporter: string;
 }
 
 export interface LyricsGenius {
@@ -65,35 +55,6 @@ export interface GeminiChat {
   Enable: boolean;
   ApiKey: string;
   ChannelId: string;
-}
-
-export interface CatAndQuotes {
-  Enable: boolean;
-  ApiKey: string;
-  CatChannelId: string;
-  QuoteChannelId: string;
-}
-
-export interface NotifyTwitch {
-  Enable: boolean;
-  Schedule: string;
-  GlobalChannelID: string;
-  ClientId: string;
-  ClientSecret: string;
-  LimitPremium: Number;
-  LimitNonPremium: Number;
-}
-
-export interface NotifyYoutube {
-  Enable: boolean;
-  Schedule: string;
-  GlobalChannelID: string;
-  LimitPremium: Number;
-  LimitNonPremium: Number;
-  ApiKey: string;
-  ApiKey1: string;
-  ApiKey2: string;
-  ApiKey3: string;
 }
 
 export interface TRACKS_EMOJI {
@@ -210,37 +171,7 @@ export interface Bot {
   IMAGES_URL_COMMAND: string;
   IMAGES_URL_ABOUT: string;
   IMAGES_URL_REQUEST_MUSIC: string;
-  IMAGES_TICKET: string;
   COMMANDS_URL: string;
-}
-
-export interface HELPDESK {
-  Enable: boolean;
-  BUTTON_HELPDESK10: BUTTON_HELPDESK10;
-  EMOJI1: string;
-  EMOJI2: string;
-  EMOJI3: string;
-  EMOJI4: string;
-  EMOJI5: string;
-  EMOJI6: string;
-  EMOJI7: string;
-  EMOJI8: string;
-  EMOJI9: string;
-  EMOJI10: string;
-  VOTE_URL: string;
-  WEBSITE_URL: string;
-  SERVER_SUPPORT_URL: string;
-  PREMIUM_URL: string;
-  HELPDESK_LOGS_CHANNEL_ID: string;
-}
-
-export interface BUTTON_HELPDESK10 {
-  NAME1: string;
-  NAME2: string;
-  NAME3: string;
-  URL1: string;
-  URL2: string;
-  URL3: string;
 }
 
 export interface HELPER_SETUP {
@@ -511,16 +442,11 @@ export interface ADMIN {
   Announcement: string[];
   BlackList: string[];
   ClearDatabase: string[];
-  Helpdesk: string[];
-  Helper: string[];
-  ModLogToggle: string[];
-  ModLogSetup: string[];
   Maintenance: string[];
   PremiumCode: string[];
   PremiumList: string[];
   PremiumReedem: string[];
   PremiumRemove: string[];
-  TicketSetup: string[];
   Update: string[];
 }
 
@@ -577,9 +503,7 @@ export interface MUSIC {
   AppleSource: string[];
   Autoplay: string[];
   ClearQueue: string[];
-  ForceJoin: string[];
   Forward: string[];
-  Join: string[];
   Loop: string[];
   Lyrics: string[];
   NowPlaying: string[];
@@ -619,7 +543,6 @@ export interface PLAYLIST {
 }
 
 export interface SETTINGS {
-  TwentyFourSeven: string[];
   ControlMode: string[];
   Language: string[];
   LastFm: string[];
@@ -630,19 +553,13 @@ export interface SETTINGS {
   Spotify: string[];
   Themes: string[];
   TempVoiceChannel: string[];
-  NotifyTwitch: string[];
-  NotifyYoutube: string[];
   StatusVoiceChannel: string[];
 }
 
 export interface UTILS {
   Ban: string[];
-  Cat: string[];
   Kick: string[];
   McStatus: string[];
-  Purge: string[];
-  Quotes: string[];
-  Ticket: string[];
   Profile: string[];
   MyStats: string[];
   TopStats: string[];

@@ -14,8 +14,6 @@ export default class {
     await client.db.autoreconnect.delete(guild.id);
     await client.db.prefix.delete(guild.id);
     await client.db.ControlButton.delete(guild.id);
-    await client.db.NotifyYoutube.delete(guild.id);
-    await client.db.NotifyTwitch.delete(guild.id);
     await client.db.PlayedSongGuild.delete(guild.id);
     await client.db.TempVoiceChannel.delete(guild.id);
     await client.db.TempVoiceChannelSetting.delete(guild.id);

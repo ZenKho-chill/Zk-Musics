@@ -95,19 +95,19 @@ services:
   #     - zkmusic-network
 
   # MySQL Database (optional)
-  mysql:
-    image: mysql:8.4
-    container_name: zkmusic-mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: zkmusic
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root123}
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./init/mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql:ro
-    networks:
-      - zkmusic-network
+  # mysql:
+  #   image: mysql:8.4
+  #   container_name: zkmusic-mysql
+  #   restart: unless-stopped
+  #   environment:
+  #     MYSQL_DATABASE: zkmusic
+  #     MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root123}
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - ./init/mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql:ro
+  #   networks:
+  #     - zkmusic-network
 
 volumes:
   lavalink_data:

@@ -1,10 +1,3 @@
-### 24/7 command!
-247_on: "<:okee:1220876098456256512> 24/7 mode is now **Enabled**"
-247_off: "<:wrong:1220876213896216686> 24/7 mode is now **Disabled**"
-247_already: "<:warnings:1220876158254710936> 24/7 mode is already **%{mode}**"
-247_arg_error: "<:wrong:1220876213896216686> Invalid 24/7 mode. Please use %{text}"
-247_no_in_voice: "<:wrong:1220876213896216686> You are not in a voice channel!"
-
 ### Set Language command! ###
 provide_lang: "<:wrong:1220876213896216686> **Invalid Language. Please use** `%{languages}`"
 lang_set: "<:lang:1220885875773280316> **Language has been set to** `%{language}`"
