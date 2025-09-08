@@ -42,19 +42,12 @@ export interface LogChannel {
 }
 
 export interface Utilities {
-  GeminiChat: GeminiChat;
   LyricsGenius: LyricsGenius;
 }
 
 export interface LyricsGenius {
   Enable: boolean;
   ApiKey: string;
-}
-
-export interface GeminiChat {
-  Enable: boolean;
-  ApiKey: string;
-  ChannelId: string;
 }
 
 export interface TRACKS_EMOJI {

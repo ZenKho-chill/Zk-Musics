@@ -64,10 +64,6 @@ utilities:
   LyricsGenius:
     Enable: false
     ApiKey: "YOUR GENIUS API KEY" # get from https://genius.com/api-clients
-  GeminiChat:
-    Enable: false
-    ApiKey: "YOUR API KEY"  # APIKEY FROM https://aistudio.google.com/app/apikey
-    ChannelId: "ID KÊNH CỦA BẠN"
 
 logchannel:
   UpdateChannelId: "ID KÊNH CẬP NHẬT"
