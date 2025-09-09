@@ -13,6 +13,7 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { EmojiValidator } from "../../utilities/EmojiValidator.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -132,7 +133,7 @@ export default class implements Command {
       ButtonHome.addComponents(
         new ButtonBuilder()
           .setLabel("Trang web")
-          .setEmoji(client.config.MENU_HELP_EMOJI.E_WEBSITE)
+          .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_WEBSITE))
           .setStyle(ButtonStyle.Link)
           .setURL(client.config.bot.WEBSITE_URL)
       );
@@ -144,7 +145,7 @@ export default class implements Command {
       ButtonHome.addComponents(
         new ButtonBuilder()
           .setLabel("Hỗ trợ")
-          .setEmoji(client.config.MENU_HELP_EMOJI.E_SUPPORT)
+          .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_SUPPORT))
           .setStyle(ButtonStyle.Link)
           .setURL(client.config.bot.SERVER_SUPPORT_URL)
       );
@@ -156,7 +157,7 @@ export default class implements Command {
       ButtonHome.addComponents(
         new ButtonBuilder()
           .setLabel("Nhận Premium")
-          .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
+          .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM))
           .setStyle(ButtonStyle.Link)
           .setURL(client.config.bot.PREMIUM_URL)
       );
@@ -179,39 +180,39 @@ export default class implements Command {
             new StringSelectMenuOptionBuilder()
               .setLabel("Trang chủ")
               .setValue("Home")
-              .setEmoji(client.config.MENU_HELP_EMOJI.E_HOME || "❓"),
+              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_HOME, "❓")),
             new StringSelectMenuOptionBuilder()
               .setLabel("Thông tin")
               .setValue("Info")
-              .setEmoji(client.config.MENU_HELP_EMOJI.E_INFO || "❓"),
+              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_INFO, "❓")),
             new StringSelectMenuOptionBuilder()
               .setLabel("Nhạc")
               .setValue("Music")
-              .setEmoji(client.config.MENU_HELP_EMOJI.E_MUSIC || "❓"),
+              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_MUSIC, "❓")),
             new StringSelectMenuOptionBuilder()
               .setLabel("Bộ lọc")
               .setValue("Filter")
-              .setEmoji(client.config.MENU_HELP_EMOJI.E_FILTER || "❓"),
+              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_FILTER, "❓")),
             new StringSelectMenuOptionBuilder()
               .setLabel("Danh sách phát")
               .setValue("Playlist")
-              .setEmoji(client.config.MENU_HELP_EMOJI.E_PLAYLIST || "❓"),
+              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PLAYLIST, "❓")),
             new StringSelectMenuOptionBuilder()
               .setLabel("Tiện ích")
               .setValue("Utils")
-              .setEmoji(client.config.MENU_HELP_EMOJI.E_UTILS || "❓"),
+              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_UTILS, "❓")),
             new StringSelectMenuOptionBuilder()
               .setLabel("Cài đặt")
               .setValue("Settings")
-              .setEmoji(client.config.MENU_HELP_EMOJI.E_SETTING || "❓"),
+              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_SETTING, "❓")),
             new StringSelectMenuOptionBuilder()
               .setLabel("Quản trị")
               .setValue("Admin")
-              .setEmoji(client.config.MENU_HELP_EMOJI.E_ADMIN || "❓"),
+              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_ADMIN, "❓")),
             new StringSelectMenuOptionBuilder()
               .setLabel("Tất cả lệnh")
               .setValue("All")
-              .setEmoji(client.config.MENU_HELP_EMOJI.E_ALLCMD || "❓"),
+              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_ALLCMD, "❓")),
           ]),
       ]);
     await handler

@@ -13,6 +13,7 @@ import {
 import { Manager } from "../../manager.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ZklinkPlayerState } from "../../Zklink/main.js";
+import { EmojiValidator } from "../../utilities/EmojiValidator.js";
 
 export default class {
   async execute(client: Manager, oldState: VoiceState, newState: VoiceState) {
@@ -194,8 +195,8 @@ export default class {
             client.config.bot.VOTE_URL &&
             client.config.MENU_HELP_EMOJI.E_VOTE
           ) {
-            leavebutton.addComponents(
-              new ButtonBuilder()
+            try {
+              const button = new ButtonBuilder()
                 .setLabel(
                   client.i18n.get(
                     language,
@@ -203,24 +204,44 @@ export default class {
                     "topgg_unvote_button"
                   )
                 )
-                .setEmoji(client.config.MENU_HELP_EMOJI.E_VOTE)
                 .setStyle(ButtonStyle.Link)
-                .setURL(client.config.bot.VOTE_URL)
-            );
+                .setURL(client.config.bot.VOTE_URL);
+              
+              // Safely set emoji with validation
+              const emoji = client.config.MENU_HELP_EMOJI.E_VOTE;
+              const safeEmoji = EmojiValidator.safeEmoji(emoji);
+              if (safeEmoji) {
+                button.setEmoji(safeEmoji);
+              }
+              
+              leavebutton.addComponents(button);
+            } catch (error) {
+              client.logger.warn("VoiceStateUpdate", `Lỗi khi tạo vote button: ${error}`);
+            }
           }
           if (
             client.config.bot.PREMIUM_URL &&
             client.config.MENU_HELP_EMOJI.E_PREMIUM
           ) {
-            leavebutton.addComponents(
-              new ButtonBuilder()
+            try {
+              const button = new ButtonBuilder()
                 .setLabel(
                   client.i18n.get(language, "interaction", "premium_button")
                 )
-                .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
                 .setStyle(ButtonStyle.Link)
-                .setURL(client.config.bot.PREMIUM_URL)
-            );
+                .setURL(client.config.bot.PREMIUM_URL);
+              
+              // Safely set emoji with validation
+              const emoji = client.config.MENU_HELP_EMOJI.E_PREMIUM;
+              const safeEmoji = EmojiValidator.safeEmoji(emoji);
+              if (safeEmoji) {
+                button.setEmoji(safeEmoji);
+              }
+              
+              leavebutton.addComponents(button);
+            } catch (error) {
+              client.logger.warn("VoiceStateUpdate", `Lỗi khi tạo premium button: ${error}`);
+            }
           }
           try {
             if (leaveEmbed) {

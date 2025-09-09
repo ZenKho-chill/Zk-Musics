@@ -11,6 +11,7 @@ import { Manager } from "../manager.js";
 import { GuildMember, Interaction } from "discord.js";
 import { TopggServiceEnum } from "../services/TopggService.js";
 import axios from "axios";
+import { EmojiValidator } from "../utilities/EmojiValidator.js";
 export default class FilterMenu {
   async execute(client: Manager) {
     const filterInfo: { [key: string]: string } = {
@@ -217,7 +218,7 @@ export default class FilterMenu {
                       )
                     )
                     .setStyle(ButtonStyle.Link)
-                    .setEmoji(client.config.MENU_HELP_EMOJI.E_VOTE)
+                    .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_VOTE))
                     .setURL(`https://top.gg/bot/${client.user?.id}/vote`)
                 );
               }
@@ -231,7 +232,7 @@ export default class FilterMenu {
                       client.i18n.get(language, "interaction", "premium_button")
                     )
                     .setStyle(ButtonStyle.Link)
-                    .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
+                    .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM))
                     .setURL(client.config.bot.PREMIUM_URL)
                 );
               }
@@ -282,7 +283,7 @@ export default class FilterMenu {
                     )
                   )
                   .setStyle(ButtonStyle.Link)
-                  .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
+                  .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM))
                   .setURL(client.config.bot.PREMIUM_URL)
               );
 
@@ -328,7 +329,7 @@ export default class FilterMenu {
                     )
                   )
                   .setStyle(ButtonStyle.Link)
-                  .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
+                  .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM))
                   .setURL(client.config.bot.PREMIUM_URL)
               );
 
@@ -379,7 +380,7 @@ export default class FilterMenu {
                     )
                   )
                   .setStyle(ButtonStyle.Link)
-                  .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
+                  .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM))
                   .setURL(client.config.bot.PREMIUM_URL)
               );
 
@@ -430,7 +431,7 @@ export default class FilterMenu {
                     )
                   )
                   .setStyle(ButtonStyle.Link)
-                  .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
+                  .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM))
                   .setURL(client.config.bot.PREMIUM_URL)
               );
 
@@ -476,7 +477,7 @@ export default class FilterMenu {
                     )
                   )
                   .setStyle(ButtonStyle.Link)
-                  .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
+                  .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM))
                   .setURL(client.config.bot.PREMIUM_URL)
               );
 

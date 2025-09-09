@@ -16,6 +16,7 @@ import {
   Interaction,
   MessageFlags,
 } from "discord.js";
+import { EmojiValidator } from "../utilities/EmojiValidator.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -193,11 +194,11 @@ export class WebServer {
                 )
               )
               .setEmoji(
-                client.i18n.get(
+                EmojiValidator.safeEmoji(client.i18n.get(
                   language,
                   "events.helper",
                   "reminder_label_emoji"
-                )
+                ))
               )
           );
 

@@ -5,12 +5,13 @@ import {
   StringSelectMenuBuilder,
 } from "discord.js";
 import { Manager } from "../manager.js";
+import { EmojiValidator } from "./EmojiValidator.js";
 
 // Hàm tạo nút với điều kiện khi setLabel
 const createButton = (client: Manager, id, emoji, label, style) => {
   const button = new ButtonBuilder()
     .setCustomId(id)
-    .setEmoji(emoji)
+    .setEmoji(EmojiValidator.safeEmoji(emoji))
     .setStyle(style);
 
   if (client.config.features.ButtonLabel ?? true) {

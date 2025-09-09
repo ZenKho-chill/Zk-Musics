@@ -33,9 +33,9 @@ bot:
   SERVER_SUPPORT_URL: "https://dsteam.store/discord"
   TEAM_NAME: "DST Team"
   TEAM_URL: "https://dsteam.store"
-  PREMIUM_URL: "https://zkmusic/zenkho.top/premium"
-  VOTE_URL: "https://zkmusic/zenkho.top/topgg"
-  COMMANDS_URL: "https://zkmusic/zenkho.top/commands"
+  PREMIUM_URL: "https://zkmusic.zenkho.top/premium"
+  VOTE_URL: "https://zkmusic.zenkho.top/topgg"
+  COMMANDS_URL: "https://zkmusic.zenkho.top/commands"
 
 lavalink:
   APPLE_TOKEN: "YOUR TOKEN" # https://youtu.be/oQW6Z1UEcJg
@@ -151,12 +151,12 @@ features:
   Callback: "https://ws.zenkho.top/lastfm" # Dùng địa chỉ nơi bot chạy, endpoint /callback (vd: http://localhost:2444/lastfm)
   scheduleScrobble: 60000 # Lịch cập nhật để đẩy scrobble mỗi 1 phút khi phát bài
   ExpiredLink: 30000 # Thời gian hết hạn của link đăng nhập nút
-  RedirectOnSuccess: "https://zkmusic/zenkho.top//lastfm"
-  RedirectOnError: "https://zkmusic/zenkho.top/lastfm-error"
+  RedirectOnSuccess: "https://zkmusic.zenkho.top/lastfm"
+  RedirectOnError: "https://zkmusic.zenkho.top/lastfm-error"
 
 HELPER_SETUP:
   Enable: false
-  SERVER_SUPPORT_URL: "https://zkmusic/zenkho.top/support"
+  SERVER_SUPPORT_URL: "https://zkmusic.zenkho.top/support"
   NAME1: "Xem Quy Định"
   NAME2: "Chọn Vai Trò"
   NAME3: "Hỗ Trợ Chúng Tôi"
@@ -171,9 +171,9 @@ HELPER_SETUP:
     NAME5: "Chính Sách Bảo Mật Zk Music's"
     URL1: "https://discord.com/terms"
     URL2: "https://discord.com/guidelines"
-    URL3: "https://zkmusic/zenkho.top"
-    URL4: "https://zkmusic/zenkho.top/termsofservice"
-    URL5: "https://zkmusic/zenkho.top/privacy"
+    URL3: "https://zkmusic.zenkho.top"
+    URL4: "https://zkmusic.zenkho.top/termsofservice"
+    URL5: "https://zkmusic.zenkho.top/privacy"
   SELECT_ROLES:
     NAME1: "Tên Vai Trò"
     NAME2: "Tên Vai Trò"
@@ -187,9 +187,9 @@ HELPER_SETUP:
     NAME1: "Mời Bot"
     NAME2: "Vote Bot"
     NAME3: "Trang Patreon"
-    URL1: "https://zkmusic/zenkho.top/invite"
-    URL2: "https://zkmusic/zenkho.top/topgg"
-    URL3: "https://zkmusic/zenkho.top/premium"
+    URL1: "https://zkmusic.zenkho.top/invite"
+    URL2: "https://zkmusic.zenkho.top/topgg"
+    URL3: "https://zkmusic.zenkho.top/premium"
 
 # Cấu hình emoji cho nội dung message trong select menu
 # https://dsteam.store/discord — Tham gia server nếu bạn muốn dùng emoji có sẵn
