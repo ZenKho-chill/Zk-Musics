@@ -155,63 +155,98 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     requester: unknown
   ): Promise<Result> {
     try {
-      const req = await fetch(
+      const data = await this.safeFetch<SearchResult>(
         `${API_URL}/search/track?q=${decodeURIComponent(query)}`
       );
-      const data = await req.json();
 
-      const res = data as SearchResult;
+      if (!data) {
+        return { tracks: [] };
+      }
+
       return {
-        tracks: res?.data?.map((track) =>
+        tracks: data?.data?.map((track) =>
           this.buildZklinkTrack(track, requester)
-        ),
+        ) || [],
       };
     } catch (e: any) {
-      throw new Error(e);
+      this.debug(`Lỗi không mong đợi trong searchTrack: ${e}`);
+      return { tracks: [] };
+    }
+  }
+
+  private async safeFetch<T = any>(url: string): Promise<T | null> {
+    try {
+      const request = await fetch(url);
+      
+      if (!request.ok) {
+        this.debug(`Lỗi khi gọi Deezer API: ${request.status} ${request.statusText}`);
+        return null;
+      }
+      
+      const text = await request.text();
+      if (!text.trim()) {
+        this.debug("Deezer API trả về response rỗng");
+        return null;
+      }
+      
+      const data = JSON.parse(text) as T;
+      return data;
+    } catch (error) {
+      this.debug(`Lỗi khi parse JSON từ Deezer API: ${error}`);
+      return null;
     }
   }
 
   private async getTrack(id: string, requester: unknown): Promise<Result> {
     try {
-      const request = await fetch(`${API_URL}/track/${id}/`);
-      const data = await request.json();
-      const track = data as DeezerTrack;
+      const data = await this.safeFetch<DeezerTrack>(`${API_URL}/track/${id}/`);
+      
+      if (!data) {
+        return { tracks: [] };
+      }
 
-      return { tracks: [this.buildZklinkTrack(track, requester)] };
+      return { tracks: [this.buildZklinkTrack(data, requester)] };
     } catch (e: any) {
-      throw new Error(e);
+      this.debug(`Lỗi không mong đợi trong getTrack: ${e}`);
+      return { tracks: [] };
     }
   }
 
   private async getAlbum(id: string, requester: unknown): Promise<Result> {
     try {
-      const request = await fetch(`${API_URL}/album/${id}/`);
-      const data = await request.json();
-      const album = data as Album;
+      const data = await this.safeFetch<Album>(`${API_URL}/album/${id}/`);
+      
+      if (!data) {
+        return { tracks: [] };
+      }
 
-      const tracks = album.tracks.data
-        .filter(this.filterNullOrUndefined)
-        .map((track) => this.buildZklinkTrack(track, requester));
+      const tracks = data.tracks?.data
+        ?.filter(this.filterNullOrUndefined)
+        ?.map((track) => this.buildZklinkTrack(track, requester)) || [];
 
-      return { tracks, name: album.title };
+      return { tracks, name: data.title };
     } catch (e: any) {
-      throw new Error(e);
+      this.debug(`Lỗi không mong đợi trong getAlbum: ${e}`);
+      return { tracks: [] };
     }
   }
 
   private async getPlaylist(id: string, requester: unknown): Promise<Result> {
     try {
-      const request = await fetch(`${API_URL}/playlist/${id}`);
-      const data = await request.json();
-      const playlist = data as Playlist;
+      const data = await this.safeFetch<Playlist>(`${API_URL}/playlist/${id}`);
+      
+      if (!data) {
+        return { tracks: [] };
+      }
 
-      const tracks = playlist.tracks.data
-        .filter(this.filterNullOrUndefined)
-        .map((track) => this.buildZklinkTrack(track, requester));
+      const tracks = data.tracks?.data
+        ?.filter(this.filterNullOrUndefined)
+        ?.map((track) => this.buildZklinkTrack(track, requester)) || [];
 
-      return { tracks, name: playlist.title };
+      return { tracks, name: data.title };
     } catch (e: any) {
-      throw new Error(e);
+      this.debug(`Lỗi không mong đợi trong getPlaylist: ${e}`);
+      return { tracks: [] };
     }
   }
 

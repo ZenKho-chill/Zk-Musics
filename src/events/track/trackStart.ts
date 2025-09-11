@@ -29,9 +29,16 @@ import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import chalk from "chalk";
 import { cli } from "winston/lib/winston/config/index.js";
 export function scheduleScrobble(client: Manager, player: ZklinkPlayer) {
+  const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
+  
+  if (!lastfmConfig || !lastfmConfig.scheduleScrobble) {
+    client.logger.warn("TrackStart", "Last.fm scrobble config không được cấu hình đúng cách");
+    return;
+  }
+  
   setTimeout(() => {
     ScrobbleToLastFM(client, player);
-  }, client.config.features.WebServer.LAST_FM_SCROBBLED.scheduleScrobble);
+  }, lastfmConfig.scheduleScrobble);
 }
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, track: ZklinkTrack) {
@@ -70,7 +77,9 @@ export default class {
     /////////// Cập nhật kênh trạng thái nhạc //////////
 
     /////////// Cập nhật lịch scrobble //////////
-    scheduleScrobble(client, player);
+    if (client.config.features.WebServer.LAST_FM_SCROBBLED.Enable) {
+      scheduleScrobble(client, player);
+    }
     /////////// Cập nhật lịch scrobble //////////
 
     const channel = (await client.channels

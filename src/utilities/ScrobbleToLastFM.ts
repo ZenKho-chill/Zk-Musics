@@ -16,19 +16,30 @@ function generateApiSignature(
   client: Manager,
   params: { [key: string]: string }
 ) {
+  const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
+  
+  if (!lastfmConfig || !lastfmConfig.Secret) {
+    throw new Error("Last.fm secret key not configured");
+  }
+
   const sortedParams = Object.keys(params)
     .sort()
     .map((key) => `${key}${params[key]}`)
     .join("");
 
-  const stringToHash =
-    sortedParams + client.config.features.WebServer.LAST_FM_SCROBBLED.Secret;
+  const stringToHash = sortedParams + lastfmConfig.Secret;
   const apiSignature = md5(stringToHash); // Tạo hash MD5
 
   return apiSignature;
 }
 export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
   try {
+    const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
+    
+    if (!lastfmConfig || !lastfmConfig.Enable) {
+      return;
+    }
+
     if (!player.queue?.current) {
       return;
     }
@@ -59,13 +70,13 @@ export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
       {
         params: {
           method: "track.scrobble",
-          api_key: client.config.features.WebServer.LAST_FM_SCROBBLED.ApiKey,
+          api_key: lastfmConfig.ApiKey,
           sk: sessionKey,
           artist: player.queue.current.author,
           track: player.queue.current.title,
           timestamp: Math.floor(Date.now() / 1000),
           api_sig: generateApiSignature(client, {
-            api_key: client.config.features.WebServer.LAST_FM_SCROBBLED.ApiKey,
+            api_key: lastfmConfig.ApiKey,
             method: "track.scrobble",
             sk: sessionKey,
             artist: player.queue.current.author,
@@ -77,6 +88,8 @@ export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
       }
     );
   } catch (error: any) {
+    const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
+    
     client.logger.warn(
       ScrobbleToLastFM.name,
       `Lỗi khi scrobble lên LastFM: ${error}`
@@ -91,9 +104,9 @@ export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
       const requesterUser = player.queue?.current?.requester as User;
       const requesterId = requesterUser.id;
       const LoginLastFM_Url = `https://www.last.fm/api/auth?api_key=${
-        client.config.features.WebServer.LAST_FM_SCROBBLED.ApiKey
+        lastfmConfig.ApiKey
       }&cb=${encodeURIComponent(
-        `${client.config.features.WebServer.LAST_FM_SCROBBLED.Callback}?user=${requesterId}`
+        `${lastfmConfig.Callback}?user=${requesterId}`
       )}`;
       const channel = (await client.channels
         .fetch(player.textId)
@@ -143,7 +156,7 @@ export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
               components: [LastFMbutton],
             });
           }
-        }, client.config.features.WebServer.LAST_FM_SCROBBLED.ExpiredLink);
+        }, lastfmConfig.ExpiredLink);
         await client.db.LastFm.delete(requesterId);
       }
     }

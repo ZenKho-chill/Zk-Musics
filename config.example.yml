@@ -148,11 +148,11 @@ features:
       Enable: false
       ApiKey: "YOUR API KEY LAST FM"
       Secret: "YOUR SECRET KEY LAST FM"
-  Callback: "https://ws.zenkho.top/lastfm" # Dùng địa chỉ nơi bot chạy, endpoint /callback (vd: http://localhost:2444/lastfm)
-  scheduleScrobble: 60000 # Lịch cập nhật để đẩy scrobble mỗi 1 phút khi phát bài
-  ExpiredLink: 30000 # Thời gian hết hạn của link đăng nhập nút
-  RedirectOnSuccess: "https://zkmusic.zenkho.top/lastfm"
-  RedirectOnError: "https://zkmusic.zenkho.top/lastfm-error"
+      Callback: "https://ws.zenkho.top/lastfm" # Dùng địa chỉ nọi bot chạy, endpoint /callback (vd: http://localhost:2444/lastfm)
+      scheduleScrobble: 60000 # Lịch cập nhật để đẩy scrobble mỗi 1 phút khi phát bài
+      ExpiredLink: 30000 # Thời gian hết hạn của link đăng nhập nút
+      RedirectOnSuccess: "https://zkmusic.zenkho.top/lastfm"
+      RedirectOnError: "https://zkmusic.zenkho.top/lastfm-error"
 
 HELPER_SETUP:
   Enable: false

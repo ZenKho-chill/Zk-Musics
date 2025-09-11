@@ -39,6 +39,41 @@ export class EmojiValidator {
   }
   
   /**
+   * Get emoji object for Discord.js Button/SelectMenu components
+   * @param emoji - Emoji string
+   * @param fallback - Fallback emoji nếu original không hợp lệ
+   * @returns emoji object cho Discord.js hoặc fallback
+   */
+  static getEmojiForComponent(emoji: string, fallback: string = "❓"): string | { id: string; name: string; animated?: boolean } | null {
+    if (!emoji) return fallback;
+    
+    if (!this.isValidEmoji(emoji)) return fallback;
+    
+    // Nếu là unicode emoji, trả về string
+    const unicodeEmojiRegex = /^[\p{Emoji}]$/u;
+    if (unicodeEmojiRegex.test(emoji)) return emoji;
+    
+    // Nếu là custom emoji, parse thành object
+    const customEmoji = this.parseCustomEmoji(emoji);
+    if (customEmoji) {
+      // Chỉ return object với id và name, không có animated nếu là false
+      const result: { id: string; name: string; animated?: boolean } = {
+        id: customEmoji.id,
+        name: customEmoji.name
+      };
+      
+      // Chỉ thêm animated nếu true
+      if (customEmoji.animated) {
+        result.animated = true;
+      }
+      
+      return result;
+    }
+    
+    return fallback;
+  }
+  
+  /**
    * Parse custom emoji thành object
    * @param emoji - Custom emoji string
    * @returns object với animated, name, id hoặc null nếu không hợp lệ
@@ -55,7 +90,6 @@ export class EmojiValidator {
         id
       };
     }
-    
     return null;
   }
 }

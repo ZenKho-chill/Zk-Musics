@@ -11,7 +11,7 @@ import { EmojiValidator } from "./EmojiValidator.js";
 const createButton = (client: Manager, id, emoji, label, style) => {
   const button = new ButtonBuilder()
     .setCustomId(id)
-    .setEmoji(EmojiValidator.safeEmoji(emoji))
+    .setEmoji(EmojiValidator.getEmojiForComponent(emoji))
     .setStyle(style);
 
   if (client.config.features.ButtonLabel ?? true) {
@@ -150,151 +150,151 @@ const filterSelect = (client: Manager) =>
           label: "Đặt lại",
           value: "reset",
           description: "Đặt lại hiệu ứng lọc về âm thanh mặc định",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_reset,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_reset),
         },
         {
           label: "3D",
           value: "threed",
           description: "Hiệu ứng âm thanh không gian 3D",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Bass",
           value: "bass",
           description: "Tăng cường dải tần thấp",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Tăng Bass",
           value: "bassboost",
           description: "Đẩy mạnh âm bass",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Giọng cao",
           value: "chipmunk",
           description: "Hiệu ứng làm giọng cao",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Darth Vader",
           value: "darthvader",
           description: "Hiệu ứng giọng giống Darth Vader",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Daycore",
           value: "daycore",
           description: "Hiệu ứng Daycore",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Tăng tốc",
           value: "doubletime",
           description: "Tăng gấp đôi tốc độ phát",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Rất to (cẩn thận)",
           value: "earrape",
           description: "Hiệu ứng cực kỳ to, hãy cẩn thận",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Karaoke",
           value: "karaoke",
           description: "Chế độ Karaoke",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Nightcore",
           value: "nightcore",
           description: "Hiệu ứng Nightcore",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Cao độ",
           value: "pitch",
           description: "Điều chỉnh cao độ âm thanh",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Pop",
           value: "pop",
           description: "Hiệu ứng theo phong cách Pop",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Tốc độ phát",
           value: "rate",
           description: "Thay đổi tỉ lệ phát âm thanh",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Chậm lại",
           value: "slowmotion",
           description: "Làm chậm tốc độ phát",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Âm mềm",
           value: "soft",
           description: "Làm âm thanh mềm hơn",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Tốc độ",
           value: "speed",
           description: "Điều chỉnh tốc độ phát",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Bass mạnh",
           value: "superbass",
           description: "Hiệu ứng bass mạnh mẽ",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "China",
           value: "china",
           description: "Hiệu ứng âm thanh phong cách Trung Quốc",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "TV",
           value: "television",
           description: "Hiệu ứng âm thanh kiểu truyền hình",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Treble & Bass",
           value: "treblebass",
           description: "Điều chỉnh treble và bass",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Tremolo",
           value: "tremolo",
           description: "Hiệu ứng Tremolo",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Vaporwave",
           value: "vaporwave",
           description: "Hiệu ứng Vaporwave",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Rung",
           value: "vibrate",
           description: "Hiệu ứng rung âm thanh",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         },
         {
           label: "Vibrato",
           value: "vibrato",
           description: "Hiệu ứng Vibrato",
-          emoji: client.config.SELECT_MENU_FILTER.emoji_filter,
+          emoji: EmojiValidator.getEmojiForComponent(client.config.SELECT_MENU_FILTER.emoji_filter),
         }
       )
   );

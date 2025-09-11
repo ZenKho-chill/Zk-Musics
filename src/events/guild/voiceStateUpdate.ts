@@ -5,15 +5,10 @@ import {
   GuildMember,
   Role,
   TextChannel,
-  ButtonStyle,
-  ActionRowBuilder,
-  ButtonBuilder,
-  MessageFlags,
 } from "discord.js";
 import { Manager } from "../../manager.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ZklinkPlayerState } from "../../Zklink/main.js";
-import { EmojiValidator } from "../../utilities/EmojiValidator.js";
 
 export default class {
   async execute(client: Manager, oldState: VoiceState, newState: VoiceState) {
@@ -34,6 +29,14 @@ export default class {
     ) {
       player.data.set("sudo-destroy", true);
       player.state !== ZklinkPlayerState.DESTROYED ? player.destroy() : true;
+      
+      // Cancel leave timeout nếu có vì player đã bị destroy
+      const existingTimeout = client.leaveDelay.get(newState.guild.id);
+      if (existingTimeout) {
+        clearTimeout(existingTimeout);
+        client.leaveDelay.delete(newState.guild.id);
+        client.logger.debug("VoiceStateUpdate", `Đã hủy leave timeout vì bot bị kick khỏi voice channel`);
+      }
     }
 
     if (oldState.member?.user.bot || newState.member?.user.bot) return;
@@ -180,92 +183,18 @@ export default class {
           ).size;
         if (!vcMembers || vcMembers === 1) {
           const newPlayer = client.Zklink?.players.get(newState.guild.id);
-          player.data.set("sudo-destroy", true);
-          if (newPlayer)
-            player.stop(is247 && is247.twentyfourseven ? false : true);
-          const TimeoutEmbed = new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(language, "events.player", "player_end", {
-                leave: vcRoom,
-              })}`
-            )
-            .setColor(client.color_main);
-          const leavebutton = new ActionRowBuilder<ButtonBuilder>();
-          if (
-            client.config.bot.VOTE_URL &&
-            client.config.MENU_HELP_EMOJI.E_VOTE
-          ) {
+          
+          // Kiểm tra player còn tồn tại và chưa bị destroy
+          if (newPlayer && newPlayer.state !== ZklinkPlayerState.DESTROYED) {
+            newPlayer.data.set("sudo-destroy", true);
             try {
-              const button = new ButtonBuilder()
-                .setLabel(
-                  client.i18n.get(
-                    language,
-                    "interaction",
-                    "topgg_unvote_button"
-                  )
-                )
-                .setStyle(ButtonStyle.Link)
-                .setURL(client.config.bot.VOTE_URL);
-              
-              // Safely set emoji with validation
-              const emoji = client.config.MENU_HELP_EMOJI.E_VOTE;
-              const safeEmoji = EmojiValidator.safeEmoji(emoji);
-              if (safeEmoji) {
-                button.setEmoji(safeEmoji);
-              }
-              
-              leavebutton.addComponents(button);
+              newPlayer.stop(is247 && is247.twentyfourseven ? false : true);
+              client.logger.info("VoiceStateUpdate", `Bot đã tự động rời voice channel ${newState.guild.name} do không có ai trong kênh`);
             } catch (error) {
-              client.logger.warn("VoiceStateUpdate", `Lỗi khi tạo vote button: ${error}`);
+              client.logger.warn("VoiceStateUpdate", `Lỗi khi stop player: ${error.message}`);
             }
-          }
-          if (
-            client.config.bot.PREMIUM_URL &&
-            client.config.MENU_HELP_EMOJI.E_PREMIUM
-          ) {
-            try {
-              const button = new ButtonBuilder()
-                .setLabel(
-                  client.i18n.get(language, "interaction", "premium_button")
-                )
-                .setStyle(ButtonStyle.Link)
-                .setURL(client.config.bot.PREMIUM_URL);
-              
-              // Safely set emoji with validation
-              const emoji = client.config.MENU_HELP_EMOJI.E_PREMIUM;
-              const safeEmoji = EmojiValidator.safeEmoji(emoji);
-              if (safeEmoji) {
-                button.setEmoji(safeEmoji);
-              }
-              
-              leavebutton.addComponents(button);
-            } catch (error) {
-              client.logger.warn("VoiceStateUpdate", `Lỗi khi tạo premium button: ${error}`);
-            }
-          }
-          try {
-            if (leaveEmbed) {
-              const msg =
-                newPlayer && leaveEmbed
-                  ? await leaveEmbed.send({
-                      flags: MessageFlags.SuppressNotifications,
-                      embeds: [TimeoutEmbed],
-                      components: leavebutton.components.length
-                        ? [leavebutton]
-                        : [],
-                    })
-                  : undefined;
-              setTimeout(
-                async () =>
-                  msg &&
-                  (!setup || setup == null || setup.channel !== player.textId)
-                    ? msg.delete().catch(() => null)
-                    : undefined,
-                client.config.features.DELETE_MSG_TIMEOUT
-              );
-            }
-          } catch (error) {
-            client.logger.error("VoiceStateUpdateError", error);
+          } else {
+            client.logger.debug("VoiceStateUpdate", `Player đã bị destroy trước đó, bỏ qua auto leave`);
           }
         }
         clearTimeout(leaveDelayTimeout);

@@ -28,7 +28,16 @@ export class SpotifyRequest {
       }
     );
 
-    const data = (await request.json()) as Promise<T>;
+    if (!request.ok) {
+      throw new Error(`Spotify API lỗi: ${request.status} ${request.statusText}`);
+    }
+
+    const text = await request.text();
+    if (!text.trim()) {
+      throw new Error("Spotify API trả về response rỗng");
+    }
+
+    const data = JSON.parse(text) as T;
 
     if (request.headers.get("x-ratelimit-remaining") === "0") {
       this.handleRateLimited(
@@ -60,7 +69,16 @@ export class SpotifyRequest {
       }
     );
 
-    const { access_token, expires_in } = (await res.json()) as {
+    if (!res.ok) {
+      throw new Error(`Spotify token lỗi: ${res.status} ${res.statusText}`);
+    }
+
+    const text = await res.text();
+    if (!text.trim()) {
+      throw new Error("Spotify token API trả về response rỗng");
+    }
+
+    const { access_token, expires_in } = JSON.parse(text) as {
       access_token?: string;
       expires_in: number;
     };

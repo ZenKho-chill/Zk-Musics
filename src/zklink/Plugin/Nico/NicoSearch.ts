@@ -23,7 +23,17 @@ export default async function search<P extends SearchParams>({
     }).toString();
 
     const req = await fetch(url);
-    const res = (await req.json()) as any;
+    
+    if (!req.ok) {
+      throw new Error(`Niconico API lỗi: ${req.status} ${req.statusText}`);
+    }
+    
+    const text = await req.text();
+    if (!text.trim()) {
+      throw new Error("Niconico API trả về response rỗng");
+    }
+    
+    const res = JSON.parse(text) as any;
 
     return res;
   } catch (err: any) {

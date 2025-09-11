@@ -202,11 +202,28 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   }
 
   private async getData<D = any>(params: string) {
-    const req = await fetch(`${this.fetchURL}${params}`, {
-      headers: this.credentials,
-    });
-    const res = (await req.json()) as any;
-    return res.data as D;
+    try {
+      const req = await fetch(`${this.fetchURL}${params}`, {
+        headers: this.credentials,
+      });
+      
+      if (!req.ok) {
+        this.debug(`Lỗi khi gọi Apple Music API: ${req.status} ${req.statusText}`);
+        return null as D;
+      }
+      
+      const text = await req.text();
+      if (!text.trim()) {
+        this.debug("Apple Music API trả về response rỗng");
+        return null as D;
+      }
+      
+      const res = JSON.parse(text) as any;
+      return res.data as D;
+    } catch (error) {
+      this.debug(`Lỗi khi parse JSON từ Apple Music API: ${error}`);
+      return null as D;
+    }
   }
 
   private async searchTrack(
@@ -219,26 +236,40 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
           .replace(/ /g, "+")
           .toLocaleLowerCase()}`
       ).catch((e) => {
-        throw new Error(e);
+        this.debug(`Lỗi khi tìm kiếm track: ${e}`);
+        return null;
       });
+      
+      if (!res) {
+        return { tracks: [] };
+      }
+      
       return {
         tracks: res?.results?.songs?.data?.map((track: Track) =>
           this.buildZklinkTrack(track, requester)
-        ),
+        ) || [],
       };
     } catch (e: any) {
-      throw new Error(e);
+      this.debug(`Lỗi không mong đợi trong searchTrack: ${e}`);
+      return { tracks: [] };
     }
   }
 
   private async getTrack(id: string, requester: unknown): Promise<Result> {
     try {
       const track = await this.getData(`/songs/${id}`).catch((e) => {
-        throw new Error(e);
+        this.debug(`Lỗi khi lấy track: ${e}`);
+        return null;
       });
+      
+      if (!track || !track[0]) {
+        return { tracks: [] };
+      }
+      
       return { tracks: [this.buildZklinkTrack(track[0], requester)] };
     } catch (e: any) {
-      throw new Error(e);
+      this.debug(`Lỗi không mong đợi trong getTrack: ${e}`);
+      return { tracks: [] };
     }
   }
 
@@ -246,44 +277,63 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     try {
       const track = await this.getData(`/artists/${id}/view/top-songs`).catch(
         (e) => {
-          throw new Error(e);
+          this.debug(`Lỗi khi lấy artist: ${e}`);
+          return null;
         }
       );
+      
+      if (!track || !track[0]) {
+        return { tracks: [] };
+      }
+      
       return { tracks: [this.buildZklinkTrack(track[0], requester)] };
     } catch (e: any) {
-      throw new Error(e);
+      this.debug(`Lỗi không mong đợi trong getArtist: ${e}`);
+      return { tracks: [] };
     }
   }
 
   private async getAlbum(id: string, requester: unknown): Promise<Result> {
     try {
       const album = await this.getData(`/albums/${id}`).catch((e) => {
-        throw new Error(e);
+        this.debug(`Lỗi khi lấy album: ${e}`);
+        return null;
       });
 
-      const tracks = album[0].relationships.tracks.data
-        .filter(this.filterNullOrUndefined)
-        .map((track: Track) => this.buildZklinkTrack(track, requester));
+      if (!album || !album[0]) {
+        return { tracks: [] };
+      }
 
-      return { tracks, name: album[0].attributes.name };
+      const tracks = album[0].relationships?.tracks?.data
+        ?.filter(this.filterNullOrUndefined)
+        ?.map((track: Track) => this.buildZklinkTrack(track, requester)) || [];
+
+      return { tracks, name: album[0].attributes?.name };
     } catch (e: any) {
-      throw new Error(e);
+      this.debug(`Lỗi không mong đợi trong getAlbum: ${e}`);
+      return { tracks: [] };
     }
   }
 
   private async getPlaylist(id: string, requester: unknown): Promise<Result> {
     try {
       const playlist = await this.getData(`/playlists/${id}`).catch((e) => {
-        throw new Error(e);
+        this.debug(`Lỗi khi lấy playlist: ${e}`);
+        return null;
       });
 
-      const tracks = playlist[0].relationships.tracks.data
-        .filter(this.filterNullOrUndefined)
-        .map((track: any) => this.buildZklinkTrack(track, requester));
+      if (!playlist || !playlist[0]) {
+        return { tracks: [] };
+      }
 
-      return { tracks, name: playlist[0].attributes.name };
+      const tracks = playlist[0].relationships?.tracks?.data
+        ?.filter(this.filterNullOrUndefined)
+        ?.map((track: any) => this.buildZklinkTrack(track, requester)) || [];
+
+      return { tracks, name: playlist[0].attributes?.name };
     } catch (e: any) {
-      throw new Error(e);
+      this.debug(`Lỗi không mong đợi trong getPlaylist: ${e}`);
+      return { tracks: [] };
     }
   }
 
