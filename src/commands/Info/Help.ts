@@ -154,10 +154,6 @@ export default class implements Command {
             .setValue("Music")
             .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_MUSIC, "❓")),
           new StringSelectMenuOptionBuilder()
-            .setLabel("Bộ lọc")
-            .setValue("Filter")
-            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_FILTER, "❓")),
-          new StringSelectMenuOptionBuilder()
             .setLabel("Danh sách phát")
             .setValue("Playlist")
             .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PLAYLIST, "❓")),

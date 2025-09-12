@@ -147,7 +147,7 @@ features:
       TopGgAuth: "YOUR AUTH/PASSWORD"
       LogVoteChannelID: "YOUR CHANNEL ID"
       TopGgToken: "YOUR TOKEN TOP.GG"
-  LAST_FM_SCROBBLED: # Lấy API key từ https://www.last.fm/api/account/create
+    LAST_FM_SCROBBLED: # Lấy API key từ https://www.last.fm/api/account/create
       Enable: false
       ApiKey: "YOUR API KEY LAST FM"
       Secret: "YOUR SECRET KEY LAST FM"

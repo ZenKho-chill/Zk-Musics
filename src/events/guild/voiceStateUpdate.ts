@@ -9,6 +9,7 @@ import {
 import { Manager } from "../../manager.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ZklinkPlayerState } from "../../Zklink/main.js";
+import { ClearMusicStatusChannel, ClearMusicStatusChannelWithDelay } from "../../utilities/UpdateStatusChannel.js";
 
 export default class {
   async execute(client: Manager, oldState: VoiceState, newState: VoiceState) {
@@ -24,8 +25,29 @@ export default class {
     const is247 = await client.db.autoreconnect.get(`${newState.guild.id}`);
 
     if (newState.channelId == null && newState.member?.user.id === client.user?.id) {
+      // Lưu lại voice channel từ oldState (trước khi disconnect) thay vì player.voiceId
+      const lastVoiceChannel = oldState.channelId || player.voiceId;
+
+      // Set flag để playerDestroy biết voice status đã được handle ở đây
       player.data.set("sudo-destroy", true);
+      player.data.set("voice-status-cleared", true);
+      
       player.state !== ZklinkPlayerState.DESTROYED ? player.destroy() : true;
+
+      // Xóa voice status channel khi bot bị kick/disconnect
+      if (lastVoiceChannel) {
+        client.logger.debug(
+          "VoiceStateUpdate", 
+          `Bot bị kick/disconnect, xóa voice status cho Guild ${newState.guild.id} (Channel: ${lastVoiceChannel})`
+        );
+        await ClearMusicStatusChannelWithDelay(client, newState.guild.id, lastVoiceChannel, 500);
+      } else {
+        // Nếu không có channel ID, log và skip - đây là trường hợp bình thường
+        client.logger.debug(
+          "VoiceStateUpdate", 
+          `Bot bị kick/disconnect từ Guild ${newState.guild.id}, nhưng không xác định được voice channel. Voice status sẽ tự động expire.`
+        );
+      }
 
       // Cancel leave timeout nếu có vì player đã bị destroy
       const existingTimeout = client.leaveDelay.get(newState.guild.id);
@@ -161,7 +183,16 @@ export default class {
           // Kiểm tra player còn tồn tại và chưa bị destroy
           if (newPlayer && newPlayer.state !== ZklinkPlayerState.DESTROYED) {
             newPlayer.data.set("sudo-destroy", true);
+            newPlayer.data.set("voice-status-cleared", true); // Flag để tránh duplicate trong playerDestroy
+            
             try {
+              // Xóa voice status trước khi stop player
+              client.logger.debug(
+                "VoiceStateUpdate", 
+                `Auto-leave timeout, xóa voice status cho Guild ${newState.guild.id} (Channel: ${newPlayer.voiceId})`
+              );
+              await ClearMusicStatusChannelWithDelay(client, newState.guild.id, newPlayer.voiceId, 500);
+              
               newPlayer.stop(is247 && is247.twentyfourseven ? false : true);
               client.logger.info(
                 "VoiceStateUpdate",

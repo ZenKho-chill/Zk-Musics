@@ -7,6 +7,15 @@ export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
+    // Lưu voice channel ID để có thể sử dụng khi cần xóa voice status
+    if (player.voiceId) {
+      player.data.set("initial-voice-channel-id", player.voiceId);
+      client.logger.debug(
+        "PlayerCreate",
+        `Đã lưu voice channel ID ${player.voiceId} cho Guild ${player.guildId}`
+      );
+    }
+
     /////////// Cập nhật kênh trạng thái nhạc //////////
     await UpdateMusicStatusChannel(client, player);
     /////////// Cập nhật kênh trạng thái nhạc //////////

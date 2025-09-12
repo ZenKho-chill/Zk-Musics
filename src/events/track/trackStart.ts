@@ -71,7 +71,7 @@ export default class {
     /////////// Cập nhật kênh trạng thái nhạc //////////
 
     /////////// Cập nhật lịch scrobble //////////
-    if (client.config.features.WebServer.LAST_FM_SCROBBLED.Enable) {
+    if (client.config.features.WebServer.LAST_FM_SCROBBLED?.Enable) {
       scheduleScrobble(client, player);
     }
     /////////// Cập nhật lịch scrobble //////////

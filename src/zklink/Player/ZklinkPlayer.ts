@@ -197,6 +197,11 @@ export class ZklinkPlayer extends EventEmitter {
   public async destroy(): Promise<void> {
     this.checkDestroyed();
     this.sudoDestroy = true;
+    
+    // Lưu voice channel ID trước khi destroy để có thể xóa voice status
+    const lastVoiceChannelId = this.voiceId;
+    this.data.set("last-voice-channel-id", lastVoiceChannelId);
+    
     this.clear(false);
     this.disconnect();
     const voiceReceiver = this.manager.plugins.get("Zklink-voiceReceiver") as ZklinkPlugin;

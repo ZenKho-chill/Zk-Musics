@@ -3,7 +3,7 @@ import { EmbedBuilder, TextChannel, MessageFlags } from "discord.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
-import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { UpdateMusicStatusChannel, ClearMusicStatusChannelWithDelay } from "../../utilities/UpdateStatusChannel.js";
 import chalk from "chalk";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
@@ -26,7 +26,30 @@ export default class {
     /////////// Cập nhật thiết lập nhạc ///////////
 
     /////////// Cập nhật kênh trạng thái nhạc //////////
-    await UpdateMusicStatusChannel(client, player);
+    const isSudoDestroy = player.data.get("sudo-destroy");
+    const voiceStatusAlreadyCleared = player.data.get("voice-status-cleared");
+    
+    // Chỉ xử lý voice status nếu chưa được clear ở voiceStateUpdate
+    if (!voiceStatusAlreadyCleared) {
+      // Lấy voice channel ID theo thứ tự ưu tiên
+      const savedVoiceChannelId = (player.data.get("last-voice-channel-id") as string) || 
+                                  (player.data.get("initial-voice-channel-id") as string) ||
+                                  player.voiceId || 
+                                  client.guilds.cache.get(player.guildId)?.members.me?.voice?.channelId;
+      
+      if (isSudoDestroy) {
+        // Nếu player bị destroy do kick/disconnect, xóa voice status
+        await ClearMusicStatusChannelWithDelay(client, player.guildId, savedVoiceChannelId, 500);
+      } else {
+        // Nếu player kết thúc bình thường, cập nhật voice status về trạng thái mặc định
+        await UpdateMusicStatusChannel(client, player);
+      }
+    } else {
+      client.logger.debug(
+        "PlayerDestroy",
+        `Voice status đã được xóa trong voiceStateUpdate, bỏ qua xử lý tại PlayerDestroy cho Guild ${player.guildId}`
+      );
+    }
     /////////// Cập nhật kênh trạng thái nhạc //////////
 
     client.emit("playerDestroy", player);
@@ -60,8 +83,6 @@ export default class {
     }
 
     const language = guildModel;
-
-    const isSudoDestroy = player.data.get("sudo-destroy");
 
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
