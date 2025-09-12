@@ -1,9 +1,9 @@
 import { REST } from 'discord.js';
 import { Routes } from 'discord-api-types/v10';
 import fs from 'fs';
-import _ from 'loadash';
+import _ from 'lodash';
 import  { config } from 'dotenv';
-import { load } from 'fs-yaml';
+import { load } from 'js-yaml';
 config();
 
 class removeSlash {
@@ -23,7 +23,7 @@ class removeSlash {
   }
 
   get ConfigData() {
-    const yaml_files = this.YAMLPraseServices('./config.yaml');
+    const yaml_files = this.YAMLPraseServices('./config.yml');
 
     let doc;
 
