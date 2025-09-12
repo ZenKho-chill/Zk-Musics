@@ -8,11 +8,7 @@ import {
   TextChannel,
   MessageFlags,
 } from "discord.js";
-import {
-  ZklinkPlayer,
-  ZklinkTrack,
-  ZklinkSearchResultType,
-} from "../../Zklink/main.js";
+import { ZklinkPlayer, ZklinkTrack, ZklinkSearchResultType } from "../../Zklink/main.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
@@ -25,8 +21,7 @@ let isCollectorActive = false;
 
 export default class implements Command {
   public name = ["spotify", "playlist"];
-  public description =
-    "Hiển thị playlist Spotify của bạn & chọn một playlist để phát";
+  public description = "Hiển thị playlist Spotify của bạn & chọn một playlist để phát";
   public category = "Âm nhạc";
   public accessableby = data.COMMANDS_ACCESS.MUSIC.SpotifyPlaylist;
   public usage = "";
@@ -44,11 +39,7 @@ export default class implements Command {
     if (isCollectorActive) {
       const responseEmbed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "spotify_playlist_active"
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_active")}`
         )
         .setColor(client.color_main);
 
@@ -74,11 +65,7 @@ export default class implements Command {
     if (!spotifyID) {
       const noSpotifyIDEmbed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "spotify_playlist_not_connected"
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_not_connected")}`
         )
         .setColor(client.color_main);
       await handler.editReply({
@@ -94,11 +81,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "play_no_in_voice"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "play_no_in_voice")}`
             )
             .setColor(client.color_main),
         ],
@@ -114,10 +97,7 @@ export default class implements Command {
         deaf: true,
         volume: client.config.bot.DEFAULT_VOLUME ?? 100,
       });
-    else if (
-      player &&
-      !this.checkSameVoice(client, handler, handler.language)
-    ) {
+    else if (player && !this.checkSameVoice(client, handler, handler.language)) {
       return;
     }
 
@@ -125,14 +105,11 @@ export default class implements Command {
 
     try {
       const accessToken = await SpotifygetAccessToken(client);
-      const response = await axios.get(
-        `https://api.spotify.com/v1/users/${spotifyID}/playlists`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await axios.get(`https://api.spotify.com/v1/users/${spotifyID}/playlists`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       let playlists = response.data.items;
       if (playlists.length > 25) {
         playlists = playlists.slice(0, 25);
@@ -141,11 +118,7 @@ export default class implements Command {
       if (!playlists || playlists.length === 0) {
         const noPlaylistsEmbed = new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get(
-              handler.language,
-              "commands.music",
-              "spotify_playlist_empty"
-            )}`
+            `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_empty")}`
           )
           .setColor(client.color_main);
         await handler.editReply({
@@ -157,9 +130,7 @@ export default class implements Command {
 
       const options = playlists.map((playlist: any) => {
         const name =
-          playlist.name.length > 25
-            ? playlist.name.substring(0, 22) + "..."
-            : playlist.name;
+          playlist.name.length > 25 ? playlist.name.substring(0, 22) + "..." : playlist.name;
         const description =
           playlist.description && playlist.description.length > 25
             ? playlist.description.substring(0, 22) + "..."
@@ -176,11 +147,7 @@ export default class implements Command {
         new StringSelectMenuBuilder()
           .setCustomId("spotify_pl")
           .setPlaceholder(
-            client.i18n.get(
-              handler.language,
-              "commands.music",
-              "spotify_playlist_placeholder"
-            )
+            client.i18n.get(handler.language, "commands.music", "spotify_playlist_placeholder")
           )
           .setMinValues(1)
           .setMaxValues(1)
@@ -201,40 +168,25 @@ export default class implements Command {
 
       const EmbedPlaylist = new EmbedBuilder()
         .setTitle(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "spotify_playlist_title",
-            {
-              SpotifyName: SpotifyName,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_title", {
+            SpotifyName: SpotifyName,
+          })}`
         )
         .setColor(client.color_second)
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "spotify_playlist_desc",
-            {
-              playlists: AllPlaylist,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_desc", {
+            playlists: AllPlaylist,
+          })}`
         )
         .setThumbnail(
           handler.user?.displayAvatarURL({ size: 1024 }) ||
             client.user!.displayAvatarURL({ size: 1024 })
         )
         .setFooter({
-          text: `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "spotify_playlist_footer",
-            {
-              username: client.user!.username,
-              max: "25",
-            }
-          )}`,
+          text: `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_footer", {
+            username: client.user!.username,
+            max: "25",
+          })}`,
         });
 
       await handler.editReply({
@@ -243,24 +195,17 @@ export default class implements Command {
       });
 
       isCollectorActive = true; // Đặt cờ true khi collector bắt đầu
-      const collector = (
-        handler?.channel! as TextChannel
-      ).createMessageComponentCollector({
+      const collector = (handler?.channel! as TextChannel).createMessageComponentCollector({
         componentType: ComponentType.StringSelect,
         filter: (message) => {
           if (
             message.guild!.members.me!.voice.channel &&
-            message.guild!.members.me!.voice.channelId ===
-              message.member!.voice.channelId
+            message.guild!.members.me!.voice.channelId === message.member!.voice.channelId
           )
             return true;
           else {
             message.reply({
-              content: `${client.i18n.get(
-                handler.language,
-                "interaction",
-                "no_same_voice"
-              )}`,
+              content: `${client.i18n.get(handler.language, "interaction", "no_same_voice")}`,
               flags: MessageFlags.Ephemeral,
             });
             return false;
@@ -269,83 +214,69 @@ export default class implements Command {
         time: client.config.features.SEARCH_TIMEOUT,
       });
 
-      collector.on(
-        "collect",
-        async (interaction: StringSelectMenuInteraction) => {
-          const selectedPlaylistId = interaction.values[0];
-          const selectedPlaylist = playlists.find(
-            (playlist: any) => playlist.id === selectedPlaylistId
-          );
+      collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
+        const selectedPlaylistId = interaction.values[0];
+        const selectedPlaylist = playlists.find(
+          (playlist: any) => playlist.id === selectedPlaylistId
+        );
 
-          if (!selectedPlaylist) {
-            await interaction.update({
-              embeds: [
-                new EmbedBuilder()
-                  .setDescription(
-                    `${client.i18n.get(
-                      handler.language,
-                      "commands_music",
-                      "spotify_playlist_notfound"
-                    )}`
-                  )
-                  .setColor(client.color_main),
-              ],
-              components: [],
-            });
-            return;
-          }
-          const selectedPlaylistUrl = `https://open.spotify.com/playlist/${selectedPlaylistId}`;
-          const searchResults = await player.search(selectedPlaylistUrl, {
-            requester: handler.user,
+        if (!selectedPlaylist) {
+          await interaction.update({
+            embeds: [
+              new EmbedBuilder()
+                .setDescription(
+                  `${client.i18n.get(
+                    handler.language,
+                    "commands_music",
+                    "spotify_playlist_notfound"
+                  )}`
+                )
+                .setColor(client.color_main),
+            ],
+            components: [],
           });
-
-          if (player) {
-            player.queue.add(searchResults.tracks);
-            if (!player.playing) await player.play();
-            const embed = new EmbedBuilder()
-              .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.music",
-                  "spotify_play_playlist",
-                  {
-                    title: this.getTitle(
-                      client,
-                      searchResults.type,
-                      searchResults.tracks,
-                      selectedPlaylist
-                    ),
-                    url: selectedPlaylist,
-                    playlistname: selectedPlaylist.name,
-                  }
-                )}`
-              )
-              .setThumbnail(selectedPlaylist.images[0]?.url)
-              .setColor(client.color_second);
-
-            await interaction.update({
-              embeds: [embed],
-              components: [],
-            });
-            collector?.stop();
-          } else {
-            await interaction.update({
-              embeds: [
-                new EmbedBuilder()
-                  .setDescription(
-                    `${client.i18n.get(
-                      handler.language,
-                      "interaction",
-                      "no_player"
-                    )}`
-                  )
-                  .setColor(client.color_main),
-              ],
-              components: [],
-            });
-          }
+          return;
         }
-      );
+        const selectedPlaylistUrl = `https://open.spotify.com/playlist/${selectedPlaylistId}`;
+        const searchResults = await player.search(selectedPlaylistUrl, {
+          requester: handler.user,
+        });
+
+        if (player) {
+          player.queue.add(searchResults.tracks);
+          if (!player.playing) await player.play();
+          const embed = new EmbedBuilder()
+            .setDescription(
+              `${client.i18n.get(handler.language, "commands.music", "spotify_play_playlist", {
+                title: this.getTitle(
+                  client,
+                  searchResults.type,
+                  searchResults.tracks,
+                  selectedPlaylist
+                ),
+                url: selectedPlaylist,
+                playlistname: selectedPlaylist.name,
+              })}`
+            )
+            .setThumbnail(selectedPlaylist.images[0]?.url)
+            .setColor(client.color_second);
+
+          await interaction.update({
+            embeds: [embed],
+            components: [],
+          });
+          collector?.stop();
+        } else {
+          await interaction.update({
+            embeds: [
+              new EmbedBuilder()
+                .setDescription(`${client.i18n.get(handler.language, "interaction", "no_player")}`)
+                .setColor(client.color_main),
+            ],
+            components: [],
+          });
+        }
+      });
 
       collector.on("end", async (_, reason) => {
         isCollectorActive = false;
@@ -358,20 +289,13 @@ export default class implements Command {
         }
       });
     } catch (error) {
-      client.logger.warn(
-        "SpotifyPlaylist",
-        `Lấy playlists từ Spotify thất bại: ${error}`
-      );
+      client.logger.warn("SpotifyPlaylist", `Lấy playlists từ Spotify thất bại: ${error}`);
       await handler.editReply({
         content: " ",
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "spotify_playlist_error"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_error")}`
             )
             .setColor(client.color_main),
         ],
@@ -381,15 +305,11 @@ export default class implements Command {
   }
 
   checkSameVoice(client: Manager, handler: CommandHandler, language: string) {
-    if (
-      handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel
-    ) {
+    if (handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel) {
       handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(language, "interaction", "no_same_voice")}`
-            )
+            .setDescription(`${client.i18n.get(language, "interaction", "no_same_voice")}`)
             .setColor(client.color_main),
         ],
       });

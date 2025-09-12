@@ -10,14 +10,11 @@ export class handleVoiceStats {
     this.Init();
   }
   private Init() {
-    this.client.on(
-      "voiceStateUpdate",
-      async (oldState: VoiceState, newState: VoiceState) => {
-        if (!newState.guild) return;
+    this.client.on("voiceStateUpdate", async (oldState: VoiceState, newState: VoiceState) => {
+      if (!newState.guild) return;
 
-        // Cập nhật thời gian thoại trong cơ sở dữ liệu
-        await updateVoiceTime(oldState, newState, this.client);
-      }
-    );
+      // Cập nhật thời gian thoại trong cơ sở dữ liệu
+      await updateVoiceTime(oldState, newState, this.client);
+    });
   }
 }

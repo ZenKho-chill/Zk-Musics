@@ -35,23 +35,18 @@ export class ZklinkNodeManager extends ZklinkDatabase<ZklinkNode> {
    */
   public async getLeastUsed(): Promise<ZklinkNode> {
     if (this.manager.ZklinkOptions.options!.nodeResolver) {
-      const resolverData =
-        await this.manager.ZklinkOptions.options!.nodeResolver(this);
+      const resolverData = await this.manager.ZklinkOptions.options!.nodeResolver(this);
       if (resolverData) return resolverData;
     }
     const nodes: ZklinkNode[] = this.values;
 
-    const onlineNodes = nodes.filter(
-      (node) => node.state === ZklinkConnectState.Connected
-    );
+    const onlineNodes = nodes.filter((node) => node.state === ZklinkConnectState.Connected);
     if (!onlineNodes.length) throw new Error("Không có node nào đang online");
 
     const temp = await Promise.all(
       onlineNodes.map(async (node) => {
         const stats = await node.rest.getStatus();
-        return !stats
-          ? { players: 0, node: node }
-          : { players: stats.players, node: node };
+        return !stats ? { players: 0, node: node } : { players: stats.players, node: node };
       })
     );
     temp.sort((a, b) => a.players - b.players);
@@ -83,9 +78,6 @@ export class ZklinkNodeManager extends ZklinkDatabase<ZklinkNode> {
 
   protected debug(logs: string) {
     // @ts-ignore
-    this.manager.emit(
-      ZklinkEvents.Debug,
-      `[Zklink] / [Quản lý Node] | ${logs}`
-    );
+    this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Quản lý Node] | ${logs}`);
   }
 }

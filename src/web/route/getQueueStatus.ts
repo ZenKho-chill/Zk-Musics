@@ -10,9 +10,7 @@ export async function getQueueStatus(
 ) {
   client.logger.info(
     "StatusRouterService",
-    `${req.method} ${req.routeOptions.url} tham_số=${
-      req.params ? util.inspect(req.params) : "{}"
-    }`
+    `${req.method} ${req.routeOptions.url} tham_số=${req.params ? util.inspect(req.params) : "{}"}`
   );
   const guildId = (req.params as Record<string, string>)["guildId"];
   const player = client.Zklink.players.get(guildId);

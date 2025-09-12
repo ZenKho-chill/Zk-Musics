@@ -48,14 +48,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.info",
-                "premium_check_invalid",
-                {
-                  prefix: client.prefix,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.info", "premium_check_invalid", {
+                prefix: client.prefix,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -74,9 +69,7 @@ export default class implements Command {
 
       const expires =
         PremiumPlan.expiresAt !== "lifetime"
-          ? `<t:${Math.floor(
-              moment(PremiumPlan.expiresAt).valueOf() / 1000
-            )}:F>`
+          ? `<t:${Math.floor(moment(PremiumPlan.expiresAt).valueOf() / 1000)}:F>`
           : "lifetime";
 
       const embed = new EmbedBuilder()
@@ -92,22 +85,14 @@ export default class implements Command {
           }&permissions=8&scope=bot`,
         })
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.info",
-            "premium_check_user_profile_desc",
-            {
-              user: String(handler.user?.displayName),
-              plan:
-                PremiumPlan.expiresAt !== "lifetime"
-                  ? `<t:${Math.floor(
-                      moment(PremiumPlan.expiresAt).valueOf() / 1000
-                    )}:R>`
-                  : "lifetime",
-              expires:
-                PremiumPlan.expiresAt == "lifetime" ? "lifetime" : expires,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.info", "premium_check_user_profile_desc", {
+            user: String(handler.user?.displayName),
+            plan:
+              PremiumPlan.expiresAt !== "lifetime"
+                ? `<t:${Math.floor(moment(PremiumPlan.expiresAt).valueOf() / 1000)}:R>`
+                : "lifetime",
+            expires: PremiumPlan.expiresAt == "lifetime" ? "lifetime" : expires,
+          })}`
         )
         .setColor(client.color_main);
 
@@ -120,9 +105,7 @@ export default class implements Command {
 
       const expires =
         PremiumPlan.expiresAt !== "lifetime"
-          ? `<t:${Math.floor(
-              moment(PremiumPlan.expiresAt).valueOf() / 1000
-            )}:F>`
+          ? `<t:${Math.floor(moment(PremiumPlan.expiresAt).valueOf() / 1000)}:F>`
           : "lifetime";
 
       const embed = new EmbedBuilder()
@@ -146,12 +129,9 @@ export default class implements Command {
               guild: String(handler.guild?.name),
               plan:
                 PremiumPlan.expiresAt !== "lifetime"
-                  ? `<t:${Math.floor(
-                      moment(PremiumPlan.expiresAt).valueOf() / 1000
-                    )}:R>`
+                  ? `<t:${Math.floor(moment(PremiumPlan.expiresAt).valueOf() / 1000)}:R>`
                   : "lifetime",
-              expires:
-                PremiumPlan.expiresAt == "lifetime" ? "lifetime" : expires,
+              expires: PremiumPlan.expiresAt == "lifetime" ? "lifetime" : expires,
             }
           )}`
         )
@@ -175,16 +155,11 @@ export default class implements Command {
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "commands.info",
-          "premium_check_user_profile_desc",
-          {
-            user: String(handler.user?.displayName),
-            plan: "lifetime",
-            expires: "lifetime",
-          }
-        )}`
+        `${client.i18n.get(handler.language, "commands.info", "premium_check_user_profile_desc", {
+          user: String(handler.user?.displayName),
+          plan: "lifetime",
+          expires: "lifetime",
+        })}`
       )
       .setColor(client.color_main);
     return handler.editReply({ embeds: [embed] });
@@ -204,16 +179,11 @@ export default class implements Command {
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "commands.info",
-          "premium_check_user_profile_desc",
-          {
-            user: String(handler.user?.displayName),
-            plan: "lifetime",
-            expires: "lifetime",
-          }
-        )}`
+        `${client.i18n.get(handler.language, "commands.info", "premium_check_user_profile_desc", {
+          user: String(handler.user?.displayName),
+          plan: "lifetime",
+          expires: "lifetime",
+        })}`
       )
       .setColor(client.color_main);
     return handler.editReply({ embeds: [embed] });
@@ -245,18 +215,11 @@ export default class implements Command {
       .setColor(client.color_main);
 
     const noPremiumButton = new ActionRowBuilder<ButtonBuilder>();
-    if (
-      client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-      client.config.bot.PREMIUM_URL
-    ) {
+    if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
       noPremiumButton.addComponents(
         new ButtonBuilder()
           .setLabel(
-            client.i18n.get(
-              handler.language,
-              "commands.info",
-              "premium_check_premium_button"
-            )
+            client.i18n.get(handler.language, "commands.info", "premium_check_premium_button")
           )
           .setStyle(ButtonStyle.Link)
           .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
@@ -293,18 +256,11 @@ export default class implements Command {
       .setColor(client.color_main);
 
     const noPremiumButton = new ActionRowBuilder<ButtonBuilder>();
-    if (
-      client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-      client.config.bot.PREMIUM_URL
-    ) {
+    if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
       noPremiumButton.addComponents(
         new ButtonBuilder()
           .setLabel(
-            client.i18n.get(
-              handler.language,
-              "commands.info",
-              "premium_check_premium_button"
-            )
+            client.i18n.get(handler.language, "commands.info", "premium_check_premium_button")
           )
           .setStyle(ButtonStyle.Link)
           .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)

@@ -6,10 +6,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class ManifestLoader {
   get data(): ManifestInterface {
-    const data = fs.readFileSync(
-      join(__dirname, "..", "..", "package.json"),
-      "utf-8"
-    );
+    const data = fs.readFileSync(join(__dirname, "..", "..", "package.json"), "utf-8");
     const jsonData = JSON.parse(data);
     const countPackage = Object.keys(jsonData.dependencies).length;
     const countDevPackage = Object.keys(jsonData.devDependencies).length;
@@ -18,9 +15,7 @@ export class ManifestLoader {
         bot: {
           version: jsonData.version,
           codename: jsonData.zk.codename || "Zk Music",
-          description:
-            jsonData.description ||
-            "Ai muốn hát rồi cũng sẽ tìm thấy một bài ♪",
+          description: jsonData.description || "Ai muốn hát rồi cũng sẽ tìm thấy một bài ♪",
           developer: jsonData.zk.developer || "ZenKho - https://zenkho.top",
         },
         autofix: {
@@ -29,8 +24,12 @@ export class ManifestLoader {
         },
       },
       package: {
-        discordjs: jsonData.dependencies["discord.js"] ? jsonData.dependencies["discord.js"].substring(1) : "unknown",
-        typescript: jsonData.devDependencies["typescript"] ? jsonData.devDependencies["typescript"].substring(1) : "unknown",
+        discordjs: jsonData.dependencies["discord.js"]
+          ? jsonData.dependencies["discord.js"].substring(1)
+          : "unknown",
+        typescript: jsonData.devDependencies["typescript"]
+          ? jsonData.devDependencies["typescript"].substring(1)
+          : "unknown",
         globalAmount: countPackage,
         devAmount: countDevPackage,
         totalAmount: countDevPackage + countPackage,

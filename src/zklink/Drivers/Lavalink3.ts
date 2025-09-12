@@ -1,10 +1,7 @@
 import { Zklink } from "../Zklink.js";
 import { metadata } from "../metadata.js";
 import { LavalinkLoadType, ZklinkEvents } from "../Interface/Constants.js";
-import {
-  ZklinkRequesterOptions,
-  UpdatePlayerInfo,
-} from "../Interface/Rest.js";
+import { ZklinkRequesterOptions, UpdatePlayerInfo } from "../Interface/Rest.js";
 import { ZklinkNode } from "../Node/ZklinkNode.js";
 import { AbstractDriver } from "./AbstractDriver.js";
 import util from "node:util";
@@ -25,9 +22,7 @@ export class Lavalink3 extends AbstractDriver {
   public wsUrl: string = "";
   public httpUrl: string = "";
   public sessionId: string | null;
-  public playerFunctions: ZklinkDatabase<
-    (player: ZklinkPlayer, ...args: any) => unknown
-  >;
+  public playerFunctions: ZklinkDatabase<(player: ZklinkPlayer, ...args: any) => unknown>;
   public functions: ZklinkDatabase<(manager: Zklink, ...args: any) => unknown>;
   protected wsClient?: ZklinkWebsocket;
   public manager: Zklink | null = null;
@@ -35,12 +30,8 @@ export class Lavalink3 extends AbstractDriver {
 
   constructor() {
     super();
-    this.playerFunctions = new ZklinkDatabase<
-      (player: ZklinkPlayer, ...args: any) => unknown
-    >();
-    this.functions = new ZklinkDatabase<
-      (manager: Zklink, ...args: any) => unknown
-    >();
+    this.playerFunctions = new ZklinkDatabase<(player: ZklinkPlayer, ...args: any) => unknown>();
+    this.functions = new ZklinkDatabase<(manager: Zklink, ...args: any) => unknown>();
     this.sessionId = null;
   }
 
@@ -65,8 +56,7 @@ export class Lavalink3 extends AbstractDriver {
   }
 
   public connect(): ZklinkWebsocket {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     const isResume = this.manager!.ZklinkOptions.options!.resume;
     const ws = new ZklinkWebsocket(this.wsUrl, {
       headers: {
@@ -92,14 +82,10 @@ export class Lavalink3 extends AbstractDriver {
     return ws;
   }
 
-  public async requester<D = any>(
-    options: ZklinkRequesterOptions
-  ): Promise<D | undefined> {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+  public async requester<D = any>(options: ZklinkRequesterOptions): Promise<D | undefined> {
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     const url = new URL(`${this.httpUrl}${options.path}`);
-    if (options.params)
-      url.search = new URLSearchParams(options.params).toString();
+    if (options.params) url.search = new URLSearchParams(options.params).toString();
     if (options.rawReqData && options.path.includes("/sessions")) {
       this.convertToV3websocket(options.rawReqData);
       return;
@@ -138,9 +124,7 @@ export class Lavalink3 extends AbstractDriver {
       );
       this.debug(
         "Lỗi từ server lavalink. " +
-          `Mã trạng thái: ${res.status}\n Headers: ${util.inspect(
-            options.headers
-          )}`
+          `Mã trạng thái: ${res.status}\n Headers: ${util.inspect(options.headers)}`
       );
       return undefined;
     }
@@ -215,10 +199,7 @@ export class Lavalink3 extends AbstractDriver {
     if (isPlaySent) return (isPlaySent = false);
 
     // Tạm dừng player
-    if (
-      data.playerOptions.paused === false ||
-      data.playerOptions.paused === true
-    )
+    if (data.playerOptions.paused === false || data.playerOptions.paused === true)
       this.wsSendData({
         op: "pause",
         guildId: data.guildId,
@@ -264,8 +245,7 @@ export class Lavalink3 extends AbstractDriver {
   }
 
   protected wsSendData(data: Record<string, unknown>): void {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     if (!this.wsClient) return;
     const jsonData = JSON.stringify(data);
     this.wsClient.send(jsonData);
@@ -273,8 +253,7 @@ export class Lavalink3 extends AbstractDriver {
   }
 
   protected wsMessageEvent(data: string) {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     const wsData = JSON.parse(data.toString());
     if (wsData.reason) wsData.reason = (wsData.reason as string).toLowerCase();
     if (wsData.reason == "LOAD_FAILED") wsData.reason = "loadFailed";
@@ -282,20 +261,14 @@ export class Lavalink3 extends AbstractDriver {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async updateSession(
-    sessionId: string,
-    mode: boolean,
-    timeout: number
-  ): Promise<void> {
+  public async updateSession(sessionId: string, mode: boolean, timeout: number): Promise<void> {
     if (!sessionId) {
       this.wsSendData({
         op: "configureResuming",
         key: "Zklink/lavalink/v3/koto/legacy",
         timeout: 60,
       });
-      this.debug(
-        `Phiên đã được cập nhật! resume: ${mode}, timeout: ${timeout}`
-      );
+      this.debug(`Phiên đã được cập nhật! resume: ${mode}, timeout: ${timeout}`);
       return;
     }
     const options: ZklinkRequesterOptions = {
@@ -314,8 +287,7 @@ export class Lavalink3 extends AbstractDriver {
   }
 
   protected debug(logs: string) {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     // @ts-ignore
     this.manager!.emit(
       ZklinkEvents.Debug,
@@ -348,12 +320,9 @@ export class Lavalink3 extends AbstractDriver {
     return;
   }
 
-  protected convertV4trackResponse(
-    v3data: Record<string, any>
-  ): Record<string, any> {
+  protected convertV4trackResponse(v3data: Record<string, any>): Record<string, any> {
     if (!v3data) return {};
-    if (v3data.loadType == Lavalink3loadType.LOAD_FAILED)
-      v3data.loadType = LavalinkLoadType.ERROR;
+    if (v3data.loadType == Lavalink3loadType.LOAD_FAILED) v3data.loadType = LavalinkLoadType.ERROR;
     if (v3data.loadType.includes("PLAYLIST_LOADED")) {
       v3data.loadType = LavalinkLoadType.PLAYLIST;
       const convertedArray = [];
@@ -381,8 +350,7 @@ export class Lavalink3 extends AbstractDriver {
       v3data.data = this.buildV4track(v3data.tracks[0]);
       delete v3data.tracks;
     }
-    if (v3data.loadType == Lavalink3loadType.NO_MATCHES)
-      v3data.loadType = LavalinkLoadType.EMPTY;
+    if (v3data.loadType == Lavalink3loadType.NO_MATCHES) v3data.loadType = LavalinkLoadType.EMPTY;
     return v3data;
   }
 

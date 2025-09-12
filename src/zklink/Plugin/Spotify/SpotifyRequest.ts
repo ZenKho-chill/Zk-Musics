@@ -13,10 +13,7 @@ export class SpotifyRequest {
     this.authorization = `&client_id=${this.client.clientId}&client_secret=${this.client.clientSecret}`;
   }
 
-  public async makeRequest<T>(
-    endpoint: string,
-    disableBaseUri: boolean = false
-  ): Promise<T> {
+  public async makeRequest<T>(endpoint: string, disableBaseUri: boolean = false): Promise<T> {
     await this.renew();
 
     const request = await fetch(
@@ -40,9 +37,7 @@ export class SpotifyRequest {
     const data = JSON.parse(text) as T;
 
     if (request.headers.get("x-ratelimit-remaining") === "0") {
-      this.handleRateLimited(
-        Number(request.headers.get("x-ratelimit-reset")) * 1000
-      );
+      this.handleRateLimited(Number(request.headers.get("x-ratelimit-reset")) * 1000);
       throw new Error("Bị giới hạn rate bởi spotify");
     }
     this.stats.requests++;
@@ -83,10 +78,7 @@ export class SpotifyRequest {
       expires_in: number;
     };
 
-    if (!access_token)
-      throw new Error(
-        "Lấy access token thất bại do spotify client không hợp lệ"
-      );
+    if (!access_token) throw new Error("Lấy access token thất bại do spotify client không hợp lệ");
 
     this.token = `Bearer ${access_token}`;
     this.nextRenew = Date.now() + expires_in * 1000;

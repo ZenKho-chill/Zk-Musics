@@ -3,10 +3,7 @@ import { EmbedBuilder, Guild, TextChannel } from "discord.js";
 
 export default class {
   async execute(client: Manager, guild: Guild) {
-    client.logger.info(
-      "GuildDelete",
-      `Đã rời guild ${guild.name} @ ${guild.id}`
-    );
+    client.logger.info("GuildDelete", `Đã rời guild ${guild.name} @ ${guild.id}`);
     const language = client.config.bot.LANGUAGE;
     client.guilds.cache.delete(`${guild!.id}`);
     await client.db.setup.delete(guild.id);
@@ -36,11 +33,7 @@ export default class {
             inline: true,
           },
           {
-            name: `${client.i18n.get(
-              language,
-              "events.guild",
-              "guild_member_count"
-            )}`,
+            name: `${client.i18n.get(language, "events.guild", "guild_member_count")}`,
             value: `\`${guild.memberCount}\` Thành viên`,
             inline: true,
           },
@@ -50,29 +43,17 @@ export default class {
             inline: true,
           },
           {
-            name: `${client.i18n.get(
-              language,
-              "events.guild",
-              "guild_creation_date"
-            )}`,
+            name: `${client.i18n.get(language, "events.guild", "guild_creation_date")}`,
             value: `<t:${Math.floor(guild.createdTimestamp / 1000)}:F>`,
             inline: true,
           },
           {
-            name: `${client.i18n.get(
-              language,
-              "events.guild",
-              "guild_join_date"
-            )}`,
+            name: `${client.i18n.get(language, "events.guild", "guild_join_date")}`,
             value: `<t:${Math.floor(guild.joinedTimestamp / 1000)}:F>`,
             inline: true,
           },
           {
-            name: `${client.i18n.get(
-              language,
-              "events.guild",
-              "current_server_count"
-            )}`,
+            name: `${client.i18n.get(language, "events.guild", "current_server_count")}`,
             value: `\`${client.guilds.cache.size}\` Server`,
             inline: true,
           },
@@ -89,10 +70,7 @@ export default class {
         `Đã gửi tin nhắn rời tới kênh sự kiện cho guild ${guild.name}`
       );
     } catch (err) {
-      client.logger.warn(
-        "GuildDelete",
-        `Gửi tin tới kênh sự kiện thất bại: ${err}`
-      );
+      client.logger.warn("GuildDelete", `Gửi tin tới kênh sự kiện thất bại: ${err}`);
     }
   }
 }

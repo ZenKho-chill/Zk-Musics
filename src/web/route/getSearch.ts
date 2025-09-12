@@ -11,9 +11,7 @@ export async function getSearch(
 ) {
   client.logger.info(
     "SearchRouterService",
-    `${req.method} ${req.routeOptions.url} truy_vấn=${
-      req.query ? util.inspect(req.query) : "{}"
-    }`
+    `${req.method} ${req.routeOptions.url} truy_vấn=${req.query ? util.inspect(req.query) : "{}"}`
   );
   const query = (req.query as Record<string, string>)["identifier"];
   const requester = (req.query as Record<string, string>)["requester"];

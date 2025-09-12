@@ -29,7 +29,6 @@ import { TopArtist } from "../schema/TopArtist.js";
 import { TempVoiceChannel } from "../schema/TempVoiceChannel.js";
 import { TempVoiceChannelSetting } from "../schema/TempVoiceChannelSetting.js";
 import { UserStatistics } from "../schema/UserStatistics.js";
-import { StatusVoiceChannel } from "../schema/StatusVoiceChannel.js";
 
 export class TableSetup {
   client: Manager;
@@ -43,12 +42,9 @@ export class TableSetup {
   }
 
   async register() {
-    const baseDB = new QuickDatabasePlus(
-      this.client.config.features.DATABASE.ClearCache,
-      {
-        driver: this.driver,
-      }
-    );
+    const baseDB = new QuickDatabasePlus(this.client.config.features.DATABASE.ClearCache, {
+      driver: this.driver,
+    });
     const start = Date.now();
     await baseDB.init();
     const end = Date.now();
@@ -73,32 +69,20 @@ export class TableSetup {
       maintenance: await baseDB.table<Maintenance>("maintenance"),
       Themes: await baseDB.table<Themes>("Themes"),
       votes: await baseDB.table<Votes>("votes"),
-      CommandGlobalUsage: await baseDB.table<CommandGlobalUsage>(
-        "CommandGlobalUsage"
-      ),
-      CommandUserUsage: await baseDB.table<CommandUserUsage>(
-        "CommandUserUsage"
-      ),
+      CommandGlobalUsage: await baseDB.table<CommandGlobalUsage>("CommandGlobalUsage"),
+      CommandUserUsage: await baseDB.table<CommandUserUsage>("CommandUserUsage"),
       PlayedSongUser: await baseDB.table<PlayedSongUser>("PlayedSongUser"),
       PlayedSongGuild: await baseDB.table<PlayedSongGuild>("PlayedSongGuild"),
-      PlayedSongGlobal: await baseDB.table<PlayedSongGlobal>(
-        "PlayedSongGlobal"
-      ),
+      PlayedSongGlobal: await baseDB.table<PlayedSongGlobal>("PlayedSongGlobal"),
       LastFm: await baseDB.table<LastFm>("LastFm"),
       SpotifyId: await baseDB.table<SpotifyId>("SpotifyId"),
       VoteReminders: await baseDB.table<VoteReminders>("VoteReminders"),
       TopTrack: await baseDB.table<TopTrack>("TopTrack"),
       TopArtist: await baseDB.table<TopArtist>("TopArtist"),
-      TempVoiceChannel: await baseDB.table<TempVoiceChannel>(
-        "TempVoiceChannel"
-      ),
-      TempVoiceChannelSetting: await baseDB.table<TempVoiceChannelSetting>(
-        "TempVoiceChannelSetting"
-      ),
+      TempVoiceChannel: await baseDB.table<TempVoiceChannel>("TempVoiceChannel"),
+      TempVoiceChannelSetting:
+        await baseDB.table<TempVoiceChannelSetting>("TempVoiceChannelSetting"),
       UserStatistics: await baseDB.table<UserStatistics>("UserStatistics"),
-      StatusVoiceChannel: await baseDB.table<StatusVoiceChannel>(
-        "StatusVoiceChannel"
-      ),
     };
 
     this.client.isDatabaseConnected = true;

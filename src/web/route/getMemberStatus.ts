@@ -9,7 +9,7 @@ export async function getMemberStatus(
 ) {
   client.logger.info(
     "StatusRouterService",
-  `${req.method} ${req.routeOptions.url} tham_số=${req.params ? util.inspect(req.params) : "{}"}`
+    `${req.method} ${req.routeOptions.url} tham_số=${req.params ? util.inspect(req.params) : "{}"}`
   );
   let isMemeberInVoice = false;
   const guildId = (req.params as Record<string, string>)["guildId"];

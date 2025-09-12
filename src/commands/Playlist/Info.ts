@@ -1,8 +1,4 @@
-import {
-  ApplicationCommandOptionType,
-  EmbedBuilder,
-  Message,
-} from "discord.js";
+import { ApplicationCommandOptionType, EmbedBuilder, Message } from "discord.js";
 import humanizeDuration from "humanize-duration";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
@@ -43,11 +39,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_info_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_info_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -60,11 +52,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_info_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_info_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -87,71 +75,35 @@ export default class implements Command {
       .setTitle(info.name)
       .addFields([
         {
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_info_owner"
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_owner")}`,
           value: `${name.username}`,
         },
         {
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_info_id"
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_id")}`,
           value: `${info.id}`,
         },
         {
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_info_des"
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_des")}`,
           value: `${
             info.description === null || info.description === "null"
-              ? client.i18n.get(
-                  handler.language,
-                  "commands.playlist",
-                  "pl_info_no_des"
-                )
+              ? client.i18n.get(handler.language, "commands.playlist", "pl_info_no_des")
               : info.description
           }`,
         },
         {
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_info_private"
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_private")}`,
           value: `${
             info.private
-              ? client.i18n.get(
-                  handler.language,
-                  "commands.playlist",
-                  "pl_public"
-                )
-              : client.i18n.get(
-                  handler.language,
-                  "commands.playlist",
-                  "pl_private"
-                )
+              ? client.i18n.get(handler.language, "commands.playlist", "pl_public")
+              : client.i18n.get(handler.language, "commands.playlist", "pl_private")
           }`,
         },
         {
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_info_created"
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_created")}`,
           value: `${created}`,
         },
         {
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_info_total"
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_total")}`,
           value: `${info.tracks!.length}`,
         },
       ])

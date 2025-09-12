@@ -80,17 +80,11 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
     let name = handler.args[0];
-    const ChoicesName = this.options[0].choices.find(
-      (choice) => choice.value === name
-    );
+    const ChoicesName = this.options[0].choices.find((choice) => choice.value === name);
 
     if (!ChoicesName) {
       await handler.interaction.reply({
-        content: `${client.i18n.get(
-          handler.language,
-          "commands.settings",
-          "error_themes"
-        )}`,
+        content: `${client.i18n.get(handler.language, "commands.settings", "error_themes")}`,
         flags: MessageFlags.Ephemeral,
       });
       return;
@@ -104,14 +98,9 @@ export default class implements Command {
 
     await client.db.Themes.set(`${handler.user!.id}`, new_data);
     await handler.interaction.reply({
-      content: `${client.i18n.get(
-        handler.language,
-        "commands.settings",
-        "succes_themes",
-        {
-          themes: ChoicesName.name,
-        }
-      )}`,
+      content: `${client.i18n.get(handler.language, "commands.settings", "succes_themes", {
+        themes: ChoicesName.name,
+      })}`,
       flags: MessageFlags.Ephemeral,
     });
   }

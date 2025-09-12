@@ -11,9 +11,6 @@ export default class {
       name: node.options.name,
     });
 
-    client.logger.info(
-      "NodeConnect",
-      chalk.green(`Lavalink [${node.options.name}] đã kết nối.`)
-    );
+    client.logger.info("NodeConnect", chalk.green(`Lavalink [${node.options.name}] đã kết nối.`));
   }
 }

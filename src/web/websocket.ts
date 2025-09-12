@@ -7,10 +7,7 @@ export class WebsocketRoute {
 
   main(fastify: Fastify.FastifyInstance) {
     fastify.get("/websocket", { websocket: true }, (socket, req) => {
-      this.client.logger.info(
-        WebsocketRoute.name,
-        `${req.method} ${req.routeOptions.url}`
-      );
+      this.client.logger.info(WebsocketRoute.name, `${req.method} ${req.routeOptions.url}`);
       socket.on("close", (code, reason) => {
         this.client.logger.info(
           WebsocketRoute.name,
@@ -39,22 +36,14 @@ export class WebsocketRoute {
       socket.close(1000, JSON.stringify({ error: "Thiếu Authorization" }));
       return false;
     }
-    if (
-      req.headers["authorization"] !== this.client.config.features.RestAPI.auth
-    ) {
+    if (req.headers["authorization"] !== this.client.config.features.RestAPI.auth) {
       socket.send(JSON.stringify({ error: "Authorization không hợp lệ" }));
-      socket.close(
-        1000,
-        JSON.stringify({ error: "Authorization không hợp lệ" })
-      );
+      socket.close(1000, JSON.stringify({ error: "Authorization không hợp lệ" }));
       return false;
     }
     if (this.client.wsl.get(String(req.headers["guild-id"]))) {
       socket.send(JSON.stringify({ error: "Đã có kết nối cho guild này" }));
-      socket.close(
-        1000,
-        JSON.stringify({ error: "Đã có kết nối cho guild này" })
-      );
+      socket.close(1000, JSON.stringify({ error: "Đã có kết nối cho guild này" }));
       return false;
     }
     return true;

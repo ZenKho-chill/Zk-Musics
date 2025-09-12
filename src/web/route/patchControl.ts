@@ -22,9 +22,7 @@ export class PatchControl {
   async main(req: Fastify.FastifyRequest, res: Fastify.FastifyReply) {
     this.client.logger.info(
       PatchControl.name,
-      `${req.method} ${req.routeOptions.url} dữ_liệu=${
-        req.body ? util.inspect(req.body) : "{}"
-      }`
+      `${req.method} ${req.routeOptions.url} dữ_liệu=${req.body ? util.inspect(req.body) : "{}"}`
     );
     const isValid = await this.checker(req, res);
     if (!isValid) return;
@@ -59,11 +57,7 @@ export class PatchControl {
     return true;
   }
 
-  async skipMode(
-    res: Fastify.FastifyReply,
-    player: ZklinkPlayer,
-    mode: string
-  ) {
+  async skipMode(res: Fastify.FastifyReply, player: ZklinkPlayer, mode: string) {
     if (!mode || !["previous", "skip"].includes(mode)) {
       res.code(400);
       res.send({ error: `Chế độ không hợp lệ, mode '${mode}' không tồn tại!` });
@@ -129,17 +123,8 @@ export class PatchControl {
     return true;
   }
 
-  async checker(
-    req: Fastify.FastifyRequest,
-    res: Fastify.FastifyReply
-  ): Promise<boolean> {
-    const accpetKey: string[] = [
-      "loop",
-      "skipMode",
-      "position",
-      "volume",
-      "add",
-    ];
+  async checker(req: Fastify.FastifyRequest, res: Fastify.FastifyReply): Promise<boolean> {
+    const accpetKey: string[] = ["loop", "skipMode", "position", "volume", "add"];
     const guildId = (req.params as Record<string, string>)["guildId"];
     const player = this.client.Zklink.players.get(guildId);
     if (!player) {

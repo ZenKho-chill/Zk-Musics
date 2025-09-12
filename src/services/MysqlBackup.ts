@@ -11,8 +11,7 @@ export default class MysqlBackupService {
       async () => {
         if (!client.config.features.DATABASE.MYSQLBACKUP.ChannelId) return;
 
-        const { host, user, password, database } =
-          client.config.features.DATABASE.config;
+        const { host, user, password, database } = client.config.features.DATABASE.config;
         const formatDate = (date) => {
           const day = String(date.getDate()).padStart(2, "0");
           const month = String(date.getMonth() + 1).padStart(2, "0");

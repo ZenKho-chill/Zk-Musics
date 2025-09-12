@@ -26,7 +26,6 @@ import { TopArtist } from "./schema/TopArtist.js";
 import { TempVoiceChannel } from "./schema/TempVoiceChannel.js";
 import { TempVoiceChannelSetting } from "./schema/TempVoiceChannelSetting.js";
 import { UserStatistics } from "./schema/UserStatistics.js";
-import { StatusVoiceChannel } from "./schema/StatusVoiceChannel.js";
 
 export interface DatabaseTable {
   autoreconnect: QuickDatabasePlus<AutoReconnect>;
@@ -56,5 +55,4 @@ export interface DatabaseTable {
   TempVoiceChannel: QuickDatabasePlus<TempVoiceChannel>;
   TempVoiceChannelSetting: QuickDatabasePlus<TempVoiceChannelSetting>;
   UserStatistics: QuickDatabasePlus<UserStatistics>;
-  StatusVoiceChannel: QuickDatabasePlus<StatusVoiceChannel>;
 }

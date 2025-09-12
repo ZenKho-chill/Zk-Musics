@@ -39,17 +39,11 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   public options: SpotifyOptions;
 
   private _search:
-    | ((
-        query: string,
-        options?: ZklinkSearchOptions
-      ) => Promise<ZklinkSearchResult>)
+    | ((query: string, options?: ZklinkSearchOptions) => Promise<ZklinkSearchResult>)
     | null;
   private Zklink: Zklink | null;
 
-  private readonly methods: Record<
-    string,
-    (id: string, requester: unknown) => Promise<Result>
-  >;
+  private readonly methods: Record<string, (id: string, requester: unknown) => Promise<Result>>;
   private requestManager: RequestManager;
 
   /**
@@ -139,8 +133,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     query: string,
     options?: ZklinkSearchOptions | undefined
   ): Promise<ZklinkSearchResult> {
-    if (!this.Zklink || !this._search)
-      throw new Error("Zklink-spotify chưa được tải.");
+    if (!this.Zklink || !this._search) throw new Error("Zklink-spotify chưa được tải.");
 
     if (!query) throw new Error("Cần truyền query");
 
@@ -159,9 +152,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
         const result: Result = await _function(id, options?.requester);
 
         const loadType =
-          type === "track"
-            ? ZklinkSearchResultType.TRACK
-            : ZklinkSearchResultType.PLAYLIST;
+          type === "track" ? ZklinkSearchResultType.TRACK : ZklinkSearchResultType.PLAYLIST;
         const playlistName = result.name ?? undefined;
 
         const tracks = result.tracks.filter(this.filterNullOrUndefined);
@@ -172,13 +163,8 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     } else if (options?.engine === this.sourceName() && !isUrl) {
       const result = await this.searchTrack(query, options?.requester);
 
-      return this.buildSearch(
-        undefined,
-        result.tracks,
-        ZklinkSearchResultType.SEARCH
-      );
-    } else
-      return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
+      return this.buildSearch(undefined, result.tracks, ZklinkSearchResultType.SEARCH);
+    } else return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
   }
 
   private buildSearch(
@@ -193,14 +179,9 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     };
   }
 
-  private async searchTrack(
-    query: string,
-    requester: unknown
-  ): Promise<Result> {
+  private async searchTrack(query: string, requester: unknown): Promise<Result> {
     const limit =
-      this.options.searchLimit &&
-      this.options.searchLimit > 0 &&
-      this.options.searchLimit < 50
+      this.options.searchLimit && this.options.searchLimit > 0 && this.options.searchLimit < 50
         ? this.options.searchLimit
         : 10;
     const tracks = await this.requestManager.makeRequest<SearchResult>(
@@ -209,16 +190,12 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
       )}&type=track&limit=${limit}&market=${this.options.searchMarket ?? "US"}`
     );
     return {
-      tracks: tracks.tracks.items.map((track) =>
-        this.buildZklinkTrack(track, requester)
-      ),
+      tracks: tracks.tracks.items.map((track) => this.buildZklinkTrack(track, requester)),
     };
   }
 
   private async getTrack(id: string, requester: unknown): Promise<Result> {
-    const track = await this.requestManager.makeRequest<TrackResult>(
-      `/tracks/${id}`
-    );
+    const track = await this.requestManager.makeRequest<TrackResult>(`/tracks/${id}`);
     return { tracks: [this.buildZklinkTrack(track, requester)] };
   }
 
@@ -228,9 +205,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     );
     const tracks = album.tracks.items
       .filter(this.filterNullOrUndefined)
-      .map((track) =>
-        this.buildZklinkTrack(track, requester, album.images[0]?.url)
-      );
+      .map((track) => this.buildZklinkTrack(track, requester, album.images[0]?.url));
 
     if (album && tracks.length) {
       let next = album.tracks.next;
@@ -238,15 +213,9 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
       while (
         next &&
-        (!this.options.playlistPageLimit
-          ? true
-          : page < this.options.playlistPageLimit)
+        (!this.options.playlistPageLimit ? true : page < this.options.playlistPageLimit)
       ) {
-        const nextTracks =
-          await this.requestManager.makeRequest<PlaylistTracks>(
-            next ?? "",
-            true
-          );
+        const nextTracks = await this.requestManager.makeRequest<PlaylistTracks>(next ?? "", true);
         page++;
         if (nextTracks.items.length) {
           next = nextTracks.next;
@@ -254,13 +223,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
             ...nextTracks.items
               .filter(this.filterNullOrUndefined)
               .filter((a) => a.track)
-              .map((track) =>
-                this.buildZklinkTrack(
-                  track.track!,
-                  requester,
-                  album.images[0]?.url
-                )
-              )
+              .map((track) => this.buildZklinkTrack(track.track!, requester, album.images[0]?.url))
           );
         }
       }
@@ -270,18 +233,14 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   }
 
   private async getArtist(id: string, requester: unknown): Promise<Result> {
-    const artist = await this.requestManager.makeRequest<Artist>(
-      `/artists/${id}`
-    );
+    const artist = await this.requestManager.makeRequest<Artist>(`/artists/${id}`);
     const fetchedTracks = await this.requestManager.makeRequest<ArtistResult>(
       `/artists/${id}/top-tracks?market=${this.options.searchMarket ?? "US"}`
     );
 
     const tracks = fetchedTracks.tracks
       .filter(this.filterNullOrUndefined)
-      .map((track) =>
-        this.buildZklinkTrack(track, requester, artist.images[0]?.url)
-      );
+      .map((track) => this.buildZklinkTrack(track, requester, artist.images[0]?.url));
 
     return { tracks, name: artist.name };
   }
@@ -293,24 +252,16 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
     const tracks = playlist.tracks.items
       .filter(this.filterNullOrUndefined)
-      .map((track) =>
-        this.buildZklinkTrack(track.track, requester, playlist.images[0]?.url)
-      );
+      .map((track) => this.buildZklinkTrack(track.track, requester, playlist.images[0]?.url));
 
     if (playlist && tracks.length) {
       let next = playlist.tracks.next;
       let page = 1;
       while (
         next &&
-        (!this.options.playlistPageLimit
-          ? true
-          : page < this.options.playlistPageLimit)
+        (!this.options.playlistPageLimit ? true : page < this.options.playlistPageLimit)
       ) {
-        const nextTracks =
-          await this.requestManager.makeRequest<PlaylistTracks>(
-            next ?? "",
-            true
-          );
+        const nextTracks = await this.requestManager.makeRequest<PlaylistTracks>(next ?? "", true);
         page++;
         if (nextTracks.items.length) {
           next = nextTracks.next;
@@ -319,11 +270,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
               .filter(this.filterNullOrUndefined)
               .filter((a) => a.track)
               .map((track) =>
-                this.buildZklinkTrack(
-                  track.track!,
-                  requester,
-                  playlist.images[0]?.url
-                )
+                this.buildZklinkTrack(track.track!, requester, playlist.images[0]?.url)
               )
           );
         }
@@ -336,11 +283,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     return obj !== undefined && obj !== null;
   }
 
-  private buildZklinkTrack(
-    spotifyTrack: Track,
-    requester: unknown,
-    thumbnail?: string
-  ) {
+  private buildZklinkTrack(spotifyTrack: Track, requester: unknown, thumbnail?: string) {
     return new ZklinkTrack(
       {
         encoded: "",
@@ -348,17 +291,13 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
           sourceName: "spotify",
           identifier: spotifyTrack.id,
           isSeekable: true,
-          author: spotifyTrack.artists[0]
-            ? spotifyTrack.artists[0].name
-            : "Không rõ",
+          author: spotifyTrack.artists[0] ? spotifyTrack.artists[0].name : "Không rõ",
           length: spotifyTrack.duration_ms,
           isStream: false,
           position: 0,
           title: spotifyTrack.name,
           uri: `https://open.spotify.com/track/${spotifyTrack.id}`,
-          artworkUrl: thumbnail
-            ? thumbnail
-            : spotifyTrack.album?.images[0]?.url,
+          artworkUrl: thumbnail ? thumbnail : spotifyTrack.album?.images[0]?.url,
         },
         pluginInfo: {
           name: this.name(),

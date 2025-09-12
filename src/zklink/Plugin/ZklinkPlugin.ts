@@ -10,9 +10,7 @@ export class ZklinkPlugin {
 
   /** Hàm trả về loại plugin (bắt buộc implement) */
   public type(): ZklinkPluginType {
-    throw new Error(
-      'Plugin phải implement type() và trả về "sourceResolver" hoặc "default"'
-    );
+    throw new Error('Plugin phải implement type() và trả về "sourceResolver" hoặc "default"');
   }
 
   /** Hàm load để kích hoạt plugin (bắt buộc implement) */

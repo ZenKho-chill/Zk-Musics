@@ -9,9 +9,7 @@ export async function deletePlayer(
 ) {
   client.logger.info(
     "PlayerRouterService",
-    `${req.method} ${req.routeOptions.url} params=${
-      req.params ? util.inspect(req.params) : "{}"
-    }`
+    `${req.method} ${req.routeOptions.url} params=${req.params ? util.inspect(req.params) : "{}"}`
   );
   const guildId = (req.params as Record<string, string>)["guildId"];
   const player = client.Zklink.players.get(guildId);

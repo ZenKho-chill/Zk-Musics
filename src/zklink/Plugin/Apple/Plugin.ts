@@ -37,14 +37,8 @@ const credentials = {
 export class ZklinkPlugin extends SourceZklinkPlugin {
   public options: AppleOptions;
   private manager: Zklink | null;
-  private _search?: (
-    query: string,
-    options?: ZklinkSearchOptions
-  ) => Promise<ZklinkSearchResult>;
-  private readonly methods: Record<
-    string,
-    (id: string, requester: unknown) => Promise<Result>
-  >;
+  private _search?: (query: string, options?: ZklinkSearchOptions) => Promise<ZklinkSearchResult>;
+  private readonly methods: Record<string, (id: string, requester: unknown) => Promise<Result>>;
   private credentials: HeaderType;
   private fetchURL: string;
   private baseURL: string;
@@ -96,12 +90,8 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     this.options = appleOptions;
     this.manager = null;
     this._search = undefined;
-    this.countryCode = this.options?.countryCode
-      ? this.options?.countryCode
-      : "us";
-    this.imageHeight = this.options?.imageHeight
-      ? this.options?.imageHeight
-      : 900;
+    this.countryCode = this.options?.countryCode ? this.options?.countryCode : "us";
+    this.imageHeight = this.options?.imageHeight ? this.options?.imageHeight : 900;
     this.imageWidth = this.options?.imageWidth ? this.options?.imageWidth : 600;
     this.baseURL = "https://api.music.apple.com/v1/";
     this.fetchURL = `https://amp-api.music.apple.com/v1/catalog/${this.countryCode}`;
@@ -154,8 +144,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     let id: string;
     let isTrack: boolean = false;
 
-    if (!this.manager || !this._search)
-      throw new Error("Zklink-apple chưa được tải.");
+    if (!this.manager || !this._search) throw new Error("Zklink-apple chưa được tải.");
 
     if (!query) throw new Error("Cần truyền query");
 
@@ -179,9 +168,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
         if (isTrack) _function = this.methods.track;
         const result: Result = await _function(id, options?.requester);
 
-        const loadType = isTrack
-          ? ZklinkSearchResultType.TRACK
-          : ZklinkSearchResultType.PLAYLIST;
+        const loadType = isTrack ? ZklinkSearchResultType.TRACK : ZklinkSearchResultType.PLAYLIST;
         const playlistName = result.name ?? undefined;
 
         const tracks = result.tracks.filter(this.filterNullOrUndefined);
@@ -192,13 +179,8 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     } else if (options?.engine === "apple" && !isUrl) {
       const result = await this.searchTrack(query, options?.requester);
 
-      return this.buildSearch(
-        undefined,
-        result.tracks,
-        ZklinkSearchResultType.SEARCH
-      );
-    } else
-      return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
+      return this.buildSearch(undefined, result.tracks, ZklinkSearchResultType.SEARCH);
+    } else return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
   }
 
   private async getData<D = any>(params: string) {
@@ -206,18 +188,18 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
       const req = await fetch(`${this.fetchURL}${params}`, {
         headers: this.credentials,
       });
-      
+
       if (!req.ok) {
         this.debug(`Lỗi khi gọi Apple Music API: ${req.status} ${req.statusText}`);
         return null as D;
       }
-      
+
       const text = await req.text();
       if (!text.trim()) {
         this.debug("Apple Music API trả về response rỗng");
         return null as D;
       }
-      
+
       const res = JSON.parse(text) as any;
       return res.data as D;
     } catch (error) {
@@ -226,28 +208,24 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     }
   }
 
-  private async searchTrack(
-    query: string,
-    requester: unknown
-  ): Promise<Result> {
+  private async searchTrack(query: string, requester: unknown): Promise<Result> {
     try {
       const res = await this.getData(
-        `/search?types=songs&term=${query
-          .replace(/ /g, "+")
-          .toLocaleLowerCase()}`
+        `/search?types=songs&term=${query.replace(/ /g, "+").toLocaleLowerCase()}`
       ).catch((e) => {
         this.debug(`Lỗi khi tìm kiếm track: ${e}`);
         return null;
       });
-      
+
       if (!res) {
         return { tracks: [] };
       }
-      
+
       return {
-        tracks: res?.results?.songs?.data?.map((track: Track) =>
-          this.buildZklinkTrack(track, requester)
-        ) || [],
+        tracks:
+          res?.results?.songs?.data?.map((track: Track) =>
+            this.buildZklinkTrack(track, requester)
+          ) || [],
       };
     } catch (e: any) {
       this.debug(`Lỗi không mong đợi trong searchTrack: ${e}`);
@@ -261,11 +239,11 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
         this.debug(`Lỗi khi lấy track: ${e}`);
         return null;
       });
-      
+
       if (!track || !track[0]) {
         return { tracks: [] };
       }
-      
+
       return { tracks: [this.buildZklinkTrack(track[0], requester)] };
     } catch (e: any) {
       this.debug(`Lỗi không mong đợi trong getTrack: ${e}`);
@@ -275,17 +253,15 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
   private async getArtist(id: string, requester: unknown): Promise<Result> {
     try {
-      const track = await this.getData(`/artists/${id}/view/top-songs`).catch(
-        (e) => {
-          this.debug(`Lỗi khi lấy artist: ${e}`);
-          return null;
-        }
-      );
-      
+      const track = await this.getData(`/artists/${id}/view/top-songs`).catch((e) => {
+        this.debug(`Lỗi khi lấy artist: ${e}`);
+        return null;
+      });
+
       if (!track || !track[0]) {
         return { tracks: [] };
       }
-      
+
       return { tracks: [this.buildZklinkTrack(track[0], requester)] };
     } catch (e: any) {
       this.debug(`Lỗi không mong đợi trong getArtist: ${e}`);
@@ -304,9 +280,10 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
         return { tracks: [] };
       }
 
-      const tracks = album[0].relationships?.tracks?.data
-        ?.filter(this.filterNullOrUndefined)
-        ?.map((track: Track) => this.buildZklinkTrack(track, requester)) || [];
+      const tracks =
+        album[0].relationships?.tracks?.data
+          ?.filter(this.filterNullOrUndefined)
+          ?.map((track: Track) => this.buildZklinkTrack(track, requester)) || [];
 
       return { tracks, name: album[0].attributes?.name };
     } catch (e: any) {
@@ -326,9 +303,10 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
         return { tracks: [] };
       }
 
-      const tracks = playlist[0].relationships?.tracks?.data
-        ?.filter(this.filterNullOrUndefined)
-        ?.map((track: any) => this.buildZklinkTrack(track, requester)) || [];
+      const tracks =
+        playlist[0].relationships?.tracks?.data
+          ?.filter(this.filterNullOrUndefined)
+          ?.map((track: any) => this.buildZklinkTrack(track, requester)) || [];
 
       return { tracks, name: playlist[0].attributes?.name };
     } catch (e: any) {
@@ -364,9 +342,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
           sourceName: this.sourceName(),
           identifier: appleTrack.id,
           isSeekable: true,
-          author: appleTrack.attributes.artistName
-            ? appleTrack.attributes.artistName
-            : "Không rõ",
+          author: appleTrack.attributes.artistName ? appleTrack.attributes.artistName : "Không rõ",
           length: appleTrack.attributes.durationInMillis,
           isStream: false,
           position: 0,
@@ -385,10 +361,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private debug(logs: string) {
     this.manager
       ? // @ts-ignore
-        this.manager.emit(
-          ZklinkEvents.Debug,
-          `[Zklink] / [Plugin] / [Apple] | ${logs}`
-        )
+        this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Plugin] / [Apple] | ${logs}`)
       : true;
   }
 }

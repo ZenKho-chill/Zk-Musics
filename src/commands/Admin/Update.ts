@@ -25,9 +25,7 @@ export default class implements Command {
       await handler.deferReply();
 
       const channelToSendId = client.config.logchannel.UpdateChannelId;
-      const channelToSend = client.channels.cache.get(channelToSendId) as
-        | TextChannel
-        | undefined;
+      const channelToSend = client.channels.cache.get(channelToSendId) as TextChannel | undefined;
 
       if (!channelToSend) {
         throw new Error(`Không tìm thấy kênh với ID ${channelToSendId}.`);
@@ -36,19 +34,11 @@ export default class implements Command {
       const filter = (msg: Message) => msg.author.id === handler.user?.id;
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(
-          client.i18n.get(
-            handler.language,
-            "commands.admin",
-            "update_provide_desc"
-          )
-        ); // Mô tả lấy từ i18n
+        .setDescription(client.i18n.get(handler.language, "commands.admin", "update_provide_desc")); // Mô tả lấy từ i18n
 
       const messagePrompt = await handler.editReply({ embeds: [embed] });
 
-      const collector = (
-        handler?.channel! as TextChannel
-      ).createMessageCollector({
+      const collector = (handler?.channel! as TextChannel).createMessageCollector({
         filter,
         time: 60000,
         max: 1,
@@ -60,29 +50,19 @@ export default class implements Command {
             const embed = new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.admin",
-                  "update_cancelled"
-                )}`
+                `${client.i18n.get(handler.language, "commands.admin", "update_cancelled")}`
               );
             await handler.editReply({ embeds: [embed] });
             return;
           }
 
-          const description = msg.content
-            .replace(/\\n/g, "\n")
-            .replace(/\\n\\n/g, "\n\n");
+          const description = msg.content.replace(/\\n/g, "\n").replace(/\\n\\n/g, "\n\n");
 
           if (description.length > 2000) {
             const embed = new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.admin",
-                  "update_length_exceeded"
-                )}`
+                `${client.i18n.get(handler.language, "commands.admin", "update_length_exceeded")}`
               );
             await handler.editReply({ embeds: [embed] });
 
@@ -96,29 +76,18 @@ export default class implements Command {
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "update_success"
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "update_success")}`
             );
           await handler.editReply({ embeds: [embed] });
 
           // Xóa tin nhắn do người dùng gửi
           await msg.delete();
         } catch (err) {
-          client.logger.warn(
-            import.meta.url,
-            `Không thể gửi tin nhắn cập nhật`
-          );
+          client.logger.warn(import.meta.url, `Không thể gửi tin nhắn cập nhật`);
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "update_failure"
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "update_failure")}`
             );
           await handler.editReply({ embeds: [embed] });
         }
@@ -129,11 +98,7 @@ export default class implements Command {
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "update_timeout_failure"
-              )
+              client.i18n.get(handler.language, "commands.admin", "update_timeout_failure")
             );
 
           handler.editReply({ embeds: [embed] });
@@ -147,11 +112,7 @@ export default class implements Command {
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.admin",
-            "update_timeout_failure"
-          )}`
+          `${client.i18n.get(handler.language, "commands.admin", "update_timeout_failure")}`
         );
 
       await handler.editReply({ embeds: [embed] });

@@ -27,17 +27,11 @@ export class ZklinkRest {
    * @param options Tùy chọn node Zklink (theo interface ZklinkNodeOptions)
    * @param nodeManager Lớp xử lý server lavalink của Zklink
    */
-  constructor(
-    manager: Zklink,
-    options: ZklinkNodeOptions,
-    nodeManager: ZklinkNode
-  ) {
+  constructor(manager: Zklink, options: ZklinkNodeOptions, nodeManager: ZklinkNode) {
     this.manager = manager;
     this.options = options;
     this.nodeManager = nodeManager;
-    this.sessionId = this.nodeManager.driver.sessionId
-      ? this.nodeManager.driver.sessionId
-      : "";
+    this.sessionId = this.nodeManager.driver.sessionId ? this.nodeManager.driver.sessionId : "";
   }
 
   /**
@@ -49,9 +43,7 @@ export class ZklinkRest {
       path: `/sessions/${this.sessionId}/players`,
       headers: { "content-type": "application/json" },
     };
-    return (
-      (await this.nodeManager.driver.requester<LavalinkPlayer[]>(options)) ?? []
-    );
+    return (await this.nodeManager.driver.requester<LavalinkPlayer[]>(options)) ?? [];
   }
 
   /**
@@ -119,9 +111,7 @@ export class ZklinkRest {
       method: "GET",
     };
 
-    const resData = await this.nodeManager.driver.requester<LavalinkResponse>(
-      options
-    );
+    const resData = await this.nodeManager.driver.requester<LavalinkResponse>(options);
 
     if (!resData) {
       return {

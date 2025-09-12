@@ -20,13 +20,13 @@ export default class {
       )} / ${chalk.hex("#f08080")(player.guildId)}`
     );
 
-  /////////// Cập nhật thiết lập nhạc //////////
+    /////////// Cập nhật thiết lập nhạc //////////
     await client.UpdateMusic(player);
-  /////////// Cập nhật thiết lập nhạc ///////////
+    /////////// Cập nhật thiết lập nhạc ///////////
 
-  /////////// Cập nhật kênh trạng thái nhạc //////////
+    /////////// Cập nhật kênh trạng thái nhạc //////////
     await UpdateMusicStatusChannel(client, player);
-  /////////// Cập nhật kênh trạng thái nhạc //////////
+    /////////// Cập nhật kênh trạng thái nhạc //////////
 
     client.emit("playerEnd", player);
 

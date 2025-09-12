@@ -53,28 +53,18 @@ export class ButtonSkip {
     /////////////////////////////// Kiểm tra vai trò Premium (bắt đầu) ////////////////////////////////
     const PremiumGuildID = this.client.config.PremiumRole.GuildID;
     const PremiumRoleID = this.client.config.PremiumRole.RoleID;
-    const supportGuild = await this.client.guilds
-      .fetch(PremiumGuildID)
-      .catch(() => null);
+    const supportGuild = await this.client.guilds.fetch(PremiumGuildID).catch(() => null);
     const supportMember = supportGuild
-      ? await supportGuild.members
-          .fetch(String(this.interaction.user?.id))
-          .catch(() => null)
+      ? await supportGuild.members.fetch(String(this.interaction.user?.id)).catch(() => null)
       : null;
-    const isPremiumRole = supportMember
-      ? supportMember.roles.cache.has(PremiumRoleID)
-      : false;
+    const isPremiumRole = supportMember ? supportMember.roles.cache.has(PremiumRoleID) : false;
     /////////////////////////////// Kiểm tra vai trò Premium (kết thúc) ////////////////////////////////
     const User = await this.client.db.premium.get(this.interaction.user.id);
-    const Guild = await this.client.db.preGuild.get(
-      String(this.interaction.guild?.id)
-    );
+    const Guild = await this.client.db.preGuild.get(String(this.interaction.guild?.id));
     const isPremiumUser = User && User.isPremium;
     const isPremiumGuild = Guild && Guild.isPremium;
     const isOwner = this.interaction.user.id == this.client.owner;
-    const isAdmin = this.client.config.bot.ADMIN.includes(
-      this.interaction.user.id
-    );
+    const isAdmin = this.client.config.bot.ADMIN.includes(this.interaction.user.id);
     const userPerm = {
       owner: isOwner,
       admin: isOwner || isAdmin,
@@ -83,12 +73,7 @@ export class ButtonSkip {
       UserPremium: isOwner || isAdmin || isPremiumUser,
       GuildPremium: isOwner || isAdmin || isPremiumGuild,
       Premium:
-        isOwner ||
-        isAdmin ||
-        isPremiumUser ||
-        isPremiumGuild ||
-        isPremiumRole ||
-        PremiumStore,
+        isOwner || isAdmin || isPremiumUser || isPremiumGuild || isPremiumRole || PremiumStore,
     };
 
     if (
@@ -102,28 +87,17 @@ export class ButtonSkip {
       !userPerm.Premium &&
       !userPerm.PremiumStore
     ) {
-      const voteChecker = await this.client.topgg.checkVote(
-        this.interaction.user!.id
-      );
+      const voteChecker = await this.client.topgg.checkVote(this.interaction.user!.id);
       if (voteChecker == TopggServiceEnum.ERROR) {
         const embed = new EmbedBuilder()
           .setAuthor({
-            name: this.client.i18n.get(
-              this.language,
-              "interaction",
-              "topgg_error_author"
-            ),
+            name: this.client.i18n.get(this.language, "interaction", "topgg_error_author"),
           })
           .setDescription(
-            this.client.i18n.get(
-              this.language,
-              "interaction",
-              "topgg_error_desc",
-              {
-                serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
-                premium: this.client.config.bot.PREMIUM_URL,
-              }
-            )
+            this.client.i18n.get(this.language, "interaction", "topgg_error_desc", {
+              serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
+              premium: this.client.config.bot.PREMIUM_URL,
+            })
           )
           .setColor(this.client.color_main);
         return await this.interaction.reply({
@@ -136,54 +110,30 @@ export class ButtonSkip {
       if (voteChecker == TopggServiceEnum.UNVOTED) {
         const embed = new EmbedBuilder()
           .setAuthor({
-            name: this.client.i18n.get(
-              this.language,
-              "interaction",
-              "topgg_unvote_author"
-            ),
+            name: this.client.i18n.get(this.language, "interaction", "topgg_unvote_author"),
           })
           .setDescription(
-            this.client.i18n.get(
-              this.language,
-              "interaction",
-              "topgg_unvote_desc",
-              {
-                user: `<@${this.interaction.user!.id}>`,
-                serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
-                premium: this.client.config.bot.PREMIUM_URL,
-              }
-            )
+            this.client.i18n.get(this.language, "interaction", "topgg_unvote_desc", {
+              user: `<@${this.interaction.user!.id}>`,
+              serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
+              premium: this.client.config.bot.PREMIUM_URL,
+            })
           )
           .setColor(this.client.color_main);
         const VoteButton = new ActionRowBuilder<ButtonBuilder>();
         if (this.client.config.MENU_HELP_EMOJI.E_VOTE) {
           VoteButton.addComponents(
             new ButtonBuilder()
-              .setLabel(
-                this.client.i18n.get(
-                  this.language,
-                  "interaction",
-                  "topgg_unvote_button"
-                )
-              )
+              .setLabel(this.client.i18n.get(this.language, "interaction", "topgg_unvote_button"))
               .setStyle(ButtonStyle.Link)
               .setEmoji(this.client.config.MENU_HELP_EMOJI.E_VOTE)
               .setURL(`https://top.gg/bot/${this.client.user?.id}/vote`)
           );
         }
-        if (
-          this.client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-          this.client.config.bot.PREMIUM_URL
-        ) {
+        if (this.client.config.MENU_HELP_EMOJI.E_PREMIUM && this.client.config.bot.PREMIUM_URL) {
           VoteButton.addComponents(
             new ButtonBuilder()
-              .setLabel(
-                this.client.i18n.get(
-                  this.language,
-                  "interaction",
-                  "premium_button"
-                )
-              )
+              .setLabel(this.client.i18n.get(this.language, "interaction", "premium_button"))
               .setStyle(ButtonStyle.Link)
               .setEmoji(this.client.config.MENU_HELP_EMOJI.E_PREMIUM)
               .setURL(this.client.config.bot.PREMIUM_URL)
@@ -201,39 +151,21 @@ export class ButtonSkip {
     if (this.accessableby === "PremiumRole" && !userPerm.PremiumRole) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_premium_role_author"
-          ),
+          name: this.client.i18n.get(this.language, "interaction", "no_premium_role_author"),
         })
         .setDescription(
-          `${this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_premium_role_desc",
-            {
-              user: `<@${this.interaction.user!.id}>`,
-              serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
-              premium: this.client.config.bot.PREMIUM_URL,
-            }
-          )}`
+          `${this.client.i18n.get(this.language, "interaction", "no_premium_role_desc", {
+            user: `<@${this.interaction.user!.id}>`,
+            serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
+            premium: this.client.config.bot.PREMIUM_URL,
+          })}`
         )
         .setColor(this.client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        this.client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        this.client.config.bot.PREMIUM_URL
-      ) {
+      if (this.client.config.MENU_HELP_EMOJI.E_PREMIUM && this.client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              this.client.i18n.get(
-                this.language,
-                "interaction",
-                "no_premium_role_button"
-              )
-            )
+            .setLabel(this.client.i18n.get(this.language, "interaction", "no_premium_role_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(this.client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(this.client.config.bot.PREMIUM_URL)
@@ -242,9 +174,7 @@ export class ButtonSkip {
       return await this.interaction.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -252,39 +182,21 @@ export class ButtonSkip {
     if (this.accessableby === "Premium" && !userPerm.Premium) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_premium_author"
-          ),
+          name: this.client.i18n.get(this.language, "interaction", "no_premium_author"),
         })
         .setDescription(
-          `${this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_premium_desc",
-            {
-              user: `<@${this.interaction.user!.id}>`,
-              serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
-              premium: this.client.config.bot.PREMIUM_URL,
-            }
-          )}`
+          `${this.client.i18n.get(this.language, "interaction", "no_premium_desc", {
+            user: `<@${this.interaction.user!.id}>`,
+            serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
+            premium: this.client.config.bot.PREMIUM_URL,
+          })}`
         )
         .setColor(this.client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        this.client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        this.client.config.bot.PREMIUM_URL
-      ) {
+      if (this.client.config.MENU_HELP_EMOJI.E_PREMIUM && this.client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              this.client.i18n.get(
-                this.language,
-                "interaction",
-                "no_premium_button"
-              )
-            )
+            .setLabel(this.client.i18n.get(this.language, "interaction", "no_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(this.client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(this.client.config.bot.PREMIUM_URL)
@@ -294,9 +206,7 @@ export class ButtonSkip {
       return await this.interaction.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -304,39 +214,21 @@ export class ButtonSkip {
     if (this.accessableby === "UserPremium" && !userPerm.UserPremium) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_user_premium_plan_author"
-          ),
+          name: this.client.i18n.get(this.language, "interaction", "no_user_premium_plan_author"),
         })
         .setDescription(
-          `${this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_user_premium_plan_desc",
-            {
-              user: `<@${this.interaction.user!.id}>`,
-              serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
-              premium: this.client.config.bot.PREMIUM_URL,
-            }
-          )}`
+          `${this.client.i18n.get(this.language, "interaction", "no_user_premium_plan_desc", {
+            user: `<@${this.interaction.user!.id}>`,
+            serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
+            premium: this.client.config.bot.PREMIUM_URL,
+          })}`
         )
         .setColor(this.client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        this.client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        this.client.config.bot.PREMIUM_URL
-      ) {
+      if (this.client.config.MENU_HELP_EMOJI.E_PREMIUM && this.client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              this.client.i18n.get(
-                this.language,
-                "interaction",
-                "no_user_premium_button"
-              )
-            )
+            .setLabel(this.client.i18n.get(this.language, "interaction", "no_user_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(this.client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(this.client.config.bot.PREMIUM_URL)
@@ -346,9 +238,7 @@ export class ButtonSkip {
       return await this.interaction.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -356,39 +246,21 @@ export class ButtonSkip {
     if (this.accessableby === "GuildPremium" && !userPerm.GuildPremium) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_guild_premium_plan_author"
-          ),
+          name: this.client.i18n.get(this.language, "interaction", "no_guild_premium_plan_author"),
         })
         .setDescription(
-          `${this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_guild_premium_plan_desc",
-            {
-              user: `<@${this.interaction.user!.id}>`,
-              serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
-              premium: this.client.config.bot.PREMIUM_URL,
-            }
-          )}`
+          `${this.client.i18n.get(this.language, "interaction", "no_guild_premium_plan_desc", {
+            user: `<@${this.interaction.user!.id}>`,
+            serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
+            premium: this.client.config.bot.PREMIUM_URL,
+          })}`
         )
         .setColor(this.client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        this.client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        this.client.config.bot.PREMIUM_URL
-      ) {
+      if (this.client.config.MENU_HELP_EMOJI.E_PREMIUM && this.client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              this.client.i18n.get(
-                this.language,
-                "interaction",
-                "no_guild_premium_button"
-              )
-            )
+            .setLabel(this.client.i18n.get(this.language, "interaction", "no_guild_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(this.client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(this.client.config.bot.PREMIUM_URL)
@@ -398,9 +270,7 @@ export class ButtonSkip {
       return await this.interaction.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -408,39 +278,21 @@ export class ButtonSkip {
     if (this.accessableby === "PremiumStore" && !userPerm.PremiumStore) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_premium_author"
-          ),
+          name: this.client.i18n.get(this.language, "interaction", "no_premium_author"),
         })
         .setDescription(
-          `${this.client.i18n.get(
-            this.language,
-            "interaction",
-            "no_premium_desc",
-            {
-              user: `<@${this.interaction.user!.id}>`,
-              serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
-              premium: this.client.config.bot.PREMIUM_URL,
-            }
-          )}`
+          `${this.client.i18n.get(this.language, "interaction", "no_premium_desc", {
+            user: `<@${this.interaction.user!.id}>`,
+            serversupport: this.client.config.bot.SERVER_SUPPORT_URL,
+            premium: this.client.config.bot.PREMIUM_URL,
+          })}`
         )
         .setColor(this.client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        this.client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        this.client.config.bot.PREMIUM_URL
-      ) {
+      if (this.client.config.MENU_HELP_EMOJI.E_PREMIUM && this.client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              this.client.i18n.get(
-                this.language,
-                "interaction",
-                "no_premium_button"
-              )
-            )
+            .setLabel(this.client.i18n.get(this.language, "interaction", "no_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(this.client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(this.client.config.bot.PREMIUM_URL)
@@ -450,9 +302,7 @@ export class ButtonSkip {
       return await this.interaction.reply({
         content: " ",
         embeds: [embed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
         flags: MessageFlags.Ephemeral,
       });
     }
@@ -462,11 +312,7 @@ export class ButtonSkip {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${this.client.i18n.get(
-                this.language,
-                "button.setup.music",
-                "no_in_voice"
-              )}`
+              `${this.client.i18n.get(this.language, "button.setup.music", "no_in_voice")}`
             )
             .setColor(this.client.color_main),
         ],
@@ -481,11 +327,7 @@ export class ButtonSkip {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${this.client.i18n.get(
-                this.language,
-                "button.setup.music",
-                "no_same_voice"
-              )}`
+              `${this.client.i18n.get(this.language, "button.setup.music", "no_same_voice")}`
             )
             .setColor(this.client.color_main),
         ],
@@ -497,11 +339,7 @@ export class ButtonSkip {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${this.client.i18n.get(
-                this.language,
-                "button.setup.music",
-                "no_player"
-              )}`
+              `${this.client.i18n.get(this.language, "button.setup.music", "no_player")}`
             )
             .setColor(this.client.color_main),
         ],
@@ -511,17 +349,10 @@ export class ButtonSkip {
     } else {
     }
 
-    if (
-      this.player.queue.size == 0 &&
-      this.player.data.get("autoplay") !== true
-    ) {
+    if (this.player.queue.size == 0 && this.player.data.get("autoplay") !== true) {
       const embed = new EmbedBuilder()
         .setDescription(
-          `${this.client.i18n.get(
-            this.language,
-            "button.setup.music",
-            "skip_notfound"
-          )}`
+          `${this.client.i18n.get(this.language, "button.setup.music", "skip_notfound")}`
         )
         .setColor(this.client.color_main);
 
@@ -530,13 +361,7 @@ export class ButtonSkip {
       await this.player.skip();
 
       const embed = new EmbedBuilder()
-        .setDescription(
-          `${this.client.i18n.get(
-            this.language,
-            "button.setup.music",
-            "skip_msg"
-          )}`
-        )
+        .setDescription(`${this.client.i18n.get(this.language, "button.setup.music", "skip_msg")}`)
         .setColor(this.client.color_main);
 
       this.interaction.reply({ embeds: [embed], ephemeral: true });

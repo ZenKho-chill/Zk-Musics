@@ -9,9 +9,7 @@ export function TrackTitle(client: Manager, track: ZklinkTrack) {
   );
 
   const title =
-    sanitizedTitle.length > 35
-      ? sanitizedTitle.substring(0, 35) + "..."
-      : sanitizedTitle;
+    sanitizedTitle.length > 35 ? sanitizedTitle.substring(0, 35) + "..." : sanitizedTitle;
 
   const author = track.author;
   const supportUrl = client.config.bot.SERVER_SUPPORT_URL;

@@ -46,14 +46,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "maintenance_arg_error",
-                {
-                  text: "**true** hoặc **false**",
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "maintenance_arg_error", {
+                text: "**true** hoặc **false**",
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -67,14 +62,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.admin",
-                "maintenance_true",
-                {
-                  type: String(type),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.admin", "maintenance_true", {
+                type: String(type),
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -84,14 +74,9 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.admin",
-            "maintenance_false",
-            {
-              type: String(type),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.admin", "maintenance_false", {
+            type: String(type),
+          })}`
         )
         .setColor(client.color_main);
       return handler.editReply({ embeds: [embed] });

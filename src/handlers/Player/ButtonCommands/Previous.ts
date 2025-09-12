@@ -8,7 +8,7 @@ import {
   ButtonStyle,
   ActionRowBuilder,
   ButtonBuilder,
-  MessageFlags
+  MessageFlags,
 } from "discord.js";
 import { TopggServiceEnum } from "../../../services/TopggService.js";
 import axios from "axios";
@@ -50,7 +50,7 @@ export class ButtonPrevious {
         PremiumStore = true;
       }
     });
-  /////////////////////////////// Kiểm tra vai trò Premium (bắt đầu) ////////////////////////////////
+    /////////////////////////////// Kiểm tra vai trò Premium (bắt đầu) ////////////////////////////////
     const PremiumGuildID = this.client.config.PremiumRole.GuildID;
     const PremiumRoleID = this.client.config.PremiumRole.RoleID;
     const supportGuild = await this.client.guilds.fetch(PremiumGuildID).catch(() => null);
@@ -58,7 +58,7 @@ export class ButtonPrevious {
       ? await supportGuild.members.fetch(String(this.interaction.user?.id)).catch(() => null)
       : null;
     const isPremiumRole = supportMember ? supportMember.roles.cache.has(PremiumRoleID) : false;
-  /////////////////////////////// Kiểm tra vai trò Premium (kết thúc) ////////////////////////////////
+    /////////////////////////////// Kiểm tra vai trò Premium (kết thúc) ////////////////////////////////
     const User = await this.client.db.premium.get(this.interaction.user.id);
     const Guild = await this.client.db.preGuild.get(String(this.interaction.guild?.id));
     const isPremiumUser = User && User.isPremium;

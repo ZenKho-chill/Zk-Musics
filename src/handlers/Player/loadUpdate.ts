@@ -1,11 +1,5 @@
 import { Manager } from "../../manager.js";
-import {
-  EmbedBuilder,
-  TextChannel,
-  AttachmentBuilder,
-  User,
-  MessageFlags,
-} from "discord.js";
+import { EmbedBuilder, TextChannel, AttachmentBuilder, User, MessageFlags } from "discord.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
 import { ZklinkPlayer } from "../../Zklink/Player/ZklinkPlayer.js";
 import { ZklinkTrack } from "../../Zklink/Player/ZklinkTrack.js";
@@ -30,17 +24,12 @@ export class PlayerUpdateLoader {
         .catch(() => undefined)) as TextChannel;
       if (!channel) return;
 
-      let playMsg = await channel.messages
-        .fetch(data.playmsg)
-        .catch(() => undefined);
+      let playMsg = await channel.messages.fetch(data.playmsg).catch(() => undefined);
       if (!playMsg) return;
 
       let guildModel = await client.db.language.get(`${player.guildId}`);
       if (!guildModel) {
-        guildModel = await client.db.language.set(
-          `${player.guildId}`,
-          client.config.bot.LANGUAGE
-        );
+        guildModel = await client.db.language.set(`${player.guildId}`, client.config.bot.LANGUAGE);
       }
 
       const language = guildModel;
@@ -95,8 +84,7 @@ export class PlayerUpdateLoader {
         // Sau khi xác định kích thước canvas
         const canvasWidth = 800;
         const songHeight = 60; // Chiều cao cho mỗi bài hát
-        const canvasHeight =
-          Math.min(player.queue.length, 10) * songHeight + 70; // Thiết lập chiều cao canvas dựa trên số lượng bài (thêm bù)
+        const canvasHeight = Math.min(player.queue.length, 10) * songHeight + 70; // Thiết lập chiều cao canvas dựa trên số lượng bài (thêm bù)
 
         // Tạo một canvas
         const canvas = createCanvas(canvasWidth, canvasHeight);
@@ -107,10 +95,7 @@ export class PlayerUpdateLoader {
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
         // Tải font nếu cần
-        GlobalFonts.registerFromPath(
-          "./scripts/Courage-Road.ttf",
-          "Courage Road"
-        );
+        GlobalFonts.registerFromPath("./scripts/Courage-Road.ttf", "Courage Road");
         ctx.font = "16px Courage Road"; // Font size and style
 
         // Văn bản tiêu đề
@@ -129,8 +114,7 @@ export class PlayerUpdateLoader {
           const song = player.queue[i];
 
           // Tải ảnh thu nhỏ từ URL của bài
-          const thumbnailUrl =
-            song.artworkUrl || client.user?.displayAvatarURL(); // Use default if no thumbnail
+          const thumbnailUrl = song.artworkUrl || client.user?.displayAvatarURL(); // Use default if no thumbnail
           const thumbnailImage = await loadImage(thumbnailUrl);
 
           // Vẽ ảnh thu nhỏ với góc bo tròn
@@ -172,11 +156,7 @@ export class PlayerUpdateLoader {
           // Thời lượng bài
           ctx.fillStyle = "#b4b4b4"; // Color for duration
           ctx.font = "10px Courage Road"; // Smaller size for duration
-          ctx.fillText(
-            new FormatDuration().parse(song.duration),
-            700,
-            yOffset + 18
-          ); // Align with author
+          ctx.fillText(new FormatDuration().parse(song.duration), 700, yOffset + 18); // Align with author
 
           // Cập nhật yOffset cho bài tiếp theo
           yOffset += 60;
@@ -198,10 +178,7 @@ export class PlayerUpdateLoader {
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
         // Tải font nếu cần
-        GlobalFonts.registerFromPath(
-          "./scripts/Courage-Road.ttf",
-          "Courage Road"
-        );
+        GlobalFonts.registerFromPath("./scripts/Courage-Road.ttf", "Courage Road");
         ctx.font = "20px Courage Road"; // Font size and style for "NO QUEUE"
 
         // Vẽ văn bản "KHÔNG CÓ HÀNG CHỜ"
@@ -218,42 +195,27 @@ export class PlayerUpdateLoader {
 
       let embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(
-            language,
-            "button.setup.music",
-            "player_setup_author"
-          ),
-          iconURL: client.i18n.get(
-            language,
-            "button.setup.music",
-            "player_setup_icon_author"
-          ),
+          name: client.i18n.get(language, "button.setup.music", "player_setup_author"),
+          iconURL: client.i18n.get(language, "button.setup.music", "player_setup_icon_author"),
         })
         .setDescription(`**${TrackTitle(client, cSong!)}**`)
         .setThumbnail(
           source === "soundcloud"
             ? (client.user?.displayAvatarURL() as string)
-            : cSong.artworkUrl ??
-                `https://img.youtube.com/vi/${cSong.identifier}/hqdefault.jpg`
+            : (cSong.artworkUrl ?? `https://img.youtube.com/vi/${cSong.identifier}/hqdefault.jpg`)
         )
         .setColor(client.color_second)
         .setImage("attachment://queue.png")
         .setFooter({
-          text: `${client.i18n.get(
-            language,
-            "button.setup.music",
-            "setup_footer",
-            {
-              duration: qDuration,
-              totalsong: player.queue.length.toString(),
-              autoplay: player!.data.get("autoplay") ? "On" : "Off",
-              queue: `${player.queue.length}`,
-              volume: `${player.volume}%`,
-              requester:
-                (cSong?.requester as User)?.displayName ||
-                (cSong?.requester as User)?.username,
-            }
-          )}`,
+          text: `${client.i18n.get(language, "button.setup.music", "setup_footer", {
+            duration: qDuration,
+            totalsong: player.queue.length.toString(),
+            autoplay: player!.data.get("autoplay") ? "On" : "Off",
+            queue: `${player.queue.length}`,
+            volume: `${player.volume}%`,
+            requester:
+              (cSong?.requester as User)?.displayName || (cSong?.requester as User)?.username,
+          })}`,
         })
         .setTimestamp()
         .addFields(
@@ -267,9 +229,7 @@ export class PlayerUpdateLoader {
           {
             name: `${client.config.TRACKS_EMOJI.Volume} **${player.volume}%**`,
             value: `**${
-              player!.data.get("autoplay")
-                ? `${client.config.TRACKS_EMOJI.Autoplay} AutoPlay`
-                : src
+              player!.data.get("autoplay") ? `${client.config.TRACKS_EMOJI.Autoplay} AutoPlay` : src
             }**`,
             inline: true,
           }
@@ -285,9 +245,7 @@ export class PlayerUpdateLoader {
         .catch((error) => {
           client.logger.info(
             "loadUpdate",
-            `Lỗi khi chỉnh sửa tin nhắn tại @ ${playMsg.guild!.name} / ${
-              playMsg.guildId
-            }`
+            `Lỗi khi chỉnh sửa tin nhắn tại @ ${playMsg.guild!.name} / ${playMsg.guildId}`
           );
         });
     };
@@ -306,35 +264,22 @@ export class PlayerUpdateLoader {
         .catch(() => undefined)) as TextChannel;
       if (!channel) return;
 
-      let playMsg = await channel.messages
-        .fetch(data.playmsg)
-        .catch(() => undefined);
+      let playMsg = await channel.messages.fetch(data.playmsg).catch(() => undefined);
       if (!playMsg) return;
 
       let guildModel = await client.db.language.get(`${player.guildId}`);
       if (!guildModel) {
-        guildModel = await client.db.language.set(
-          `${player.guildId}`,
-          client.config.bot.LANGUAGE
-        );
+        guildModel = await client.db.language.set(`${player.guildId}`, client.config.bot.LANGUAGE);
       }
 
       const language = guildModel;
 
-      const queueMsg = `${client.i18n.get(
-        language,
-        "button.setup.music",
-        "setup_queuemsg"
-      )}`;
+      const queueMsg = `${client.i18n.get(language, "button.setup.music", "setup_queuemsg")}`;
 
       const playEmbed = new EmbedBuilder()
         .setColor(client.color_second)
         .setAuthor({
-          name: `${client.i18n.get(
-            language,
-            "button.setup.music",
-            "setup_playembed_author"
-          )}`,
+          name: `${client.i18n.get(language, "button.setup.music", "setup_playembed_author")}`,
         })
         .setImage(client.config.bot.IMAGES_URL_REQUEST_MUSIC);
 
@@ -348,9 +293,7 @@ export class PlayerUpdateLoader {
         .catch((error) => {
           client.logger.info(
             "LoadUpdate",
-            `Không thể chỉnh sửa tin nhắn tại @ ${playMsg.guild!.name} / ${
-              playMsg.guildId
-            }`
+            `Không thể chỉnh sửa tin nhắn tại @ ${playMsg.guild!.name} / ${playMsg.guildId}`
           );
         });
     };

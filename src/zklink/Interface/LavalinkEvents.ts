@@ -22,12 +22,7 @@ export enum LavalinkPlayerEventsEnum {
 /**
  * Nguyên nhân kết thúc bài
  */
-export type TrackEndReason =
-  | "finished"
-  | "loadFailed"
-  | "stopped"
-  | "replaced"
-  | "cleanup";
+export type TrackEndReason = "finished" | "loadFailed" | "stopped" | "replaced" | "cleanup";
 
 /**
  * Giao diện Exception

@@ -1,9 +1,7 @@
 import { Manager } from "../manager.js";
 import axios from "axios";
 
-export async function SpotifygetAccessToken(
-  client: Manager
-): Promise<string | null> {
+export async function SpotifygetAccessToken(client: Manager): Promise<string | null> {
   const CLIENT_ID = client.config.lavalink.SPOTIFY.id;
   const CLIENT_SECRET = client.config.lavalink.SPOTIFY.secret;
 
@@ -15,9 +13,7 @@ export async function SpotifygetAccessToken(
       }),
       {
         headers: {
-          Authorization: `Basic ${Buffer.from(
-            `${CLIENT_ID}:${CLIENT_SECRET}`
-          ).toString("base64")}`,
+          Authorization: `Basic ${Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64")}`,
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }
@@ -25,10 +21,7 @@ export async function SpotifygetAccessToken(
 
     return response.data.access_token;
   } catch (error) {
-    client.logger.warn(
-      SpotifygetAccessToken.name,
-      `Lỗi khi lấy access token từ Spotify: ${error}`
-    );
+    client.logger.warn(SpotifygetAccessToken.name, `Lỗi khi lấy access token từ Spotify: ${error}`);
     return null;
   }
 }

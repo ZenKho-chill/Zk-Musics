@@ -46,29 +46,17 @@ export default class implements Command {
         .setColor(client.color_main);
 
       let command = client.commands.get(
-        client.aliases.get(handler.args[0].toLowerCase()) ||
-          handler.args[0].toLowerCase()
+        client.aliases.get(handler.args[0].toLowerCase()) || handler.args[0].toLowerCase()
       );
       if (!command)
         return handler.editReply({
           embeds: [
             embed
-              .setTitle(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.info",
-                  "finder_invalid"
-                )}`
-              )
+              .setTitle(`${client.i18n.get(handler.language, "commands.info", "finder_invalid")}`)
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.info",
-                  "finder_example",
-                  {
-                    command: `${handler.prefix}${this.name[0]}`,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.info", "finder_example", {
+                  command: `${handler.prefix}${this.name[0]}`,
+                })}`
               ),
           ],
         });
@@ -79,23 +67,21 @@ export default class implements Command {
         ${eString.name} \`${command.name.join("-")}\`
         ${eString.des} \`${command.description || eString.desNone}\`
         ${eString.usage} ${
-        command.usage
-          ? `\`${handler.prefix}${
-              handler.interaction
-                ? command.name.join(" ")
-                : command.name.join("-")
-            } ${command.usage}\``
-          : `\`${eString.usageNone}\``
-      }
+          command.usage
+            ? `\`${handler.prefix}${
+                handler.interaction ? command.name.join(" ") : command.name.join("-")
+              } ${command.usage}\``
+            : `\`${eString.usageNone}\``
+        }
         ${eString.access} \`${command.accessableby}\`
         ${eString.aliases} \`${
-        command.aliases && command.aliases.length !== 0
-          ? command.aliases.join(", ") + eString.aliasesPrefix
-          : eString.aliasesNone
-      }\`
+          command.aliases && command.aliases.length !== 0
+            ? command.aliases.join(", ") + eString.aliasesPrefix
+            : eString.aliasesNone
+        }\`
         ${eString.slash} \`${
-        command.usingInteraction ? eString.slashEnable : eString.slashDisable
-      }\`
+          command.usingInteraction ? eString.slashEnable : eString.slashDisable
+        }\`
         `);
 
       return handler.editReply({ embeds: [embed] });
@@ -109,13 +95,7 @@ export default class implements Command {
           client.user!.id
         }&permissions=8&scope=bot`,
       })
-      .setTitle(
-        `${client.i18n.get(
-          handler.language,
-          "commands.info",
-          "homepage_title"
-        )}`
-      )
+      .setTitle(`${client.i18n.get(handler.language, "commands.info", "homepage_title")}`)
       .setImage(client.config.bot.IMAGES_URL_HELPMENU)
       .setColor(client.color_main)
       .setDescription(
@@ -126,10 +106,7 @@ export default class implements Command {
       );
 
     const ButtonHome = new ActionRowBuilder<ButtonBuilder>();
-    if (
-      client.config.bot.WEBSITE_URL &&
-      client.config.MENU_HELP_EMOJI.E_WEBSITE
-    ) {
+    if (client.config.bot.WEBSITE_URL && client.config.MENU_HELP_EMOJI.E_WEBSITE) {
       ButtonHome.addComponents(
         new ButtonBuilder()
           .setLabel("Trang web")
@@ -138,10 +115,7 @@ export default class implements Command {
           .setURL(client.config.bot.WEBSITE_URL)
       );
     }
-    if (
-      client.config.bot.SERVER_SUPPORT_URL &&
-      client.config.MENU_HELP_EMOJI.E_SUPPORT
-    ) {
+    if (client.config.bot.SERVER_SUPPORT_URL && client.config.MENU_HELP_EMOJI.E_SUPPORT) {
       ButtonHome.addComponents(
         new ButtonBuilder()
           .setLabel("Hỗ trợ")
@@ -150,10 +124,7 @@ export default class implements Command {
           .setURL(client.config.bot.SERVER_SUPPORT_URL)
       );
     }
-    if (
-      client.config.bot.PREMIUM_URL &&
-      client.config.MENU_HELP_EMOJI.E_PREMIUM
-    ) {
+    if (client.config.bot.PREMIUM_URL && client.config.MENU_HELP_EMOJI.E_PREMIUM) {
       ButtonHome.addComponents(
         new ButtonBuilder()
           .setLabel("Nhận Premium")
@@ -163,65 +134,55 @@ export default class implements Command {
       );
     }
 
-    const selectmenu =
-      new ActionRowBuilder<StringSelectMenuBuilder>().addComponents([
-        new StringSelectMenuBuilder()
-          .setCustomId("help-category")
-          .setPlaceholder(
-            `${client.i18n.get(
-              handler.language,
-              "commands.info",
-              "select_menu"
-            )}`
-          )
-          .setMaxValues(1)
-          .setMinValues(1)
-          .setOptions([
-            new StringSelectMenuOptionBuilder()
-              .setLabel("Trang chủ")
-              .setValue("Home")
-              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_HOME, "❓")),
-            new StringSelectMenuOptionBuilder()
-              .setLabel("Thông tin")
-              .setValue("Info")
-              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_INFO, "❓")),
-            new StringSelectMenuOptionBuilder()
-              .setLabel("Nhạc")
-              .setValue("Music")
-              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_MUSIC, "❓")),
-            new StringSelectMenuOptionBuilder()
-              .setLabel("Bộ lọc")
-              .setValue("Filter")
-              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_FILTER, "❓")),
-            new StringSelectMenuOptionBuilder()
-              .setLabel("Danh sách phát")
-              .setValue("Playlist")
-              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PLAYLIST, "❓")),
-            new StringSelectMenuOptionBuilder()
-              .setLabel("Tiện ích")
-              .setValue("Utils")
-              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_UTILS, "❓")),
-            new StringSelectMenuOptionBuilder()
-              .setLabel("Cài đặt")
-              .setValue("Settings")
-              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_SETTING, "❓")),
-            new StringSelectMenuOptionBuilder()
-              .setLabel("Quản trị")
-              .setValue("Admin")
-              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_ADMIN, "❓")),
-            new StringSelectMenuOptionBuilder()
-              .setLabel("Tất cả lệnh")
-              .setValue("All")
-              .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_ALLCMD, "❓")),
-          ]),
-      ]);
+    const selectmenu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents([
+      new StringSelectMenuBuilder()
+        .setCustomId("help-category")
+        .setPlaceholder(`${client.i18n.get(handler.language, "commands.info", "select_menu")}`)
+        .setMaxValues(1)
+        .setMinValues(1)
+        .setOptions([
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Trang chủ")
+            .setValue("Home")
+            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_HOME, "❓")),
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Thông tin")
+            .setValue("Info")
+            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_INFO, "❓")),
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Nhạc")
+            .setValue("Music")
+            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_MUSIC, "❓")),
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Bộ lọc")
+            .setValue("Filter")
+            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_FILTER, "❓")),
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Danh sách phát")
+            .setValue("Playlist")
+            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_PLAYLIST, "❓")),
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Tiện ích")
+            .setValue("Utils")
+            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_UTILS, "❓")),
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Cài đặt")
+            .setValue("Settings")
+            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_SETTING, "❓")),
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Quản trị")
+            .setValue("Admin")
+            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_ADMIN, "❓")),
+          new StringSelectMenuOptionBuilder()
+            .setLabel("Tất cả lệnh")
+            .setValue("All")
+            .setEmoji(EmojiValidator.safeEmoji(client.config.MENU_HELP_EMOJI.E_ALLCMD, "❓")),
+        ]),
+    ]);
     await handler
       .editReply({
         embeds: [EmbedHome],
-        components: [
-          selectmenu,
-          ...(ButtonHome.components.length ? [ButtonHome] : []),
-        ],
+        components: [selectmenu, ...(ButtonHome.components.length ? [ButtonHome] : [])],
       })
       .then(async (msg) => {
         if (msg) {
@@ -232,8 +193,7 @@ export default class implements Command {
                   i.user &&
                   i.message.author.id == client.user!.id &&
                   (i.user.id == handler.interaction?.user.id ||
-                    (handler.message &&
-                      i.user.id == handler.message.author.id))) ||
+                    (handler.message && i.user.id == handler.message.author.id))) ||
                 false
               );
             },
@@ -267,11 +227,7 @@ export default class implements Command {
                       }&permissions=8&scope=bot`,
                     })
                     .setTitle(
-                      `${client.i18n.get(
-                        handler.language,
-                        "commands.info",
-                        "homepage_title"
-                      )}`
+                      `${client.i18n.get(handler.language, "commands.info", "homepage_title")}`
                     )
                     .setImage(client.config.bot.IMAGES_URL_COMMAND)
                     .setDescription(`Tiền tố bot: \`${client.prefix} hoặc /\``)
@@ -284,9 +240,7 @@ export default class implements Command {
                       )} | Total Commands: ${client.commands.size}`,
                     });
 
-                  for (const [category, commands] of Object.entries(
-                    categoriesAndCommands
-                  )) {
+                  for (const [category, commands] of Object.entries(categoriesAndCommands)) {
                     const commandList = commands
                       .map((c) => `\`${c.split(",").join("-")}\``)
                       .join(", ");
@@ -303,15 +257,10 @@ export default class implements Command {
                 } else if (directory === "Home") {
                   msg.edit({
                     embeds: [EmbedHome],
-                    components: [
-                      selectmenu,
-                      ...(ButtonHome.components.length ? [ButtonHome] : []),
-                    ],
+                    components: [selectmenu, ...(ButtonHome.components.length ? [ButtonHome] : [])],
                   });
                 } else {
-                  const filteredCommands = client.commands.filter(
-                    (c) => c.category === directory
-                  );
+                  const filteredCommands = client.commands.filter((c) => c.category === directory);
                   const EmbedSingleCommands = new EmbedBuilder()
                     .setAuthor({
                       name: `${client.user!.username} — Menu Trợ giúp ♪`,
@@ -375,10 +324,7 @@ export default class implements Command {
                 await handler.editReply({
                   content: timedMessage,
                   embeds: [EmbedHome],
-                  components: [
-                    selectmenu,
-                    ...(ButtonHome.components.length ? [ButtonHome] : []),
-                  ],
+                  components: [selectmenu, ...(ButtonHome.components.length ? [ButtonHome] : [])],
                 });
               }
             } catch (error) {
@@ -395,66 +341,22 @@ export default class implements Command {
 
   private transalatedFinder(client: Manager, handler: CommandHandler) {
     return {
-      name: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_name"
-      )}`,
-      des: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_des"
-      )}`,
-      usage: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_usage"
-      )}`,
-      access: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_access"
-      )}`,
-      aliases: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_aliases"
-      )}`,
-      slash: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_slash"
-      )}`,
-      desNone: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_des_no"
-      )}`,
-      usageNone: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_usage_no"
-      )}`,
+      name: `${client.i18n.get(handler.language, "commands.info", "finder_name")}`,
+      des: `${client.i18n.get(handler.language, "commands.info", "finder_des")}`,
+      usage: `${client.i18n.get(handler.language, "commands.info", "finder_usage")}`,
+      access: `${client.i18n.get(handler.language, "commands.info", "finder_access")}`,
+      aliases: `${client.i18n.get(handler.language, "commands.info", "finder_aliases")}`,
+      slash: `${client.i18n.get(handler.language, "commands.info", "finder_slash")}`,
+      desNone: `${client.i18n.get(handler.language, "commands.info", "finder_des_no")}`,
+      usageNone: `${client.i18n.get(handler.language, "commands.info", "finder_usage_no")}`,
       aliasesPrefix: `${client.i18n.get(
         handler.language,
         "commands.info",
         "finder_aliases_prefix"
       )}`,
-      aliasesNone: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_aliases_no"
-      )}`,
-      slashEnable: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_slash_enable"
-      )}`,
-      slashDisable: `${client.i18n.get(
-        handler.language,
-        "commands.info",
-        "finder_slash_disable"
-      )}`,
+      aliasesNone: `${client.i18n.get(handler.language, "commands.info", "finder_aliases_no")}`,
+      slashEnable: `${client.i18n.get(handler.language, "commands.info", "finder_slash_enable")}`,
+      slashDisable: `${client.i18n.get(handler.language, "commands.info", "finder_slash_disable")}`,
     };
   }
 }

@@ -21,9 +21,7 @@ export class RestAPI {
             reply.send(JSON.stringify({ error: "Thiếu Authorization" }));
             return done();
           }
-          if (
-            req.headers["authorization"] !== client.config.features.RestAPI.auth
-          ) {
+          if (req.headers["authorization"] !== client.config.features.RestAPI.auth) {
             reply.code(401);
             reply.send(JSON.stringify({ error: "Authorization không hợp lệ" }));
             return done();
@@ -33,9 +31,7 @@ export class RestAPI {
             !client.config.features.RestAPI.whitelist.includes(req.hostname)
           ) {
             reply.code(401);
-            reply.send(
-              JSON.stringify({ error: "Bạn không có trong whitelist" })
-            );
+            reply.send(JSON.stringify({ error: "Bạn không có trong whitelist" }));
             return done();
           }
           done();
@@ -71,10 +67,7 @@ export class RestAPI {
         "Ở đây không có Zk Music's, nhưng bạn vẫn có thể mỉm cười 😊",
         "Đừng lo, Zk Music's không phải là tất cả đâu 😎",
       ];
-      client.logger.info(
-        "HealthRouterService",
-        `${request.method} ${request.routeOptions.url}`
-      );
+      client.logger.info("HealthRouterService", `${request.method} ${request.routeOptions.url}`);
       reply.send({ zk: response[Math.floor(Math.random() * response.length)] });
     });
 
@@ -82,22 +75,14 @@ export class RestAPI {
 
     this.app
       .listen({ port, host: "0.0.0.0" })
-      .then(() =>
-        this.client.logger.info(RestAPI.name, `Server đang chạy ở cổng ${port}`)
-      )
+      .then(() => this.client.logger.info(RestAPI.name, `Server đang chạy ở cổng ${port}`))
       .catch((err) => {
         if (this.client.config.bot.TOKEN.length > 1) {
-          this.client.config.features.RestAPI.port =
-            this.client.config.features.RestAPI.port + 1;
+          this.client.config.features.RestAPI.port = this.client.config.features.RestAPI.port + 1;
           const newPort = this.client.config.features.RestAPI.port;
           return this.app
             .listen({ port: newPort, host: "0.0.0.0" })
-            .then(() =>
-              this.client.logger.info(
-                RestAPI.name,
-                `Server đang chạy ở cổng ${newPort}`
-              )
-            )
+            .then(() => this.client.logger.info(RestAPI.name, `Server đang chạy ở cổng ${newPort}`))
             .catch((err) => this.client.logger.error(RestAPI.name, err));
         } else {
           this.client.logger.error(RestAPI.name, err);

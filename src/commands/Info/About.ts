@@ -1,10 +1,5 @@
 import { Manager } from "../../manager.js";
-import {
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-} from "discord.js";
+import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import { stripIndents } from "common-tags";
 import { Command, Accessableby } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
@@ -92,10 +87,7 @@ export default class implements Command {
       );
     }
 
-    if (
-      client.config.bot.SERVER_SUPPORT_URL &&
-      client.config.MENU_HELP_EMOJI.E_SUPPORT
-    ) {
+    if (client.config.bot.SERVER_SUPPORT_URL && client.config.MENU_HELP_EMOJI.E_SUPPORT) {
       AboutButton.addComponents(
         new ButtonBuilder()
           .setLabel("Hỗ trợ máy chủ")

@@ -15,12 +15,7 @@ export class Page {
   timeout: number;
   language: string;
 
-  constructor(
-    client: Manager,
-    pages: EmbedBuilder[],
-    timeout: number,
-    language: string
-  ) {
+  constructor(client: Manager, pages: EmbedBuilder[], timeout: number, language: string) {
     this.client = client;
     this.pages = pages;
     this.timeout = timeout;
@@ -102,8 +97,7 @@ export class Page {
   }
 
   async prefixPage(message: Message) {
-    if (!message && !(message as Message).channel)
-      throw new Error("Kênh không thể truy cập.");
+    if (!message && !(message as Message).channel) throw new Error("Kênh không thể truy cập.");
     if (!this.pages) throw new Error("Chưa cung cấp trang.");
 
     const row1 = new ButtonBuilder()
@@ -130,9 +124,7 @@ export class Page {
 
     const collector = curPage.createMessageComponentCollector({
       filter: (interaction) =>
-        interaction.user.id === message.author.id
-          ? true
-          : false && interaction.deferUpdate(),
+        interaction.user.id === message.author.id ? true : false && interaction.deferUpdate(),
       time: this.timeout,
     });
 

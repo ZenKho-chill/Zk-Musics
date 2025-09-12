@@ -12,10 +12,7 @@ import {
 } from "../Interface/Constants.js";
 import { ZklinkTrack } from "./ZklinkTrack.js";
 import { UpdatePlayerInfo, UpdatePlayerOptions } from "../Interface/Rest.js";
-import {
-  ZklinkSearchOptions,
-  ZklinkSearchResult,
-} from "../Interface/Manager.js";
+import { ZklinkSearchOptions, ZklinkSearchResult } from "../Interface/Manager.js";
 import { ZklinkPlugin } from "../Plugin/VoiceReceiver/Plugin.js";
 import { ServerUpdate, StateUpdatePartial } from "../Interface/Connection.js";
 import { EventEmitter } from "node:events";
@@ -129,11 +126,7 @@ export class ZklinkPlayer extends EventEmitter {
    * @param voiceOptions Tùy chọn voice (theo interface VoiceChannelOptions)
    * @param node Node hiện đang sử dụng
    */
-  constructor(
-    manager: Zklink,
-    voiceOptions: VoiceChannelOptions,
-    node: ZklinkNode
-  ) {
+  constructor(manager: Zklink, voiceOptions: VoiceChannelOptions, node: ZklinkNode) {
     super();
     this.manager = manager;
     this.guildId = voiceOptions.guildId;
@@ -206,9 +199,7 @@ export class ZklinkPlayer extends EventEmitter {
     this.sudoDestroy = true;
     this.clear(false);
     this.disconnect();
-    const voiceReceiver = this.manager.plugins.get(
-      "Zklink-voiceReceiver"
-    ) as ZklinkPlugin;
+    const voiceReceiver = this.manager.plugins.get("Zklink-voiceReceiver") as ZklinkPlugin;
     if (voiceReceiver && this.node.driver.id.includes("nodelink"))
       voiceReceiver.close(this.guildId);
     this.node.rest.updatePlayer({
@@ -236,24 +227,18 @@ export class ZklinkPlayer extends EventEmitter {
    * @param options Tùy chọn phát
    * @returns ZklinkPlayer
    */
-  public async play(
-    track?: ZklinkTrack,
-    options?: PlayOptions
-  ): Promise<ZklinkPlayer> {
+  public async play(track?: ZklinkTrack, options?: PlayOptions): Promise<ZklinkPlayer> {
     this.checkDestroyed();
 
-    if (track && !(track instanceof ZklinkTrack))
-      throw new Error("track phải là một ZklinkTrack");
+    if (track && !(track instanceof ZklinkTrack)) throw new Error("track phải là một ZklinkTrack");
 
-    if (!track && !this.queue.totalSize)
-      throw new Error("Không có track nào để phát");
+    if (!track && !this.queue.totalSize) throw new Error("Không có track nào để phát");
 
     if (!options || typeof options.replaceCurrent !== "boolean")
       options = { ...options, replaceCurrent: false };
 
     if (track) {
-      if (!options.replaceCurrent && this.queue.current)
-        this.queue.unshift(this.queue.current);
+      if (!options.replaceCurrent && this.queue.current) this.queue.unshift(this.queue.current);
       this.queue.current = track;
     } else if (!this.queue.current) this.queue.current = this.queue.shift();
 
@@ -272,18 +257,11 @@ export class ZklinkPlayer extends EventEmitter {
 
     if (!resolveResult || (resolveResult && !resolveResult.isPlayable)) {
       // @ts-ignore
-      this.manager.emit(
-        ZklinkEvents.TrackResolveError,
-        this,
-        current,
-        errorMessage
-      );
+      this.manager.emit(ZklinkEvents.TrackResolveError, this, current, errorMessage);
       this.debug(`Player ${this.guildId} lỗi khi resolve: ${errorMessage}`);
       this.queue.current = null;
       // @ts-ignore
-      this.queue.size
-        ? await this.play()
-        : this.manager.emit(ZklinkEvents.QueueEmpty, this);
+      this.queue.size ? await this.play() : this.manager.emit(ZklinkEvents.QueueEmpty, this);
       return this;
     }
 
@@ -331,10 +309,7 @@ export class ZklinkPlayer extends EventEmitter {
    * @param options Tùy chọn tìm kiếm
    * @returns ZklinkSearchResult
    */
-  public async search(
-    query: string,
-    options?: ZklinkSearchOptions
-  ): Promise<ZklinkSearchResult> {
+  public async search(query: string, options?: ZklinkSearchOptions): Promise<ZklinkSearchResult> {
     this.checkDestroyed();
     return await this.manager.search(query, options);
   }
@@ -452,8 +427,7 @@ export class ZklinkPlayer extends EventEmitter {
    */
   public async seek(position: number): Promise<ZklinkPlayer> {
     this.checkDestroyed();
-    if (!this.queue.current)
-      throw new Error("Player không có track hiện tại trong hàng đợi");
+    if (!this.queue.current) throw new Error("Player không có track hiện tại trong hàng đợi");
     if (!this.queue.current.isSeekable)
       throw new Error("Track hiện tại không thể tua (not seekable)");
 
@@ -461,10 +435,7 @@ export class ZklinkPlayer extends EventEmitter {
 
     if (isNaN(position)) throw new Error("position phải là một số");
     if (position < 0 || position > (this.queue.current.duration ?? 0))
-      position = Math.max(
-        Math.min(position, this.queue.current.duration ?? 0),
-        0
-      );
+      position = Math.max(Math.min(position, this.queue.current.duration ?? 0), 0);
 
     await this.node.rest.updatePlayer({
       guildId: this.guildId,
@@ -595,8 +566,7 @@ export class ZklinkPlayer extends EventEmitter {
    * @returns ZklinkPlayer
    */
   public async connect(): Promise<ZklinkPlayer> {
-    if (this.state === ZklinkPlayerState.CONNECTED || !this.voiceId)
-      return this;
+    if (this.state === ZklinkPlayerState.CONNECTED || !this.voiceId) return this;
     if (
       this.voiceState === VoiceConnectState.CONNECTING ||
       this.voiceState === VoiceConnectState.CONNECTED
@@ -618,13 +588,9 @@ export class ZklinkPlayer extends EventEmitter {
       if (status !== VoiceState.SESSION_READY) {
         switch (status) {
           case VoiceState.SESSION_ID_MISSING:
-            throw new Error(
-              "Kết nối voice không thành công do thiếu session id"
-            );
+            throw new Error("Kết nối voice không thành công do thiếu session id");
           case VoiceState.SESSION_ENDPOINT_MISSING:
-            throw new Error(
-              "Kết nối voice không thành công do thiếu endpoint kết nối"
-            );
+            throw new Error("Kết nối voice không thành công do thiếu endpoint kết nối");
         }
       }
       this.voiceState = VoiceConnectState.CONNECTED;
@@ -666,9 +632,7 @@ export class ZklinkPlayer extends EventEmitter {
     this.disconnect();
     this.voiceId = voiceId;
     this.connect();
-    this.debugDiscord(
-      `Player ${this.guildId} đã chuyển tới voice channel ${voiceId}`
-    );
+    this.debugDiscord(`Player ${this.guildId} đã chuyển tới voice channel ${voiceId}`);
     return this;
   }
 
@@ -677,13 +641,10 @@ export class ZklinkPlayer extends EventEmitter {
    * @param filter Tên filter
    * @returns ZklinkPlayer
    */
-  public async setFilter(
-    filter: keyof typeof ZklinkFilterData
-  ): Promise<ZklinkPlayer> {
+  public async setFilter(filter: keyof typeof ZklinkFilterData): Promise<ZklinkPlayer> {
     this.checkDestroyed();
 
-    const filterData =
-      ZklinkFilterData[filter as keyof typeof ZklinkFilterData];
+    const filterData = ZklinkFilterData[filter as keyof typeof ZklinkFilterData];
 
     if (!filterData) throw new Error("Không tìm thấy filter");
 
@@ -710,10 +671,7 @@ export class ZklinkPlayer extends EventEmitter {
 
   protected debug(logs: string): void {
     // @ts-ignore
-    this.manager.emit(
-      ZklinkEvents.Debug,
-      `[Zklink] / [Người phát @ ${this.guildId}] | ${logs}`
-    );
+    this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Người phát @ ${this.guildId}] | ${logs}`);
   }
 
   protected debugDiscord(logs: string): void {
@@ -725,8 +683,7 @@ export class ZklinkPlayer extends EventEmitter {
   }
 
   protected checkDestroyed(): void {
-    if (this.state === ZklinkPlayerState.DESTROYED)
-      throw new Error("Player đã bị huỷ");
+    if (this.state === ZklinkPlayerState.DESTROYED) throw new Error("Player đã bị huỷ");
   }
 
   /**
@@ -768,8 +725,7 @@ export class ZklinkPlayer extends EventEmitter {
     }
 
     this.lastRegion = this.region?.repeat(1) || null;
-    this.region =
-      data.endpoint.split(".").shift()?.replace(/[0-9]/g, "") || null;
+    this.region = data.endpoint.split(".").shift()?.replace(/[0-9]/g, "") || null;
 
     if (this.region && this.lastRegion !== this.region) {
       this.debugDiscord(
@@ -780,9 +736,7 @@ export class ZklinkPlayer extends EventEmitter {
     this.serverUpdate = data;
     // @ts-ignore
     this.emit("connectionUpdate", VoiceState.SESSION_READY);
-    this.debugDiscord(
-      `Đã nhận Server Update | Server: ${this.region} Guild: ${this.guildId}`
-    );
+    this.debugDiscord(`Đã nhận Server Update | Server: ${this.region} Guild: ${this.guildId}`);
   }
 
   /**
@@ -799,9 +753,7 @@ export class ZklinkPlayer extends EventEmitter {
     this.voiceId = channel_id || null;
 
     if (this.voiceId && this.lastvoiceId !== this.voiceId) {
-      this.debugDiscord(
-        `Channel đã thay đổi | Kênh cũ: ${this.voiceId} Guild: ${this.guildId}`
-      );
+      this.debugDiscord(`Channel đã thay đổi | Kênh cũ: ${this.voiceId} Guild: ${this.guildId}`);
     }
 
     if (!this.voiceId) {

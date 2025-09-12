@@ -11,9 +11,7 @@ export class PostCreatePlayer {
   async main(req: Fastify.FastifyRequest, res: Fastify.FastifyReply) {
     this.client.logger.info(
       PostCreatePlayer.name,
-      `${req.method} ${req.routeOptions.url} dữ_liệu=${
-        req.body ? util.inspect(req.body) : "{}"
-      }`
+      `${req.method} ${req.routeOptions.url} dữ_liệu=${req.body ? util.inspect(req.body) : "{}"}`
     );
     const data = req.body as Record<string, string>;
     const validBody = await this.checker(data, req, res);
@@ -42,21 +40,15 @@ export class PostCreatePlayer {
   ): Promise<boolean> {
     const reqKey = ["guildId", "userId"];
     if (!data) return this.errorRes(req, res, "Thiếu body");
-    if (Object.keys(data).length !== reqKey.length)
-      return this.errorRes(req, res, "Thiếu key");
+    if (Object.keys(data).length !== reqKey.length) return this.errorRes(req, res, "Thiếu key");
     if (!data["guildId"]) return this.errorRes(req, res, "Thiếu key guildId");
     if (!data["userId"]) return this.errorRes(req, res, "Thiếu key userId");
-    const Guild = await this.client.guilds
-      .fetch(data["guildId"])
-      .catch(() => undefined);
+    const Guild = await this.client.guilds.fetch(data["guildId"]).catch(() => undefined);
     if (!Guild) return this.errorRes(req, res, "Không tìm thấy guild");
     const isPlayerExist = this.client.Zklink.players.get(Guild.id);
-    if (isPlayerExist)
-      return this.errorRes(req, res, "Player đã tồn tại trong guild này");
+    if (isPlayerExist) return this.errorRes(req, res, "Player đã tồn tại trong guild này");
     this.guild = Guild;
-    const Member = await Guild.members
-      .fetch(data["userId"])
-      .catch(() => undefined);
+    const Member = await Guild.members.fetch(data["userId"]).catch(() => undefined);
     if (!Member) return this.errorRes(req, res, "Không tìm thấy người dùng");
     if (!Member.voice.channel || !Member.voice)
       return this.errorRes(req, res, "Người dùng chưa vào voice");
@@ -64,11 +56,7 @@ export class PostCreatePlayer {
     return true;
   }
 
-  async errorRes(
-    req: Fastify.FastifyRequest,
-    res: Fastify.FastifyReply,
-    message: string
-  ) {
+  async errorRes(req: Fastify.FastifyRequest, res: Fastify.FastifyReply, message: string) {
     res.code(400);
     res.send({ error: message });
     this.clean();

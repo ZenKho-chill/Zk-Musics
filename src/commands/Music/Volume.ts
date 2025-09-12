@@ -38,30 +38,20 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "volume_number_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "volume_number_invalid")}`
             )
             .setColor(client.color_main),
         ],
       });
 
-    const player = client.Zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
 
     if (!value)
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "volume_number_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "volume_number_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -71,11 +61,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "volume_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "volume_invalid")}`
             )
             .setColor(client.color_main),
         ],

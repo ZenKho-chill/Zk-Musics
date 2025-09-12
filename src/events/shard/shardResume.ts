@@ -3,6 +3,6 @@ import chalk from "chalk";
 
 export default class {
   async execute(client: Manager, id: number) {
-  client.logger.info("ShardResume", chalk.cyanBright(`Shard ${id} đã tiếp tục!`));
+    client.logger.info("ShardResume", chalk.cyanBright(`Shard ${id} đã tiếp tục!`));
   }
 }

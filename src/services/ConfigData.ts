@@ -6,20 +6,12 @@ config();
 
 export class ConfigData {
   get data() {
-    const yaml_files = load(
-      new YAMLConfigParse("./config.yml").execute()
-    ) as Config;
-    const old_data = load(
-      new YAMLConfigParse("./config.yml").execute()
-    ) as Config;
+    const yaml_files = load(new YAMLConfigParse("./config.yml").execute()) as Config;
+    const old_data = load(new YAMLConfigParse("./config.yml").execute()) as Config;
 
     const res = yaml_files;
 
-    if (
-      old_data.features &&
-      old_data.features.DATABASE &&
-      old_data.features.DATABASE.config
-    ) {
+    if (old_data.features && old_data.features.DATABASE && old_data.features.DATABASE.config) {
       res.features.DATABASE.config = old_data.features.DATABASE.config;
     }
 
@@ -77,10 +69,7 @@ export class ConfigData {
 
   // Modded from:
   // https://github.com/shipgirlproject/Shoukaku/blob/2677ecdf123ffef1c254c2113c5342b250ac4396/src/Utils.ts#L9-L23
-  mergeDefault<T extends { [key: string]: any }>(
-    def: T,
-    given: T
-  ): Required<T> {
+  mergeDefault<T extends { [key: string]: any }>(def: T, given: T): Required<T> {
     if (!given) return def as Required<T>;
     const defaultKeys: (keyof T)[] = Object.keys(def);
     for (const key in given) {
@@ -89,21 +78,15 @@ export class ConfigData {
       delete given[key];
     }
     for (const key of defaultKeys) {
-      if (Array.isArray(given[key]) && given[key].length == 0)
-        given[key] = def[key];
-      if (
-        def[key] === null ||
-        (typeof def[key] === "string" && def[key].length === 0)
-      ) {
+      if (Array.isArray(given[key]) && given[key].length == 0) given[key] = def[key];
+      if (def[key] === null || (typeof def[key] === "string" && def[key].length === 0)) {
         if (!given[key]) given[key] = def[key];
       }
-      if (given[key] === null || given[key] === undefined)
-        given[key] = def[key];
+      if (given[key] === null || given[key] === undefined) given[key] = def[key];
       if (typeof given[key] === "object" && given[key] !== null) {
         this.mergeDefault(def[key], given[key]);
       }
-      if (typeof given[key] !== typeof def[key])
-        if (!given[key]) given[key] = def[key];
+      if (typeof given[key] !== typeof def[key]) if (!given[key]) given[key] = def[key];
     }
     return given as Required<T>;
   }

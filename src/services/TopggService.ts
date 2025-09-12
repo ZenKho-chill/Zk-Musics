@@ -30,10 +30,7 @@ export class TopggService {
       );
       return true;
     }
-    this.client.logger.warn(
-      TopggService.name,
-      "Có sự cố khi cài đặt dịch vụ TopGG"
-    );
+    this.client.logger.warn(TopggService.name, "Có sự cố khi cài đặt dịch vụ TopGG");
     this.client.logger.warn(TopggService.name, await res.text());
     return false;
   }
@@ -48,10 +45,7 @@ export class TopggService {
     }
     const res = await this.fetch(`/bots/${this.botId}/check?userId=${userId}`);
     if (res.status !== 200) {
-      this.client.logger.error(
-        TopggService.name,
-        "Có lỗi khi lấy dữ liệu từ top.gg"
-      );
+      this.client.logger.error(TopggService.name, "Có lỗi khi lấy dữ liệu từ top.gg");
       return TopggServiceEnum.ERROR;
     }
     const jsonRes = (await res.json()) as { voted: number };
@@ -62,15 +56,13 @@ export class TopggService {
   private async fetch(path: string) {
     return await fetch(this.url + path, {
       headers: {
-        Authorization:
-          this.client.config.features.WebServer.TOPGG_VOTELOGS.TopGgToken,
+        Authorization: this.client.config.features.WebServer.TOPGG_VOTELOGS.TopGgToken,
       },
     });
   }
 
   public async startInterval() {
-    if (!this.botId || !this.isTokenAvalible)
-      throw new Error("Topgg Statistic chưa cấu hình!");
+    if (!this.botId || !this.isTokenAvalible) throw new Error("Topgg Statistic chưa cấu hình!");
     this.updateStatisticCount(this.client.guilds.cache.size, this.shardCount);
     cron.schedule("0 */1 * * * *", () =>
       this.updateStatisticCount(this.client.guilds.cache.size, this.shardCount)
@@ -82,8 +74,7 @@ export class TopggService {
   }
 
   public async updateStatisticCount(serverCount: number, shardCount: number) {
-    if (!this.botId || !this.isTokenAvalible)
-      throw new Error("Topgg Statistic chưa cấu hình!");
+    if (!this.botId || !this.isTokenAvalible) throw new Error("Topgg Statistic chưa cấu hình!");
     await request(this.url + `/bots/${this.botId}/stats`, {
       method: "POST",
       body: JSON.stringify({
@@ -91,8 +82,7 @@ export class TopggService {
         shard_count: shardCount,
       }),
       headers: {
-        Authorization:
-          this.client.config.features.WebServer.TOPGG_VOTELOGS.TopGgToken,
+        Authorization: this.client.config.features.WebServer.TOPGG_VOTELOGS.TopGgToken,
         "Content-Type": "application/json",
       },
     });

@@ -27,9 +27,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
-    const player = client.Zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
 
     const currentTrack = player.queue.current;
 
@@ -38,14 +36,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "no_songs_playing",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+                user: handler.user!.displayName || handler.user!.tag,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -53,9 +46,7 @@ export default class implements Command {
     }
 
     const song_position = player.position;
-    const CurrentDuration = new FormatDuration().parse(
-      song_position - rewindNum * 1000
-    );
+    const CurrentDuration = new FormatDuration().parse(song_position - rewindNum * 1000);
 
     if (song_position - rewindNum * 1000 > 0) {
       await player.send({
@@ -81,11 +72,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "rewind_beyond"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "rewind_beyond")}`
             )
             .setColor(client.color_main),
         ],

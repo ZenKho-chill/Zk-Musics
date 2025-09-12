@@ -37,9 +37,7 @@ export class PlayerButtonsLoader {
 
   async register(commandFile: string) {
     const rltPath = relative(__dirname, commandFile);
-    const command = new (
-      await import(pathToFileURL(commandFile).toString())
-    ).default();
+    const command = new (await import(pathToFileURL(commandFile).toString())).default();
 
     if (!command.name?.length) {
       this.client.logger.warn(

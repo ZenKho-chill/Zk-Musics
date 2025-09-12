@@ -16,7 +16,10 @@ type InfoDataType = {
 export class LogManager {
   private preLog: winston.Logger;
   private padding = 28;
-  constructor(private client: Manager, private clusterId: number) {
+  constructor(
+    private client: Manager,
+    private clusterId: number
+  ) {
     this.preLog = winston.createLogger({
       levels: {
         error: 0,
@@ -105,8 +108,7 @@ export class LogManager {
 
   private get consoleFormat() {
     const colored = chalk.hex("#86cecb")("|");
-    const timeStamp = (info: InfoDataType) =>
-      chalk.hex("#00ddc0")(info.timestamp);
+    const timeStamp = (info: InfoDataType) => chalk.hex("#00ddc0")(info.timestamp);
     const msg = (info: InfoDataType) => chalk.hex("#86cecb")(info.message);
     const cluster = chalk.hex("#86cecb")(`CỤM_${this.clusterId}`);
     const zk = chalk.hex("#f4e0c7")(`ZK MUSIC'S`);
@@ -125,9 +127,7 @@ export class LogManager {
     return winston.format.combine(
       timestamp(),
       printf((info: InfoDataType) => {
-        return `${info.timestamp} | ${info.level.toUpperCase().padEnd(pad)} | ${
-          info.message
-        }`;
+        return `${info.timestamp} | ${info.level.toUpperCase().padEnd(pad)} | ${info.message}`;
       })
     );
   }
@@ -135,7 +135,7 @@ export class LogManager {
   private async sendDiscord(type: string, message: string, className: string) {
     // Kiểm tra xem logchannel có được cấu hình không
     if (!this.client.config.logchannel) return;
-    
+
     const channelId = this.client.config.logchannel.ErrorChannelID;
     if (!channelId || channelId.length == 0) return;
     try {
@@ -146,9 +146,7 @@ export class LogManager {
       let embed = null;
       if (message.length > 4096) {
         embed = new EmbedBuilder()
-          .setDescription(
-            "Log dài quá để hiển thị! Vui lòng kiểm tra host của bạn!"
-          )
+          .setDescription("Log dài quá để hiển thị! Vui lòng kiểm tra host của bạn!")
           .setTitle(`${type} từ ${className}`)
           .setColor(this.client.color_main);
       } else {

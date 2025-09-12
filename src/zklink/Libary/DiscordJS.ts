@@ -14,9 +14,7 @@ export class DiscordJS extends AbstractLibrary {
 
   // Lấy số shard để làm việc với lavalink
   public getShardCount(): number {
-    return this.client.shard && this.client.shard.count
-      ? this.client.shard.count
-      : 1;
+    return this.client.shard && this.client.shard.count ? this.client.shard.count : 1;
   }
 
   // Listen: gắn listener vào thư viện (client)

@@ -13,9 +13,7 @@ export default class {
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
 
-    const guild = await client.guilds
-      .fetch(player.guildId)
-      .catch(() => undefined);
+    const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
     client.logger.info(
       "PlayerStop",
       `${chalk.hex("#ff7f50")("Player đã dừng tại @ ")}${chalk.hex("#ff7f50")(
@@ -45,10 +43,7 @@ export default class {
 
     let guildModel = await client.db.language.get(`${channel.guild.id}`);
     if (!guildModel) {
-      guildModel = await client.db.language.set(
-        `${channel.guild.id}`,
-        client.config.bot.LANGUAGE
-      );
+      guildModel = await client.db.language.set(`${channel.guild.id}`, client.config.bot.LANGUAGE);
     }
 
     const language = guildModel;
@@ -57,9 +52,7 @@ export default class {
 
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
-      .setDescription(
-        `${client.i18n.get(language, "events.player", "queue_end_desc")}`
-      );
+      .setDescription(`${client.i18n.get(language, "events.player", "queue_end_desc")}`);
 
     if (!isSudoDestroy) {
       const setup = await client.db.setup.get(player.guildId);

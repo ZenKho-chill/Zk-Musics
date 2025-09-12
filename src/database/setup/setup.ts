@@ -27,9 +27,7 @@ export class SongRequesterCleanSetup {
       .catch(() => undefined)) as TextChannel;
     if (!channel) return;
 
-    let playMsg = await channel.messages
-      .fetch(setupData.playmsg)
-      .catch(() => undefined);
+    let playMsg = await channel.messages.fetch(setupData.playmsg).catch(() => undefined);
     if (!playMsg) return;
 
     let guildModel = await this.client.db.language.get(`${setupData.guild}`);
@@ -42,20 +40,12 @@ export class SongRequesterCleanSetup {
 
     const language = guildModel;
 
-    const queueMsg = `${this.client.i18n.get(
-      language,
-      "button.setup.music",
-      "setup_queuemsg"
-    )}`;
+    const queueMsg = `${this.client.i18n.get(language, "button.setup.music", "setup_queuemsg")}`;
 
     const playEmbed = new EmbedBuilder()
       .setColor(this.client.color_main)
       .setAuthor({
-        name: `${this.client.i18n.get(
-          language,
-          "button.setup.music",
-          "setup_playembed_author"
-        )}`,
+        name: `${this.client.i18n.get(language, "button.setup.music", "setup_playembed_author")}`,
       })
       .setImage(this.client.config.bot.IMAGES_URL_REQUEST_MUSIC);
 

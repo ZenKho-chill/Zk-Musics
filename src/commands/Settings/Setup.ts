@@ -1,8 +1,4 @@
-import {
-  EmbedBuilder,
-  ApplicationCommandOptionType,
-  ChannelType,
-} from "discord.js";
+import { EmbedBuilder, ApplicationCommandOptionType, ChannelType } from "discord.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
@@ -51,14 +47,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.settings",
-                "setup_arg_error",
-                {
-                  text: "**create** hoặc **delete**",
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.settings", "setup_arg_error", {
+                text: "**create** hoặc **delete**",
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -74,11 +65,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.settings",
-                  "setup_enable"
-                )}`
+                `${client.i18n.get(handler.language, "commands.settings", "setup_enable")}`
               )
               .setColor(client.color_main),
           ],
@@ -91,11 +78,7 @@ export default class implements Command {
       const textChannel = await handler.guild!.channels.create({
         name: "yeu-cau-bai-hat",
         type: ChannelType.GuildText,
-        topic: `${client.i18n.get(
-          handler.language,
-          "commands.settings",
-          "setup_topic"
-        )}`,
+        topic: `${client.i18n.get(handler.language, "commands.settings", "setup_topic")}`,
         parent: parent.id,
       });
       const queueMsg = `${client.i18n.get(
@@ -141,14 +124,9 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "setup_msg",
-            {
-              channel: String(textChannel),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "setup_msg", {
+            channel: String(textChannel),
+          })}`
         )
         .setColor(client.color_main);
       return handler.editReply({ embeds: [embed] });
@@ -156,54 +134,33 @@ export default class implements Command {
       const SetupChannel = await client.db.setup.get(`${handler.guild!.id}`);
 
       const embed_none = new EmbedBuilder()
-        .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "setup_null"
-          )}`
-        )
+        .setDescription(`${client.i18n.get(handler.language, "commands.settings", "setup_null")}`)
         .setColor(client.color_main);
 
-      if (SetupChannel == null)
-        return handler.editReply({ embeds: [embed_none] });
-      if (SetupChannel.enable == false)
-        return handler.editReply({ embeds: [embed_none] });
+      if (SetupChannel == null) return handler.editReply({ embeds: [embed_none] });
+      if (SetupChannel.enable == false) return handler.editReply({ embeds: [embed_none] });
 
       const fetchedTextChannel = SetupChannel.channel
-        ? await handler
-            .guild!.channels.fetch(SetupChannel.channel)
-            .catch(() => {})
+        ? await handler.guild!.channels.fetch(SetupChannel.channel).catch(() => {})
         : undefined;
       const fetchedVoiceChannel = SetupChannel.voice
-        ? await handler
-            .guild!.channels.fetch(SetupChannel.voice)
-            .catch(() => {})
+        ? await handler.guild!.channels.fetch(SetupChannel.voice).catch(() => {})
         : undefined;
       const fetchedCategory = SetupChannel.category
-        ? await handler
-            .guild!.channels.fetch(SetupChannel.category)
-            .catch(() => {})
+        ? await handler.guild!.channels.fetch(SetupChannel.category).catch(() => {})
         : undefined;
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "setup_deleted",
-            {
-              channel: String(fetchedTextChannel),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "setup_deleted", {
+            channel: String(fetchedTextChannel),
+          })}`
         )
         .setColor(client.color_main);
 
       if (fetchedCategory) await fetchedCategory.delete().catch(() => null);
-      if (fetchedVoiceChannel)
-        await fetchedVoiceChannel.delete().catch(() => null);
-      if (fetchedTextChannel)
-        await fetchedTextChannel.delete().catch(() => null);
+      if (fetchedVoiceChannel) await fetchedVoiceChannel.delete().catch(() => null);
+      if (fetchedTextChannel) await fetchedTextChannel.delete().catch(() => null);
 
       await client.db.setup.delete(`${handler.guild!.id}`);
 
@@ -212,11 +169,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.settings",
-                  "setup_null"
-                )}`
+                `${client.i18n.get(handler.language, "commands.settings", "setup_null")}`
               )
               .setColor(client.color_main),
           ],

@@ -1,26 +1,22 @@
 import { Manager } from "../manager.js";
 import { ZklinkPlayer } from "../Zklink/Player/ZklinkPlayer.js";
 
-export async function UpdateMusicStatusChannel(
-  client: Manager,
-  player: ZklinkPlayer
-) {
+export async function UpdateMusicStatusChannel(client: Manager, player: ZklinkPlayer) {
   const guildId = player.guildId;
   if (!guildId) return;
 
-  const voiceStatus =
-    (await client.db.StatusVoiceChannel.get(guildId)) ?? false;
+  // Đọc config voice status từ file thay vì database
+  const voiceStatus = client.config.features.VOICE_STATUS_CHANNEL ?? true;
 
   if (!voiceStatus) {
     client.logger.info(
       UpdateMusicStatusChannel.name,
-      `Trạng thái voice đã bị tắt cho Guild ${guildId}, bỏ qua cập nhật.`
+      `Trạng thái voice đã bị tắt trong config, bỏ qua cập nhật.`
     );
     return;
   }
 
-  const VoiceChannel =
-    client.guilds.cache.get(guildId)?.members.me?.voice?.channelId;
+  const VoiceChannel = client.guilds.cache.get(guildId)?.members.me?.voice?.channelId;
   if (!VoiceChannel) return;
 
   try {
@@ -30,9 +26,7 @@ export async function UpdateMusicStatusChannel(
 
     if (player.queue.current) {
       const { title, author, isStream } = player.queue.current;
-      statusText = isStream
-        ? `♪ Đang nghe ${author}`
-        : `**♪ ${title}** của ${author}`;
+      statusText = isStream ? `♪ Đang nghe ${author}` : `**♪ ${title}** của ${author}`;
     }
 
     await client.rest.put(url, { body: { status: statusText } });

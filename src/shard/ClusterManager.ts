@@ -20,8 +20,7 @@ export interface ClusterManagerOptions {
 
 export class ClusterManager {
   public readonly workerPID: Collection<Worker> = new Collection<Worker>();
-  public readonly commands: Collection<ClusterCommand> =
-    new Collection<ClusterCommand>();
+  public readonly commands: Collection<ClusterCommand> = new Collection<ClusterCommand>();
   public readonly clusterShardList: Record<string, number[]> = {};
   public readonly totalShards: number = 0;
   public customData?: {
@@ -31,21 +30,17 @@ export class ClusterManager {
   };
 
   constructor(public readonly options: ClusterManagerOptions) {
-    this.totalShards =
-      this.options.totalClusters * this.options.shardsPerClusters;
+    this.totalShards = this.options.totalClusters * this.options.shardsPerClusters;
     const shardArrayID = this.arrayRange(0, this.totalShards - 1, 1);
 
     // Sửa lỗi: đảm bảo shard được phân chia đúng cho mỗi cluster
-    this.arrayChunk<number>(
-      shardArrayID,
-      this.options.shardsPerClusters
-    ).forEach((value, index) => {
-      this.clusterShardList[String(index + 1)] = value;
-    });
-
-    console.log(
-      `Tổng cluster: ${this.options.totalClusters}, Tổng shard: ${this.totalShards}`
+    this.arrayChunk<number>(shardArrayID, this.options.shardsPerClusters).forEach(
+      (value, index) => {
+        this.clusterShardList[String(index + 1)] = value;
+      }
     );
+
+    console.log(`Tổng cluster: ${this.options.totalClusters}, Tổng shard: ${this.totalShards}`);
   }
 
   public async start() {
@@ -98,10 +93,7 @@ export class ClusterManager {
       }
     } else {
       bootBot(this);
-      this.log(
-        "INFO",
-        `Worker ${process.pid} / ${cluster.worker.id} đã khởi động`
-      );
+      this.log("INFO", `Worker ${process.pid} / ${cluster.worker.id} đã khởi động`);
     }
   }
 
@@ -153,10 +145,7 @@ export class ClusterManager {
   }
 
   protected arrayRange(start: number, stop: number, step: number) {
-    return Array.from(
-      { length: (stop - start) / step + 1 },
-      (_, index) => start + index * step
-    );
+    return Array.from({ length: (stop - start) / step + 1 }, (_, index) => start + index * step);
   }
 
   protected arrayChunk<D = unknown>(array: D[], chunkSize: number): D[][] {
@@ -189,15 +178,10 @@ export class ClusterManager {
   }
 
   protected async registerCommand(path: string) {
-    const command = new (
-      await import(pathToFileURL(path).toString())
-    ).default() as ClusterCommand;
+    const command = new (await import(pathToFileURL(path).toString())).default() as ClusterCommand;
 
     if (!command.execute) {
-      return this.log(
-        "WARN",
-        `Lệnh cluster [${command.name}] thiếu hàm execute, bỏ qua...`
-      );
+      return this.log("WARN", `Lệnh cluster [${command.name}] thiếu hàm execute, bỏ qua...`);
     }
 
     this.commands.set(command.name, command);

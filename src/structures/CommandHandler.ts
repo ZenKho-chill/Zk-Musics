@@ -25,9 +25,7 @@ export type CommandHandlerOptions = {
   prefix: string;
 };
 
-export type GlobalMsg =
-  | InteractionResponse<boolean>
-  | (Message<boolean> | undefined);
+export type GlobalMsg = InteractionResponse<boolean> | (Message<boolean> | undefined);
 
 export enum ParseMentionEnum {
   ERROR,
@@ -88,11 +86,7 @@ export class CommandHandler {
   get modeLangData() {
     return {
       enable: `${this.client.i18n.get(this.language, "interaction", "enable")}`,
-      disable: `${this.client.i18n.get(
-        this.language,
-        "interaction",
-        "disable"
-      )}`,
+      disable: `${this.client.i18n.get(this.language, "interaction", "disable")}`,
     };
   }
 
@@ -172,10 +166,7 @@ export class CommandHandler {
 
   public async editReply(data: BaseMessageOptions): Promise<GlobalMsg> {
     if (!this.msg) {
-      this.client.logger.error(
-        CommandHandler.name,
-        "Bạn chưa gọi deferReply()"
-      );
+      this.client.logger.error(CommandHandler.name, "Bạn chưa gọi deferReply()");
       return;
     }
     if (this.interaction) {
@@ -195,9 +186,7 @@ export class CommandHandler {
   public async parseMentions(data: string): Promise<ParseMentionInterface> {
     if (this.USERS_PATTERN.test(data)) {
       const extract = this.USERS_PATTERN.exec(data);
-      const user = await this.client.users
-        .fetch(extract![1])
-        .catch(() => undefined);
+      const user = await this.client.users.fetch(extract![1]).catch(() => undefined);
       if (!user || user == null)
         return {
           type: ParseMentionEnum.ERROR,
@@ -210,9 +199,7 @@ export class CommandHandler {
     }
     if (this.CHANNELS_PATTERN.test(data)) {
       const extract = this.CHANNELS_PATTERN.exec(data);
-      const channel = await this.client.channels
-        .fetch(extract![1])
-        .catch(() => undefined);
+      const channel = await this.client.channels.fetch(extract![1]).catch(() => undefined);
       if (!channel || channel == null)
         return {
           type: ParseMentionEnum.ERROR,
@@ -226,12 +213,8 @@ export class CommandHandler {
     if (this.ROLES_PATTERN.test(data)) {
       const extract = this.ROLES_PATTERN.exec(data);
       const role = this.message
-        ? await this.message.guild?.roles
-            .fetch(extract![1])
-            .catch(() => undefined)
-        : await this.interaction?.guild?.roles
-            .fetch(extract![1])
-            .catch(() => undefined);
+        ? await this.message.guild?.roles.fetch(extract![1]).catch(() => undefined)
+        : await this.interaction?.guild?.roles.fetch(extract![1]).catch(() => undefined);
       if (!role || role == null)
         return {
           type: ParseMentionEnum.ERROR,

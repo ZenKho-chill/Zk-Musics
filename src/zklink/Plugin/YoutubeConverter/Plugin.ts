@@ -1,10 +1,6 @@
 import { ZklinkTrack } from "../../main.js";
 import { ZklinkPluginType } from "../../main.js";
-import {
-  ZklinkSearchOptions,
-  ZklinkSearchResult,
-  ZklinkSearchResultType,
-} from "../../main.js";
+import { ZklinkSearchOptions, ZklinkSearchResult, ZklinkSearchResultType } from "../../main.js";
 import { Zklink } from "../../main.js";
 import { ZklinkPlugin as Plugin } from "../../main.js";
 
@@ -24,10 +20,7 @@ export type YoutubeConvertOptions = {
 
 export class ZklinkPlugin extends Plugin {
   private options: YoutubeConvertOptions;
-  private _search?: (
-    query: string,
-    options?: ZklinkSearchOptions
-  ) => Promise<ZklinkSearchResult>;
+  private _search?: (query: string, options?: ZklinkSearchOptions) => Promise<ZklinkSearchResult>;
   constructor(options?: YoutubeConvertOptions) {
     super();
     this.options = options ?? { sources: ["scsearch"] };
@@ -59,13 +52,9 @@ export class ZklinkPlugin extends Plugin {
     this._search = undefined;
   }
 
-  private async search(
-    query: string,
-    options?: ZklinkSearchOptions
-  ): Promise<ZklinkSearchResult> {
+  private async search(query: string, options?: ZklinkSearchOptions): Promise<ZklinkSearchResult> {
     // Kiểm tra xem hàm tìm kiếm có sẵn không
-    if (!this._search)
-      return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
+    if (!this._search) return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
 
     // Kiểm tra xem query có phải link YouTube không
     const match = YOUTUBE_REGEX.some((match) => {
@@ -86,9 +75,7 @@ export class ZklinkPlugin extends Plugin {
     }
 
     const song = preRes.tracks[0];
-    const searchQuery = [song.author, song.title]
-      .filter((x) => !!x)
-      .join(" - ");
+    const searchQuery = [song.author, song.title].filter((x) => !!x).join(" - ");
     const res = await this.searchEngine(searchQuery, options);
     if (res.tracks.length !== 0) return res;
     return preRes;
@@ -98,14 +85,10 @@ export class ZklinkPlugin extends Plugin {
     query: string,
     options?: ZklinkSearchOptions
   ): Promise<ZklinkSearchResult> {
-    if (!this._search)
-      return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
+    if (!this._search) return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
     // Duyệt qua các nguồn đã cấu hình, thử từng nguồn để tìm kết quả
     for (const SearchParams of this.options.sources!) {
-      const res = await this._search(
-        `directSearch=${SearchParams}:${query}`,
-        options
-      );
+      const res = await this._search(`directSearch=${SearchParams}:${query}`, options);
       if (res.tracks.length !== 0) return res;
     }
     return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);

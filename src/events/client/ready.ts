@@ -5,16 +5,16 @@ import chalk from "chalk";
 
 export default class {
   async execute(client: Manager) {
-  client.logger.info("ClientReady", chalk.white(`Đã đăng nhập @ ${client.user!.tag}`));
+    client.logger.info("ClientReady", chalk.white(`Đã đăng nhập @ ${client.user!.tag}`));
 
     let guilds = client.guilds.cache.size;
     let members = client.guilds.cache.reduce((a, b) => a + b.memberCount, 0);
     let channels = client.channels.cache.size;
 
     const activities = [
-  `${client.config.bot.BOT_ACTIVITY1}` || `với ${guilds} máy chủ!`,
-  `${client.config.bot.BOT_ACTIVITY2}` || `với ${members} người dùng!`,
-  `${client.config.bot.BOT_ACTIVITY3}` || `với ${channels} kênh!`,
+      `${client.config.bot.BOT_ACTIVITY1}` || `với ${guilds} máy chủ!`,
+      `${client.config.bot.BOT_ACTIVITY2}` || `với ${members} người dùng!`,
+      `${client.config.bot.BOT_ACTIVITY3}` || `với ${channels} kênh!`,
     ];
 
     setInterval(() => {

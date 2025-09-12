@@ -4,9 +4,7 @@ import { ZklinkNodeOptions } from "../Interface/Manager.js";
 export class ErisJS extends AbstractLibrary {
   // Gửi packet tới Discord Gateway
   public sendPacket(shardId: number, payload: any, important: boolean): void {
-    return this.client.shards
-      .get(shardId)
-      ?.sendWS(payload.op, payload.d, important);
+    return this.client.shards.get(shardId)?.sendWS(payload.op, payload.d, important);
   }
 
   // Lấy id của bot (client user)
@@ -16,9 +14,7 @@ export class ErisJS extends AbstractLibrary {
 
   // Lấy số shard để làm việc với lavalink
   public getShardCount(): number {
-    return this.client.shards && this.client.shards.size
-      ? this.client.shards.size
-      : 1;
+    return this.client.shards && this.client.shards.size ? this.client.shards.size : 1;
   }
 
   // Listen: gắn listener vào thư viện (client)

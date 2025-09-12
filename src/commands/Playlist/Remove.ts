@@ -45,11 +45,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_remove_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_remove_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -76,11 +72,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_remove_notfound"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_remove_notfound")}`
             )
             .setColor(client.color_main),
         ],
@@ -90,11 +82,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_remove_owner"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_remove_owner")}`
             )
             .setColor(client.color_main),
         ],
@@ -107,30 +95,18 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_remove_song_notfound"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_remove_song_notfound")}`
             )
             .setColor(client.color_main),
         ],
       });
-    await client.db.playlist.pull(
-      `${value}.tracks`,
-      playlist.tracks![Number(position) - 1]
-    );
+    await client.db.playlist.pull(`${value}.tracks`, playlist.tracks![Number(position) - 1]);
     const embed = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "commands.playlist",
-          "pl_remove_removed",
-          {
-            name: value,
-            position: pos,
-          }
-        )}`
+        `${client.i18n.get(handler.language, "commands.playlist", "pl_remove_removed", {
+          name: value,
+          position: pos,
+        })}`
       )
       .setColor(client.color_main);
     handler.editReply({ embeds: [embed] });

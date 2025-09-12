@@ -18,11 +18,7 @@ import { TopTrack } from "../../utilities/TopTrack.js";
 import { TrackTitle } from "../../utilities/TrackTitle.js";
 import { zkcard } from "zkcard";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
-import {
-  filterSelect,
-  playerRowOne,
-  playerRowTwo,
-} from "../../utilities/PlayerControlButton.js";
+import { filterSelect, playerRowOne, playerRowTwo } from "../../utilities/PlayerControlButton.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ControlButtonEnum } from "../../database/schema/ControlButton.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
@@ -30,12 +26,12 @@ import chalk from "chalk";
 import { cli } from "winston/lib/winston/config/index.js";
 export function scheduleScrobble(client: Manager, player: ZklinkPlayer) {
   const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
-  
+
   if (!lastfmConfig || !lastfmConfig.scheduleScrobble) {
     client.logger.warn("TrackStart", "Last.fm scrobble config không được cấu hình đúng cách");
     return;
   }
-  
+
   setTimeout(() => {
     ScrobbleToLastFM(client, player);
   }, lastfmConfig.scheduleScrobble);
@@ -48,15 +44,13 @@ export default class {
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
 
-    const guild = await client.guilds
-      .fetch(player.guildId)
-      .catch(() => undefined);
+    const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
     client.logger.info(
       "TrackStart",
-      `${chalk.hex("#53ec53")("Player đã bắt đầu tại @ ")}${chalk.hex(
-        "#53ec53"
-      )(guild?.name)} / ${chalk.hex("#53ec53")(player.guildId)}`
+      `${chalk.hex("#53ec53")("Player đã bắt đầu tại @ ")}${chalk.hex("#53ec53")(
+        guild?.name
+      )} / ${chalk.hex("#53ec53")(player.guildId)}`
     );
 
     let ControlButton = await client.db.ControlButton.get(`${player.guildId}`);
@@ -100,10 +94,7 @@ export default class {
               player.queue.current?.uri
             )
           : true;
-        await client.db.autoreconnect.set(
-          `${player.guildId}.config.loop`,
-          player.loop
-        );
+        await client.db.autoreconnect.set(`${player.guildId}.config.loop`, player.loop);
 
         function queueUri() {
           const res = [];
@@ -121,14 +112,8 @@ export default class {
           return res.length !== 0 ? res : [];
         }
 
-        await client.db.autoreconnect.set(
-          `${player.guildId}.queue`,
-          queueUri()
-        );
-        await client.db.autoreconnect.set(
-          `${player.guildId}.previous`,
-          previousUri()
-        );
+        await client.db.autoreconnect.set(`${player.guildId}.queue`, queueUri());
+        await client.db.autoreconnect.set(`${player.guildId}.previous`, previousUri());
       }
     }
 
@@ -137,10 +122,7 @@ export default class {
 
     let guildModel = await client.db.language.get(`${channel.guild.id}`);
     if (!guildModel) {
-      guildModel = await client.db.language.set(
-        `${channel.guild.id}`,
-        client.config.bot.LANGUAGE
-      );
+      guildModel = await client.db.language.set(`${channel.guild.id}`, client.config.bot.LANGUAGE);
     }
 
     const language = guildModel;
@@ -187,10 +169,7 @@ export default class {
         ? song?.author
         : song?.title || `♪ Những ai muốn hát sẽ luôn tìm thấy một bài.`;
 
-    const title =
-      originalTitle.length > 40
-        ? `${originalTitle.slice(0, 40)}...`
-        : originalTitle;
+    const title = originalTitle.length > 40 ? `${originalTitle.slice(0, 40)}...` : originalTitle;
     const Author =
       (song?.author || guild!.name).length > 15
         ? `${(song?.author || guild!.name).slice(0, 15)}...`
@@ -212,8 +191,7 @@ export default class {
       .setThumbnail(
         source === "soundcloud"
           ? (client.user?.displayAvatarURL() as string)
-          : track.artworkUrl ??
-              `https://img.youtube.com/vi/${track.identifier}/hqdefault.jpg`
+          : (track.artworkUrl ?? `https://img.youtube.com/vi/${track.identifier}/hqdefault.jpg`)
       )
       .setRequester(
         (song?.requester as User)?.displayName.toUpperCase() ||
@@ -226,11 +204,7 @@ export default class {
     const embeded1 = new EmbedBuilder()
       .setAuthor({
         name: client.i18n.get(language, "events.player", "track_author"),
-        iconURL: client.i18n.get(
-          language,
-          "events.player",
-          "track_author_icon"
-        ),
+        iconURL: client.i18n.get(language, "events.player", "track_author_icon"),
       })
       .setDescription(`**${TrackTitle(client, track)}**`)
       .setImage(`attachment://zk.png`)
@@ -246,9 +220,7 @@ export default class {
         {
           name: `${client.config.TRACKS_EMOJI.Volume} **${player.volume}%**`,
           value: `**${
-            player!.data.get("autoplay")
-              ? `${client.config.TRACKS_EMOJI.Autoplay} Tự phát`
-              : src
+            player!.data.get("autoplay") ? `${client.config.TRACKS_EMOJI.Autoplay} Tự phát` : src
           }**`,
           inline: true,
         }
@@ -257,11 +229,7 @@ export default class {
     const embeded2 = new EmbedBuilder()
       .setAuthor({
         name: client.i18n.get(language, "events.player", "track_author"),
-        iconURL: client.i18n.get(
-          language,
-          "events.player",
-          "track_author_icon"
-        ),
+        iconURL: client.i18n.get(language, "events.player", "track_author_icon"),
       })
       .setDescription(`**${TrackTitle(client, track)}**`)
       .setColor(client.color_second)
@@ -270,32 +238,23 @@ export default class {
           player!.data.get("autoplay") ? "Bật" : "Tắt"
         } • Độ dài hàng chờ ${player.queue.length} bài`,
         iconURL:
-          client.user?.displayAvatarURL() ||
-          (song?.requester as User)?.displayAvatarURL() ||
-          "",
+          client.user?.displayAvatarURL() || (song?.requester as User)?.displayAvatarURL() || "",
       })
       .setThumbnail(
         source === "soundcloud"
           ? client.user?.displayAvatarURL({ size: 512 })
-          : track.artworkUrl ??
-              `https://img.youtube.com/vi/${track.identifier}/hqdefault.jpg`
+          : (track.artworkUrl ?? `https://img.youtube.com/vi/${track.identifier}/hqdefault.jpg`)
       )
       .addFields(
         {
           name: client.i18n.get(language, "events.player", "track_song_author"),
-          value: `[${
-            Author || "Không xác định"
-          }](https://google.com/search?q=${encodeURIComponent(
+          value: `[${Author || "Không xác định"}](https://google.com/search?q=${encodeURIComponent(
             song?.author || "Không xác định"
           )})`,
           inline: true,
         },
         {
-          name: client.i18n.get(
-            language,
-            "events.player",
-            "track_requested_by"
-          ),
+          name: client.i18n.get(language, "events.player", "track_requested_by"),
           value: `**${song?.requester || "Không xác định"}**`,
           inline: true,
         },
@@ -306,8 +265,7 @@ export default class {
         }
       );
 
-    const embedToSend =
-      client.config.features.MusicCard.Enable === true ? embeded1 : embeded2;
+    const embedToSend = client.config.features.MusicCard.Enable === true ? embeded1 : embeded2;
 
     const playing_channel = (await client.channels
       .fetch(player.textId)
@@ -318,16 +276,11 @@ export default class {
           flags: MessageFlags.SuppressNotifications,
           embeds: [embedToSend],
           components: [
-            ...(client.config.features.FilterMenu ?? false
-              ? [filterSelect(client)]
-              : []),
+            ...((client.config.features.FilterMenu ?? false) ? [filterSelect(client)] : []),
             playerRowOne(client),
             playerRowTwo(client),
           ],
-          files:
-            client.config.features.MusicCard.Enable === true
-              ? [attachment]
-              : [],
+          files: client.config.features.MusicCard.Enable === true ? [attachment] : [],
         })
       : undefined;
 
@@ -375,17 +328,12 @@ export default class {
       filter: (message) => {
         if (
           message.guild!.members.me!.voice.channel &&
-          message.guild!.members.me!.voice.channelId ===
-            message.member!.voice.channelId
+          message.guild!.members.me!.voice.channelId === message.member!.voice.channelId
         )
           return true;
         else {
           message.reply({
-            content: `${client.i18n.get(
-              language,
-              "events.player",
-              "no_same_voice"
-            )}`,
+            content: `${client.i18n.get(language, "events.player", "no_same_voice")}`,
             flags: MessageFlags.Ephemeral,
           });
           return false;
@@ -406,14 +354,7 @@ export default class {
 
       if (button) {
         try {
-          return button.run(
-            client,
-            message,
-            String(language),
-            player,
-            nplaying,
-            collector
-          );
+          return button.run(client, message, String(language), player, nplaying, collector);
         } catch (err) {
           client.logger.warn("ButtonError", err as string);
         }

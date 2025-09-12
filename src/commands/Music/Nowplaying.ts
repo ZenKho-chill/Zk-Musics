@@ -27,9 +27,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.SilentDeferReply();
 
-    const player = client.Zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
     const currentTrack = player.queue.current;
 
     if (!currentTrack) {
@@ -37,14 +35,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "no_songs_playing",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+                user: handler.user!.displayName || handler.user!.tag,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -59,10 +52,7 @@ export default class implements Command {
     const Part = Math.floor((position / song!.duration!) * 30);
     const requester = song?.requester as User;
     const requesterName =
-      requester?.displayName ||
-      requester?.username ||
-      client.user?.username ||
-      "N/A";
+      requester?.displayName || requester?.username || client.user?.username || "N/A";
 
     let requesterAvatarURL;
     if (requester && requester.displayAvatarURL) {
@@ -114,20 +104,14 @@ export default class implements Command {
       },
       {
         name: `**Thời lượng hiện tại**`,
-        value: `\`${CurrentDuration} / ${new FormatDuration().parse(
-          song!.duration
-        )}\n${bar}\``,
+        value: `\`${CurrentDuration} / ${new FormatDuration().parse(song!.duration)}\n${bar}\``,
         inline: false,
       },
     ];
 
     const embeded = new EmbedBuilder();
     embeded.setAuthor({
-      name: `${client.i18n.get(
-        handler.language,
-        "commands.music",
-        "nowplaying_title"
-      )}`,
+      name: `${client.i18n.get(handler.language, "commands.music", "nowplaying_title")}`,
     });
     embeded.setColor(client.color_second);
     if (new FormatDuration().parse(song!.duration) !== "Live Stream") {
@@ -136,8 +120,7 @@ export default class implements Command {
     embeded.setThumbnail(
       source === "soundcloud"
         ? (client.user?.displayAvatarURL() as string)
-        : song?.artworkUrl ??
-            `https://img.youtube.com/vi/${song?.identifier}/hqdefault.jpg`
+        : (song?.artworkUrl ?? `https://img.youtube.com/vi/${song?.identifier}/hqdefault.jpg`)
     );
     embeded.addFields(fieldDataGlobal);
     embeded.setFooter({

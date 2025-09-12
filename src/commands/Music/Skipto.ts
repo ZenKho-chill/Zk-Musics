@@ -32,19 +32,13 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
-    const player = client.Zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
     const currentTrack = player.queue.current;
 
     if (!currentTrack) {
       const skipped = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "no_songs_playing"
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "no_songs_playing")}`
         )
         .setColor(client.color_main);
 
@@ -59,11 +53,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "skip_number_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "skip_number_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -71,13 +61,7 @@ export default class implements Command {
 
     if (player.queue.size == 0 || getPosition >= player.queue.length) {
       const skipped = new EmbedBuilder()
-        .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "skip_notfound"
-          )}`
-        )
+        .setDescription(`${client.i18n.get(handler.language, "commands.music", "skip_notfound")}`)
         .setColor(client.color_main);
 
       handler.editReply({ content: " ", embeds: [skipped] });
@@ -85,9 +69,7 @@ export default class implements Command {
       const cuttedQueue = player.queue.splice(0, getPosition);
       const nowCurrentTrack = cuttedQueue.splice(-1)[0];
       player.queue.previous.push(...cuttedQueue);
-      player.queue.current
-        ? player.queue.previous.unshift(player.queue.current)
-        : true;
+      player.queue.current ? player.queue.previous.unshift(player.queue.current) : true;
       await player.play(nowCurrentTrack);
       player.queue.shift();
       client.wsl.get(handler.guild!.id)?.send({

@@ -25,20 +25,14 @@ export class PlayerContentLoader {
 
   register() {
     try {
-      this.client.on(
-        "interactionCreate",
-        this.interaction.bind(null, this.client)
-      );
+      this.client.on("interactionCreate", this.interaction.bind(null, this.client));
       this.client.on("messageCreate", this.message.bind(null, this.client));
     } catch (err) {
       this.client.logger.error(PlayerContentLoader.name, err);
     }
   }
 
-  async interaction(
-    client: Manager,
-    interaction: GlobalInteraction
-  ): Promise<void> {
+  async interaction(client: Manager, interaction: GlobalInteraction): Promise<void> {
     if (!interaction.guild || interaction.user.bot) return;
     if (!interaction.isButton()) return;
     const { customId, member } = interaction;
@@ -50,17 +44,12 @@ export class PlayerContentLoader {
     let player = client.Zklink.players.get(interaction.guild.id);
     if (!player) return;
 
-    const playChannel = await client.channels
-      .fetch(player.textId)
-      .catch(() => undefined);
+    const playChannel = await client.channels.fetch(player.textId).catch(() => undefined);
     if (!playChannel) return;
 
     let guildModel = await client.db.language.get(`${player.guildId}`);
     if (!guildModel) {
-      guildModel = await client.db.language.set(
-        `${player.guildId}`,
-        client.config.bot.LANGUAGE
-      );
+      guildModel = await client.db.language.set(`${player.guildId}`, client.config.bot.LANGUAGE);
     }
 
     const language = guildModel;
@@ -87,12 +76,7 @@ export class PlayerContentLoader {
   }
 
   async message(client: Manager, message: Message): Promise<any> {
-    if (
-      !message.guild ||
-      !message.guild.available ||
-      !message.channel.isTextBased()
-    )
-      return;
+    if (!message.guild || !message.guild.available || !message.channel.isTextBased()) return;
     let database = await client.db.setup.get(`${message.guild?.id}`);
     let player = client.Zklink.players.get(`${message.guild?.id}`);
 
@@ -113,10 +97,7 @@ export class PlayerContentLoader {
 
     let guildModel = await client.db.language.get(`${message.guild.id}`);
     if (!guildModel) {
-      guildModel = await client.db.language.set(
-        `${message.guild.id}`,
-        client.config.bot.LANGUAGE
-      );
+      guildModel = await client.db.language.set(`${message.guild.id}`, client.config.bot.LANGUAGE);
     }
 
     const language = guildModel;
@@ -132,11 +113,8 @@ export class PlayerContentLoader {
           clearInterval(preInterval);
           return;
         }
-        const final = fetchedMessage.filter(
-          (msg) => msg.id !== database?.playmsg
-        );
-        if (final.size > 0)
-          (message.channel as TextChannel).bulkDelete(final).catch(() => {});
+        const final = fetchedMessage.filter((msg) => msg.id !== database?.playmsg);
+        if (final.size > 0) (message.channel as TextChannel).bulkDelete(final).catch(() => {});
         else clearInterval(preInterval);
       }, client.config.features.DELETE_MSG_TIMEOUT);
     }
@@ -157,31 +135,20 @@ export class PlayerContentLoader {
       return (message.channel as TextChannel).send({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(
-                language,
-                "button.setup.music",
-                "no_in_voice"
-              )}`
-            )
+            .setDescription(`${client.i18n.get(language, "button.setup.music", "no_in_voice")}`)
             .setColor(client.color_main),
         ],
       });
 
-    let msg = await message.channel.messages
-      .fetch(database!.playmsg)
-      .catch(() => undefined);
+    let msg = await message.channel.messages.fetch(database!.playmsg).catch(() => undefined);
 
-    const emotes = (str: string) =>
-      str.match(/<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu);
+    const emotes = (str: string) => str.match(/<a?:.+?:\d{18}>|\p{Extended_Pictographic}/gu);
 
     if (emotes(song) !== null) {
       msg?.reply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(language, "button.setup.music", "play_emoji")}`
-            )
+            .setDescription(`${client.i18n.get(language, "button.setup.music", "play_emoji")}`)
             .setColor(client.color_main),
         ],
       });
@@ -189,8 +156,7 @@ export class PlayerContentLoader {
     }
 
     const isYouTubeLink = (value: string): boolean => {
-      const youtubeRegex =
-        /(?:https?:\/\/)?(?:www\.)?(?:youtube|youtu)\.(?:com|be)\/(?:[^ ]+)/i;
+      const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube|youtu)\.(?:com|be)\/(?:[^ ]+)/i;
       return youtubeRegex.test(value);
     };
 
@@ -199,16 +165,11 @@ export class PlayerContentLoader {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                language,
-                "commands.music",
-                "youtube_disabled",
-                {
-                  user: message.author!.displayName || message.author!.tag,
-                  botname: client.user!.username || client.user!.displayName,
-                  serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
-                }
-              )}`
+              `${client.i18n.get(language, "commands.music", "youtube_disabled", {
+                user: message.author!.displayName || message.author!.tag,
+                botname: client.user!.username || client.user!.displayName,
+                serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -228,20 +189,11 @@ export class PlayerContentLoader {
         volume: client.config.bot.DEFAULT_VOLUME ?? 100,
       });
     else {
-      if (
-        message.member!.voice.channel !==
-        message.guild!.members.me!.voice.channel
-      ) {
+      if (message.member!.voice.channel !== message.guild!.members.me!.voice.channel) {
         msg?.reply({
           embeds: [
             new EmbedBuilder()
-              .setDescription(
-                `${client.i18n.get(
-                  language,
-                  "button.setup.music",
-                  "no_same_voice"
-                )}`
-              )
+              .setDescription(`${client.i18n.get(language, "button.setup.music", "no_same_voice")}`)
               .setColor(client.color_main),
           ],
         });
@@ -260,19 +212,13 @@ export class PlayerContentLoader {
 
     if (!result.tracks.length) {
       msg?.edit({
-        content: `${`${client.i18n.get(
-          language,
-          "button.setup.music",
-          "setup_content"
-        )}`}`,
+        content: `${`${client.i18n.get(language, "button.setup.music", "setup_content")}`}`,
       });
       return;
     }
 
-    if (result.type === "PLAYLIST")
-      for (let track of tracks) player.queue.add(track);
-    else if (player.playing && result.type === "SEARCH")
-      player.queue.add(tracks[0]);
+    if (result.type === "PLAYLIST") for (let track of tracks) player.queue.add(track);
+    else if (player.playing && result.type === "SEARCH") player.queue.add(tracks[0]);
     else if (player.playing && result.type !== "SEARCH")
       for (let track of tracks) player.queue.add(track);
     else player.queue.add(tracks[0]);
@@ -298,9 +244,7 @@ export class PlayerContentLoader {
         .setDescription(
           `${client.i18n.get(language, "button.setup.music", "play_track", {
             title: getTitle(result.tracks),
-            duration: new ConvertTime().parse(
-              result.tracks[0].duration as number
-            ),
+            duration: new ConvertTime().parse(result.tracks[0].duration as number),
             request: `${result.tracks[0].requester}`,
           })}`
         )
@@ -308,23 +252,18 @@ export class PlayerContentLoader {
       msg?.reply({ content: " ", embeds: [embed] });
     } else if (result.type === "SEARCH") {
       if (!player.playing) player.play();
-      const embed = new EmbedBuilder()
-        .setColor(client.color_main)
-        .setDescription(
-          `${client.i18n.get(language, "button.setup.music", "play_result", {
-            title: getTitle(result.tracks),
-            duration: new ConvertTime().parse(
-              result.tracks[0].duration as number
-            ),
-            request: `${result.tracks[0].requester}`,
-          })}`
-        );
+      const embed = new EmbedBuilder().setColor(client.color_main).setDescription(
+        `${client.i18n.get(language, "button.setup.music", "play_result", {
+          title: getTitle(result.tracks),
+          duration: new ConvertTime().parse(result.tracks[0].duration as number),
+          request: `${result.tracks[0].requester}`,
+        })}`
+      );
       msg?.reply({ content: " ", embeds: [embed] });
     }
 
     function getTitle(tracks: ZklinkTrack[]): string {
-      if (client.config.features.HIDE_LINK)
-        return `${tracks[0].title} bởi ${tracks[0].author}`;
+      if (client.config.features.HIDE_LINK) return `${tracks[0].title} bởi ${tracks[0].author}`;
       else {
         return `[${tracks[0].title} bởi ${tracks[0].author}](${client.config.bot.SERVER_SUPPORT_URL})`;
       }

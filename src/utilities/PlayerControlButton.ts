@@ -1,9 +1,4 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  StringSelectMenuBuilder,
-} from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } from "discord.js";
 import { Manager } from "../manager.js";
 import { EmojiValidator } from "./EmojiValidator.js";
 
@@ -44,20 +39,8 @@ const playerRowOne = (client: Manager) =>
       "Tạm dừng",
       ButtonStyle.Secondary
     ),
-    createButton(
-      client,
-      "skip",
-      client.config.emojis.PLAYER.SKIP,
-      "Bỏ qua",
-      ButtonStyle.Secondary
-    ),
-    createButton(
-      client,
-      "loop",
-      client.config.emojis.PLAYER.LOOP,
-      "Lặp",
-      ButtonStyle.Secondary
-    ),
+    createButton(client, "skip", client.config.emojis.PLAYER.SKIP, "Bỏ qua", ButtonStyle.Secondary),
+    createButton(client, "loop", client.config.emojis.PLAYER.LOOP, "Lặp", ButtonStyle.Secondary),
   ]);
 
 const playerRowTwo = (client: Manager) =>
@@ -76,13 +59,7 @@ const playerRowTwo = (client: Manager) =>
       "Giảm âm",
       ButtonStyle.Secondary
     ),
-    createButton(
-      client,
-      "stop",
-      client.config.emojis.PLAYER.STOP,
-      "Dừng",
-      ButtonStyle.Secondary
-    ),
+    createButton(client, "stop", client.config.emojis.PLAYER.STOP, "Dừng", ButtonStyle.Secondary),
     createButton(
       client,
       "volup",
@@ -115,27 +92,9 @@ const playerRowOneEdited = (client: Manager) =>
       "Trước",
       ButtonStyle.Secondary
     ),
-    createButton(
-      client,
-      "pause",
-      client.config.emojis.PLAYER.PLAY,
-      "Phát",
-      ButtonStyle.Secondary
-    ),
-    createButton(
-      client,
-      "skip",
-      client.config.emojis.PLAYER.SKIP,
-      "Bỏ qua",
-      ButtonStyle.Secondary
-    ),
-    createButton(
-      client,
-      "loop",
-      client.config.emojis.PLAYER.LOOP,
-      "Lặp",
-      ButtonStyle.Secondary
-    ),
+    createButton(client, "pause", client.config.emojis.PLAYER.PLAY, "Phát", ButtonStyle.Secondary),
+    createButton(client, "skip", client.config.emojis.PLAYER.SKIP, "Bỏ qua", ButtonStyle.Secondary),
+    createButton(client, "loop", client.config.emojis.PLAYER.LOOP, "Lặp", ButtonStyle.Secondary),
   ]);
 
 const filterSelect = (client: Manager) =>

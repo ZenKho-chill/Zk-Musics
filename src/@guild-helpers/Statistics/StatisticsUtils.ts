@@ -2,11 +2,7 @@ import { Manager } from "../../manager.js";
 import { VoiceState, MessageReaction, User } from "discord.js";
 
 // Hàm cập nhật số tin nhắn
-export async function updateMessageCount(
-  guildId: string,
-  userId: string,
-  client: Manager
-) {
+export async function updateMessageCount(guildId: string, userId: string, client: Manager) {
   const stats = await client.db.UserStatistics.get(`${userId}`); // Lấy thống kê hiện có theo key
   const today = new Date().setHours(0, 0, 0, 0); // Bắt đầu ngày hôm nay (0:00)
 
@@ -39,8 +35,7 @@ export async function updateMessageCount(
       voiceJoinTime: null,
       lastUpdated: Date.now(),
       joinDate:
-        client.guilds.cache.get(guildId)?.members.cache.get(userId)
-          ?.joinedTimestamp || Date.now(),
+        client.guilds.cache.get(guildId)?.members.cache.get(userId)?.joinedTimestamp || Date.now(),
       daysActive: 1,
       firstMessageDate: Date.now(),
       lastActiveDay: today, // Khởi tạo bằng ngày hôm nay
@@ -49,11 +44,7 @@ export async function updateMessageCount(
 }
 
 // Hàm tính và cập nhật thời gian thoại
-export async function updateVoiceTime(
-  oldState: VoiceState,
-  newState: VoiceState,
-  client: Manager
-) {
+export async function updateVoiceTime(oldState: VoiceState, newState: VoiceState, client: Manager) {
   const userId = newState.id;
   const guildId = newState.guild?.id;
 
@@ -78,8 +69,8 @@ export async function updateVoiceTime(
         voiceJoinTime: Date.now(), // Đặt thời gian tham gia
         lastUpdated: Date.now(),
         joinDate:
-          client.guilds.cache.get(guildId)?.members.cache.get(userId)
-            ?.joinedTimestamp || Date.now(),
+          client.guilds.cache.get(guildId)?.members.cache.get(userId)?.joinedTimestamp ||
+          Date.now(),
         daysActive: 0,
         firstMessageDate: null,
       });
@@ -106,11 +97,7 @@ export async function updateVoiceTime(
 }
 
 // Hàm cập nhật số lượng reaction
-export async function updateReactionStats(
-  reaction: MessageReaction,
-  user: User,
-  client: Manager
-) {
+export async function updateReactionStats(reaction: MessageReaction, user: User, client: Manager) {
   const guild = reaction.message.guild;
   if (!guild) return; // Thoát nếu không có máy chủ (ví dụ DM)
 
@@ -135,8 +122,7 @@ export async function updateReactionStats(
       voiceJoinTime: null,
       lastUpdated: Date.now(),
       joinDate:
-        client.guilds.cache.get(guildId)?.members.cache.get(userId)
-          ?.joinedTimestamp || Date.now(),
+        client.guilds.cache.get(guildId)?.members.cache.get(userId)?.joinedTimestamp || Date.now(),
       daysActive: 0,
       firstMessageDate: null,
     });
@@ -170,8 +156,7 @@ export async function updateTopChannelsStats(
       voiceJoinTime: null,
       lastUpdated: Date.now(),
       joinDate:
-        client.guilds.cache.get(guildId)?.members.cache.get(userId)
-          ?.joinedTimestamp || Date.now(),
+        client.guilds.cache.get(guildId)?.members.cache.get(userId)?.joinedTimestamp || Date.now(),
       daysActive: 0,
       firstMessageDate: null,
     });

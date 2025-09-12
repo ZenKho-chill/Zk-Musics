@@ -44,9 +44,7 @@ export class handleActivityStats {
           topChannels: {},
           voiceJoinTime: null,
           lastUpdated: Date.now(),
-          joinDate:
-            message.guild.members.cache.get(userId)?.joinedTimestamp ||
-            Date.now(),
+          joinDate: message.guild.members.cache.get(userId)?.joinedTimestamp || Date.now(),
           daysActive: 1,
           firstMessageDate: Date.now(),
           lastActiveDay: today, // Khởi tạo bằng ngày hôm nay

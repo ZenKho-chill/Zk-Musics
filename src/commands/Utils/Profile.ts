@@ -1,8 +1,5 @@
 import { Accessableby, Command } from "../../structures/Command.js";
-import {
-  CommandHandler,
-  ParseMentionEnum,
-} from "../../structures/CommandHandler.js";
+import { CommandHandler, ParseMentionEnum } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
 import { ApplicationCommandOptionType, EmbedBuilder, User } from "discord.js";
 import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
@@ -44,14 +41,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.utils",
-                "user_arg_error",
-                {
-                  text: "**@mention**",
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.utils", "user_arg_error", {
+                text: "**@mention**",
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -70,9 +62,7 @@ export default class implements Command {
     const ctx = canvas.getContext("2d");
 
     if (user) {
-      const userPfp = await loadImage(
-        user.displayAvatarURL({ extension: "jpg", size: 1024 })
-      );
+      const userPfp = await loadImage(user.displayAvatarURL({ extension: "jpg", size: 1024 }));
       const img = await loadImage("./script/profile.png");
 
       ctx.font = "22px Courage Road";

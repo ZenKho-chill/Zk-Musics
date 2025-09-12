@@ -42,11 +42,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "seek_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "seek_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -58,9 +54,7 @@ export default class implements Command {
       value = min + sec;
     }
 
-    const player = client.Zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
     const currentTrack = player.queue.current;
 
     if (!currentTrack) {
@@ -68,14 +62,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "no_songs_playing",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+                user: handler.user!.displayName || handler.user!.tag,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -87,14 +76,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "seek_beyond",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "seek_beyond", {
+                user: handler.user!.displayName || handler.user!.tag,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -105,15 +89,10 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "seek_not_seekable",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                  title: this.getTitle(client, currentTrack),
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "seek_not_seekable", {
+                user: handler.user!.displayName || handler.user!.tag,
+                title: this.getTitle(client, currentTrack),
+              })}`
             )
             .setColor(client.color_main),
         ],

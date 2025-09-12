@@ -5,14 +5,11 @@ import chalk from "chalk";
 export default class {
   execute(client: Manager, node: ZklinkNode, code: number, reason: Buffer) {
     client.Zklink.players.forEach((player, index) => {
-      if (player.node.options.name == node.options.name)
-        player.destroy().catch(() => {});
+      if (player.node.options.name == node.options.name) player.destroy().catch(() => {});
     });
     client.logger.debug(
       "NodeDisconnect",
-      chalk.red(
-        `Lavalink ${node.options.name}: Đã ngắt kết nối, Mã: ${code}, Lý do: ${reason}`
-      )
+      chalk.red(`Lavalink ${node.options.name}: Đã ngắt kết nối, Mã: ${code}, Lý do: ${reason}`)
     );
   }
 }

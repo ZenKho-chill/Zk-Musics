@@ -38,14 +38,9 @@ export default class implements Command {
     if (!languages.includes(input as string)) {
       const onsome = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "provide_lang",
-            {
-              languages: languages.join(", "),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "provide_lang", {
+            languages: languages.join(", "),
+          })}`
         )
         .setColor(client.color_main);
       return handler.editReply({ content: " ", embeds: [onsome] });
@@ -57,14 +52,9 @@ export default class implements Command {
       await client.db.language.set(`${handler.guild!.id}`, input);
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "lang_set",
-            {
-              language: String(input),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "lang_set", {
+            language: String(input),
+          })}`
         )
         .setColor(client.color_main);
 
@@ -74,14 +64,9 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "lang_change",
-            {
-              language: String(input),
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "lang_change", {
+            language: String(input),
+          })}`
         )
         .setColor(client.color_main);
 

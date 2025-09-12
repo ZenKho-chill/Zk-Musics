@@ -24,31 +24,14 @@ export class CommandLoader {
 
     if (this.client.commands.size) {
       const commandColl = this.client.commands;
-      const array1 = commandColl.filter(
-        (command) => command.name.length === 1
-      ).size;
-      const array2 = commandColl.filter(
-        (command) => command.name.length === 2
-      ).size;
-      const array3 = commandColl.filter(
-        (command) => command.name.length === 3
-      ).size;
-      const haveInteraction = commandColl.filter(
-        (command) => command.usingInteraction
-      ).size;
+      const array1 = commandColl.filter((command) => command.name.length === 1).size;
+      const array2 = commandColl.filter((command) => command.name.length === 2).size;
+      const array3 = commandColl.filter((command) => command.name.length === 3).size;
+      const haveInteraction = commandColl.filter((command) => command.usingInteraction).size;
       this.client.logger.info(CommandLoader.name, `Kết quả tải lệnh:`);
-      this.client.logger.info(
-        CommandLoader.name,
-        `${array1} lệnh không có tiền tố`
-      );
-      this.client.logger.info(
-        CommandLoader.name,
-        `${array2} lệnh có 1 tiền tố`
-      );
-      this.client.logger.info(
-        CommandLoader.name,
-        `${array3} lệnh có 2 tiền tố`
-      );
+      this.client.logger.info(CommandLoader.name, `${array1} lệnh không có tiền tố`);
+      this.client.logger.info(CommandLoader.name, `${array2} lệnh có 1 tiền tố`);
+      this.client.logger.info(CommandLoader.name, `${array3} lệnh có 2 tiền tố`);
       this.client.logger.info(
         CommandLoader.name,
         `${haveInteraction} lệnh hỗ trợ Interaction/Prefix`
@@ -62,24 +45,16 @@ export class CommandLoader {
         `Tổng cộng ${commandColl.size} lệnh đã được tải!`
       );
     } else {
-      this.client.logger.warn(
-        CommandLoader.name,
-        `Không có lệnh nào được tải, mọi thứ ổn chứ?`
-      );
+      this.client.logger.warn(CommandLoader.name, `Không có lệnh nào được tải, mọi thứ ổn chứ?`);
     }
   }
 
   async register(commandFile: string) {
     const rltPath = relative(__dirname, commandFile);
-    const command = new (
-      await import(pathToFileURL(commandFile).toString())
-    ).default();
+    const command = new (await import(pathToFileURL(commandFile).toString())).default();
 
     if (!command.name?.length) {
-      this.client.logger.warn(
-        CommandLoader.name,
-        `"${rltPath}" File lệnh không có tên. Bỏ qua...`
-      );
+      this.client.logger.warn(CommandLoader.name, `"${rltPath}" File lệnh không có tên. Bỏ qua...`);
       return;
     }
 
@@ -104,9 +79,7 @@ export class CommandLoader {
     this.client.commands.set(command.name.join("-"), command);
 
     if (command.aliases && command.aliases.length !== 0)
-      command.aliases.forEach((a: string) =>
-        this.client.aliases.set(a, command.name.join("-"))
-      );
+      command.aliases.forEach((a: string) => this.client.aliases.set(a, command.name.join("-")));
   }
 
   keyChecker(obj: Record<string, any>): KeyCheckerEnum {

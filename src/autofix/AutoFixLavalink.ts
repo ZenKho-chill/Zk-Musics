@@ -29,18 +29,13 @@ export class AutoFixLavalink {
     if (this.client.lavalinkList.filter((i) => i.online).length == 0) {
       this.client.logger.info(
         AutoFixLavalink.name,
-        autofixErrorMess +
-          "Không có lavalink trực tuyến hoặc khả dụng cho bot này."
+        autofixErrorMess + "Không có lavalink trực tuyến hoặc khả dụng cho bot này."
       );
       this.client.logger.info(
         AutoFixLavalink.name,
-        autofixErrorMess +
-          "Vui lòng tắt bot, nhập server lavalink hợp lệ (v4) và khởi động lại bot"
+        autofixErrorMess + "Vui lòng tắt bot, nhập server lavalink hợp lệ (v4) và khởi động lại bot"
       );
-      this.client.logger.info(
-        AutoFixLavalink.name,
-        "Đã kết thúc autofix lavalink"
-      );
+      this.client.logger.info(AutoFixLavalink.name, "Đã kết thúc autofix lavalink");
       return;
     }
 
@@ -50,17 +45,11 @@ export class AutoFixLavalink {
       AutoFixLavalink.name,
       "Đã chuyển sang lavalink mới, vui lòng chờ 3 giây để kết nối."
     );
-    this.client.logger.info(
-      AutoFixLavalink.name,
-      "Đã kết thúc autofix lavalink"
-    );
+    this.client.logger.info(AutoFixLavalink.name, "Đã kết thúc autofix lavalink");
   }
 
   checkLavalink() {
-    if (
-      this.client.Zklink.nodes.size !== 0 &&
-      this.client.lavalinkUsing.length == 0
-    ) {
+    if (this.client.Zklink.nodes.size !== 0 && this.client.lavalinkUsing.length == 0) {
       this.client.Zklink.nodes.forEach((data, index) => {
         this.client.lavalinkUsing.push({
           host: data.options.host,
@@ -80,10 +69,7 @@ export class AutoFixLavalink {
 
     // Kiểm tra xem lavalinkIndex có hợp lệ không
     if (lavalinkIndex === -1) {
-      this.client.logger.warn(
-        AutoFixLavalink.name,
-        "Không tìm thấy node lavalink."
-      );
+      this.client.logger.warn(AutoFixLavalink.name, "Không tìm thấy node lavalink.");
       return;
     }
 
@@ -91,26 +77,15 @@ export class AutoFixLavalink {
 
     // Đảm bảo targetLavalink được định nghĩa trước khi tiếp tục
     if (!targetLavalink) {
-      this.client.logger.warn(
-        AutoFixLavalink.name,
-        "Node lavalink mục tiêu không xác định."
-      );
+      this.client.logger.warn(AutoFixLavalink.name, "Node lavalink mục tiêu không xác định.");
       return;
     }
 
     // Logic xóa lavalink khỏi nodes
-    if (
-      this.client.Zklink.nodes.size == 0 &&
-      this.client.lavalinkUsing.length != 0
-    ) {
+    if (this.client.Zklink.nodes.size == 0 && this.client.lavalinkUsing.length != 0) {
       this.client.lavalinkUsing.splice(lavalinkIndex, 1);
-    } else if (
-      this.client.Zklink.nodes.size !== 0 &&
-      this.client.lavalinkUsing.length !== 0
-    ) {
-      const isLavalinkExist = this.client.Zklink.nodes.get(
-        targetLavalink.name
-      );
+    } else if (this.client.Zklink.nodes.size !== 0 && this.client.lavalinkUsing.length !== 0) {
+      const isLavalinkExist = this.client.Zklink.nodes.get(targetLavalink.name);
       if (isLavalinkExist) {
         this.client.Zklink.nodes.remove(targetLavalink.name);
       }

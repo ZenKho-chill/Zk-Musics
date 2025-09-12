@@ -21,9 +21,7 @@ export default class {
     await UpdateMusicStatusChannel(client, player);
     /////////// Cập nhật kênh trạng thái nhạc //////////
 
-    const guild = await client.guilds
-      .fetch(player.guildId)
-      .catch(() => undefined);
+    const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
     if (player.data.get("autoplay") === true) {
       const author = player.data.get("author");
@@ -38,24 +36,18 @@ export default class {
 
         const finalRes = res.tracks.filter((track) => {
           const req1 = !player.queue.some((s) => s.encoded === track.encoded);
-          const req2 = !player.queue.previous.some(
-            (s) => s.encoded === track.encoded
-          );
+          const req2 = !player.queue.previous.some((s) => s.encoded === track.encoded);
           return req1 && req2;
         });
 
         if (finalRes.length !== 0) {
           await player.play(finalRes.length <= 1 ? finalRes[0] : finalRes[1]);
-          const channel = await client.channels
-            .fetch(player.textId)
-            .catch(() => undefined);
+          const channel = await client.channels.fetch(player.textId).catch(() => undefined);
           if (channel) return new CleanUpMessage(client, channel, player);
           return;
         }
       } else if (source.toLowerCase() !== "spotify") {
-        const findQuery =
-          "directSearch=spsearch:" +
-          [author, title].filter((x) => !!x).join(" - ");
+        const findQuery = "directSearch=spsearch:" + [author, title].filter((x) => !!x).join(" - ");
         const preRes = await player.search(findQuery, { requester: requester });
         if (preRes.tracks.length !== 0) {
           identifier = preRes.tracks[0]?.identifier ?? identifier;
@@ -69,22 +61,15 @@ export default class {
         const finalRes = res.tracks.filter((track) => {
           const unwantedKeywords = /remix|dj|koplo|live|instrumental/i;
           const isUnwanted =
-            unwantedKeywords.test(track.title) ||
-            unwantedKeywords.test(track.author);
-          const req1 = !player.queue.some(
-            (s) => s && s.encoded === track.encoded
-          );
-          const req2 = !player.queue.previous.some(
-            (s) => s && s.encoded === track.encoded
-          );
+            unwantedKeywords.test(track.title) || unwantedKeywords.test(track.author);
+          const req1 = !player.queue.some((s) => s && s.encoded === track.encoded);
+          const req2 = !player.queue.previous.some((s) => s && s.encoded === track.encoded);
           return !isUnwanted && req1 && req2;
         });
 
         if (finalRes.length !== 0) {
           await player.play(finalRes.length <= 1 ? finalRes[0] : finalRes[1]);
-          const channel = await client.channels
-            .fetch(player.textId)
-            .catch(() => undefined);
+          const channel = await client.channels.fetch(player.textId).catch(() => undefined);
           if (channel) return new CleanUpMessage(client, channel, player);
           return;
         }
@@ -93,9 +78,9 @@ export default class {
 
     client.logger.info(
       "QueueEmpty",
-      `${chalk.hex("#00ffff")("Hàng chờ (queue) đã rỗng tại @ ")}${chalk.hex(
-        "#00ffff"
-      )(guild?.name)} / ${chalk.hex("#00ffff")(player.guildId)}`
+      `${chalk.hex("#00ffff")("Hàng chờ (queue) đã rỗng tại @ ")}${chalk.hex("#00ffff")(
+        guild?.name
+      )} / ${chalk.hex("#00ffff")(player.guildId)}`
     );
     const channel = (await client.channels
       .fetch(player.textId)

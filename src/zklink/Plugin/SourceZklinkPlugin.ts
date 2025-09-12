@@ -1,7 +1,4 @@
-import {
-  ZklinkSearchOptions,
-  ZklinkSearchResult,
-} from "../Interface/Manager.js";
+import { ZklinkSearchOptions, ZklinkSearchResult } from "../Interface/Manager.js";
 import { ZklinkPlugin } from "./ZklinkPlugin.js";
 
 /** Lớp interface cho plugin resolver track, kế thừa để sử dụng */
@@ -21,9 +18,7 @@ export class SourceZklinkPlugin extends ZklinkPlugin {
    * @returns string
    */
   public sourceIdentify(): string {
-    throw new Error(
-      "Plugin nguồn phải implement sourceIdentify() và trả về chuỗi"
-    );
+    throw new Error("Plugin nguồn phải implement sourceIdentify() và trả về chuỗi");
   }
 
   /**
@@ -46,8 +41,6 @@ export class SourceZklinkPlugin extends ZklinkPlugin {
     query: string,
     options?: ZklinkSearchOptions
   ): Promise<ZklinkSearchResult> {
-    throw new Error(
-      "Plugin nguồn phải implement searchDirect() và trả về ZklinkSearchResult"
-    );
+    throw new Error("Plugin nguồn phải implement searchDirect() và trả về ZklinkSearchResult");
   }
 }

@@ -15,13 +15,9 @@ export abstract class AbstractDriver {
   /** ID phiên (session) của lavalink để resume */
   abstract sessionId: string | null;
   /** Tập các hàm mở rộng hỗ trợ driver trên lớp ZklinkPlayer */
-  abstract playerFunctions: ZklinkDatabase<
-    (player: ZklinkPlayer, ...args: any) => unknown
-  >;
+  abstract playerFunctions: ZklinkDatabase<(player: ZklinkPlayer, ...args: any) => unknown>;
   /** Tập các hàm mở rộng hỗ trợ driver trên lớp Zklink */
-  abstract functions: ZklinkDatabase<
-    (manager: Zklink, ...args: any) => unknown
-  >;
+  abstract functions: ZklinkDatabase<(manager: Zklink, ...args: any) => unknown>;
   /** Lớp quản lý Zklink */
   abstract manager: Zklink | null;
   /** Node lavalink/nodelink mà Zklink yêu cầu */
@@ -41,9 +37,7 @@ export abstract class AbstractDriver {
    * Hàm fetch để gửi yêu cầu REST tới server lavalink/nodelink
    * @returns Promise<D | undefined>
    */
-  abstract requester<D = any>(
-    options: ZklinkRequesterOptions
-  ): Promise<D | undefined>;
+  abstract requester<D = any>(options: ZklinkRequesterOptions): Promise<D | undefined>;
   /**
    * Đóng kết nối tới lavalink/nodelink
    * @returns void
@@ -53,9 +47,5 @@ export abstract class AbstractDriver {
    * Cập nhật session để cho phép (hoặc không) resume
    * @returns void
    */
-  abstract updateSession(
-    sessionId: string,
-    mode: boolean,
-    timeout: number
-  ): Promise<void>;
+  abstract updateSession(sessionId: string, mode: boolean, timeout: number): Promise<void>;
 }

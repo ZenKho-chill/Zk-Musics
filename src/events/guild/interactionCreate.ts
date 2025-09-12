@@ -15,10 +15,7 @@ import {
 } from "discord.js";
 import chalk from "chalk";
 import { Manager } from "../../manager.js";
-import {
-  GlobalInteraction,
-  NoAutoInteraction,
-} from "../../@types/Interaction.js";
+import { GlobalInteraction, NoAutoInteraction } from "../../@types/Interaction.js";
 import {
   CheckPermissionResultInterface,
   CheckPermServices,
@@ -41,8 +38,7 @@ const commandRateLimitManager = new RateLimitManager(1000);
 
 export default class {
   async execute(client: Manager, interaction: GlobalInteraction) {
-    if (interaction.isAutocomplete())
-      return new AutocompleteManager(client, interaction);
+    if (interaction.isAutocomplete()) return new AutocompleteManager(client, interaction);
     if (!interaction.isChatInputCommand()) return;
     if (!interaction.guild || interaction.user.bot) return;
 
@@ -74,8 +70,7 @@ export default class {
     const commandNameArray = [];
 
     if (interaction.commandName) commandNameArray.push(interaction.commandName);
-    if (subCommandName.length !== 0 && !subCommandGroupName)
-      commandNameArray.push(subCommandName);
+    if (subCommandName.length !== 0 && !subCommandGroupName) commandNameArray.push(subCommandName);
     if (subCommandGroupName) {
       commandNameArray.push(subCommandGroupName);
       commandNameArray.push(subCommandName);
@@ -114,24 +109,16 @@ export default class {
       PermissionFlagsBits.EmbedLinks,
       PermissionFlagsBits.ReadMessageHistory,
     ];
-    const musicPermissions = [
-      PermissionFlagsBits.Speak,
-      PermissionFlagsBits.Connect,
-    ];
+    const musicPermissions = [PermissionFlagsBits.Speak, PermissionFlagsBits.Connect];
     const managePermissions = [PermissionFlagsBits.ManageChannels];
 
     async function respondError(
       interaction: ChatInputCommandInteraction | CommandInteraction,
       permissionResult: CheckPermissionResultInterface
     ) {
-      const selfErrorString = `${client.i18n.get(
-        language,
-        "interaction",
-        "no_perms",
-        {
-          perm: permissionResult.result,
-        }
-      )}`;
+      const selfErrorString = `${client.i18n.get(language, "interaction", "no_perms", {
+        perm: permissionResult.result,
+      })}`;
       const embed = new EmbedBuilder()
         .setDescription(
           permissionResult.channel == "Self"
@@ -148,54 +135,35 @@ export default class {
     }
 
     if (command.name[0] !== "help") {
-      const returnData = await permissionChecker.interaction(
-        interaction,
-        defaultPermissions
-      );
-      if (returnData.result !== "PermissionPass")
-        return respondError(interaction, returnData);
+      const returnData = await permissionChecker.interaction(interaction, defaultPermissions);
+      if (returnData.result !== "PermissionPass") return respondError(interaction, returnData);
     }
     if (command.category.toLocaleLowerCase() == "music") {
-      const returnData = await permissionChecker.interaction(
-        interaction,
-        musicPermissions
-      );
-      if (returnData.result !== "PermissionPass")
-        return respondError(interaction, returnData);
+      const returnData = await permissionChecker.interaction(interaction, musicPermissions);
+      if (returnData.result !== "PermissionPass") return respondError(interaction, returnData);
     }
     if (command.accessableby.includes(Accessableby.Manager)) {
-      const returnData = await permissionChecker.interaction(
-        interaction,
-        managePermissions
-      );
-      if (returnData.result !== "PermissionPass")
-        return respondError(interaction, returnData);
+      const returnData = await permissionChecker.interaction(interaction, managePermissions);
+      if (returnData.result !== "PermissionPass") return respondError(interaction, returnData);
     } else if (command.permissions.length !== 0) {
-      const returnData = await permissionChecker.interaction(
-        interaction,
-        command.permissions
-      );
-      if (returnData.result !== "PermissionPass")
-        return respondError(interaction, returnData);
+      const returnData = await permissionChecker.interaction(interaction, command.permissions);
+      if (returnData.result !== "PermissionPass") return respondError(interaction, returnData);
     }
     //////////////////////////////// Kiểm tra quyền kết thúc ////////////////////////////////
 
     //////////////////////////////// Kiểm tra khả dụng bắt đầu ////////////////////////////////
-    const isNotManager = !(
-      interaction.member!.permissions as Readonly<PermissionsBitField>
-    ).has(PermissionsBitField.Flags.ManageGuild);
+    const isNotManager = !(interaction.member!.permissions as Readonly<PermissionsBitField>).has(
+      PermissionsBitField.Flags.ManageGuild
+    );
 
     if (command.accessableby.includes(Accessableby.Manager) && isNotManager)
       return interaction.reply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                language,
-                "interaction",
-                "no_manage_guild_perms",
-                { perm: "ManageGuild" }
-              )}`
+              `${client.i18n.get(language, "interaction", "no_manage_guild_perms", {
+                perm: "ManageGuild",
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -207,17 +175,12 @@ export default class {
       const is247 = await twentyFourBuilder.get(interaction.guild!.id);
       if (
         !player ||
-        (is247 &&
-          is247.twentyfourseven &&
-          player.queue.length == 0 &&
-          !player.queue.current)
+        (is247 && is247.twentyfourseven && player.queue.length == 0 && !player.queue.current)
       )
         return interaction.reply({
           embeds: [
             new EmbedBuilder()
-              .setDescription(
-                `${client.i18n.get(language, "interaction", "no_player")}`
-              )
+              .setDescription(`${client.i18n.get(language, "interaction", "no_player")}`)
               .setColor(client.color_main),
           ],
         });
@@ -233,9 +196,7 @@ export default class {
         return (interaction as NoAutoInteraction).reply({
           embeds: [
             new EmbedBuilder()
-              .setDescription(
-                `${client.i18n.get(language, "interaction", "no_same_voice")}`
-              )
+              .setDescription(`${client.i18n.get(language, "interaction", "no_same_voice")}`)
               .setColor(client.color_main),
           ],
         });
@@ -245,9 +206,7 @@ export default class {
       return interaction.reply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(language, "interaction", "no_node")}`
-            )
+            .setDescription(`${client.i18n.get(language, "interaction", "no_node")}`)
             .setColor(client.color_main),
         ],
       });
@@ -272,17 +231,11 @@ export default class {
     /////////////////////////////// Check Premium Role start ////////////////////////////////
     const PremiumGuildID = client.config.PremiumRole.GuildID;
     const PremiumRoleID = client.config.PremiumRole.RoleID;
-    const supportGuild = await client.guilds
-      .fetch(PremiumGuildID)
-      .catch(() => null);
+    const supportGuild = await client.guilds.fetch(PremiumGuildID).catch(() => null);
     const supportMember = supportGuild
-      ? await supportGuild.members
-          .fetch(String(interaction.user?.id))
-          .catch(() => null)
+      ? await supportGuild.members.fetch(String(interaction.user?.id)).catch(() => null)
       : null;
-    const isPremiumRole = supportMember
-      ? supportMember.roles.cache.has(PremiumRoleID)
-      : false;
+    const isPremiumRole = supportMember ? supportMember.roles.cache.has(PremiumRoleID) : false;
     /////////////////////////////// Check Premium Role end ////////////////////////////////
     const User = await client.db.premium.get(interaction.user.id);
     const Guild = await client.db.preGuild.get(interaction.guild.id);
@@ -298,17 +251,10 @@ export default class {
       UserPremium: isOwner || isAdmin || isPremiumUser,
       GuildPremium: isOwner || isAdmin || isPremiumGuild,
       Premium:
-        isOwner ||
-        isAdmin ||
-        isPremiumUser ||
-        isPremiumGuild ||
-        isPremiumRole ||
-        PremiumStore,
+        isOwner || isAdmin || isPremiumUser || isPremiumGuild || isPremiumRole || PremiumStore,
     };
 
-    const BlacklistUser = await client.db.BlacklistUser.get(
-      interaction.user.id
-    );
+    const BlacklistUser = await client.db.BlacklistUser.get(interaction.user.id);
     if (BlacklistUser) {
       return interaction.reply({
         embeds: [
@@ -322,9 +268,7 @@ export default class {
       });
     }
 
-    const BlacklistGuild = await client.db.BlacklistGuild.get(
-      interaction.guild.id
-    );
+    const BlacklistGuild = await client.db.BlacklistGuild.get(interaction.guild.id);
     if (!isOwner && !isAdmin && BlacklistGuild) {
       return interaction.reply({
         embeds: [
@@ -346,24 +290,13 @@ export default class {
           return interaction.reply({
             embeds: [
               new EmbedBuilder()
-                .setTitle(
-                  `${client.i18n.get(
-                    language,
-                    "interaction",
-                    "maintenance_title"
-                  )}`
-                )
+                .setTitle(`${client.i18n.get(language, "interaction", "maintenance_title")}`)
                 .setColor(client.color_main)
                 .setDescription(
-                  `${client.i18n.get(
-                    language,
-                    "interaction",
-                    "maintenance_desc",
-                    {
-                      bot: client.user!.username,
-                      serversupport: client.config.bot.SERVER_SUPPORT_URL,
-                    }
-                  )}`
+                  `${client.i18n.get(language, "interaction", "maintenance_desc", {
+                    bot: client.user!.username,
+                    serversupport: client.config.bot.SERVER_SUPPORT_URL,
+                  })}`
                 ),
             ],
           });
@@ -371,10 +304,7 @@ export default class {
       }
     }
 
-    if (
-      command.accessableby.includes(Accessableby.Premium) &&
-      !userPerm.Premium
-    ) {
+    if (command.accessableby.includes(Accessableby.Premium) && !userPerm.Premium) {
       const noPremiumUserEmbed = new EmbedBuilder()
         .setAuthor({
           name: client.i18n.get(language, "interaction", "no_premium_author"),
@@ -388,15 +318,10 @@ export default class {
         )
         .setColor(client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        client.config.bot.PREMIUM_URL
-      ) {
+      if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              client.i18n.get(language, "interaction", "no_premium_button")
-            )
+            .setLabel(client.i18n.get(language, "interaction", "no_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -405,23 +330,14 @@ export default class {
 
       return interaction.reply({
         embeds: [noPremiumUserEmbed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
       });
     }
 
-    if (
-      command.accessableby.includes(Accessableby.PremiumRole) &&
-      !userPerm.PremiumRole
-    ) {
+    if (command.accessableby.includes(Accessableby.PremiumRole) && !userPerm.PremiumRole) {
       const noPremiumUserEmbed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(
-            language,
-            "interaction",
-            "no_premium_role_author"
-          ),
+          name: client.i18n.get(language, "interaction", "no_premium_role_author"),
         })
         .setDescription(
           `${client.i18n.get(language, "interaction", "no_premium_role_desc", {
@@ -432,15 +348,10 @@ export default class {
         )
         .setColor(client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        client.config.bot.PREMIUM_URL
-      ) {
+      if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              client.i18n.get(language, "interaction", "no_premium_role_button")
-            )
+            .setLabel(client.i18n.get(language, "interaction", "no_premium_role_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -449,9 +360,7 @@ export default class {
 
       return interaction.reply({
         embeds: [noPremiumUserEmbed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
       });
     }
 
@@ -459,9 +368,7 @@ export default class {
       return interaction.reply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(language, "interaction", "owner_only")}`
-            )
+            .setDescription(`${client.i18n.get(language, "interaction", "owner_only")}`)
             .setColor(client.color_main),
         ],
       });
@@ -479,41 +386,24 @@ export default class {
         ],
       });
 
-    if (
-      command.accessableby.includes(Accessableby.UserPremium) &&
-      !userPerm.UserPremium
-    ) {
+    if (command.accessableby.includes(Accessableby.UserPremium) && !userPerm.UserPremium) {
       const noPremiumUserEmbed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(
-            language,
-            "interaction",
-            "no_user_premium_plan_author"
-          ),
+          name: client.i18n.get(language, "interaction", "no_user_premium_plan_author"),
         })
         .setDescription(
-          `${client.i18n.get(
-            language,
-            "interaction",
-            "no_user_premium_plan_desc",
-            {
-              user: `${interaction.user}`,
-              serversupport: client.config.bot.SERVER_SUPPORT_URL,
-              premium: client.config.bot.PREMIUM_URL,
-            }
-          )}`
+          `${client.i18n.get(language, "interaction", "no_user_premium_plan_desc", {
+            user: `${interaction.user}`,
+            serversupport: client.config.bot.SERVER_SUPPORT_URL,
+            premium: client.config.bot.PREMIUM_URL,
+          })}`
         )
         .setColor(client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        client.config.bot.PREMIUM_URL
-      ) {
+      if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              client.i18n.get(language, "interaction", "no_user_premium_button")
-            )
+            .setLabel(client.i18n.get(language, "interaction", "no_user_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -522,51 +412,28 @@ export default class {
 
       return interaction.reply({
         embeds: [noPremiumUserEmbed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
       });
     }
 
-    if (
-      command.accessableby.includes(Accessableby.GuildPremium) &&
-      !userPerm.GuildPremium
-    ) {
+    if (command.accessableby.includes(Accessableby.GuildPremium) && !userPerm.GuildPremium) {
       const noPremiumGuildEmbed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(
-            language,
-            "interaction",
-            "no_guild_premium_plan_author"
-          ),
+          name: client.i18n.get(language, "interaction", "no_guild_premium_plan_author"),
         })
         .setDescription(
-          `${client.i18n.get(
-            language,
-            "interaction",
-            "no_guild_premium_plan_desc",
-            {
-              user: `${interaction.user}`,
-              serversupport: client.config.bot.SERVER_SUPPORT_URL,
-              premium: client.config.bot.PREMIUM_URL,
-            }
-          )}`
+          `${client.i18n.get(language, "interaction", "no_guild_premium_plan_desc", {
+            user: `${interaction.user}`,
+            serversupport: client.config.bot.SERVER_SUPPORT_URL,
+            premium: client.config.bot.PREMIUM_URL,
+          })}`
         )
         .setColor(client.color_main);
       const PremiumCheckButton = new ActionRowBuilder<ButtonBuilder>();
-      if (
-        client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-        client.config.bot.PREMIUM_URL
-      ) {
+      if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(
-              client.i18n.get(
-                language,
-                "interaction",
-                "no_guild_premium_button"
-              )
-            )
+            .setLabel(client.i18n.get(language, "interaction", "no_guild_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -575,9 +442,7 @@ export default class {
 
       return interaction.reply({
         embeds: [noPremiumGuildEmbed],
-        components: PremiumCheckButton.components.length
-          ? [PremiumCheckButton]
-          : [],
+        components: PremiumCheckButton.components.length ? [PremiumCheckButton] : [],
       });
     }
 
@@ -596,11 +461,7 @@ export default class {
           if (voteChecker == TopggServiceEnum.ERROR) {
             const embed = new EmbedBuilder()
               .setAuthor({
-                name: client.i18n.get(
-                  language,
-                  "interaction",
-                  "topgg_error_author"
-                ),
+                name: client.i18n.get(language, "interaction", "topgg_error_author"),
               })
               .setDescription(
                 client.i18n.get(language, "interaction", "topgg_error_desc", {
@@ -621,11 +482,7 @@ export default class {
           if (voteChecker == TopggServiceEnum.UNVOTED) {
             const embed = new EmbedBuilder()
               .setAuthor({
-                name: client.i18n.get(
-                  language,
-                  "interaction",
-                  "topgg_unvote_author"
-                ),
+                name: client.i18n.get(language, "interaction", "topgg_unvote_author"),
               })
               .setDescription(
                 client.i18n.get(language, "interaction", "topgg_unvote_desc", {
@@ -639,27 +496,16 @@ export default class {
             if (client.config.MENU_HELP_EMOJI.E_VOTE) {
               VoteButton.addComponents(
                 new ButtonBuilder()
-                  .setLabel(
-                    client.i18n.get(
-                      language,
-                      "interaction",
-                      "topgg_unvote_button"
-                    )
-                  )
+                  .setLabel(client.i18n.get(language, "interaction", "topgg_unvote_button"))
                   .setStyle(ButtonStyle.Link)
                   .setEmoji(client.config.MENU_HELP_EMOJI.E_VOTE)
                   .setURL(`https://top.gg/bot/${client.user?.id}/vote`)
               );
             }
-            if (
-              client.config.MENU_HELP_EMOJI.E_PREMIUM &&
-              client.config.bot.PREMIUM_URL
-            ) {
+            if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
               VoteButton.addComponents(
                 new ButtonBuilder()
-                  .setLabel(
-                    client.i18n.get(language, "interaction", "premium_button")
-                  )
+                  .setLabel(client.i18n.get(language, "interaction", "premium_button"))
                   .setStyle(ButtonStyle.Link)
                   .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
                   .setURL(client.config.bot.PREMIUM_URL)
@@ -675,10 +521,7 @@ export default class {
       }
     }
 
-    if (
-      command.accessableby.includes(Accessableby.PremiumStore) &&
-      !userPerm.PremiumStore
-    ) {
+    if (command.accessableby.includes(Accessableby.PremiumStore) && !userPerm.PremiumStore) {
       const url = `https://discord.com/api/v10/interactions/${interaction.id}/${interaction.token}/callback`;
       const json = {
         type: 10,
@@ -699,9 +542,7 @@ export default class {
       let attachments: Attachment | undefined;
       let subCommandGroupName: string;
 
-      function argConvert(
-        dataArray: readonly CommandInteractionOption<CacheType>[]
-      ) {
+      function argConvert(dataArray: readonly CommandInteractionOption<CacheType>[]) {
         for (const data of dataArray) {
           if (data.type === ApplicationCommandOptionType.Subcommand) {
             argConvert(data.options!);
@@ -747,36 +588,26 @@ export default class {
 
       client.logger.info(
         "Slash Commands",
-        `${chalk
-          .hex("#00D100")
-          .bold(commandNameArray.join("-"))} được sử dụng bởi ${chalk.hex(
+        `${chalk.hex("#00D100").bold(commandNameArray.join("-"))} được sử dụng bởi ${chalk.hex(
           "#00D100"
         )(interaction.user.displayName)} (${chalk.hex("#00D100")(
           interaction.user.id
-        )}) từ ${chalk.hex("#00D100")(interaction.guild.name)} (${chalk.hex(
-          "#00D100"
-        )(interaction.guild.id)})`
+        )}) từ ${chalk.hex("#00D100")(interaction.guild.name)} (${chalk.hex("#00D100")(
+          interaction.guild.id
+        )})`
       );
 
       ////////// Thống kê Sử dụng Lệnh Người Dùng //////////
-      let commandUsage = await client.db.CommandUserUsage.get(
-        `${interaction.user.id}`
-      );
+      let commandUsage = await client.db.CommandUserUsage.get(`${interaction.user.id}`);
       if (!commandUsage) {
-        commandUsage = await client.db.CommandUserUsage.set(
-          `${interaction.user.id}`,
-          {
-            userid: interaction.user.id,
-            username: interaction.user.username,
-            total: 1,
-          }
-        );
+        commandUsage = await client.db.CommandUserUsage.set(`${interaction.user.id}`, {
+          userid: interaction.user.id,
+          username: interaction.user.username,
+          total: 1,
+        });
       } else {
         commandUsage.total += 1;
-        await client.db.CommandUserUsage.set(
-          `${interaction.user.id}`,
-          commandUsage
-        );
+        await client.db.CommandUserUsage.set(`${interaction.user.id}`, commandUsage);
       }
       ////////// Thống kê Sử dụng Lệnh Người Dùng //////////
 
@@ -796,11 +627,7 @@ export default class {
     } catch (error) {
       client.logger.error("CommandManager", error);
       interaction.reply({
-        content: `${client.i18n.get(
-          language,
-          "interaction",
-          "unexpected_error"
-        )}\n ${error}`,
+        content: `${client.i18n.get(language, "interaction", "unexpected_error")}\n ${error}`,
       });
     }
   }

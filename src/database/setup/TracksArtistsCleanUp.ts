@@ -24,17 +24,11 @@ export class TracksArtistsCleanUp {
     try {
       // Xóa tất cả dữ liệu từ TopTrack
       await this.client.db.TopTrack.deleteAll();
-      this.client.logger.info(
-        TracksArtistsCleanUp.name,
-        "Đã xóa tất cả dữ liệu TopTrack."
-      );
+      this.client.logger.info(TracksArtistsCleanUp.name, "Đã xóa tất cả dữ liệu TopTrack.");
 
       // Xóa tất cả dữ liệu từ TopArtist
       await this.client.db.TopArtist.deleteAll();
-      this.client.logger.info(
-        TracksArtistsCleanUp.name,
-        "Đã xóa tất cả dữ liệu TopArtist."
-      );
+      this.client.logger.info(TracksArtistsCleanUp.name, "Đã xóa tất cả dữ liệu TopArtist.");
     } catch (error) {
       this.client.logger.error(
         TracksArtistsCleanUp.name,

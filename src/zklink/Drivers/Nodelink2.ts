@@ -40,9 +40,7 @@ export class Nodelink2 extends AbstractDriver {
   public wsUrl: string = "";
   public httpUrl: string = "";
   public sessionId: string | null;
-  public playerFunctions: ZklinkDatabase<
-    (player: ZklinkPlayer, ...args: any) => unknown
-  >;
+  public playerFunctions: ZklinkDatabase<(player: ZklinkPlayer, ...args: any) => unknown>;
   public functions: ZklinkDatabase<(manager: Zklink, ...args: any) => unknown>;
   protected wsClient?: ZklinkWebsocket;
   public manager: Zklink | null = null;
@@ -51,12 +49,8 @@ export class Nodelink2 extends AbstractDriver {
   constructor() {
     super();
     this.sessionId = null;
-    this.playerFunctions = new ZklinkDatabase<
-      (player: ZklinkPlayer, ...args: any) => unknown
-    >();
-    this.functions = new ZklinkDatabase<
-      (manager: Zklink, ...args: any) => unknown
-    >();
+    this.playerFunctions = new ZklinkDatabase<(player: ZklinkPlayer, ...args: any) => unknown>();
+    this.functions = new ZklinkDatabase<(manager: Zklink, ...args: any) => unknown>();
     this.playerFunctions.set("getLyric", this.getLyric);
   }
 
@@ -81,16 +75,13 @@ export class Nodelink2 extends AbstractDriver {
   }
 
   public connect(): ZklinkWebsocket {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     const isResume = this.manager!.ZklinkOptions.options!.resume;
     const ws = new ZklinkWebsocket(this.wsUrl, {
       headers: {
         Authorization: this.node!.options.auth,
         "user-id": this.manager!.id,
-        "accept-encoding": (process as any).isBun
-          ? "gzip, deflate"
-          : "br, gzip, deflate",
+        "accept-encoding": (process as any).isBun ? "gzip, deflate" : "br, gzip, deflate",
         "client-name": `${metadata.name}/${metadata.version} (${metadata.github})`,
         "session-id": this.sessionId !== null && isResume ? this.sessionId : "",
         "user-agent": this.manager!.ZklinkOptions.options!.userAgent!,
@@ -111,18 +102,12 @@ export class Nodelink2 extends AbstractDriver {
     return ws;
   }
 
-  public async requester<D = any>(
-    options: ZklinkRequesterOptions
-  ): Promise<D | undefined> {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+  public async requester<D = any>(options: ZklinkRequesterOptions): Promise<D | undefined> {
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     if (options.path.includes("/sessions") && this.sessionId == null)
-      throw new Error(
-        "sessionId chưa được khởi tạo! Vui lòng đợi nodelink kết nối!"
-      );
+      throw new Error("sessionId chưa được khởi tạo! Vui lòng đợi nodelink kết nối!");
     const url = new URL(`${this.httpUrl}${options.path}`);
-    if (options.params)
-      url.search = new URLSearchParams(options.params).toString();
+    if (options.params) url.search = new URLSearchParams(options.params).toString();
 
     if (options.data) {
       options.body = JSON.stringify(options.data);
@@ -131,9 +116,7 @@ export class Nodelink2 extends AbstractDriver {
     const lavalinkHeaders = {
       authorization: this.node!.options.auth,
       "user-agent": this.manager!.ZklinkOptions.options!.userAgent!,
-      "accept-encoding": (process as any).isBun
-        ? "gzip, deflate"
-        : "br, gzip, deflate",
+      "accept-encoding": (process as any).isBun ? "gzip, deflate" : "br, gzip, deflate",
       ...options.headers,
     };
 
@@ -157,9 +140,7 @@ export class Nodelink2 extends AbstractDriver {
       );
       this.debug(
         "Lỗi từ server nodelink. " +
-          `Mã trạng thái: ${res.status}\n Headers: ${util.inspect(
-            options.headers
-          )}`
+          `Mã trạng thái: ${res.status}\n Headers: ${util.inspect(options.headers)}`
       );
       return undefined;
     }
@@ -181,15 +162,13 @@ export class Nodelink2 extends AbstractDriver {
   }
 
   protected wsMessageEvent(data: string) {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     const wsData = JSON.parse(data.toString());
     this.node!.wsMessageEvent(wsData);
   }
 
   protected debug(logs: string) {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     // @ts-ignore
     this.manager!.emit(
       ZklinkEvents.Debug,
@@ -201,9 +180,7 @@ export class Nodelink2 extends AbstractDriver {
     if (this.wsClient) this.wsClient.close(1006, "Tự đóng");
   }
 
-  protected convertV4trackResponse(
-    nl2Data: Record<string, any>
-  ): Record<string, any> {
+  protected convertV4trackResponse(nl2Data: Record<string, any>): Record<string, any> {
     if (!nl2Data) return {};
     switch (nl2Data.loadType) {
       case Nodelink2loadType.SHORTS: {
@@ -238,14 +215,8 @@ export class Nodelink2 extends AbstractDriver {
     return nl2Data;
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async updateSession(
-    sessionId: string,
-    mode: boolean,
-    timeout: number
-  ): Promise<void> {
-    this.debug(
-      "CẢNH BÁO: Nodelink không hỗ trợ resume, đặt resume=true sẽ không có tác dụng"
-    );
+  public async updateSession(sessionId: string, mode: boolean, timeout: number): Promise<void> {
+    this.debug("CẢNH BÁO: Nodelink không hỗ trợ resume, đặt resume=true sẽ không có tác dụng");
     return;
   }
 
@@ -262,9 +233,7 @@ export class Nodelink2 extends AbstractDriver {
       headers: { "content-type": "application/json" },
       method: "GET",
     };
-    const data = await player.node.driver.requester<NodelinkGetLyricsInterface>(
-      options
-    );
+    const data = await player.node.driver.requester<NodelinkGetLyricsInterface>(options);
     return data;
   }
 

@@ -53,8 +53,7 @@ export class ZklinkQueue extends Array<ZklinkTrack> {
   public add(track: ZklinkTrack | ZklinkTrack[]): ZklinkQueue {
     if (Array.isArray(track) && track.some((t) => !(t instanceof ZklinkTrack)))
       throw new Error("Track phải là một instance của ZklinkTrack");
-    if (!Array.isArray(track) && !(track instanceof ZklinkTrack))
-      track = [track];
+    if (!Array.isArray(track) && !(track instanceof ZklinkTrack)) track = [track];
 
     if (!this.current) {
       if (Array.isArray(track)) this.current = track.shift();

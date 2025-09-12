@@ -19,10 +19,7 @@ export class PlayerEventLoader {
       let eventsFile = await readdirRecursive(eventsPath);
       await this.registerPath(eventsFile);
     }
-    this.client.logger.info(
-      PlayerEventLoader.name,
-      `${this.counter} sự kiện đã được nạp!`
-    );
+    this.client.logger.info(PlayerEventLoader.name, `${this.counter} sự kiện đã được nạp!`);
   }
 
   async registerPath(eventsPath: string[]) {
@@ -39,9 +36,6 @@ export class PlayerEventLoader {
     };
 
     const eName = splitPath(path);
-    this.client.Zklink.on(
-      eName as "voiceEndSpeaking",
-      events.execute.bind(null, this.client)
-    );
+    this.client.Zklink.on(eName as "voiceEndSpeaking", events.execute.bind(null, this.client));
   }
 }

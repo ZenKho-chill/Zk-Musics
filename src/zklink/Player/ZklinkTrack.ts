@@ -1,8 +1,5 @@
 import { ZklinkEvents } from "../Interface/Constants.js";
-import {
-  ZklinkSearchResult,
-  ZklinkSearchResultType,
-} from "../Interface/Manager.js";
+import { ZklinkSearchResult, ZklinkSearchResultType } from "../Interface/Manager.js";
 import { RawTrack } from "../Interface/Rest.js";
 import { ResolveOptions } from "../Interface/Track.js";
 import { Zklink } from "../Zklink.js";
@@ -45,7 +42,10 @@ export class ZklinkTrack {
    * @param options RawTrack trả về từ REST
    * @param requester Thông tin requester của track này
    */
-  constructor(protected options: RawTrack, requester: unknown) {
+  constructor(
+    protected options: RawTrack,
+    requester: unknown
+  ) {
     this.encoded = options.encoded;
     this.identifier = options.info.identifier;
     this.isSeekable = options.info.isSeekable;
@@ -108,10 +108,7 @@ export class ZklinkTrack {
    * @param options Tùy chọn resolve
    * @returns Promise<ZklinkTrack>
    */
-  public async resolver(
-    manager: Zklink,
-    options?: ResolveOptions
-  ): Promise<ZklinkTrack> {
+  public async resolver(manager: Zklink, options?: ResolveOptions): Promise<ZklinkTrack> {
     const { overwrite } = options ? options : { overwrite: false };
 
     if (this.isPlayable) {
@@ -124,10 +121,7 @@ export class ZklinkTrack {
       `[Zklink] / [Track] | Đang resolve track từ ${this.source} ${this.title}; Source: ${this.source}`
     );
 
-    const result = await this.getTrack(
-      manager,
-      options ? options.nodeName : undefined
-    );
+    const result = await this.getTrack(manager, options ? options.nodeName : undefined);
     if (!result) throw new Error("Không tìm thấy kết quả");
 
     this.encoded = result.encoded;
@@ -146,20 +140,14 @@ export class ZklinkTrack {
     return this;
   }
 
-  protected async getTrack(
-    manager: Zklink,
-    nodeName?: string
-  ): Promise<RawTrack> {
-    const node = nodeName
-      ? manager.nodes.get(nodeName)
-      : await manager.nodes.getLeastUsed();
+  protected async getTrack(manager: Zklink, nodeName?: string): Promise<RawTrack> {
+    const node = nodeName ? manager.nodes.get(nodeName) : await manager.nodes.getLeastUsed();
 
     if (!node) throw new Error("Không có node khả dụng");
 
     const result = await this.resolverEngine(manager, node);
 
-    if (!result || !result.tracks.length)
-      throw new Error("Không tìm thấy kết quả");
+    if (!result || !result.tracks.length) throw new Error("Không tìm thấy kết quả");
 
     const rawTracks = result.tracks.map((x) => x.raw);
 
@@ -168,13 +156,8 @@ export class ZklinkTrack {
       const officialTrack = rawTracks.find(
         (track) =>
           author.some((name) =>
-            new RegExp(`^${this.escapeRegExp(name)}$`, "i").test(
-              track.info.author
-            )
-          ) ||
-          new RegExp(`^${this.escapeRegExp(this.title)}$`, "i").test(
-            track.info.title
-          )
+            new RegExp(`^${this.escapeRegExp(name)}$`, "i").test(track.info.author)
+          ) || new RegExp(`^${this.escapeRegExp(this.title)}$`, "i").test(track.info.title)
       );
       if (officialTrack) return officialTrack;
     }
@@ -194,23 +177,12 @@ export class ZklinkTrack {
     return string.replace(/[/\-\\^$*+?.()|[\]{}]/g, "\\$&");
   }
 
-  protected async resolverEngine(
-    manager: Zklink,
-    node: ZklinkNode
-  ): Promise<ZklinkSearchResult> {
-    const defaultSearchEngine =
-      manager.ZklinkOptions.options!.defaultSearchEngine;
-    const engine = manager.searchEngines.get(
-      this.source || defaultSearchEngine || "spotify"
-    );
-    const searchQuery = [this.author, this.title]
-      .filter((x) => !!x)
-      .join(" - ");
-    const searchFallbackEngineName =
-      manager.ZklinkOptions.options!.searchFallback!.engine;
-    const searchFallbackEngine = manager.searchEngines.get(
-      searchFallbackEngineName
-    );
+  protected async resolverEngine(manager: Zklink, node: ZklinkNode): Promise<ZklinkSearchResult> {
+    const defaultSearchEngine = manager.ZklinkOptions.options!.defaultSearchEngine;
+    const engine = manager.searchEngines.get(this.source || defaultSearchEngine || "spotify");
+    const searchQuery = [this.author, this.title].filter((x) => !!x).join(" - ");
+    const searchFallbackEngineName = manager.ZklinkOptions.options!.searchFallback!.engine;
+    const searchFallbackEngine = manager.searchEngines.get(searchFallbackEngineName);
 
     const prase1 = await manager.search(`directSearch=${this.uri}`, {
       requester: this.requester,
@@ -218,19 +190,13 @@ export class ZklinkTrack {
     });
     if (prase1.tracks.length !== 0) return prase1;
 
-    const prase2 = await manager.search(
-      `directSearch=${engine}search:${searchQuery}`,
-      {
-        requester: this.requester,
-        nodeName: node.options.name,
-      }
-    );
+    const prase2 = await manager.search(`directSearch=${engine}search:${searchQuery}`, {
+      requester: this.requester,
+      nodeName: node.options.name,
+    });
     if (prase2.tracks.length !== 0) return prase2;
 
-    if (
-      manager.ZklinkOptions.options!.searchFallback?.enable &&
-      searchFallbackEngine
-    ) {
+    if (manager.ZklinkOptions.options!.searchFallback?.enable && searchFallbackEngine) {
       const prase3 = await manager.search(
         `directSearch=${searchFallbackEngine}search:${searchQuery}`,
         {

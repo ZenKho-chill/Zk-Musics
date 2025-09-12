@@ -5,21 +5,14 @@ import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 export default class {
-  async execute(
-    client: Manager,
-    player: ZklinkPlayer,
-    track: ZklinkTrack,
-    message: string
-  ) {
+  async execute(client: Manager, player: ZklinkPlayer, track: ZklinkTrack, message: string) {
     if (!client.isDatabaseConnected)
       return client.logger.warn(
         "DatabaseService",
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
 
-    const guild = await client.guilds
-      .fetch(player.guildId)
-      .catch(() => undefined);
+    const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
     client.logger.warn("TrackResolveError", message);
 
@@ -37,19 +30,14 @@ export default class {
 
     let guildModel = await client.db.language.get(`${player.guildId}`);
     if (!guildModel) {
-      guildModel = await client.db.language.set(
-        `${player.guildId}`,
-        client.config.bot.LANGUAGE
-      );
+      guildModel = await client.db.language.set(`${player.guildId}`, client.config.bot.LANGUAGE);
     }
 
     const language = guildModel;
 
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
-      .setDescription(
-        `${client.i18n.get(language, "events.player", "player_track_error")}`
-      );
+      .setDescription(`${client.i18n.get(language, "events.player", "player_track_error")}`);
 
     if (channel) {
       const setup = await client.db.setup.get(player.guildId);
@@ -66,23 +54,15 @@ export default class {
       );
     }
 
-    client.logger.error(
-      "TrackResolveError",
-      `Lỗi track tại ${guild!.name} / ${player.guildId}.`
-    );
+    client.logger.error("TrackResolveError", `Lỗi track tại ${guild!.name} / ${player.guildId}.`);
 
-    const data247 = await new Mode247Builder(client, player).get(
-      player.guildId
-    );
+    const data247 = await new Mode247Builder(client, player).get(player.guildId);
     if (data247 !== null && data247 && data247.twentyfourseven && channel)
       new CleanUpMessage(client, channel, player);
 
-    const currentPlayer = client.Zklink.players.get(
-      player.guildId
-    ) as ZklinkPlayer;
+    const currentPlayer = client.Zklink.players.get(player.guildId) as ZklinkPlayer;
     if (!currentPlayer) return;
-    if (currentPlayer.queue.length > 0)
-      return await player.skip().catch(() => {});
+    if (currentPlayer.queue.length > 0) return await player.skip().catch(() => {});
     if (!currentPlayer.sudoDestroy) await player.destroy().catch(() => {});
   }
 }

@@ -13,8 +13,7 @@ GlobalFonts.registerFromPath("./script/Courage-Road.ttf", "Courage Road");
 
 export default class implements Command {
   public name = ["topstats"];
-  public description =
-    "Hiển thị top server, top người dùng và top lượt bình chọn";
+  public description = "Hiển thị top server, top người dùng và top lượt bình chọn";
   public category = "Utils";
   public accessableby = data.COMMANDS_ACCESS.UTILS.TopStats;
   public usage = "";
@@ -45,10 +44,7 @@ export default class implements Command {
 
       const topUsers =
         (usersData || [])
-          .sort(
-            (a, b) =>
-              (b.value.totalSongsPlayed || 0) - (a.value.totalSongsPlayed || 0)
-          )
+          .sort((a, b) => (b.value.totalSongsPlayed || 0) - (a.value.totalSongsPlayed || 0))
           .slice(0, 10)
           .map((user, index) => `${index + 1}. ${user.value.username}`)
           .join("\n") || "Không có dữ liệu";
@@ -70,9 +66,7 @@ export default class implements Command {
 
       // Hàm tiện ích để rút ngắn chuỗi tới độ dài tối đa
       function truncateText(text: string, maxLength: number): string {
-        return text.length > maxLength
-          ? text.slice(0, maxLength - 3) + "..."
-          : text;
+        return text.length > maxLength ? text.slice(0, maxLength - 3) + "..." : text;
       }
 
       // Vẽ danh sách Top Server
@@ -133,11 +127,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.utils",
-                "topstats_error"
-              )}`
+              `${client.i18n.get(handler.language, "commands.utils", "topstats_error")}`
             )
             .setColor(client.color_main),
         ],

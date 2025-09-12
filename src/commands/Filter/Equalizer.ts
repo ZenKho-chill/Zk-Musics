@@ -35,9 +35,7 @@ export default class implements Command {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(
-              `${client.i18n.get(handler.language, "error", "number_invalid")}`
-            )
+            .setDescription(`${client.i18n.get(handler.language, "error", "number_invalid")}`)
             .setColor(client.color_main),
         ],
       });
@@ -47,50 +45,25 @@ export default class implements Command {
     if (!value) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.filter",
-            "eq_author"
-          )}`,
-          iconURL: `${client.i18n.get(
-            handler.language,
-            "commands.filter",
-            "eq_icon"
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.filter", "eq_author")}`,
+          iconURL: `${client.i18n.get(handler.language, "commands.filter", "eq_icon")}`,
         })
         .setColor(client.color_main)
-        .setDescription(
-          `${client.i18n.get(handler.language, "commands.filter", "eq_desc")}`
-        )
+        .setDescription(`${client.i18n.get(handler.language, "commands.filter", "eq_desc")}`)
         .addFields({
-          name: `${client.i18n.get(
-            handler.language,
-            "commands.filter",
-            "eq_field_title"
-          )}`,
-          value: `${client.i18n.get(
-            handler.language,
-            "commands.filter",
-            "eq_field_value",
-            {
-              prefix: handler.prefix,
-            }
-          )}`,
+          name: `${client.i18n.get(handler.language, "commands.filter", "eq_field_title")}`,
+          value: `${client.i18n.get(handler.language, "commands.filter", "eq_field_value", {
+            prefix: handler.prefix,
+          })}`,
           inline: false,
         })
         .setFooter({
-          text: `${client.i18n.get(
-            handler.language,
-            "commands.filter",
-            "eq_footer",
-            {
-              prefix: handler.prefix,
-            }
-          )}`,
+          text: `${client.i18n.get(handler.language, "commands.filter", "eq_footer", {
+            prefix: handler.prefix,
+          })}`,
         });
       return handler.editReply({ embeds: [embed] });
-    } else if (value == "off" || value == "reset")
-      return player?.filter.clear();
+    } else if (value == "off" || value == "reset") return player?.filter.clear();
 
     const bands = value.split(/[ ]+/);
     let bandsStr = "";
@@ -101,11 +74,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.filter",
-                  "eq_number"
-                )}`
+                `${client.i18n.get(handler.language, "commands.filter", "eq_number")}`
               )
               .setColor(client.color_main),
           ],
@@ -114,13 +83,7 @@ export default class implements Command {
         return handler.editReply({
           embeds: [
             new EmbedBuilder()
-              .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.filter",
-                  "eq_than"
-                )}`
-              )
+              .setDescription(`${client.i18n.get(handler.language, "commands.filter", "eq_than")}`)
               .setColor(client.color_main),
           ],
         });
@@ -130,11 +93,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.filter",
-                  "eq_greater"
-                )}`
+                `${client.i18n.get(handler.language, "commands.filter", "eq_greater")}`
               )
               .setColor(client.color_main),
           ],

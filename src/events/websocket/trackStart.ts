@@ -8,8 +8,7 @@ export default class {
     if (!song) {
       return;
     }
-    const requesterQueue =
-      song && song.requester ? (song!.requester as User) : null;
+    const requesterQueue = song && song.requester ? (song!.requester as User) : null;
 
     const currentData = {
       title: song.title ?? "Tiêu đề không xác định",

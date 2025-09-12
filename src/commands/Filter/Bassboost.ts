@@ -1,9 +1,5 @@
 import { Manager } from "../../manager.js";
-import {
-  EmbedBuilder,
-  ApplicationCommandOptionType,
-  Message,
-} from "discord.js";
+import { EmbedBuilder, ApplicationCommandOptionType, Message } from "discord.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
@@ -40,11 +36,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.filter",
-                "filter_number"
-              )}`
+              `${client.i18n.get(handler.language, "commands.filter", "filter_number")}`
             )
             .setColor(client.color_main),
         ],
@@ -71,11 +63,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.filter",
-                "bassboost_limit"
-              )}`
+              `${client.i18n.get(handler.language, "commands.filter", "bassboost_limit")}`
             )
             .setColor(client.color_main),
         ],
@@ -101,14 +89,9 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "commands.filter",
-          "bassboost_set",
-          {
-            amount: value,
-          }
-        )}`
+        `${client.i18n.get(handler.language, "commands.filter", "bassboost_set", {
+          amount: value,
+        })}`
       )
       .setColor(client.color_main);
 

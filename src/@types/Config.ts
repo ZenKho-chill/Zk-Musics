@@ -264,6 +264,7 @@ export interface Features {
   FilterMenu: boolean;
   ButtonLabel: boolean;
   MusicCard: MusicCard;
+  VOICE_STATUS_CHANNEL: boolean;
 }
 
 export interface MusicCard {
@@ -501,7 +502,6 @@ export interface SETTINGS {
   Spotify: string[];
   Themes: string[];
   TempVoiceChannel: string[];
-  StatusVoiceChannel: string[];
 }
 
 export interface UTILS {

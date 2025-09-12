@@ -24,9 +24,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
-    const globalCommandUsageData = await client.db.CommandGlobalUsage.get(
-      "global"
-    );
+    const globalCommandUsageData = await client.db.CommandGlobalUsage.get("global");
     const globalPlayedSongData = await client.db.PlayedSongGlobal.get("global");
     const globalCommands = globalCommandUsageData?.total || 0;
     const globalPlayed = globalPlayedSongData?.SongsPlayed || 0;
@@ -34,10 +32,7 @@ export default class implements Command {
     const botInfo = stripIndents`
   • **Tên người dùng :** ${client.user!.username} / ${client.user!.id}
   • **Số máy chủ :** ${client.guilds.cache.size}
-  • **Số người dùng :** ${client.guilds.cache.reduce(
-    (a, b) => a + b.memberCount,
-    0
-  )}
+  • **Số người dùng :** ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}
   • **Số kênh :** ${client.channels.cache.size}
   • **Lệnh đã sử dụng :** ${globalCommands}
   • **Bài đã phát :** ${globalPlayed}

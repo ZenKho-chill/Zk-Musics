@@ -32,9 +32,7 @@ export class ZklinkFilter {
     const filterData = ZklinkFilterData[filter];
 
     if (!filterData) {
-      this.debug(
-        `Filter ${filter} không có trong danh sách filter có sẵn của Zklink`
-      );
+      this.debug(`Filter ${filter} không có trong danh sách filter có sẵn của Zklink`);
       return this.player;
     }
 
@@ -168,9 +166,7 @@ export class ZklinkFilter {
       },
     });
 
-    this.debug(
-      "Đã đặt filter tuỳ chỉnh thành công. Dữ liệu: " + util.inspect(filter)
-    );
+    this.debug("Đã đặt filter tuỳ chỉnh thành công. Dữ liệu: " + util.inspect(filter));
 
     return this.player;
   }
@@ -184,7 +180,6 @@ export class ZklinkFilter {
   }
 
   protected checkDestroyed(): void {
-    if (this.player.state === ZklinkPlayerState.DESTROYED)
-      throw new Error("Player đã bị huỷ");
+    if (this.player.state === ZklinkPlayerState.DESTROYED) throw new Error("Player đã bị huỷ");
   }
 }

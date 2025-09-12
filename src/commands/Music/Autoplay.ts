@@ -28,16 +28,11 @@ export default class implements Command {
     if (!client.config.features.AUTOPLAY_SUPPORT) {
       const AutoplayDisabledEmbed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "autoplay_disabled",
-            {
-              user: String(handler.user?.displayName || handler.user?.tag),
-              botname: client.user!.username || client.user!.displayName,
-              serversupport: client.config.bot.SERVER_SUPPORT_URL,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "autoplay_disabled", {
+            user: String(handler.user?.displayName || handler.user?.tag),
+            botname: client.user!.username || client.user!.displayName,
+            serversupport: client.config.bot.SERVER_SUPPORT_URL,
+          })}`
         )
         .setColor(client.color_main);
 
@@ -47,9 +42,7 @@ export default class implements Command {
       });
     }
 
-    const player = client.Zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
 
     if (player.data.get("autoplay") === true) {
       player.data.set("autoplay", false);
@@ -59,14 +52,9 @@ export default class implements Command {
 
       const off = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "autoplay_off",
-            {
-              mode: handler.modeLang.disable,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "autoplay_off", {
+            mode: handler.modeLang.disable,
+          })}`
         )
         .setColor(client.color_main);
 
@@ -100,14 +88,9 @@ export default class implements Command {
 
       const on = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "autoplay_on",
-            {
-              mode: handler.modeLang.enable,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "autoplay_on", {
+            mode: handler.modeLang.enable,
+          })}`
         )
         .setColor(client.color_main);
 

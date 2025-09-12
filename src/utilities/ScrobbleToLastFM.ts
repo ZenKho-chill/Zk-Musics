@@ -12,12 +12,9 @@ import md5 from "md5";
 import { ZklinkPlayer } from "../Zklink/main.js";
 import Axios from "axios";
 
-function generateApiSignature(
-  client: Manager,
-  params: { [key: string]: string }
-) {
+function generateApiSignature(client: Manager, params: { [key: string]: string }) {
   const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
-  
+
   if (!lastfmConfig || !lastfmConfig.Secret) {
     throw new Error("Last.fm secret key not configured");
   }
@@ -35,7 +32,7 @@ function generateApiSignature(
 export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
   try {
     const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
-    
+
     if (!lastfmConfig || !lastfmConfig.Enable) {
       return;
     }
@@ -64,50 +61,40 @@ export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
     }
     const { sessionKey } = lastFmData;
 
-    const response = await Axios.post(
-      "http://ws.audioscrobbler.com/2.0/",
-      null,
-      {
-        params: {
-          method: "track.scrobble",
+    const response = await Axios.post("http://ws.audioscrobbler.com/2.0/", null, {
+      params: {
+        method: "track.scrobble",
+        api_key: lastfmConfig.ApiKey,
+        sk: sessionKey,
+        artist: player.queue.current.author,
+        track: player.queue.current.title,
+        timestamp: Math.floor(Date.now() / 1000),
+        api_sig: generateApiSignature(client, {
           api_key: lastfmConfig.ApiKey,
+          method: "track.scrobble",
           sk: sessionKey,
           artist: player.queue.current.author,
           track: player.queue.current.title,
-          timestamp: Math.floor(Date.now() / 1000),
-          api_sig: generateApiSignature(client, {
-            api_key: lastfmConfig.ApiKey,
-            method: "track.scrobble",
-            sk: sessionKey,
-            artist: player.queue.current.author,
-            track: player.queue.current.title,
-            timestamp: Math.floor(Date.now() / 1000).toString(),
-          }),
-          format: "json",
-        },
-      }
-    );
+          timestamp: Math.floor(Date.now() / 1000).toString(),
+        }),
+        format: "json",
+      },
+    });
   } catch (error: any) {
     const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
-    
-    client.logger.warn(
-      ScrobbleToLastFM.name,
-      `Lỗi khi scrobble lên LastFM: ${error}`
-    );
+
+    client.logger.warn(ScrobbleToLastFM.name, `Lỗi khi scrobble lên LastFM: ${error}`);
 
     if (
       error.response &&
       error.response.data.error === 9 &&
-      error.response.data.message ===
-        "Invalid session key - Please re-authenticate"
+      error.response.data.message === "Invalid session key - Please re-authenticate"
     ) {
       const requesterUser = player.queue?.current?.requester as User;
       const requesterId = requesterUser.id;
       const LoginLastFM_Url = `https://www.last.fm/api/auth?api_key=${
         lastfmConfig.ApiKey
-      }&cb=${encodeURIComponent(
-        `${lastfmConfig.Callback}?user=${requesterId}`
-      )}`;
+      }&cb=${encodeURIComponent(`${lastfmConfig.Callback}?user=${requesterId}`)}`;
       const channel = (await client.channels
         .fetch(player.textId)
         .catch(() => undefined)) as TextChannel;
@@ -123,26 +110,18 @@ export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
       const language = guildModel;
 
       if (channel) {
-        const embed = new EmbedBuilder()
-          .setColor(client.color_second)
-          .setDescription(
-            `${client.i18n.get(
-              language,
-              "events.player",
-              "expired_login_session",
-              {
-                user: `<@${requesterId}>`,
-              }
-            )}`
-          );
+        const embed = new EmbedBuilder().setColor(client.color_second).setDescription(
+          `${client.i18n.get(language, "events.player", "expired_login_session", {
+            user: `<@${requesterId}>`,
+          })}`
+        );
 
-        const LastFMbutton =
-          new ActionRowBuilder<ButtonBuilder>().addComponents(
-            new ButtonBuilder()
-              .setLabel("Đăng nhập")
-              .setStyle(ButtonStyle.Link)
-              .setURL(LoginLastFM_Url)
-          );
+        const LastFMbutton = new ActionRowBuilder<ButtonBuilder>().addComponents(
+          new ButtonBuilder()
+            .setLabel("Đăng nhập")
+            .setStyle(ButtonStyle.Link)
+            .setURL(LoginLastFM_Url)
+        );
         const msg = await channel.send({
           flags: MessageFlags.SuppressNotifications,
           content: " ",

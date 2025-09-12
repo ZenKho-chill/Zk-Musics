@@ -45,11 +45,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_create_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_create_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -60,11 +56,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_create_toolong"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_create_toolong")}`
             )
             .setColor(client.color_main),
         ],
@@ -74,11 +66,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_create_des_toolong"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_create_des_toolong")}`
             )
             .setColor(client.color_main),
         ],
@@ -124,16 +112,11 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "commands.playlist",
-          "pl_create_created",
-          {
-            playlist: String(value),
-            id: idgen[0],
-            desc: des ? des : "Chưa đặt",
-          }
-        )}`
+        `${client.i18n.get(handler.language, "commands.playlist", "pl_create_created", {
+          playlist: String(value),
+          id: idgen[0],
+          desc: des ? des : "Chưa đặt",
+        })}`
       )
       .setColor(client.color_main)
       .setFooter({

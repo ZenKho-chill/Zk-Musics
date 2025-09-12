@@ -44,11 +44,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_delete_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_delete_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -61,11 +57,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_delete_notfound"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_delete_notfound")}`
             )
             .setColor(client.color_main),
         ],
@@ -75,38 +67,23 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.playlist",
-                "pl_delete_owner"
-              )}`
+              `${client.i18n.get(handler.language, "commands.playlist", "pl_delete_owner")}`
             )
             .setColor(client.color_main),
         ],
       });
 
     const action = new ActionRowBuilder<ButtonBuilder>().addComponents([
-      new ButtonBuilder()
-        .setStyle(ButtonStyle.Danger)
-        .setCustomId("yes")
-        .setLabel("Có"),
-      new ButtonBuilder()
-        .setStyle(ButtonStyle.Secondary)
-        .setCustomId("no")
-        .setLabel("Không"),
+      new ButtonBuilder().setStyle(ButtonStyle.Danger).setCustomId("yes").setLabel("Có"),
+      new ButtonBuilder().setStyle(ButtonStyle.Secondary).setCustomId("no").setLabel("Không"),
     ]);
 
     const msg = await handler.editReply({
       embeds: [
         new EmbedBuilder().setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_delete_confirm",
-            {
-              playlist_id: value,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.playlist", "pl_delete_confirm", {
+            playlist_id: value,
+          })}`
         ),
       ],
       components: [action],
@@ -123,14 +100,9 @@ export default class implements Command {
         await client.db.playlist.delete(value);
         const embed = new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get(
-              handler.language,
-              "commands.playlist",
-              "pl_delete_deleted",
-              {
-                name: value,
-              }
-            )}`
+            `${client.i18n.get(handler.language, "commands.playlist", "pl_delete_deleted", {
+              name: value,
+            })}`
           )
           .setColor(client.color_main);
         interaction.reply({ embeds: [embed] });
@@ -139,11 +111,7 @@ export default class implements Command {
       } else if (id == "no") {
         const embed = new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get(
-              handler.language,
-              "commands.playlist",
-              "pl_delete_no"
-            )}`
+            `${client.i18n.get(handler.language, "commands.playlist", "pl_delete_no")}`
           )
           .setColor(client.color_main);
         interaction.reply({ embeds: [embed] });
@@ -157,13 +125,7 @@ export default class implements Command {
         .fetch(String(msg?.id))
         .catch(() => undefined);
       const embed = new EmbedBuilder()
-        .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.playlist",
-            "pl_delete_no"
-          )}`
-        )
+        .setDescription(`${client.i18n.get(handler.language, "commands.playlist", "pl_delete_no")}`)
         .setColor(client.color_main);
       checkMsg ? checkMsg.edit({ embeds: [embed], components: [] }) : true;
       // @ts-ignore

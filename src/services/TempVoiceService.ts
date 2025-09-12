@@ -34,11 +34,7 @@ export default class TempVoiceService {
     }
   }
 
-  private async monitorChannel(
-    channel: VoiceChannel,
-    channelId: string,
-    client: Manager
-  ) {
+  private async monitorChannel(channel: VoiceChannel, channelId: string, client: Manager) {
     const checkEmpty = async () => {
       const updatedChannel = channel.guild.channels.cache.get(channel.id);
       if (
@@ -51,10 +47,7 @@ export default class TempVoiceService {
           await client.db.TempVoiceChannel.delete(channelId);
         } catch (error) {
           if ((error as Error).message !== "Unknown Channel") {
-            client.logger.error(
-              TempVoiceService.name,
-              `Lỗi khi xóa kênh voice tạm thời`
-            );
+            client.logger.error(TempVoiceService.name, `Lỗi khi xóa kênh voice tạm thời`);
           }
         }
       }
@@ -64,53 +57,38 @@ export default class TempVoiceService {
     channel.guild.client.on(
       "voiceStateUpdate",
       async (oldState: VoiceState, newState: VoiceState) => {
-        if (
-          oldState.channelId === channel.id &&
-          oldState.channel?.members.size === 0
-        ) {
+        if (oldState.channelId === channel.id && oldState.channel?.members.size === 0) {
           await checkEmpty();
         }
       }
     );
   }
 
-  public async handleVoiceStateUpdate(
-    oldState: VoiceState,
-    newState: VoiceState,
-    client: Manager
-  ) {
+  public async handleVoiceStateUpdate(oldState: VoiceState, newState: VoiceState, client: Manager) {
     const guildId = newState.guild.id;
     const userId = newState.member?.id;
 
     const guildSettings = await client.db.TempVoiceChannelSetting.get(guildId);
-    if (!guildSettings?.tempVoiceEnabled || !guildSettings.createVoiceChannelId)
-      return;
+    if (!guildSettings?.tempVoiceEnabled || !guildSettings.createVoiceChannelId) return;
 
     if (newState.channelId === guildSettings.createVoiceChannelId) {
       const allChannels = await client.db.TempVoiceChannel.all();
       const userChannels = allChannels.filter(
-        (entry) =>
-          entry.value.guildId === guildId && entry.value.ownerId === userId
+        (entry) => entry.value.guildId === guildId && entry.value.ownerId === userId
       );
 
       if (userChannels.length >= TempVoiceService.MAX_CHANNELS_PER_USER) {
         const existingChannelId = userChannels[0].value.channelId;
-        const existingChannel =
-          newState.guild.channels.cache.get(existingChannelId);
+        const existingChannel = newState.guild.channels.cache.get(existingChannelId);
 
-        if (
-          existingChannel instanceof VoiceChannel ||
-          existingChannel instanceof StageChannel
-        ) {
+        if (existingChannel instanceof VoiceChannel || existingChannel instanceof StageChannel) {
           await newState.member?.voice.setChannel(existingChannel);
         }
         return;
       }
 
       // Đảm bảo tên kênh hợp lệ
-      const channelName = `${
-        newState.member?.displayName || "Người dùng"
-      } - Phòng tạm`;
+      const channelName = `${newState.member?.displayName || "Người dùng"} - Phòng tạm`;
 
       // Tạo kênh voice tạm thời với quyền phù hợp
       const tempChannel = await newState.guild.channels.create({
@@ -120,10 +98,7 @@ export default class TempVoiceService {
         permissionOverwrites: [
           {
             id: newState.guild.roles.everyone,
-            allow: [
-              PermissionsBitField.Flags.Connect,
-              PermissionsBitField.Flags.Speak,
-            ],
+            allow: [PermissionsBitField.Flags.Connect, PermissionsBitField.Flags.Speak],
           },
           {
             id: userId!,
@@ -148,10 +123,7 @@ export default class TempVoiceService {
         channelId: tempChannel.id,
       };
 
-      await client.db.TempVoiceChannel.set(
-        tempVoiceChannel.id,
-        tempVoiceChannel
-      );
+      await client.db.TempVoiceChannel.set(tempVoiceChannel.id, tempVoiceChannel);
       this.monitorChannel(tempChannel, tempVoiceChannel.id, client);
     }
 

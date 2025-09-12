@@ -43,9 +43,7 @@ export default class implements Command {
     await handler.SilentDeferReply();
 
     const value = handler.args[0];
-    const originalValue = await client.db.ControlButton.get(
-      `${handler.guild!.id}`
-    );
+    const originalValue = await client.db.ControlButton.get(`${handler.guild!.id}`);
 
     if (value === "enable") {
       if (originalValue === ControlButtonEnum.Enable)
@@ -53,34 +51,21 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.settings",
-                  "control_already",
-                  {
-                    mode: handler.modeLang.enable,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.settings", "control_already", {
+                  mode: handler.modeLang.enable,
+                })}`
               )
               .setColor(client.color_main),
           ],
         });
 
-      await client.db.ControlButton.set(
-        `${handler.guild!.id}`,
-        ControlButtonEnum.Enable
-      );
+      await client.db.ControlButton.set(`${handler.guild!.id}`, ControlButtonEnum.Enable);
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "control_set",
-            {
-              toggle: handler.modeLang.enable,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "control_set", {
+            toggle: handler.modeLang.enable,
+          })}`
         )
         .setColor(client.color_main);
 
@@ -91,33 +76,20 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(
-                  handler.language,
-                  "commands.settings",
-                  "control_already",
-                  {
-                    mode: handler.modeLang.disable,
-                  }
-                )}`
+                `${client.i18n.get(handler.language, "commands.settings", "control_already", {
+                  mode: handler.modeLang.disable,
+                })}`
               )
               .setColor(client.color_main),
           ],
         });
 
-      await client.db.ControlButton.set(
-        `${handler.guild!.id}`,
-        ControlButtonEnum.Disable
-      );
+      await client.db.ControlButton.set(`${handler.guild!.id}`, ControlButtonEnum.Disable);
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "control_set",
-            {
-              toggle: handler.modeLang.disable,
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "control_set", {
+            toggle: handler.modeLang.disable,
+          })}`
         )
         .setColor(client.color_main);
 
@@ -125,14 +97,9 @@ export default class implements Command {
     } else {
       const onsome = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.settings",
-            "control_arg_error",
-            {
-              text: "**enable** hoặc **disable**",
-            }
-          )}`
+          `${client.i18n.get(handler.language, "commands.settings", "control_arg_error", {
+            text: "**enable** hoặc **disable**",
+          })}`
         )
         .setColor(client.color_main);
       return handler.editReply({ content: " ", embeds: [onsome] });

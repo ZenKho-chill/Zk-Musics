@@ -3,10 +3,7 @@ import { Manager } from "../manager.js";
 import path from "path";
 import readdirRecursive from "recursive-readdir";
 import { ApplicationCommandOptionType, REST, Routes } from "discord.js";
-import {
-  CommandInterface,
-  UploadCommandInterface,
-} from "../@types/Interaction.js";
+import { CommandInterface, UploadCommandInterface } from "../@types/Interaction.js";
 import { join, dirname } from "path";
 import { BotInfoType } from "../@types/User.js";
 
@@ -32,9 +29,7 @@ export class CommandDeployer {
     });
 
     for await (const interactionFilePath of interactionFilePaths) {
-      const cmd = new (
-        await import(pathToFileURL(interactionFilePath).toString())
-      ).default();
+      const cmd = new (await import(pathToFileURL(interactionFilePath).toString())).default();
       cmd.usingInteraction ? store.push(cmd) : true;
     }
 
@@ -44,10 +39,7 @@ export class CommandDeployer {
   async execute() {
     const command = [];
 
-    this.client.logger.info(
-      CommandDeployer.name,
-      "Đang đọc file interaction..."
-    );
+    this.client.logger.info(CommandDeployer.name, "Đang đọc file interaction...");
 
     const store = await this.combineDir();
 
@@ -58,9 +50,7 @@ export class CommandDeployer {
       "Đã đọc xong file interaction, đang thiết lập REST..."
     );
 
-    const rest = new REST({ version: "10" }).setToken(
-      this.client.config.bot.TOKEN
-    );
+    const rest = new REST({ version: "10" }).setToken(this.client.config.bot.TOKEN);
     const client = await rest.get(Routes.user());
 
     this.client.logger.info(
@@ -94,10 +84,7 @@ export class CommandDeployer {
     );
   }
 
-  protected commandReducer(
-    all: UploadCommandInterface[],
-    current: CommandInterface
-  ) {
+  protected commandReducer(all: UploadCommandInterface[], current: CommandInterface) {
     // Thêm lệnh đơn (tên 1 phần)
     if (current.name.length == 1) all.push(this.singleCommandMaker(current));
     // Thêm lệnh 2 phần (subcommand)
@@ -116,8 +103,7 @@ export class CommandDeployer {
       let GroupItem = SubItem
         ? SubItem.options!.find((i: UploadCommandInterface) => {
             return (
-              i.name == current.name[1] &&
-              i.type == ApplicationCommandOptionType.SubcommandGroup
+              i.name == current.name[1] && i.type == ApplicationCommandOptionType.SubcommandGroup
             );
           })
         : undefined;

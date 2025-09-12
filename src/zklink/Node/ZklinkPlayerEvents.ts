@@ -1,16 +1,9 @@
-import {
-  ZklinkEvents,
-  ZklinkLoopMode,
-  ZklinkPlayerState,
-} from "../Interface/Constants.js";
+import { ZklinkEvents, ZklinkLoopMode, ZklinkPlayerState } from "../Interface/Constants.js";
 import { LavalinkEventsEnum } from "../Interface/LavalinkEvents.js";
 import { Zklink } from "../Zklink.js";
 
 export class ZklinkPlayerEvents {
-  protected readonly methods: Record<
-    string,
-    (manager: Zklink, data: Record<string, any>) => void
-  >;
+  protected readonly methods: Record<string, (manager: Zklink, data: Record<string, any>) => void>;
 
   constructor() {
     this.methods = {
@@ -23,8 +16,7 @@ export class ZklinkPlayerEvents {
   }
 
   public initial(data: Record<string, any>, manager: Zklink) {
-    if (data.op == LavalinkEventsEnum.PlayerUpdate)
-      return this.PlayerUpdate(manager, data);
+    if (data.op == LavalinkEventsEnum.PlayerUpdate) return this.PlayerUpdate(manager, data);
     const _function = this.methods[data.type];
     if (_function !== undefined) _function(manager, data);
   }
@@ -69,15 +61,10 @@ export class ZklinkPlayerEvents {
 
       if (data.reason === "replaced") {
         // @ts-ignore
-        return manager.emit(
-          ZklinkEvents.TrackEnd,
-          player,
-          player.queue.current
-        );
+        return manager.emit(ZklinkEvents.TrackEnd, player, player.queue.current);
       }
       if (["loadFailed", "cleanup"].includes(data.reason)) {
-        if (player.queue.current)
-          player.queue.previous.push(player.queue.current);
+        if (player.queue.current) player.queue.previous.push(player.queue.current);
         if (!player.queue.length && !player.sudoDestroy)
           // @ts-ignore
           return manager.emit(ZklinkEvents.QueueEmpty, player);
@@ -92,8 +79,7 @@ export class ZklinkPlayerEvents {
       if (player.loop == ZklinkLoopMode.QUEUE && player.queue.current)
         player.queue.push(player.queue.current);
 
-      if (player.queue.current)
-        player.queue.previous.push(player.queue.current);
+      if (player.queue.current) player.queue.previous.push(player.queue.current);
       const currentSong = player.queue.current;
       player.queue.current = null;
 
@@ -133,8 +119,7 @@ export class ZklinkPlayerEvents {
       // @ts-ignore
       manager.emit(
         ZklinkEvents.Debug,
-        `[Zklink] / [Người phát @ ${data.guildId}] / [Sự kiện] / [Bị kẹt] | ` +
-          JSON.stringify(data)
+        `[Zklink] / [Người phát @ ${data.guildId}] / [Sự kiện] / [Bị kẹt] | ` + JSON.stringify(data)
       );
     }
     return;

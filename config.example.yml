@@ -104,6 +104,9 @@ features:
   # Các theme khả dụng: themes1 - themes20 hoặc miko, kobokanaeru, vestiazeta, yui, cute
     Enable: true
     Themes: "zk"
+  
+  # Tính năng cập nhật trạng thái kênh thoại
+  VOICE_STATUS_CHANNEL: true
 
   DATABASE:
     ClearCache: "*/60 * * * * *" # Xóa cache sau mỗi 1 phút
@@ -413,7 +416,6 @@ COMMANDS_ACCESS:
     Spotify: ["Member"]
     Themes: ["Member"]
     TempVoiceChannel: ["Manager"]
-    StatusVoiceChannel: ["Manager"]
 
   UTILS:
     Ban: ["Manager"]

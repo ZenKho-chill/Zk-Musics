@@ -264,15 +264,9 @@ export declare interface Zklink {
     listener: (player: ZklinkPlayer, oldChannelId: string, newChannelId: string) => void
   ): this;
   /** @ignore */
-  once(
-    event: "playerPause",
-    listener: (player: ZklinkPlayer, track: ZklinkTrack) => void
-  ): this;
+  once(event: "playerPause", listener: (player: ZklinkPlayer, track: ZklinkTrack) => void): this;
   /** @ignore */
-  once(
-    event: "playerResume",
-    listener: (player: ZklinkPlayer, data: ZklinkTrack) => void
-  ): this;
+  once(event: "playerResume", listener: (player: ZklinkPlayer, data: ZklinkTrack) => void): this;
   /** @ignore */
   once(
     event: "playerWebsocketClosed",
@@ -311,10 +305,7 @@ export declare interface Zklink {
     listener: (player: ZklinkPlayer, queue: ZklinkQueue, track: ZklinkTrack) => void
   ): this;
   /** @ignore */
-  once(
-    event: "queueShuffle",
-    listener: (player: ZklinkPlayer, queue: ZklinkQueue) => void
-  ): this;
+  once(event: "queueShuffle", listener: (player: ZklinkPlayer, queue: ZklinkQueue) => void): this;
   /** @ignore */
   once(event: "queueClear", listener: (player: ZklinkPlayer, queue: ZklinkQueue) => void): this;
   /** @ignore */
@@ -423,10 +414,7 @@ export declare interface Zklink {
     listener: (player: ZklinkPlayer, queue: ZklinkQueue, track: ZklinkTrack) => void
   ): this;
   /** @ignore */
-  off(
-    event: "queueShuffle",
-    listener: (player: ZklinkPlayer, queue: ZklinkQueue) => void
-  ): this;
+  off(event: "queueShuffle", listener: (player: ZklinkPlayer, queue: ZklinkQueue) => void): this;
   /** @ignore */
   off(event: "queueClear", listener: (player: ZklinkPlayer, queue: ZklinkQueue) => void): this;
   /** @ignore */
@@ -459,43 +447,43 @@ export declare interface Zklink {
 
 export class Zklink extends EventEmitter {
   /**
-  * Kết nối thư viện Discord
+   * Kết nối thư viện Discord
    */
   public readonly library: AbstractLibrary;
   /**
-  * Danh sách các server Lavalink đã cấu hình
+   * Danh sách các server Lavalink đã cấu hình
    */
   public nodes: ZklinkNodeManager;
   /**
-  * Tuỳ chọn Zklink
+   * Tuỳ chọn Zklink
    */
   public ZklinkOptions: ZklinkOptions;
   /**
-  * ID bot
+   * ID bot
    */
   public id: string | undefined;
   /**
-  * Bản đồ players
+   * Bản đồ players
    */
   public players: ZklinkPlayerManager;
   /**
-  * Tất cả engine tìm kiếm
+   * Tất cả engine tìm kiếm
    */
   public searchEngines: ZklinkDatabase<string>;
   /**
-  * Tất cả plugin tìm kiếm (resolver plugins)
+   * Tất cả plugin tìm kiếm (resolver plugins)
    */
   public searchPlugins: ZklinkDatabase<SourceZklinkPlugin>;
   /**
-  * Tất cả plugin (bao gồm resolver plugins)
+   * Tất cả plugin (bao gồm resolver plugins)
    */
   public plugins: ZklinkDatabase<ZklinkPlugin>;
   /**
-  * Các driver Zklink
+   * Các driver Zklink
    */
   public drivers: AbstractDriver[];
   /**
-  * Số shard hiện tại của bot
+   * Số shard hiện tại của bot
    */
   public shardCount: number = 1;
 
@@ -586,7 +574,7 @@ export class Zklink extends EventEmitter {
         ? (this.nodes.get(options.nodeName) ?? (await this.nodes.getLeastUsed()))
         : await this.nodes.getLeastUsed();
 
-  if (!node) throw new Error("Không có node khả dụng");
+    if (!node) throw new Error("Không có node khả dụng");
 
     let pluginData: ZklinkSearchResult;
 
@@ -619,8 +607,8 @@ export class Zklink extends EventEmitter {
     const finalQuery =
       isDirectSearch !== null ? isDirectSearch[1] : !isUrl ? `${source}search:${query}` : query;
 
-  const result = await node.rest.resolver(finalQuery).catch(() => null);
-  if (!result || result.loadType === LavalinkLoadType.EMPTY) {
+    const result = await node.rest.resolver(finalQuery).catch(() => null);
+    if (!result || result.loadType === LavalinkLoadType.EMPTY) {
       return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
     }
 

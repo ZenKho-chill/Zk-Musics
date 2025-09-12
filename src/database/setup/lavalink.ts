@@ -40,10 +40,7 @@ export class AutoReconnectLavalinkService {
     if (Object.keys(maindata).length === 0) return;
 
     let retry_interval = setInterval(async () => {
-      if (
-        this.client.lavalinkUsing.length == 0 ||
-        this.client.Zklink.nodes.size == 0
-      )
+      if (this.client.lavalinkUsing.length == 0 || this.client.Zklink.nodes.size == 0)
         return this.client.logger.info(
           AutoReconnectLavalinkService.name,
           `Không có lavalink khả dụng, thử lại sau 3 giây!`
@@ -73,12 +70,8 @@ export class AutoReconnectLavalinkService {
   }
 
   async connectChannel(data: { id: string; value: AutoReconnect }) {
-    const channel = await this.client.channels
-      .fetch(data.value.text)
-      .catch(() => undefined);
-    const guild = await this.client.guilds
-      .fetch(data.value.guild)
-      .catch(() => undefined);
+    const channel = await this.client.channels.fetch(data.value.text).catch(() => undefined);
+    const guild = await this.client.guilds.fetch(data.value.guild).catch(() => undefined);
     const voice = (await this.client.channels
       .fetch(data.value.voice)
       .catch(() => undefined)) as VoiceChannel;
@@ -90,10 +83,7 @@ export class AutoReconnectLavalinkService {
       return this.client.db.autoreconnect.delete(data.value.guild);
     }
 
-    if (
-      !data.value.twentyfourseven &&
-      voice.members.filter((m) => !m.user.bot).size == 0
-    ) {
+    if (!data.value.twentyfourseven && voice.members.filter((m) => !m.user.bot).size == 0) {
       this.client.logger.info(
         AutoReconnectLavalinkService.name,
         `Guild [${data.value.guild}] có 0 thành viên trong kênh voice cuối cùng bot tham gia, bỏ qua...`
@@ -125,8 +115,7 @@ export class AutoReconnectLavalinkService {
       });
       if (!search.tracks.length) return;
 
-      if (data.value.queue.length !== 0)
-        await this.queueDataPush(data.value.queue, player);
+      if (data.value.queue.length !== 0) await this.queueDataPush(data.value.queue, player);
 
       if (data.value.previous.length !== 0)
         await this.previousDataPush(data.value.previous, player);

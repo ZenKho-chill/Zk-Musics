@@ -14,9 +14,7 @@ export class Lavalink4 extends AbstractDriver {
   public wsUrl: string = "";
   public httpUrl: string = "";
   public sessionId: string | null;
-  public playerFunctions: ZklinkDatabase<
-    (player: ZklinkPlayer, ...args: any) => unknown
-  >;
+  public playerFunctions: ZklinkDatabase<(player: ZklinkPlayer, ...args: any) => unknown>;
   public functions: ZklinkDatabase<(manager: Zklink, ...args: any) => unknown>;
   protected wsClient?: ZklinkWebsocket;
   public manager: Zklink | null = null;
@@ -24,12 +22,8 @@ export class Lavalink4 extends AbstractDriver {
 
   constructor() {
     super();
-    this.playerFunctions = new ZklinkDatabase<
-      (player: ZklinkPlayer, ...args: any) => unknown
-    >();
-    this.functions = new ZklinkDatabase<
-      (manager: Zklink, ...args: any) => unknown
-    >();
+    this.playerFunctions = new ZklinkDatabase<(player: ZklinkPlayer, ...args: any) => unknown>();
+    this.functions = new ZklinkDatabase<(manager: Zklink, ...args: any) => unknown>();
     this.sessionId = null;
   }
 
@@ -54,8 +48,7 @@ export class Lavalink4 extends AbstractDriver {
   }
 
   public connect(): ZklinkWebsocket {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     const isResume = this.manager!.ZklinkOptions.options!.resume;
     const ws = new ZklinkWebsocket(this.wsUrl, {
       headers: {
@@ -81,18 +74,12 @@ export class Lavalink4 extends AbstractDriver {
     return ws;
   }
 
-  public async requester<D = any>(
-    options: ZklinkRequesterOptions
-  ): Promise<D | undefined> {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+  public async requester<D = any>(options: ZklinkRequesterOptions): Promise<D | undefined> {
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     if (options.path.includes("/sessions") && this.sessionId == null)
-      throw new Error(
-        "sessionId chưa được khởi tạo! Vui lòng đợi lavalink kết nối!"
-      );
+      throw new Error("sessionId chưa được khởi tạo! Vui lòng đợi lavalink kết nối!");
     const url = new URL(`${this.httpUrl}${options.path}`);
-    if (options.params)
-      url.search = new URLSearchParams(options.params).toString();
+    if (options.params) url.search = new URLSearchParams(options.params).toString();
 
     if (options.data) {
       options.body = JSON.stringify(options.data);
@@ -120,9 +107,7 @@ export class Lavalink4 extends AbstractDriver {
       );
       this.debug(
         "Lỗi từ server lavalink. " +
-          `Mã trạng thái: ${res.status}\n Headers: ${util.inspect(
-            options.headers
-          )}`
+          `Mã trạng thái: ${res.status}\n Headers: ${util.inspect(options.headers)}`
       );
       return undefined;
     }
@@ -139,15 +124,13 @@ export class Lavalink4 extends AbstractDriver {
   }
 
   protected wsMessageEvent(data: string) {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     const wsData = JSON.parse(data.toString());
     this.node!.wsMessageEvent(wsData);
   }
 
   protected debug(logs: string) {
-    if (!this.isRegistered)
-      throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
+    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
     // @ts-ignore
     this.manager!.emit(
       ZklinkEvents.Debug,
@@ -159,11 +142,7 @@ export class Lavalink4 extends AbstractDriver {
     if (this.wsClient) this.wsClient.close(1006, "Tự đóng");
   }
 
-  public async updateSession(
-    sessionId: string,
-    mode: boolean,
-    timeout: number
-  ): Promise<void> {
+  public async updateSession(sessionId: string, mode: boolean, timeout: number): Promise<void> {
     const options: ZklinkRequesterOptions = {
       path: `/sessions/${sessionId}`,
       headers: { "content-type": "application/json" },

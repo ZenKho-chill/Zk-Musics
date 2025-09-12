@@ -10,20 +10,13 @@ import { ZklinkEvents, ZklinkPluginType } from "../../Interface/Constants.js";
 import { fetch } from "undici";
 
 const API_URL = "https://api.deezer.com/";
-const REGEX =
-  /^https?:\/\/(?:www\.)?deezer\.com\/[a-z]+\/(track|album|playlist)\/(\d+)$/;
+const REGEX = /^https?:\/\/(?:www\.)?deezer\.com\/[a-z]+\/(track|album|playlist)\/(\d+)$/;
 const SHORT_REGEX = /^https:\/\/deezer\.page\.link\/[a-zA-Z0-9]{12}$/;
 
 export class ZklinkPlugin extends SourceZklinkPlugin {
   private manager: Zklink | null;
-  private _search?: (
-    query: string,
-    options?: ZklinkSearchOptions
-  ) => Promise<ZklinkSearchResult>;
-  private readonly methods: Record<
-    string,
-    (id: string, requester: unknown) => Promise<Result>
-  >;
+  private _search?: (query: string, options?: ZklinkSearchOptions) => Promise<ZklinkSearchResult>;
+  private readonly methods: Record<string, (id: string, requester: unknown) => Promise<Result>>;
   /**
    * Mã nhận diện nguồn của plugin
    * @returns string
@@ -106,8 +99,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     query: string,
     options?: ZklinkSearchOptions | undefined
   ): Promise<ZklinkSearchResult> {
-    if (!this.manager || !this._search)
-      throw new Error("Zklink-deezer chưa được tải.");
+    if (!this.manager || !this._search) throw new Error("Zklink-deezer chưa được tải.");
 
     if (!query) throw new Error("Cần truyền query");
 
@@ -128,9 +120,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
         const result: Result = await _function(id, options?.requester);
 
         const loadType =
-          type === "track"
-            ? ZklinkSearchResultType.TRACK
-            : ZklinkSearchResultType.PLAYLIST;
+          type === "track" ? ZklinkSearchResultType.TRACK : ZklinkSearchResultType.PLAYLIST;
         const playlistName = result.name ?? undefined;
 
         const tracks = result.tracks.filter(this.filterNullOrUndefined);
@@ -141,19 +131,11 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     } else if (options?.engine === this.sourceName() && !isUrl) {
       const result = await this.searchTrack(query, options?.requester);
 
-      return this.buildSearch(
-        undefined,
-        result.tracks,
-        ZklinkSearchResultType.SEARCH
-      );
-    } else
-      return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
+      return this.buildSearch(undefined, result.tracks, ZklinkSearchResultType.SEARCH);
+    } else return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
   }
 
-  private async searchTrack(
-    query: string,
-    requester: unknown
-  ): Promise<Result> {
+  private async searchTrack(query: string, requester: unknown): Promise<Result> {
     try {
       const data = await this.safeFetch<SearchResult>(
         `${API_URL}/search/track?q=${decodeURIComponent(query)}`
@@ -164,9 +146,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
       }
 
       return {
-        tracks: data?.data?.map((track) =>
-          this.buildZklinkTrack(track, requester)
-        ) || [],
+        tracks: data?.data?.map((track) => this.buildZklinkTrack(track, requester)) || [],
       };
     } catch (e: any) {
       this.debug(`Lỗi không mong đợi trong searchTrack: ${e}`);
@@ -177,18 +157,18 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private async safeFetch<T = any>(url: string): Promise<T | null> {
     try {
       const request = await fetch(url);
-      
+
       if (!request.ok) {
         this.debug(`Lỗi khi gọi Deezer API: ${request.status} ${request.statusText}`);
         return null;
       }
-      
+
       const text = await request.text();
       if (!text.trim()) {
         this.debug("Deezer API trả về response rỗng");
         return null;
       }
-      
+
       const data = JSON.parse(text) as T;
       return data;
     } catch (error) {
@@ -200,7 +180,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private async getTrack(id: string, requester: unknown): Promise<Result> {
     try {
       const data = await this.safeFetch<DeezerTrack>(`${API_URL}/track/${id}/`);
-      
+
       if (!data) {
         return { tracks: [] };
       }
@@ -215,14 +195,15 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private async getAlbum(id: string, requester: unknown): Promise<Result> {
     try {
       const data = await this.safeFetch<Album>(`${API_URL}/album/${id}/`);
-      
+
       if (!data) {
         return { tracks: [] };
       }
 
-      const tracks = data.tracks?.data
-        ?.filter(this.filterNullOrUndefined)
-        ?.map((track) => this.buildZklinkTrack(track, requester)) || [];
+      const tracks =
+        data.tracks?.data
+          ?.filter(this.filterNullOrUndefined)
+          ?.map((track) => this.buildZklinkTrack(track, requester)) || [];
 
       return { tracks, name: data.title };
     } catch (e: any) {
@@ -234,14 +215,15 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private async getPlaylist(id: string, requester: unknown): Promise<Result> {
     try {
       const data = await this.safeFetch<Playlist>(`${API_URL}/playlist/${id}`);
-      
+
       if (!data) {
         return { tracks: [] };
       }
 
-      const tracks = data.tracks?.data
-        ?.filter(this.filterNullOrUndefined)
-        ?.map((track) => this.buildZklinkTrack(track, requester)) || [];
+      const tracks =
+        data.tracks?.data
+          ?.filter(this.filterNullOrUndefined)
+          ?.map((track) => this.buildZklinkTrack(track, requester)) || [];
 
       return { tracks, name: data.title };
     } catch (e: any) {
@@ -293,10 +275,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private debug(logs: string) {
     this.manager
       ? // @ts-ignore
-        this.manager.emit(
-          ZklinkEvents.Debug,
-          `[Zklink] / [Plugin] / [Deezer] | ${logs}`
-        )
+        this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Plugin] / [Deezer] | ${logs}`)
       : true;
   }
 }

@@ -25,11 +25,9 @@ export class PremiumScheduleSetup {
   async setupChecker() {
     const premium = Array.from(await this.client.db.premium.all());
     const users = premium.filter(
-      (data) =>
-        data.value.isPremium == true && data.value.expiresAt !== "lifetime"
+      (data) => data.value.isPremium == true && data.value.expiresAt !== "lifetime"
     );
-    if (users && users.length !== 0)
-      this.checkUser(users.map((data) => data.value));
+    if (users && users.length !== 0) this.checkUser(users.map((data) => data.value));
     this.client.logger.info(
       PremiumScheduleSetup.name,
       `Đang kiểm tra ${users.length} người dùng Premium`
@@ -37,11 +35,9 @@ export class PremiumScheduleSetup {
 
     const premiumGuild = Array.from(await this.client.db.preGuild.all());
     const guilds = premiumGuild.filter(
-      (data) =>
-        data.value.isPremium == true && data.value.expiresAt !== "lifetime"
+      (data) => data.value.isPremium == true && data.value.expiresAt !== "lifetime"
     );
-    if (guilds && guilds.length !== 0)
-      this.checkGuild(guilds.map((data) => data.value));
+    if (guilds && guilds.length !== 0) this.checkGuild(guilds.map((data) => data.value));
     this.client.logger.info(
       PremiumScheduleSetup.name,
       `Đang kiểm tra ${guilds.length} guild Premium`
@@ -71,10 +67,7 @@ export class PremiumScheduleSetup {
           );
         }
       } catch (error) {
-        this.client.logger.error(
-          PremiumScheduleSetup.name,
-          `Không thể xóa người dùng ${data.id}`
-        );
+        this.client.logger.error(PremiumScheduleSetup.name, `Không thể xóa người dùng ${data.id}`);
       }
     }
   }
@@ -103,10 +96,7 @@ export class PremiumScheduleSetup {
           );
         }
       } catch (error) {
-        this.client.logger.error(
-          PremiumScheduleSetup.name,
-          `Không thể xóa guild ${data.id}`
-        );
+        this.client.logger.error(PremiumScheduleSetup.name, `Không thể xóa guild ${data.id}`);
       }
     }
   }
@@ -130,10 +120,7 @@ export class PremiumScheduleSetup {
 
       channel.send({ embeds: [embed] });
     } catch (error) {
-      this.client.logger.error(
-        PremiumScheduleSetup.name,
-        "Gửi log tới kênh thất bại: " + error
-      );
+      this.client.logger.error(PremiumScheduleSetup.name, "Gửi log tới kênh thất bại: " + error);
     }
   }
 }

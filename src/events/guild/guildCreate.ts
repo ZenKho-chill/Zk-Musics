@@ -22,17 +22,12 @@ export default class {
       );
       return;
     }
-    client.logger.info(
-      "GuildCreate",
-      `Đã tham gia guild ${guild.name} @ ${guild.id}`
-    );
+    client.logger.info("GuildCreate", `Đã tham gia guild ${guild.name} @ ${guild.id}`);
     const language = client.config.bot.LANGUAGE;
     client.guilds.cache.set(`${guild!.id}`, guild);
     if (!client.config.logchannel.GuildJoinChannelID) return;
     try {
-      const eventChannel = await client.channels.fetch(
-        client.config.logchannel.GuildJoinChannelID
-      );
+      const eventChannel = await client.channels.fetch(client.config.logchannel.GuildJoinChannelID);
       if (!eventChannel || !eventChannel.isTextBased()) return;
       const owner = await client.users.fetch(guild.ownerId);
 
@@ -48,11 +43,7 @@ export default class {
             inline: true,
           },
           {
-            name: `${client.i18n.get(
-              language,
-              "events.guild",
-              "guild_member_count"
-            )}`,
+            name: `${client.i18n.get(language, "events.guild", "guild_member_count")}`,
             value: `\`${guild.memberCount}\` Thành viên`,
             inline: true,
           },
@@ -62,29 +53,17 @@ export default class {
             inline: true,
           },
           {
-            name: `${client.i18n.get(
-              language,
-              "events.guild",
-              "guild_creation_date"
-            )}`,
+            name: `${client.i18n.get(language, "events.guild", "guild_creation_date")}`,
             value: `<t:${Math.floor(guild.createdTimestamp / 1000)}:F>`,
             inline: true,
           },
           {
-            name: `${client.i18n.get(
-              language,
-              "events.guild",
-              "guild_join_date"
-            )}`,
+            name: `${client.i18n.get(language, "events.guild", "guild_join_date")}`,
             value: `<t:${Math.floor(guild.joinedTimestamp / 1000)}:F>`,
             inline: true,
           },
           {
-            name: `${client.i18n.get(
-              language,
-              "events.guild",
-              "current_server_count"
-            )}`,
+            name: `${client.i18n.get(language, "events.guild", "current_server_count")}`,
             value: `\`${client.guilds.cache.size}\` Server`,
             inline: true,
           },
@@ -170,8 +149,7 @@ export default class {
     } catch (error) {
       client.logger.info(
         "GuildCreate",
-        `Không thể gửi tin giới thiệu bot cho guild @ ${guild.name} @ ${guild.id}` +
-          error
+        `Không thể gửi tin giới thiệu bot cho guild @ ${guild.name} @ ${guild.id}` + error
       );
     }
   }

@@ -6,11 +6,7 @@ import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import chalk from "chalk";
 export default class {
-  async execute(
-    client: Manager,
-    player: ZklinkPlayer,
-    data: Record<string, any>
-  ) {
+  async execute(client: Manager, player: ZklinkPlayer, data: Record<string, any>) {
     if (!client.isDatabaseConnected)
       return client.logger.warn(
         "DatabaseService",
@@ -25,9 +21,7 @@ export default class {
     await UpdateMusicStatusChannel(client, player);
     /////////// Cập nhật kênh trạng thái nhạc //////////
 
-    const guild = await client.guilds
-      .fetch(player.guildId)
-      .catch(() => undefined);
+    const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
     const channel = (await client.channels
       .fetch(player.textId)
@@ -36,19 +30,14 @@ export default class {
 
     let guildModel = await client.db.language.get(`${channel.guild.id}`);
     if (!guildModel) {
-      guildModel = await client.db.language.set(
-        `${channel.guild.id}`,
-        client.config.bot.LANGUAGE
-      );
+      guildModel = await client.db.language.set(`${channel.guild.id}`, client.config.bot.LANGUAGE);
     }
 
     const language = guildModel;
 
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
-      .setDescription(
-        `${client.i18n.get(language, "events.player", "player_track_stuck")}`
-      );
+      .setDescription(`${client.i18n.get(language, "events.player", "player_track_stuck")}`);
 
     if (channel) {
       const setup = await client.db.setup.get(player.guildId);
@@ -72,17 +61,12 @@ export default class {
       )} / ${chalk.hex("#fc2c03")(player.guildId)}`
     );
 
-    const data247 = await new Mode247Builder(client, player).get(
-      player.guildId
-    );
+    const data247 = await new Mode247Builder(client, player).get(player.guildId);
     if (data247 !== null && data247 && data247.twentyfourseven && channel)
       new CleanUpMessage(client, channel, player);
-    const currentPlayer = client.Zklink.players.get(
-      player.guildId
-    ) as ZklinkPlayer;
+    const currentPlayer = client.Zklink.players.get(player.guildId) as ZklinkPlayer;
     if (!currentPlayer) return;
-    if (currentPlayer.queue.length > 0)
-      return await player.skip().catch(() => {});
+    if (currentPlayer.queue.length > 0) return await player.skip().catch(() => {});
     if (!currentPlayer.sudoDestroy) await player.destroy().catch(() => {});
   }
 }

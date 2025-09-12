@@ -1,9 +1,5 @@
 import { ZklinkEvents, ZklinkPluginType } from "../../main.js";
-import {
-  ZklinkSearchOptions,
-  ZklinkSearchResult,
-  ZklinkSearchResultType,
-} from "../../main.js";
+import { ZklinkSearchOptions, ZklinkSearchResult, ZklinkSearchResultType } from "../../main.js";
 import { ZklinkTrack } from "../../main.js";
 import { Zklink } from "../../main.js";
 import { SourceZklinkPlugin } from "../../main.js";
@@ -27,17 +23,11 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
    */
   public options: NicoOptions;
   private _search:
-    | ((
-        query: string,
-        options?: ZklinkSearchOptions
-      ) => Promise<ZklinkSearchResult>)
+    | ((query: string, options?: ZklinkSearchOptions) => Promise<ZklinkSearchResult>)
     | undefined;
   private Zklink: Zklink | null;
 
-  private readonly methods: Record<
-    string,
-    (id: string, requester: unknown) => Promise<Result>
-  >;
+  private readonly methods: Record<string, (id: string, requester: unknown) => Promise<Result>>;
 
   /**
    * Khởi tạo plugin
@@ -100,10 +90,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     return "Zklink-nico";
   }
 
-  private async search(
-    query: string,
-    options?: ZklinkSearchOptions
-  ): Promise<ZklinkSearchResult> {
+  private async search(query: string, options?: ZklinkSearchOptions): Promise<ZklinkSearchResult> {
     const res = await this._search!(query, options);
     if (!this.directSearchChecker(query)) return res;
     if (res.tracks.length == 0) return this.searchDirect(query, options);
@@ -120,8 +107,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     query: string,
     options?: ZklinkSearchOptions | undefined
   ): Promise<ZklinkSearchResult> {
-    if (!this.Zklink || !this._search)
-      throw new Error("Zklink-nico chưa được tải.");
+    if (!this.Zklink || !this._search) throw new Error("Zklink-nico chưa được tải.");
 
     if (!query) throw new Error("Cần truyền query");
     const [, id] = REGEX.exec(query) || [];
@@ -133,27 +119,16 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
       const _function = this.methods.track;
       const result: Result = await _function(id, options?.requester);
 
-      const loadType = result
-        ? ZklinkSearchResultType.TRACK
-        : ZklinkSearchResultType.SEARCH;
+      const loadType = result ? ZklinkSearchResultType.TRACK : ZklinkSearchResultType.SEARCH;
       const playlistName = result.name ?? undefined;
 
       const tracks = result.tracks.filter(this.filterNullOrUndefined);
-      return this.buildSearch(
-        playlistName,
-        tracks && tracks.length !== 0 ? tracks : [],
-        loadType
-      );
+      return this.buildSearch(playlistName, tracks && tracks.length !== 0 ? tracks : [], loadType);
     } else if (options?.engine === this.sourceName() && !isUrl) {
       const result = await this.searchTrack(query, options?.requester);
 
-      return this.buildSearch(
-        undefined,
-        result.tracks,
-        ZklinkSearchResultType.SEARCH
-      );
-    } else
-      return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
+      return this.buildSearch(undefined, result.tracks, ZklinkSearchResultType.SEARCH);
+    } else return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
   }
 
   private buildSearch(
@@ -182,9 +157,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
       for (let i = 0; i < data.length; i++) {
         const element = data[i];
-        const nico = new NicoResolver(
-          `https://www.nicovideo.jp/watch/${element.contentId}`
-        );
+        const nico = new NicoResolver(`https://www.nicovideo.jp/watch/${element.contentId}`);
         const info = await nico.getVideoInfo();
         res.push(info);
       }
@@ -239,10 +212,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private debug(logs: string) {
     this.Zklink
       ? // @ts-ignore
-        this.Zklink.emit(
-          ZklinkEvents.Debug,
-          `[Zklink] / [Plugin] / [Nico] | ${logs}`
-        )
+        this.Zklink.emit(ZklinkEvents.Debug, `[Zklink] / [Plugin] / [Nico] | ${logs}`)
       : true;
   }
 }

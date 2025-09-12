@@ -26,19 +26,13 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
-    const player = client.Zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
     const currentTrack = player.queue.current;
 
     if (!currentTrack) {
       const skipped = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "no_songs_playing"
-          )}`
+          `${client.i18n.get(handler.language, "commands.music", "no_songs_playing")}`
         )
         .setColor(client.color_main);
 
@@ -48,13 +42,7 @@ export default class implements Command {
 
     if (player.queue.size == 0 && player.data.get("autoplay") !== true) {
       const skipped = new EmbedBuilder()
-        .setDescription(
-          `${client.i18n.get(
-            handler.language,
-            "commands.music",
-            "skip_notfound"
-          )}`
-        )
+        .setDescription(`${client.i18n.get(handler.language, "commands.music", "skip_notfound")}`)
         .setColor(client.color_main);
 
       handler.editReply({ content: " ", embeds: [skipped] });

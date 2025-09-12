@@ -7,8 +7,7 @@ export class RequestManager {
 
   constructor(private options: SpotifyOptions) {
     if (options.clients?.length) {
-      for (const client of options.clients)
-        this.requests.push(new SpotifyRequest(client));
+      for (const client of options.clients) this.requests.push(new SpotifyRequest(client));
       this.mode = "multi";
       // eslint-disable-next-line no-console
       console.warn(
@@ -30,12 +29,10 @@ export class RequestManager {
     disableBaseUri: boolean = false,
     tries: number = 3
   ): Promise<T> {
-    if (this.mode === "single")
-      return this.requests[0].makeRequest<T>(endpoint, disableBaseUri);
+    if (this.mode === "single") return this.requests[0].makeRequest<T>(endpoint, disableBaseUri);
 
     const targetRequest = this.getLeastUsedRequest();
-    if (!targetRequest)
-      throw new Error("Không có request khả dụng [ALL_RATE_LIMITED]");
+    if (!targetRequest) throw new Error("Không có request khả dụng [ALL_RATE_LIMITED]");
     return targetRequest
       .makeRequest<T>(endpoint, disableBaseUri)
       .catch((e) =>
@@ -46,9 +43,7 @@ export class RequestManager {
   }
 
   protected getLeastUsedRequest(): SpotifyRequest | undefined {
-    const targetSearch = this.requests.filter(
-      (request) => !request.stats.rateLimited
-    );
+    const targetSearch = this.requests.filter((request) => !request.stats.rateLimited);
     if (!targetSearch.length) return undefined;
 
     return targetSearch.sort((a, b) => a.stats.requests - b.stats.requests)[0];

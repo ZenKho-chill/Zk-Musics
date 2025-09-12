@@ -1,9 +1,4 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  EmbedBuilder,
-} from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
@@ -37,26 +32,16 @@ export default class implements Command {
         }&permissions=8&scope=bot`,
       })
       .setTitle(
-        `${client.i18n.get(
-          handler.language,
-          "tos.and.privacy",
-          "privacy_title",
-          {
-            bot: client.user!.username,
-          }
-        )}`
+        `${client.i18n.get(handler.language, "tos.and.privacy", "privacy_title", {
+          bot: client.user!.username,
+        })}`
       )
       .setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "tos.and.privacy",
-          "privacy_desc",
-          {
-            bot: client.user!.username,
-            serversupport: client.config.bot.SERVER_SUPPORT_URL,
-            developer: client.config.bot.TEAM_URL,
-          }
-        )}`
+        `${client.i18n.get(handler.language, "tos.and.privacy", "privacy_desc", {
+          bot: client.user!.username,
+          serversupport: client.config.bot.SERVER_SUPPORT_URL,
+          developer: client.config.bot.TEAM_URL,
+        })}`
       )
       .setColor(client.color_second);
 

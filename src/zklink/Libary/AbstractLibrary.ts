@@ -41,8 +41,7 @@ export abstract class AbstractLibrary {
     const guildId = packet.d.guild_id;
     const players = this.manager!.players.get(guildId);
     if (!players) return;
-    if (packet.t === "VOICE_SERVER_UPDATE")
-      return players.setServerUpdate(packet.d);
+    if (packet.t === "VOICE_SERVER_UPDATE") return players.setServerUpdate(packet.d);
     const userId = packet.d.user_id;
     if (userId !== this.manager!.id) return;
     players.setStateUpdate(packet.d);

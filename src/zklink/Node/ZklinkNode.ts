@@ -38,9 +38,7 @@ export class ZklinkNode {
   constructor(manager: Zklink, options: ZklinkNodeOptions) {
     this.manager = manager;
     this.options = options;
-    const getDriver = this.manager.drivers.filter(
-      (driver) => driver.id === options.driver
-    );
+    const getDriver = this.manager.drivers.filter((driver) => driver.id === options.driver);
     if (!getDriver || getDriver.length == 0) {
       this.debug("Không tìm thấy driver, sử dụng lavalink v4 thay thế");
       this.driver = new Lavalink4();
@@ -193,9 +191,6 @@ export class ZklinkNode {
 
   protected debug(logs: string) {
     // @ts-ignore
-    this.manager.emit(
-      ZklinkEvents.Debug,
-      `[Zklink] / [Nút @ ${this.options.name}] | ${logs}`
-    );
+    this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Nút @ ${this.options.name}] | ${logs}`);
   }
 }

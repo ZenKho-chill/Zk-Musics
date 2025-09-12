@@ -35,9 +35,7 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
 
-    const player = client.Zklink.players.get(
-      handler.guild!.id
-    ) as ZklinkPlayer;
+    const player = client.Zklink.players.get(handler.guild!.id) as ZklinkPlayer;
     const currentTrack = player.queue.current;
 
     if (!currentTrack) {
@@ -45,14 +43,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "no_songs_playing",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+                user: handler.user!.displayName || handler.user!.tag,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -65,11 +58,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "removetrack_number_invalid"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "removetrack_number_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -79,11 +68,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "removetrack_already"
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "removetrack_already")}`
             )
             .setColor(client.color_main),
         ],
@@ -93,14 +78,9 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(
-                handler.language,
-                "commands.music",
-                "removetrack_notfound",
-                {
-                  user: handler.user!.displayName || handler.user!.tag,
-                }
-              )}`
+              `${client.i18n.get(handler.language, "commands.music", "removetrack_notfound", {
+                user: handler.user!.displayName || handler.user!.tag,
+              })}`
             )
             .setColor(client.color_main),
         ],
@@ -112,17 +92,12 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(
-          handler.language,
-          "commands.music",
-          "removetrack_desc",
-          {
-            title: this.getTitle(client, song),
-            duration: new ConvertTime().parse(player.position),
-            request: String(song.requester),
-            user: handler.user!.displayName || handler.user!.tag,
-          }
-        )}`
+        `${client.i18n.get(handler.language, "commands.music", "removetrack_desc", {
+          title: this.getTitle(client, song),
+          duration: new ConvertTime().parse(player.position),
+          request: String(song.requester),
+          user: handler.user!.displayName || handler.user!.tag,
+        })}`
       )
       .setColor(client.color_main);
 
@@ -140,8 +115,7 @@ export default class implements Command {
               id: (song.requester as any).id,
               username: (song.requester as any).username,
               globalName: (song.requester as any).globalName,
-              defaultAvatarURL:
-                (song.requester as any).defaultAvatarURL ?? null,
+              defaultAvatarURL: (song.requester as any).defaultAvatarURL ?? null,
             }
           : null,
       },

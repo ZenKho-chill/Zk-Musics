@@ -58,9 +58,7 @@ export class ZklinkPlugin extends Plugin {
       this.manager?.emit(ZklinkEvents.VoiceError, node, err);
     });
     ws.on("close", (code: number, reason: Buffer) => {
-      this.debug(
-        `Ngắt kết nối tới server nhận voice của nodelink! Code: ${code} Lý do: ${reason}`
-      );
+      this.debug(`Ngắt kết nối tới server nhận voice của nodelink! Code: ${code} Lý do: ${reason}`);
       // @ts-ignore
       this.manager?.emit(ZklinkEvents.VoiceDisconnect, node, code, reason);
       // @ts-ignore
@@ -124,10 +122,7 @@ export class ZklinkPlugin extends Plugin {
   private debug(logs: string) {
     this.manager
       ? // @ts-ignore
-        this.manager.emit(
-          ZklinkEvents.Debug,
-          `[Zklink] / [Plugin] / [Voice Receiver] | ${logs}`
-        )
+        this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Plugin] / [Voice Receiver] | ${logs}`)
       : true;
   }
 }

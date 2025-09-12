@@ -59,10 +59,7 @@ function parseFrameHeaderInfo(buffer: Buffer) {
 }
 
 function parseFrameHeader(info: ZklinkWebsocketFHInfo, buffer: Buffer) {
-  const slicedBuffer = buffer.subarray(
-    info.startIndex,
-    info.startIndex + info.payloadLength
-  );
+  const slicedBuffer = buffer.subarray(info.startIndex, info.startIndex + info.payloadLength);
 
   if (info.mask) {
     for (let i = 0; i < info.payloadLength; i++) {
@@ -247,10 +244,7 @@ export class ZklinkWebsocket extends EventEmitter {
       }
       case 0x1:
       case 0x2: {
-        if (
-          this.continueInfo.type !== -1 &&
-          this.continueInfo.type !== headers.opcode
-        ) {
+        if (this.continueInfo.type !== -1 && this.continueInfo.type !== headers.opcode) {
           this.close(1002, "Khung tiếp nối không hợp lệ");
           this.cleanup();
 
@@ -263,9 +257,7 @@ export class ZklinkWebsocket extends EventEmitter {
         } else {
           this.emit(
             "message",
-            headers.opcode === 0x1
-              ? headers.buffer.toString("utf8")
-              : headers.buffer
+            headers.opcode === 0x1 ? headers.buffer.toString("utf8") : headers.buffer
           );
         }
 
@@ -347,8 +339,7 @@ export class ZklinkWebsocket extends EventEmitter {
     if (options.mask) {
       mask = Buffer.allocUnsafe(4);
 
-      while ((mask[0] | mask[1] | mask[2] | mask[3]) === 0)
-        crypto.randomFillSync(mask, 0, 4);
+      while ((mask[0] | mask[1] | mask[2] | mask[3]) === 0) crypto.randomFillSync(mask, 0, 4);
 
       payloadStartIndex += 4;
     }
@@ -407,9 +398,7 @@ export class ZklinkWebsocket extends EventEmitter {
    * @returns boolean
    */
   public close(code?: number, reason?: string) {
-    const data = Buffer.allocUnsafe(
-      2 + Buffer.byteLength(reason ?? "Đóng kết nối bình thường")
-    );
+    const data = Buffer.allocUnsafe(2 + Buffer.byteLength(reason ?? "Đóng kết nối bình thường"));
     data.writeUInt16BE(code ?? 1000);
     data.write(reason ?? "Đóng kết nối bình thường", 2);
 
