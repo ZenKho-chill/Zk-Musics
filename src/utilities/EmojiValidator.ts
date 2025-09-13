@@ -3,6 +3,98 @@
  */
 export class EmojiValidator {
   /**
+   * Test xem bot có thể sử dụng emoji không bằng cách thử tạo một message tạm
+   * @param client - Discord client instance
+   * @param emoji - Emoji string để test
+   * @returns Promise<boolean> - true nếu có quyền truy cập
+   */
+  static async canAccessEmoji(client: any, emoji: string): Promise<boolean> {
+    try {
+      if (!emoji || emoji.trim() === "") return false;
+
+      // Unicode emoji luôn available
+      const unicodeEmojiRegex = /^[\p{Emoji}]$/u;
+      if (unicodeEmojiRegex.test(emoji)) return true;
+
+      // Parse custom emoji
+      const customEmojiRegex = /^<(a?):([^:]+):(\d+)>$/;
+      const match = emoji.match(customEmojiRegex);
+      
+      if (!match) return false;
+      
+      const [, animated, name, id] = match;
+      
+      // Kiểm tra emoji có trong cache của bot không
+      const emojiFromCache = client.emojis.cache.get(id);
+      if (emojiFromCache) return true;
+
+      // Nếu không có trong cache, có thể là emoji từ server khác
+      // Bot chỉ có thể dùng emoji từ server mà nó có mặt
+      return false;
+      
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /**
+   * Safely get emoji cho Button với kiểm tra quyền truy cập
+   * @param client - Discord client instance
+   * @param emoji - Emoji string
+   * @param fallback - Fallback emoji
+   * @returns Promise<emoji object hoặc fallback hoặc null để bỏ emoji>
+   */
+  static async safeEmojiForButton(
+    client: any,
+    emoji: string,
+    fallback: string = "❓",
+    removeIfNoAccess: boolean = false
+  ): Promise<string | { id: string; name: string; animated?: boolean } | null> {
+    try {
+      if (!emoji || emoji.trim() === "") {
+        return removeIfNoAccess ? null : fallback;
+      }
+
+      // Kiểm tra quyền truy cập
+      const canAccess = await this.canAccessEmoji(client, emoji);
+      
+      if (!canAccess) {
+        // Nếu không có quyền truy cập và yêu cầu xóa emoji
+        if (removeIfNoAccess) return null;
+        // Nếu không thì dùng fallback
+        return fallback;
+      }
+
+      // Nếu có quyền truy cập, parse emoji
+      const unicodeEmojiRegex = /^[\p{Emoji}]$/u;
+      if (unicodeEmojiRegex.test(emoji)) return emoji;
+
+      // Parse custom emoji
+      const customEmojiRegex = /^<(a?):([^:]+):(\d+)>$/;
+      const match = emoji.match(customEmojiRegex);
+
+      if (match) {
+        const [, animated, name, id] = match;
+        
+        const result: { id: string; name: string; animated?: boolean } = {
+          id: id,
+          name: name,
+        };
+
+        if (animated === "a") {
+          result.animated = true;
+        }
+
+        return result;
+      }
+
+      return removeIfNoAccess ? null : fallback;
+    } catch (error) {
+      return removeIfNoAccess ? null : fallback;
+    }
+  }
+
+  /**
    * Kiểm tra xem emoji string có hợp lệ không
    * @param emoji - Emoji string (có thể là unicode hoặc custom emoji)
    * @returns true nếu hợp lệ
@@ -36,6 +128,54 @@ export class EmojiValidator {
   static safeEmoji(emoji: string, fallback: string = "❓"): string {
     if (!emoji) return fallback;
     return this.isValidEmoji(emoji) ? emoji : fallback;
+  }
+
+  /**
+   * Safely get custom emoji for Button components với extra validation
+   * @param emoji - Custom emoji string
+   * @param fallback - Fallback unicode emoji
+   * @returns emoji object hoặc fallback an toàn
+   */
+  static safeCustomEmojiForButton(
+    emoji: string,
+    fallback: string = "❓"
+  ): string | { id: string; name: string; animated?: boolean } {
+    try {
+      if (!emoji || emoji.trim() === "") return fallback;
+
+      // Nếu là unicode emoji, trả về ngay
+      const unicodeEmojiRegex = /^[\p{Emoji}]$/u;
+      if (unicodeEmojiRegex.test(emoji)) return emoji;
+
+      // Parse custom emoji
+      const customEmojiRegex = /^<(a?):([^:]+):(\d+)>$/;
+      const match = emoji.match(customEmojiRegex);
+
+      if (match) {
+        const [, animated, name, id] = match;
+        
+        // Validation nghiêm ngặt hơn
+        if (!name || name.length === 0 || name.length > 32) return fallback;
+        if (!id || !/^\d{17,20}$/.test(id)) return fallback; // Discord snowflake ID format
+        
+        const result: { id: string; name: string; animated?: boolean } = {
+          id: id,
+          name: name,
+        };
+
+        if (animated === "a") {
+          result.animated = true;
+        }
+
+        return result;
+      }
+
+      // Nếu không match format nào, return fallback
+      return fallback;
+    } catch (error) {
+      // Nếu có lỗi gì, luôn return fallback
+      return fallback;
+    }
   }
 
   /**

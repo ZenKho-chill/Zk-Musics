@@ -66,7 +66,7 @@ services:
       - .env
     depends_on:
       - lavalink
-      - mongodb
+      # - mongodb
     networks:
       - zkmusic-network
     healthcheck:

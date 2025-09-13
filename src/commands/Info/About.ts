@@ -5,6 +5,7 @@ import { Command, Accessableby } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { EmojiValidator } from "../../utilities/EmojiValidator.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -73,37 +74,72 @@ export default class implements Command {
     }
 
     const AboutButton = new ActionRowBuilder<ButtonBuilder>();
+    
+    // Kiểm tra và thêm button Invite với emoji safe
     if (client.config.MENU_HELP_EMOJI.E_INVITE) {
-      AboutButton.addComponents(
-        new ButtonBuilder()
-          .setLabel("Mời bot")
-          .setEmoji(client.config.MENU_HELP_EMOJI.E_INVITE)
-          .setStyle(ButtonStyle.Link)
-          .setURL(
-            `https://discord.com/oauth2/authorize?client_id=${
-              client.user!.id
-            }&permissions=8&scope=bot`
-          )
+      const inviteEmoji = await EmojiValidator.safeEmojiForButton(
+        client, 
+        client.config.MENU_HELP_EMOJI.E_INVITE, 
+        "➕", 
+        true // xóa emoji nếu không có quyền truy cập
       );
+      
+      const inviteButton = new ButtonBuilder()
+        .setLabel("Mời bot")
+        .setStyle(ButtonStyle.Link)
+        .setURL(
+          `https://discord.com/oauth2/authorize?client_id=${
+            client.user!.id
+          }&permissions=8&scope=bot`
+        );
+      
+      if (inviteEmoji) {
+        inviteButton.setEmoji(inviteEmoji);
+      }
+      
+      AboutButton.addComponents(inviteButton);
     }
 
+    // Kiểm tra và thêm button Support với emoji safe
     if (client.config.bot.SERVER_SUPPORT_URL && client.config.MENU_HELP_EMOJI.E_SUPPORT) {
-      AboutButton.addComponents(
-        new ButtonBuilder()
-          .setLabel("Hỗ trợ máy chủ")
-          .setEmoji(client.config.MENU_HELP_EMOJI.E_SUPPORT)
-          .setStyle(ButtonStyle.Link)
-          .setURL(client.config.bot.SERVER_SUPPORT_URL)
+      const supportEmoji = await EmojiValidator.safeEmojiForButton(
+        client, 
+        client.config.MENU_HELP_EMOJI.E_SUPPORT, 
+        "🆘", 
+        true // xóa emoji nếu không có quyền truy cập
       );
+      
+      const supportButton = new ButtonBuilder()
+        .setLabel("Hỗ trợ máy chủ")
+        .setStyle(ButtonStyle.Link)
+        .setURL(client.config.bot.SERVER_SUPPORT_URL);
+      
+      if (supportEmoji) {
+        supportButton.setEmoji(supportEmoji);
+      }
+      
+      AboutButton.addComponents(supportButton);
     }
+    
+    // Kiểm tra và thêm button Vote với emoji safe
     if (client.config.bot.VOTE_URL && client.config.MENU_HELP_EMOJI.E_VOTE) {
-      AboutButton.addComponents(
-        new ButtonBuilder()
-          .setLabel("Bình chọn")
-          .setEmoji(client.config.MENU_HELP_EMOJI.E_VOTE)
-          .setStyle(ButtonStyle.Link)
-          .setURL(client.config.bot.VOTE_URL)
+      const voteEmoji = await EmojiValidator.safeEmojiForButton(
+        client, 
+        client.config.MENU_HELP_EMOJI.E_VOTE, 
+        "🗳️", 
+        true // xóa emoji nếu không có quyền truy cập
       );
+      
+      const voteButton = new ButtonBuilder()
+        .setLabel("Bình chọn")
+        .setStyle(ButtonStyle.Link)
+        .setURL(client.config.bot.VOTE_URL);
+      
+      if (voteEmoji) {
+        voteButton.setEmoji(voteEmoji);
+      }
+      
+      AboutButton.addComponents(voteButton);
     }
 
     await handler.editReply({
