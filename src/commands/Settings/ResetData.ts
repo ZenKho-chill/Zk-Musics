@@ -44,7 +44,6 @@ export default class implements Command {
         { name: "Ngôn ngữ (Guild)", value: "language" },
         { name: "Twenty Four Seven (Guild)", value: "twentyfourseven" },
         { name: "Cài đặt nhạc (Guild)", value: "setup" },
-        { name: "Chế độ điều khiển (Guild)", value: "controlmode" },
         { name: "Tiền tố (Guild)", value: "prefix" },
         { name: "Kênh tạm (Guild)", value: "tempvoice" },
         { name: "Xóa tất cả (Guild)", value: "resetallguild" },
@@ -92,7 +91,6 @@ export default class implements Command {
               client.db.language.delete(guildId!),
               client.db.autoreconnect.delete(guildId!),
               client.db.setup.delete(guildId!),
-              client.db.ControlButton.delete(guildId!),
               client.db.prefix.delete(guildId!),
               client.db.TempVoiceChannel.delete(guildId!),
               client.db.TempVoiceChannelSetting.delete(guildId!),
@@ -110,10 +108,6 @@ export default class implements Command {
           case "setup":
             await client.db.setup.delete(guildId!);
             resultMessage = "Đã xóa thành công cơ sở dữ liệu Cài đặt nhạc.";
-            break;
-          case "controlmode":
-            await client.db.ControlButton.delete(guildId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Chế độ điều khiển.";
             break;
           case "prefix":
             await client.db.prefix.delete(guildId!);

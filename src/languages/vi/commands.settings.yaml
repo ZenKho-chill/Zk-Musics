@@ -9,11 +9,6 @@ prefix_length: "<:wrong:1220876213896216686> **Prefix không được dài hơn 
 prefix_set: "<:magic:1220886110482468977> **Prefix đã được đặt thành** `%{prefix}`"
 prefix_change: "<:magic:1220886110482468977> **Prefix đã được thay đổi thành** `%{prefix}`"
 
-### Lệnh điều khiển!
-control_set: "<:filters:1252602140472508476> **Chế độ điều khiển trình phát đã được đặt thành %{toggle}**"
-control_arg_error: "<:wrong:1220876213896216686> Tham số không hợp lệ. Vui lòng dùng %{text}"
-control_already: "<:warnings:1220876158254710936> Thông báo bài hát hiện là **%{mode}**"
-
 ### Lệnh thiết lập Music Req! ###
 setup_arg_error: "<:wrong:1220876213896216686> Không hợp lệ! Vui lòng dùng %{text}"
 setup_enable: "<:warnings:1220876158254710936> **Ồ! Hệ thống nhạc đã tồn tại.**"

@@ -79,17 +79,6 @@ kick_success_dm: |
   You have been kicked by %{moderator} from the server %{guild}. ```Reason: %{reason}```
   Contact the server administrator if you have any questions or would like to appeal.
 
-### Ban command! ###
-ban_user_not_found: "That user doesn't exist in this server"
-ban_user_ownerid: "You can't kick that user because they're the server owner"
-ban_user_higher_role: "You can't kick that user because they have a higher role than you"
-ban_bot_higher_role: "You can't kick that user because they have a higher role than me"
-ban_error: "error occurred while trying to kick that user"
-banned_success: "**%{user} has been banned by %{moderator}**"
-ban_success_dm: |
-  You have been banned by %{moderator} from the server %{guild}. ```Reason: %{reason}```
-  Contact the server administrator if you have any questions or would like to appeal.
-
 ### Purge command! ###
 purge_invalid_amount: "Please provide a valid number"
 purge_error: "Failed to purge messages"

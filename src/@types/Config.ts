@@ -390,7 +390,6 @@ export interface COMMANDS_ACCESS {
 export interface ADMIN {
   Announcement: string[];
   BlackList: string[];
-  ClearDatabase: string[];
   Maintenance: string[];
   PremiumCode: string[];
   PremiumList: string[];
@@ -492,7 +491,6 @@ export interface PLAYLIST {
 }
 
 export interface SETTINGS {
-  ControlMode: string[];
   Language: string[];
   LastFm: string[];
   McSetup: string[];

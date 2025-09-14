@@ -9,11 +9,6 @@ prefix_length: "<:wrong:1220876213896216686> **Prefix can not be longer than 10 
 prefix_set: "<:magic:1220886110482468977> **Prefix has been set to** `%{prefix}`"
 prefix_change: "<:magic:1220886110482468977> **Prefix has been changed to** `%{prefix}`"
 
-### Control command!
-control_set: "<:filters:1252602140472508476> **Player control mode has been set to %{toggle}**"
-control_arg_error: "<:wrong:1220876213896216686> Invalid argument. Please use %{text}"
-control_already: "<:warnings:1220876158254710936> Song Notifications are already **%{mode}**"
-
 ### Setup Music Req command! ###
 setup_arg_error: "<:wrong:1220876213896216686> Invalid! Please use %{text}"
 setup_enable: "<:warnings:1220876158254710936> **Oops! Music System already exists.**"

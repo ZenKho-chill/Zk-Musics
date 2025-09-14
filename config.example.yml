@@ -320,7 +320,6 @@ COMMANDS_ACCESS:
   ADMIN: # for admin = only set Owner or Admin
     Announcement: ["Admin"]
     BlackList: ["Admin"]
-    ClearDatabase: ["Owner"]
     Maintenance: ["Admin"]
     PremiumCode: ["Admin"]
     PremiumList: ["Admin"]
@@ -407,7 +406,6 @@ COMMANDS_ACCESS:
     SaveQueue: ["Member"]
 
   SETTINGS:
-    ControlMode: ["Manager"]
     Language: ["Manager"]
     LastFm: ["Member"]
     Prefix: ["Manager"]
@@ -418,7 +416,6 @@ COMMANDS_ACCESS:
     TempVoiceChannel: ["Manager"]
 
   UTILS:
-    Ban: ["Manager"]
     Kick: ["Manager"]
     TopStats: ["Member"]
     MyStats: ["Member"]
