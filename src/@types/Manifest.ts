@@ -4,7 +4,10 @@ export interface ManifestInterface {
       version: string;
       codename: string;
       description: string;
-      developer: string[];
+      developer: {
+        name: string;
+        contact: string;
+      };
     };
     autofix: {
       version: string;

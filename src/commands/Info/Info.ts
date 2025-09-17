@@ -30,7 +30,7 @@ export default class implements Command {
     const globalPlayed = globalPlayedSongData?.SongsPlayed || 0;
 
     const botInfo = stripIndents`
-  • **Tên người dùng :** ${client.user!.username} / ${client.user!.id}
+  • **Tên người dùng :** ${client.user!.username}
   • **Số máy chủ :** ${client.guilds.cache.size}
   • **Số người dùng :** ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}
   • **Số kênh :** ${client.channels.cache.size}
@@ -43,7 +43,7 @@ export default class implements Command {
   `;
 
     const Metadata = stripIndents`
-  • **Client ID :** ${client.user!.id}
+  • **Client ID :** ||${client.user!.id}||
   • **Tên dự án :** ${client.manifest.metadata.bot.codename}
   • **Phiên bản :** ${client.manifest.metadata.bot.version}
   • **Mô tả :** ${client.manifest.metadata.bot.description}
@@ -54,13 +54,17 @@ export default class implements Command {
   • **Typescript :** ${client.manifest.package.typescript}
   • **Tổng số gói :** ${client.manifest.package.totalAmount}
   • **Liên hệ hỗ trợ :** ${client.config.bot.SERVER_SUPPORT_URL}
-  • **Nhà phát triển :** ${client.manifest.metadata.bot.developer}
+  • **Nhà phát triển :** [${client.manifest.metadata.bot.developer.name}](${client.manifest.metadata.bot.developer.contact})
   `;
 
     const embed = new EmbedBuilder()
       .setColor(client.color_second)
       .setThumbnail(client.user!.displayAvatarURL({ size: 512 }))
-      .addFields({ name: "THÔNG TIN BOT", value: botInfo, inline: false })
+      .addFields({ 
+        name: "THÔNG TIN BOT", 
+        value: botInfo, 
+        inline: false 
+      })
       .addFields({
         name: "THÔNG TIN KỸ THUẬT",
         value: Metadata,

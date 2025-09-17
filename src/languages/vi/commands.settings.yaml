@@ -1,5 +1,6 @@
 ### Lệnh đặt ngôn ngữ! ###
 provide_lang: "<:wrong:1220876213896216686> **Ngôn ngữ không hợp lệ. Vui lòng dùng** `%{languages}`"
+provide_lang_list: "<:wrong:1220876213896216686> **Ngôn ngữ không hợp lệ. Các ngôn ngữ được hỗ trợ:**"
 lang_set: "<:lang:1220885875773280316> **Ngôn ngữ đã được đặt thành** `%{language}`"
 lang_change: "<:lang:1220885875773280316> **Ngôn ngữ đã được chuyển sang** `%{language}`"
 

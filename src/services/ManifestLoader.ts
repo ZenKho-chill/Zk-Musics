@@ -16,7 +16,10 @@ export class ManifestLoader {
           version: jsonData.version,
           codename: jsonData.zk.codename || "Zk Music",
           description: jsonData.description || "Ai muốn hát rồi cũng sẽ tìm thấy một bài ♪",
-          developer: jsonData.zk.developer || "ZenKho - https://zenkho.top",
+          developer: {
+            name: jsonData.zk.developer?.name || "ZenKho",
+            contact: jsonData.zk.developer?.contact || "https://zenkho.top"
+          },
         },
         autofix: {
           version: jsonData.zk.autofix.version,
@@ -25,10 +28,10 @@ export class ManifestLoader {
       },
       package: {
         discordjs: jsonData.dependencies["discord.js"]
-          ? jsonData.dependencies["discord.js"].substring(1)
+          ? jsonData.dependencies["discord.js"].replace(/^[\^~]/, "")
           : "unknown",
         typescript: jsonData.devDependencies["typescript"]
-          ? jsonData.devDependencies["typescript"].substring(1)
+          ? jsonData.devDependencies["typescript"].replace(/^[\^~]/, "")
           : "unknown",
         globalAmount: countPackage,
         devAmount: countDevPackage,

@@ -1,5 +1,6 @@
 ### Set Language command! ###
 provide_lang: "<:wrong:1220876213896216686> **Invalid Language. Please use** `%{languages}`"
+provide_lang_list: "<:wrong:1220876213896216686> **Invalid Language. Supported languages:**"
 lang_set: "<:lang:1220885875773280316> **Language has been set to** `%{language}`"
 lang_change: "<:lang:1220885875773280316> **Language has been changed to** `%{language}`"
 

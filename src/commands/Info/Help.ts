@@ -6,6 +6,7 @@ import {
   StringSelectMenuOptionBuilder,
   ButtonBuilder,
   ButtonStyle,
+  AutocompleteInteraction,
 } from "discord.js";
 import { stripIndents } from "common-tags";
 import { Accessableby, Command } from "../../structures/Command.js";
@@ -14,6 +15,7 @@ import { Manager } from "../../manager.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import { EmojiValidator } from "../../utilities/EmojiValidator.js";
+import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -34,6 +36,7 @@ export default class implements Command {
       description: "Tên lệnh",
       type: ApplicationCommandOptionType.String,
       required: false,
+      autocomplete: true,
     },
   ];
 
@@ -354,5 +357,182 @@ export default class implements Command {
       slashEnable: `${client.i18n.get(handler.language, "commands.info", "finder_slash_enable")}`,
       slashDisable: `${client.i18n.get(handler.language, "commands.info", "finder_slash_disable")}`,
     };
+  }
+
+  // Hàm autocomplete cho tìm kiếm lệnh theo từ khóa
+  async autocomplete(client: Manager, interaction: GlobalInteraction, language: string) {
+    let choice: AutocompleteInteractionChoices[] = [];
+    const input = String((interaction as any).options.get("command")?.value || "");
+
+    // Lấy tất cả commands
+    const allCommands = Array.from(client.commands.values());
+
+    // Nếu không có input, hiển thị một số lệnh phổ biến
+    if (!input.trim()) {
+      const popularCommands = allCommands
+        .filter(cmd => ["play", "pause", "skip", "stop", "queue", "help", "info"].includes(cmd.name[0]))
+        .slice(0, 10);
+      
+      for (const cmd of popularCommands) {
+        choice.push({
+          name: `${this.getCategoryIcon(cmd.category)} ${cmd.name[0]} - ${cmd.description}`,
+          value: cmd.name[0]
+        });
+      }
+    } else {
+      // Tách từ khóa tìm kiếm
+      const searchKeywords = input.toLowerCase().split(/\s+/).filter(keyword => keyword.length > 0);
+      
+      // Xử lý trường hợp đặc biệt cho "pl"
+      if (input.toLowerCase().trim() === "pl") {
+        // 1. Tìm lệnh play có alias "pl"
+        const playCommand = allCommands.find(cmd => 
+          cmd.aliases && cmd.aliases.includes("pl") && cmd.name[0] === "play"
+        );
+        if (playCommand) {
+          choice.push({
+            name: `🎵 pl (play) - ${playCommand.description}`,
+            value: "pl"
+          });
+        }
+        
+        // 2. Tìm tất cả lệnh playlist có format ["pl", "subcommand"]
+        const playlistCommands = allCommands.filter(cmd => 
+          cmd.name.length >= 2 && cmd.name[0] === "pl"
+        );
+        
+        for (const cmd of playlistCommands) {
+          const subCommand = cmd.name[1];
+          const displayName = `pl ${subCommand}`;
+          choice.push({
+            name: `📝 ${displayName} - ${cmd.description}`,
+            value: cmd.name.join("-") // Sử dụng format pl-add thay vì pl add
+          });
+        }
+      } else {
+        // Tìm kiếm theo từ khóa với hệ thống scoring
+        const commandScores = allCommands.map(cmd => {
+          let score = 0;
+          const searchableText = [
+            ...cmd.name,
+            ...(cmd.aliases || []),
+            cmd.description || "",
+            cmd.category || ""
+          ].join(" ").toLowerCase();
+
+          // Tính điểm cho từng từ khóa
+          for (const keyword of searchKeywords) {
+            // Từ khóa xuất hiện trong tên lệnh (điểm cao nhất)
+            if (cmd.name.some(name => name.toLowerCase().includes(keyword))) {
+              score += 100;
+            }
+            
+            // Từ khóa xuất hiện trong aliases
+            if (cmd.aliases && cmd.aliases.some(alias => alias.toLowerCase().includes(keyword))) {
+              score += 80;
+            }
+            
+            // Từ khóa xuất hiện trong description
+            if (cmd.description && cmd.description.toLowerCase().includes(keyword)) {
+              score += 60;
+            }
+            
+            // Từ khóa xuất hiện trong category
+            if (cmd.category && cmd.category.toLowerCase().includes(keyword)) {
+              score += 40;
+            }
+            
+            // Bonus điểm cho exact match
+            if (cmd.name.some(name => name.toLowerCase() === keyword)) {
+              score += 50;
+            }
+            
+            // Bonus điểm cho match với aliases
+            if (cmd.aliases && cmd.aliases.some(alias => alias.toLowerCase() === keyword)) {
+              score += 30;
+            }
+          }
+          
+          // Bonus điểm nếu tất cả từ khóa đều có trong searchableText
+          const allKeywordsFound = searchKeywords.every(keyword => 
+            searchableText.includes(keyword)
+          );
+          if (allKeywordsFound && searchKeywords.length > 1) {
+            score += 20;
+          }
+
+          return { command: cmd, score };
+        });
+
+        // Lọc và sắp xếp theo điểm
+        const filteredCommands = commandScores
+          .filter(item => item.score > 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 25);
+
+        // Tạo choices
+        for (const { command: cmd } of filteredCommands) {
+          const categoryIcon = this.getCategoryIcon(cmd.category);
+          
+          // Xác định display name và return value
+          let returnValue: string;
+          let displayName: string;
+          
+          if (cmd.name.length > 1) {
+            returnValue = cmd.name.join("-"); // Sử dụng format pl-add
+            displayName = cmd.name.join(" "); // Hiển thị pl add
+          } else {
+            const primaryName = cmd.name[0];
+            returnValue = primaryName;
+            displayName = primaryName;
+            
+            // Kiểm tra nếu có alias match với từ khóa
+            if (cmd.aliases) {
+              const matchingAlias = cmd.aliases.find(alias => 
+                searchKeywords.some(keyword => alias.toLowerCase().includes(keyword))
+              );
+              if (matchingAlias) {
+                displayName = `${matchingAlias} (${primaryName})`;
+                
+                // Nếu alias match exact với input, ưu tiên alias làm return value
+                if (cmd.aliases.some(alias => alias.toLowerCase() === input.toLowerCase())) {
+                  returnValue = matchingAlias;
+                }
+              }
+            }
+          }
+          
+          choice.push({
+            name: `${categoryIcon} ${displayName} - ${cmd.description}`,
+            value: returnValue
+          });
+        }
+      }
+      
+      // Nếu không tìm thấy gì, hiển thị thông báo
+      if (choice.length === 0) {
+        choice.push({
+          name: `❌ Không tìm thấy lệnh cho "${input}"`,
+          value: "help"
+        });
+      }
+    }
+
+    await (interaction as AutocompleteInteraction).respond(choice).catch(() => {});
+  }
+
+  // Helper function để lấy icon cho từng category
+  private getCategoryIcon(category: string): string {
+    const iconMap: { [key: string]: string } = {
+      "Music": "🎵",
+      "Playlist": "📝", 
+      "Info": "ℹ️",
+      "Settings": "⚙️",
+      "Utils": "🔧",
+      "Admin": "👑",
+      "default": "📋"
+    };
+    
+    return iconMap[category] || iconMap["default"];
   }
 }
