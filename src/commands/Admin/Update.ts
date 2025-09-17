@@ -13,7 +13,7 @@ export default class implements Command {
   public accessableby = data.COMMANDS_ACCESS.ADMIN.Update;
   public usage = "[description]";
   public aliases = ["up"];
-  public lavalink = true;
+  public lavalink = false;
   public playerCheck = false;
   public usingInteraction = true;
   public sameVoiceCheck = false;
@@ -25,10 +25,31 @@ export default class implements Command {
       await handler.deferReply();
 
       const channelToSendId = client.config.logchannel.UpdateChannelId;
+      
+      // Kiểm tra xem channel ID có được cấu hình không
+      if (!channelToSendId || channelToSendId === "ID KÊNH CẬP NHẬT") {
+        const embed = new EmbedBuilder()
+          .setColor(client.color_main)
+          .setDescription("❌ **Lỗi:** Channel cập nhật chưa được cấu hình trong config!");
+        return await handler.editReply({ embeds: [embed] });
+      }
+
       const channelToSend = client.channels.cache.get(channelToSendId) as TextChannel | undefined;
 
       if (!channelToSend) {
-        throw new Error(`Không tìm thấy kênh với ID ${channelToSendId}.`);
+        const embed = new EmbedBuilder()
+          .setColor(client.color_main)
+          .setDescription(`❌ **Lỗi:** Không tìm thấy kênh cập nhật với ID: \`${channelToSendId}\``);
+        return await handler.editReply({ embeds: [embed] });
+      }
+
+      // Kiểm tra quyền của bot trong channel
+      const botMember = channelToSend.guild.members.cache.get(client.user!.id);
+      if (!botMember || !channelToSend.permissionsFor(botMember)?.has(['SendMessages', 'ViewChannel'])) {
+        const embed = new EmbedBuilder()
+          .setColor(client.color_main)
+          .setDescription(`❌ **Lỗi:** Bot không có quyền gửi tin nhắn trong kênh \`${channelToSend.name}\``);
+        return await handler.editReply({ embeds: [embed] });
       }
 
       const filter = (msg: Message) => msg.author.id === handler.user?.id;
@@ -36,7 +57,7 @@ export default class implements Command {
         .setColor(client.color_main)
         .setDescription(client.i18n.get(handler.language, "commands.admin", "update_provide_desc")); // Mô tả lấy từ i18n
 
-      const messagePrompt = await handler.editReply({ embeds: [embed] });
+      await handler.editReply({ embeds: [embed] });
 
       const collector = (handler?.channel! as TextChannel).createMessageCollector({
         filter,
@@ -73,21 +94,30 @@ export default class implements Command {
           }
 
           const sentMessage = await channelToSend.send(description);
+          
+          // Log success
+          client.logger.info("Update Command", `Đã gửi thông báo cập nhật thành công đến kênh ${channelToSend.name} (${channelToSend.id})`);
+          
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "update_success")}`
+              `✅ ${client.i18n.get(handler.language, "commands.admin", "update_success")}\n` +
+              `📤 **Kênh:** ${channelToSend.name}\n` +
+              `🔗 **Link:** [Xem tin nhắn](${sentMessage.url})`
             );
           await handler.editReply({ embeds: [embed] });
 
           // Xóa tin nhắn do người dùng gửi
-          await msg.delete();
+          await msg.delete().catch(() => {
+            client.logger.warn("Update Command", "Không thể xóa tin nhắn của người dùng");
+          });
         } catch (err) {
-          client.logger.warn(import.meta.url, `Không thể gửi tin nhắn cập nhật`);
+          client.logger.error("Update Command", `Lỗi khi gửi tin nhắn cập nhật: ${err}`);
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "update_failure")}`
+              `❌ ${client.i18n.get(handler.language, "commands.admin", "update_failure")}\n` +
+              `📝 **Chi tiết:** ${err instanceof Error ? err.message : "Lỗi không xác định"}`
             );
           await handler.editReply({ embeds: [embed] });
         }
@@ -107,15 +137,18 @@ export default class implements Command {
         collector?.removeAllListeners();
       });
     } catch (error) {
-      client.logger.warn("Update", `Không thể gửi thông báo cập nhật`);
+      client.logger.error("Update Command", `Lỗi chung trong lệnh update: ${error}`);
 
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.admin", "update_timeout_failure")}`
+          `❌ ${client.i18n.get(handler.language, "commands.admin", "update_failure")}\n` +
+          `📝 **Chi tiết:** ${error instanceof Error ? error.message : "Lỗi không xác định"}`
         );
 
-      await handler.editReply({ embeds: [embed] });
+      await handler.editReply({ embeds: [embed] }).catch(() => {
+        client.logger.error("Update Command", "Không thể gửi tin nhắn lỗi");
+      });
     }
   }
 }
