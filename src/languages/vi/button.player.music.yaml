@@ -1,4 +1,4 @@
-### Lệnh Autoplay!
+﻿### Lệnh Autoplay!
 autoplay_on: "Tự phát giờ đã **BẬT** — Thưởng thức âm nhạc nhé!"
 autoplay_off: "Tự phát giờ đã **TẮT** — Mình sẽ không tự thêm nhạc nữa."
 autoplay_no_song: "Không có bài hát nào đang phát!"
@@ -10,18 +10,9 @@ loop_current: |
 
 loop_all: "<:loop:1220832757496811570> **%{user} đã bật chế độ lặp toàn bộ hàng chờ (QUEUE)**"
 unloop_all: "<:wrong:1220876213896216686> **Chế độ lặp đã bị %{user} TẮT**"
-loop_invalid: "<:warnings:1220876158254710936> Chế độ lặp không hợp lệ. Vui lòng dùng **%{mode}**"
-loop_already: "<:warnings:1220876158254710936> Chế độ lặp hiện đã là **%{mode}**"
 
 ### Lệnh Tạm dừng (Pause)!
-pause_msg: |
-  <:pause:1220831927595175949> **Bài hát %{title} đã tạm dừng!
-  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Đã bị %{user} tạm dừng**
 ### Lệnh Tiếp tục (Resume)!
-resume_msg: |
-  <:play:1220839345938763978> **Đã tiếp tục phát %{title},
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Thưởng thức nào %{user}**
-
 previous_notfound: |
   <:warnings:1220876158254710936> **Không tìm thấy bài trước trong hàng chờ!
   <:blankers:1220848705289064669><:pop:1220849334606626946> Hãy dùng /play để thêm bài và giữ không khí sôi động nhé!**
@@ -48,7 +39,6 @@ stop_msg: "<:stop:1220831796430897272> **%{user} đã dừng %{title}**"
 
 ### Lệnh Âm lượng (Volume)!
 voldown_msg: "<:voldown:1220831827825135637> **Đã đặt âm lượng thành %{volume}%**"
-volume_invalid: "<:warnings:1220876158254710936> Giá trị âm lượng không hợp lệ. Phạm vi hợp lệ **1** đến **100**"
 volup_msg: "<:volup:1220831844766060554> **Đã đặt âm lượng thành %{volume}%**"
 volume_max: "<:warnings:1220876158254710936> **Âm lượng đã ở mức tối đa 100% rồi**"
 volume_min: "<:warnings:1220876158254710936> **Âm lượng đã ở mức nhỏ nhất rồi!**"

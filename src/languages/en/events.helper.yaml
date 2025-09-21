@@ -1,21 +1,4 @@
-## Helper setup ##
-setup_helper_content: |
-  ## Welcome to %{guild} Community!
-  *If you're new to Discord, then you've come to the right place! This channel is dedicated to helping you navigate around the server.*
-  ⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤
-  %{bot} is a high-quality Discord music bot. Enjoy your favorite tunes on Discord with support from multiple music players. 
-  Try out the feature-rich commands and enjoy smooth playback.
-
-  This Discord server is the perfect place to hang out in the heart of the %{guild} Community. 
-  Enjoy chats, share music recommendations, and explore all the features offered by the %{bots} bot!
-
-  Want to invite your friends to the server? Send them this link: %{serversupport}
-
-disable_helper: "The helper has been disabled"
-invalid_channel_helper: "The provided channel is invalid"
-channel_viewable_helper: "The provided channel is not visible to me"
-setup_helper_succes: "The helper has been set up to %{channel} successfully."
-
+﻿## Helper setup ##
 ## RULES Events ##
 rules_title: "Server Rules for %{guild} Community!"
 rules_desc: |
@@ -73,9 +56,5 @@ reminder_label_emoji: "⏰"
 reminder_title: "Vote Reminder"
 reminder_desc: "It's time! You can now vote again on **[Top.gg](%{voteurl})**."
 reminder_set_content: "Reminder set! I will remind you to vote again in 12 hours"
-reminder_cancel_content: "Reminder canceled. You will not be reminded to vote again"
-reminder_no_vote_warning: "You must vote first before setting a reminder"
 
 ### Welcomer events!
-welcome_desc: "Welcome to %{guildname} %{member}, Stay in your imagination!"
-leave_desc: "Thanks for being with us! Goodbye %{member}"

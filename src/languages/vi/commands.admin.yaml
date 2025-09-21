@@ -1,24 +1,11 @@
-### Thông báo tới mọi máy chủ
+﻿### Thông báo tới mọi máy chủ
 announcement_desc: "*Nhập nội dung cho thông báo này*"
-announcement_invalidURL: "*URL ảnh không hợp lệ hoặc chưa cung cấp. Vui lòng cung cấp URL ảnh hợp lệ.*"
 announcement_timeout: "*Không nhận được dữ liệu trong thời gian cho phép. Lệnh đã hủy.*"
 announcement_failure: "*Không gửi được thông báo đến bất kỳ máy chủ nào.*`Không tìm thấy máy chủ.`"
-announcement_success: "*Thông báo đã được gửi thành công tới %{successfulGuilds} máy chủ%{plural}!*"
 
 ### Danh sách đen (Guild)
-blacklist_guild_not_found: <:warning:1291142143993446412> "Mình không tìm thấy máy chủ đó..."
-blacklist_guild_already: <:warning:1291142143993446412> "Có vẻ %{id} đã bị chặn rồi, mình không thể làm gì hơn."
-blacklist_guild_add: <:ok:1291155671596929097> "Đã thêm %{id} vào danh sách đen. Chắc là không hợp rồi..."
-blacklist_guild_not_exist: <:warning:1291142143993446412> "Bạn nói bạn đang tìm %{id}? Mình không tìm thấy họ trong hành trình của mình..."
-blacklist_guild_delete: <:ok:1291155671596929097> "Chào mừng trở lại, %{id}! Mình có thể ghé đó nữa rồi, họ không còn bị chặn."
 
 ### Danh sách đen (User)
-blacklist_user_bot_owner: <:warning:1291142143993446412> "Ồ! Mình không thể chặn chủ nhân của mình! Bạn đang muốn mình gặp rắc rối à?"
-blacklist_user_not_found: <:warning:1291142143993446412> "Mình không tìm thấy người đó..."
-blacklist_user_already: <:warning:1291142143993446412> "Có vẻ %{id} đã bị chặn rồi, mình không thể làm gì hơn."
-blacklist_user_add: <:ok:1291155671596929097> "Tạm biệt, %{id}! Buồn khi phải thêm ai đó vào danh sách đen, nhưng có lẽ là tốt nhất..."
-blacklist_user_not_exist: <:warning:1291142143993446412> "%{id}? Là ai vậy? Mình không tìm thấy họ trong fanclub..."
-blacklist_user_delete: <:ok:1291155671596929097> "Tuyệt! %{id} đã được phục hồi! Mình mong gặp họ ở buổi hòa nhạc tiếp theo!"
 
 ### Lệnh Premium / Tạo mã!
 premium_code_arg_error: "<:wrong:1220876213896216686> Tham số không hợp lệ. Vui lòng dùng %{text}"
@@ -32,15 +19,11 @@ premium_code_expired: "Hết hạn"
 premium_code_generateby: "Tạo bởi"
 
 ### Lệnh Xóa!
-premium_remove_desc: "<:okee:1220876098456256512> **Đã xóa %{user} khỏi danh sách Premium thành công**"
 premium_remove_already: "<:warnings:1220876158254710936> %{user} đã được gỡ trước đó"
-premium_remove_invalid_params: "<:warnings:1220876158254710936> Không hợp lệ, ví dụ %{example}"
 premium_remove_404: "<:wrong:1220876213896216686> **Không tìm thấy %{id} trong loại %{type}**"
-premium_remove_invalid_type: "<:warnings:1220876158254710936> Không hợp lệ, loại %{type}"
 premium_remove_footer: "Đã xóa thành công %{user}"
 premium_remove_id: "Id"
 premium_remove_by: "Xóa bởi"
-display_name: "Tên hiển thị"
 
 ### Lệnh Cập nhật!
 update_provide_desc: "*Nhập mô tả cho bản cập nhật này*"
@@ -56,9 +39,6 @@ maintenance_true: "<:okee:1220876098456256512> Chế độ bảo trì đã đư�
 maintenance_false: "<:okee:1220876098456256512> Chế độ bảo trì đã được **Tắt**"
 
 ### Lệnh danh sách Premium!
-premiumlist_invalid_page_number: <:warning:1291142143993446412> "Mình không thể liệt kê nhiều mã như vậy... Vui lòng cung cấp một số hợp lệ!"
-premiumlist_guild_list_title: "Danh sách máy chủ Premium!"
-premiumlist_user_list_title: "Danh sách người dùng Premium"
 premiumlist_page_not_found: "<:warning:1291142143993446412> Chỉ có **%{page} trang** khả dụng!"
 premiumlist_invalid_type: "<:warning:1291142143993446412> Oops! Đó không phải loại hợp lệ?\nVí dụ: %{example}"
 
@@ -76,16 +56,11 @@ redeem_invalid_guild: "<:warnings:1220876158254710936> Không hợp lệ! Vui l�
 redeem_invalid_user: "<:warnings:1220876158254710936> Không hợp lệ! Vui lòng sử dụng userId hợp lệ"
 redeem_invalid_mode: "<:warnings:1220876158254710936> Không hợp lệ! Dùng `guild` hoặc `user`"
 redeem_invalid: "<:wrong:1220876213896216686> **Mã Premium không hợp lệ. Vui lòng sử dụng mã hợp lệ**"
-redeem_already_guild: "<:wrong:1220876213896216686> Máy chủ này đã ở trong **Premium**"
-redeem_already: "<:warnings:1220876158254710936> **Bạn đã là người dùng Premium**"
 
 ### Nhật ký đổi mã ###
 display_names: "Tên hiển thị"
-username: "Tên người dùng"
 createdAt: "Ngày tạo"
 redeemedAt: "Ngày đổi"
 expiresAt: "Hết hạn"
 plan: "Gói"
-title: "Đã đổi Premium cho người dùng thành công"
-guild_title: "Đã đổi Premium cho máy chủ thành công"
 code: "Mã"

@@ -1,52 +1,5 @@
-### Ticket Events ###
-setup_ticket_succes: "Ticket đã được cài đặt thành công vào %{channel}."
-ticket_modal_active: "Quá trình vẫn đang chạy, vui lòng chờ 1 phút rồi thử lại nha."
-channel_viewable: "Tôi không thể nhìn thấy kênh mà bạn chọn."
-category_viewable: "Tôi không thể nhìn thấy category mà bạn chọn."
-invalid_open_category: "Category bạn chọn không hợp lệ."
-invalid_close_category: "Category bạn chọn không hợp lệ."
-invalid_category: "Category bạn chọn không hợp lệ."
-missing_permission: "Bot thiếu quyền quản lý kênh (manage-channels) để tạo ticket channel."
-disable_ticket_system: "Hệ thống ticket đã bị tắt trong config."
-invalid_channel_category: "Kênh hoặc category bạn nhập vào không hợp lệ."
-ticket_setup_timeout: "Cài đặt ticket bị hết thời gian. Vui lòng thử lại."
-ticket_setup_invalid_url_thumbnail: "URL thumbnail không hợp lệ."
-ticket_setup_invalid_url_image: "URL hình ảnh không hợp lệ."
-ticket_setup_modal_error: "Có lỗi khi xử lý modal. Vui lòng thử lại."
-ticket_already_setup: "Server này đã có ticket setup rồi, bạn không thể tạo thêm."
-ticket_reason: "Hãy nhập lý do tạo ticket."
-ticket_already_open: "Bạn đã có một ticket đang mở rồi."
-ticket_already_closed: "Không tìm thấy dữ liệu ticket hoặc ticket đã được đóng."
-ticket_close_user: "Bạn không được phép đóng ticket này."
-ticket_delete_user: "Bạn không được phép xóa ticket này."
-ticket_deleting_action: "Đang xóa ticket..."
-ticket_closed_label: "🔒 Đã đóng"
-ticket_delete_label: "🗑️ Xóa"
-ticket_create: "Ticket đã được tạo. Vào %{channel} để xem."
-ticket_create_title: "Chờ staff phản hồi nha"
-ticket_create_desc: |
-  Cảm ơn bạn đã tạo ticket. Vui lòng chờ staff phản hồi.
-  `LƯU Ý: Ticket này không có bản sao lưu. Nếu có thông tin quan trọng, bạn hãy tự backup lại nhé.`
-
+﻿### Ticket Events ###
 ### Closed Ticket Events ###
-ticket_closed_title: "🔒 Ticket đã đóng"
-ticket_closed_desc: "Ticket đã được đóng thành công!"
 
 ### Closed Ticket DM User ###
-label_name_closed: "Tải transcript"
-ticket_closed_dm_title: "Ticket của bạn đã được đóng."
-ticket_closed_dm_desc: |
-  Một ticket bạn đã mở vừa được đóng. Bạn có thể xem transcript tại link dưới đây.
-  Nếu gặp vấn đề hoặc có câu hỏi khác, cứ thoải mái mở ticket mới nha. Team luôn sẵn sàng giúp bạn!
-
 ### Ticket Setup Label Modal ###
-ticket_setup_label_embed_title: "Tiêu đề Embed"
-ticket_setup_placeholder_embed_title: "Nhập tiêu đề embed"
-ticket_setup_label_embed_description: "Mô tả Embed"
-ticket_setup_placeholder_embed_description: "Nhập mô tả embed"
-ticket_setup_label_embed_thumbnail_url: "URL Thumbnail"
-ticket_setup_placeholder_embed_thumbnail_url: "Nhập URL thumbnail"
-ticket_setup_label_embed_image_url: "URL Hình ảnh"
-ticket_setup_placeholder_embed_image_url: "Nhập URL hình ảnh"
-ticket_setup_label_embed_footer: "Chữ Footer"
-ticket_setup_placeholder_embed_footer: "Nhập chữ footer"

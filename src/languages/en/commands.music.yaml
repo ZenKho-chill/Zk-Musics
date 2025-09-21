@@ -1,4 +1,4 @@
-### Search command!
+﻿### Search command!
 search_desc: "### HEY! Found results for your request"
 search_end_desc2: "### OMG! %{user}, you didn't select a song in time\n**Give it another go!**"
 search_footer: "%{countSong} tracks found"
@@ -11,9 +11,6 @@ no_songs_playing: "<:wrong:1220876213896216686> No song is currently playing!"
 url_no_allowed: "<:wrong:1220876213896216686> Please use the song name/artist name (url no allowed)"
 
 ### Autoplay command!
-autoplay_off: "<:wrong:1220876213896216686> Autoplay is now **Disabled**"
-autoplay_on: "<:okee:1220876098456256512> Autoplay is now **Enabled**"
-autoplay_no_songs_playing: "<:warnings:1220876158254710936> No songs are playing!"
 
 ### ClearQueue command!
 clearqueue_msg: "<:bin:1220831964890927235> Queue has been **Cleared**"
@@ -41,7 +38,6 @@ loop_invalid: "<:warnings:1220876158254710936> Invalid Loop mode. Please use **%
 loop_already: "<:warnings:1220876158254710936> Loop mode is already **%{mode}**"
 
 ### Lyrics command!
-provide_lyrics: "Please provide a valid **Song Name**"
 lyrics_title: "Lyrics for **%{song}**"
 lyrics_notfound: "<:wrong:1291138140681273396> **Could not find the lyrics for this song!**"
 lyrics_toolong: "**Lyrics too long maks 4048 characters allowed!**"
@@ -51,10 +47,6 @@ lyrics_error: "**Error: %{error}**"
 
 ### Nowplaying command!
 nowplaying_title: "Now playing..."
-nowplaying_footer: "Queue Left: %{queue} • Loop mode: %{loopmode} • Volume: %{volume}"
-nowplaying_author_title: "Author"
-nowplaying_total_duration_title: "Duration"
-nowplaying_request_title: "Requested By"
 
 ### Pause command!
 pause_msg: |
@@ -140,7 +132,6 @@ stop_msg: <:stop:1220831796430897272> **%{title} Has been stopped**
 volume_number_invalid: "<:warnings:1220876158254710936> Please provide a valid number!"
 volume_invalid: "<:warnings:1220876158254710936> Invalid Volume. Please use a number between **1** and **100**"
 volume_msg: "<:voldown:1220831827825135637> **Volume set to %{volume}%, Enjoy %{user}**"
-volume_max: "<:warnings:1220876158254710936> **Volume is already at max 100%**"
 
 ### Spotify Playlist command!
 spotify_playlist_placeholder: "Add to queue and play for you ♥"
@@ -152,7 +143,6 @@ spotify_play_playlist: |
   ### has been added to the queue
 spotify_playlist_empty: "You have no playlists on Spotify."
 spotify_playlist_not_connected: "Please connect your Spotify account first!>"
-spotify_playlist_notfound: "The playlist you selected could not be found. Please try again or choose a different playlist."
 spotify_playlist_error: "There was an error fetching your playlists. Please try again later."
 spotify_playlist_active: "Please wait 30s before making a new request.\nIf you've already selected, you can make a new request."
 

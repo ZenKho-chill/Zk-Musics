@@ -1,4 +1,4 @@
-### About commands
+﻿### About commands
 about_desc1: "** %{bot} Where those who wish to sing always find a song ♪\nJoin the melody in your Discord server today!**"
 about_desc2: |
   ・Bot prefix for this server is `%{prefix}`
@@ -23,15 +23,11 @@ finder_aliases: "**Aliases:**"
 finder_slash: "**Slash:**"
 finder_des_no: "No Description"
 finder_usage_no: "No Usage"
-finder_aliases_prefix: "[Prefix only]"
 finder_aliases_no: "No Aliases"
 finder_slash_enable: "Enabled"
 finder_slash_disable: "Disabled"
 ### Homepage menu / help commands and All commands
-command_not_found: "Unknown command"
 select_menu: "Enjoy music with me!"
-footer: "© 2024 All Rights Reserved"
-help_timeout: "Help Menu timed out try using **`%{prefix}help`** or **`/help`** again."
 homepage_title: "Where those who wish to sing always find a song ♪\nJoin the melody in your Discord server today!"
 #homepage_title: "The Discord music bot that's 100% free with no payment or votes required to access all its amazing functionalities."
 homepage_desc: |
@@ -44,15 +40,6 @@ homepage_desc: |
   <:blankers:1220848705289064669><a:support:1220847678380970086> **Do you want to upgrade to the [Premium](%{premium}) plan?**
 
 ### Lavalink command not available status!
-lavalink_title: "Lavalink Information"
-lavalink_desc: |
-  **Node Info**
-  - Not available!
-  **CPU Info**
-  - Not available!
-  **Memory Info**
-  - Not available!
-
 ### Rating bot commands! ###
 rating_desc: "Thank you %{user} for rating stars for our Discord music bot!"
 rating_succes: "Thank you for your rating!\nYour rating has been successfully submitted."
@@ -69,48 +56,18 @@ suggestions_failure: "Failed to send the report. Please try again later."
 suggestions_success: "Thank you for your suggestion!\nYour suggestion has been successfully submitted."
 
 ### kick command! ###
-kick_user_not_found: "That user doesn't exist in this server"
-kick_user_ownerid: "You can't kick that user because they're the server owner"
-kick_user_higher_role: "You can't kick that user because they have a higher role than you"
-kick_bot_higher_role: "You can't kick that user because they have a higher role than me"
-kick_error: "error occurred while trying to kick that user"
-kick_success: "**%{user} has been kicked by %{moderator}**"
-kick_success_dm: |
-  You have been kicked by %{moderator} from the server %{guild}. ```Reason: %{reason}```
-  Contact the server administrator if you have any questions or would like to appeal.
-
 ### Purge command! ###
-purge_invalid_amount: "Please provide a valid number"
-purge_error: "Failed to purge messages"
-purge_success: "Successfully purged %{amount} messages"
-purge_older_than_14_days: "You can't purge messages older than 14 days"
 
 ### Cat command #####
-provide_categories_cat: "Oops! Invalid commands.please provide category\nAvailable categories: %{categories}"
-invalid_categories_cat: "Invalid category\nAvailable categories: %{categories}"
-cat_error: "An error occured while sending the image! Please try again."
 
 ### Quote command #####
-provide_categories_quote: "Oops! Invalid commands.please provide category\nAvailable categories: %{categories}"
-invalid_categories_quote: "Invalid category\nAvailable categories: %{categories}"
-quote_error: "An error occured while sending the quote! Please try again."
 
 ### Premium Check User command!
 premium_check_premium_button: "Upgrade to premium"
-premium_check_guild_profile_error_desc: "it looks like this guild don't have a premium plan yet."
-premium_check_user_profile_error_desc: "it looks like you don't have a premium plan yet."
 premium_check_invalid: "Invalid profile type. Please choose either 'user' or 'guild'"
-premium_check_owner_profile_author: "Owner Premium Profile"
-premium_check_admin_profile_author: "Admin Premium Profile"
-premium_check_user_profile_author: "User Premium Profile"
 premium_check_user_profile_desc: |
   **User:** %{user}
   **Plan:** %{plan}
   **Expire:** %{expires}
 
 ### Premium Check Guild command!
-premium_check_guild_profile_author: "Guild Premium Profile"
-premium_check_guild_profile_desc: |
-  **Guild:** %{guild}
-  **Plan:** %{plan}
-  **Expire:** %{expires}

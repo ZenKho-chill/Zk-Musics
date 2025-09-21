@@ -1,5 +1,4 @@
-### Set Language command! ###
-provide_lang: "<:wrong:1220876213896216686> **Invalid Language. Please use** `%{languages}`"
+﻿### Set Language command! ###
 provide_lang_list: "<:wrong:1220876213896216686> **Invalid Language. Supported languages:**"
 lang_set: "<:lang:1220885875773280316> **Language has been set to** `%{language}`"
 lang_change: "<:lang:1220885875773280316> **Language has been changed to** `%{language}`"
@@ -17,14 +16,9 @@ setup_topic: "♪ Those who wish to sing always find a song. ♪"
 setup_msg: "*`Succesfully Setup Music System in`* %{channel}\n```Note: Do not delete any message(s) I've created in order for me to work properly.```"
 setup_null: "*`Successfully delete setup channel!`*"
 setup_deleted: "*`Successfully delete setup channel!`*"
-setup_null_inguild: "<:wrong:1220876213896216686> **Music System not found in this server! Ready to delete data**"
-setup_queuemsg: "**Join a voice channel and play songs using name or URL in here!**"
-setup_playembed_author: "No Song Is Currently Playing"
 
 ### Reset Guild command! ###
-reset_data_desc: "<:okee:1220876098456256512> **Database for this server has been reset**"
 ### Reset User data command! ###
-reset_data_user_success: "<:okee:1220876098456256512> **Data for your account has been reset**"
 
 ### Themes command!
 error_themes: "<:wrong:1220876213896216686> Invalid... Please try again."
@@ -41,61 +35,14 @@ lastfm_logout_title: "Last.fm Logout"
 lastfm_logout_desc: "<:okee:1220876098456256512> You have successfully logout from Last.fm"
 
 ### Last FM Feature Disable!
-lastfm_feature_disabled_title: "Last.fm Feature is disabled."
-lastfm_feature_disabled_desc: "The Last.fm feature is currently disabled. Please contact the administrator for more information."
 
 ### Spotify Connect command!
-spotify_connect_error: |
-  <:wrong:1220876213896216686> An error occurred while connecting your Spotify account.
-  <:blankers:1220848705289064669><:info:1220848388455661608>  Please ensure your Spotify ID is correct and try again later.
-
-spotify_connect_success: "Successfully!! You were logged in as **%{name}**"
-spotify_connect_provide_id: "Please provide a valid Spotify ID."
-
 ### Spotify Disconnect command!
-spotify_disconnect_error: "<:wrong:1220876213896216686> An error occurred while disconnecting your Spotify account."
-spotify_disconnect_success: "Successfully disconnected from your Spotify account."
-spotify_disconnect_not_connected: "You are not connected to your Spotify account."
 
 ### Last FM Feature Disable!
-spotify_feature_disabled_title: "Spotify Connect Feature is disabled."
-spotify_feature_disabled_desc: "The Spotify Connect feature is currently disabled. Please contact the administrator for more information."
 
 ### Notify Youtube Feature command!
-notify_youtube_not_found: "No notification found for the YouTube channel **%{ytchannel}**."
-notify_youtube_removed: "You have removed the notification for the YouTube channel **%{ytchannel}**."
-notify_youtube_disabled: "Notify Youtube feature is currently disabled. Contact the staff for more information."
-notify_youtube_already: "Notifications for the YouTube channel %{ytchannel} are already set up."
-notify_youtube_invalid_channel: "There was an error in specifying a valid text channel. Please check!"
-notify_youtube_set: "Notify Youtube has been set for **%{ytchannel}** in %{channelid}."
-notify_youtube_404: |
-  The provided YouTube channel ID could not be found. 
-  To find the channel ID, go to the YouTube channel page and check the URL.
-  The channel ID is the string of letters and numbers after `/channel/` (for example: `UC_x5XG1OV2P6uZZ5FSM9Ttw`).
-notify_youtube_limit_reached_non_premium: |
-   You have reached the limit of %{limit} notifications.
-   By upgrading to [premium](%{premium}), you can set up to 10 notifications.
-
-notify_youtube_limit_reached_premium: |
-   You have reached the limit of %{limit} notifications.
-   This is the maximum allowed. Consider deleting some notifications to make room for new ones.
-
 ### Notify Twitch Feature command!
-notify_twitch_not_found: "No notification found for the Twitch username **%{twitchusername}**."
-notify_twitch_removed: "You have removed the notification for the Twitch username **%{twitchusername}**."
-notify_twitch_disabled: "Notify Twitch feature is currently disabled. Contact the staff for more information."
-notify_twitch_already: "You have already set up notifications for the Twitch channel %{twitchusername}."
-notify_twitch_invalid_channel: "There was an error in specifying a valid text channel. Please check!"
-notify_twitch_set: "Notify Twitch has been set for **%{twitchusername}** in %{channelid}."
-notify_twitch_error: "An unexpected error occurred while processing the Twitch notification for **{twitchusername}** in channel **{channelid}**. Please try again or contact support if the issue persists."
-notify_twitch_limit_reached_non_premium: |
-   You have reached the limit of %{limit} notifications.
-   By upgrading to [premium](%{premium}), you can set up to 10 notifications.
-
-notify_twitch_limit_reached_premium: |
-   You have reached the limit of %{limit} notifications.
-   This is the maximum allowed. Consider deleting some notifications to make room for new ones.
-
 ### Temp Voice Feature command!
 tempvoice_setup: "Temp Voice feature has been %{status}."
 tempvoice_disabled: "Temp Voice has been disabled."

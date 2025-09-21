@@ -1,4 +1,4 @@
-### Autoplay command!
+﻿### Autoplay command!
 autoplay_on: "Autoplay is now **Enabled**"
 autoplay_off: "Autoplay is now **Disabled**"
 autoplay_no_song: "No songs are playing!"
@@ -10,18 +10,9 @@ loop_current: |
 
 loop_all: "<:loop:1220832757496811570> **%{user} has been looping QUEUE mode**"
 unloop_all: "<:wrong:1220876213896216686> **Looping mode has been DISABLED by %{user}**"
-loop_invalid: "<:warnings:1220876158254710936> Invalid Loop mode. Please use **%{mode}**"
-loop_already: "<:warnings:1220876158254710936> Loop mode is already **%{mode}**"
 
 ### Pause command!
-pause_msg: |
-  <:pause:1220831927595175949> **The track %{title} is currently paused! 
-  <:blankers:1220848705289064669><:sparkle:1220846124961890304> It was paused by %{user}**
 ### Resume command!
-resume_msg: |
-  <:play:1220839345938763978> **Playback Resumed %{title},
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Enjoy %{user}**
-
 previous_notfound: |
   <:warnings:1220876158254710936> **No Previous song found in the queue! 
   <:blankers:1220848705289064669><:pop:1220849334606626946> Why not /play more tracks and keep the music going?**
@@ -48,7 +39,6 @@ stop_msg: "<:stop:1220831796430897272> **%{user} stopped %{title}**"
 
 ### Volume command!
 voldown_msg: "<:voldown:1220831827825135637> **Changed Volume to %{volume}%**"
-volume_invalid: "<:warnings:1220876158254710936> Invalid Volume. Available range is **1** and **100**"
 volup_msg: "<:volup:1220831844766060554> **Changed Volume to %{volume}%**"
 volume_max: "<:warnings:1220876158254710936> **Volume is already at max 100%**"
 volume_min: "<:warnings:1220876158254710936> **Player is already at min volume!**"

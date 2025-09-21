@@ -1,21 +1,4 @@
-## Helper setup ##
-setup_helper_content: |
-  ## Chào mừng bạn đến với cộng đồng %{guild}!
-  *Nếu bạn mới dùng Discord thì đây chính là nơi tuyệt vời để bắt đầu! Kênh này được tạo ra để giúp bạn làm quen với server.*  
-  ⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤⏤  
-  %{bot} là một bot nhạc Discord chất lượng cao. Thưởng thức những bài hát yêu thích ngay trên Discord với hỗ trợ nhiều trình phát nhạc.  
-  Hãy thử các lệnh đa tính năng và tận hưởng nhạc mượt mà nha! 🎶
-
-  Đây là nơi lý tưởng để trò chuyện trong cộng đồng %{guild}.  
-  Cùng nhau tám chuyện, chia sẻ gợi ý nhạc hay và khám phá hết mọi tính năng mà bot %{bots} mang lại nhé!  
-
-  Muốn mời bạn bè vào server à? Gửi cho họ link này: %{serversupport}
-
-disable_helper: "Helper đã bị tắt"
-invalid_channel_helper: "Kênh bạn đưa vào không hợp lệ"
-channel_viewable_helper: "Tôi không thể nhìn thấy kênh mà bạn chọn"
-setup_helper_succes: "Helper đã được cài đặt thành công vào %{channel}."
-
+﻿## Helper setup ##
 ## RULES Events ##
 rules_title: "Nội quy server cộng đồng %{guild}!"
 rules_desc: |
@@ -71,9 +54,5 @@ reminder_label_emoji: "⏰"
 reminder_title: "Nhắc bạn đi vote nè"
 reminder_desc: "Tới giờ rồi! Bạn có thể vote lại trên **[Top.gg](%{voteurl})**."
 reminder_set_content: "Đã đặt nhắc nhở! Tôi sẽ nhắc bạn vote lại sau 12 giờ"
-reminder_cancel_content: "Đã hủy nhắc nhở. Bạn sẽ không còn được nhắc vote nữa"
-reminder_no_vote_warning: "Bạn cần vote ít nhất một lần trước khi đặt nhắc nhở"
 
 ### Welcomer events! ###
-welcome_desc: "Chào mừng bạn đến với %{guildname} %{member}, bay cùng trí tưởng tượng nào! 🌈"
-leave_desc: "Cảm ơn bạn đã đồng hành cùng tụi mình! Tạm biệt %{member} 👋"

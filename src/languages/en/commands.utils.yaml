@@ -1,4 +1,4 @@
-### Kick command! ###
+﻿### Kick command! ###
 kick_user_not_found: "That user doesn't exist in this server"
 kick_user_ownerid: "You can't kick that user because they're the server owner"
 kick_user_higher_role: "You can't kick that user because they have a higher role than you"
@@ -10,18 +10,10 @@ kick_success_dm: |
   Contact the server administrator if you have any questions or would like to appeal.
 
 ### Purge command! ###
-purge_invalid_amount: "Please provide a valid number"
-purge_success: "Successfully purged %{amount} messages"
-purge_older_than_14_days: "You can't purge messages older than 14 days"
-purge_error: "Failed to purge messages"
 
 ### Cat command #####
-cat_error: "An error occured while sending the image cat! Please try again."
 
 ### Quotes command ####
-provide_categories_quote: "Oops! Invalid commands.please provide category\nAvailable categories: %{categories}"
-invalid_categories_quote: "Invalid category\nAvailable categories: %{categories}"
-quote_error: "An error occured while sending the quote! Please try again."
 
 ### MyStats command ####
 mystats_error: "There was an error generating your statistics. Please try again later."

@@ -1,6 +1,5 @@
-### privacy policy commands
+﻿### privacy policy commands
 privacy_title: "Privacy Policy of %{bot}"
-privacy_label: Privacy Policy
 privacy_desc: |
   **User Agreement**
   Using [%{bot}](%{serversupport}) ("bot") on the server requires the collection of certain user data. The data collected includes but is not limited to the user's Discord ID, Discord username, and server roles. Using the Bot is considered acceptance of these policy terms.
@@ -20,7 +19,6 @@ privacy_desc: |
 ### The following terms and conditions apply to the use of the bot.
 ### terms of services commands
 termsofservice_title: "Terms of Service of %{bot}"
-tos_label: "Terms Of Service"
 termsofservice_desc: |
   **Usage Agreement**
   By inviting [%{bot}](%{serversupport}) ("bot") and using its features, you agree to the Terms of Service and Privacy Policy of the bot.

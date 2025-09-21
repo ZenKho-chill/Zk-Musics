@@ -1,13 +1,10 @@
-### PLAYER MUSIC ###
+﻿### PLAYER MUSIC ###
 track_author: "ĐANG PHÁT"
 track_author_icon: "https://media.tenor.com/Sb0yPHMgNaUAAAAi/music-disc.gif"
 track_song_author: "Tác giả"
 track_requested_by: "Yêu cầu bởi"
 track_duration: "Thời lượng"
 no_same_voice: "<:wrong:1220876213896216686> Bạn không ở cùng kênh thoại với mình!"
-filter_already: "<:warnings:1220876158254710936> **Bộ lọc %{name} đã được bật trước đó**"
-filter_reset_on: "<:okee:1220876098456256512> **Bộ lọc đã được đặt lại**"
-filter_reset_already: "<:warnings:1220876158254710936> **Bộ lọc đã được đặt lại trước đó**"
 no_player_filter: |
   <:pop:1220849334606626946> **Không thể áp dụng bộ lọc!**
   <:blankers:1220848705289064669><:sparkle:1220846124961890304> **Mình cần phát nhạc trước đã...**
@@ -24,12 +21,6 @@ queue_end_desc: |
 
 leave_pause: "Vì mọi người rời hết nên mình tạm dừng phát :("
 leave_resume: "Có người quay lại nên mình đã tiếp tục phát nha."
-
-player_end: |
-  <:warnings:1220876158254710936> **Kênh đã trống gần 15 phút, mình quyết định rời vì mình không thích bị bỏ lại một mình!
-
-  <:sparkle:1220846124961890304> Muốn mình ở lại kênh ngay cả khi trống không? 
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Bạn có thể dùng lệnh /247 để làm điều đó!**
 
 ### Last FM Scrobble ###
 expired_login_session: "Này %{user}, phiên Last.fm của bạn đã hết hạn hoặc không hợp lệ.\nVui lòng xác thực lại để tiếp tục dùng tính năng scrobble."

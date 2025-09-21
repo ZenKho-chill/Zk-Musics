@@ -1,4 +1,4 @@
-### Lệnh Tìm kiếm!
+﻿### Lệnh Tìm kiếm!
 search_desc: "### HEY! Đã tìm thấy kết quả cho yêu cầu của bạn"
 search_end_desc2: "### Ôi! %{user}, bạn đã không chọn bài kịp\n**Thử lại nhé!**"
 search_footer: "%{countSong} bài được tìm thấy"
@@ -11,9 +11,6 @@ no_songs_playing: "<:wrong:1220876213896216686> Hiện không có bài nào đan
 url_no_allowed: "<:wrong:1220876213896216686> Vui lòng dùng tên bài/ca sĩ (không dùng URL)"
 
 ### Lệnh Tự phát (Autoplay)!
-autoplay_off: "<:wrong:1220876213896216686> Tự phát đã **TẮT**"
-autoplay_on: "<:okee:1220876098456256512> Tự phát đã **BẬT**"
-autoplay_no_songs_playing: "<:warnings:1220876158254710936> Không có bài nào đang phát!"
 
 ### Lệnh Xóa hàng chờ!
 clearqueue_msg: "<:bin:1220831964890927235> Hàng chờ đã **được xóa**"
@@ -41,7 +38,6 @@ loop_invalid: "<:warnings:1220876158254710936> Chế độ lặp không hợp l�
 loop_already: "<:warnings:1220876158254710936> Chế độ lặp hiện đã là **%{mode}**"
 
 ### Lệnh Lyrics!
-provide_lyrics: "Vui lòng cung cấp **tên bài hát** hợp lệ"
 lyrics_title: "Lời bài hát cho **%{song}**"
 lyrics_notfound: "<:wrong:1291138140681273396> **Ôi không, mình không tìm thấy lời bài hát cho bài này!**"
 lyrics_toolong: "**Ôi, lời bài hát này quá dài! Mình chỉ có thể hiển thị tối đa 4048 ký tự thôi!**"
@@ -51,10 +47,6 @@ lyrics_error: "**Lỗi: %{error}**"
 
 ### Lệnh Đang phát (Nowplaying)!
 nowplaying_title: "Đang phát..."
-nowplaying_footer: "Còn trong hàng: %{queue} • Chế độ lặp: %{loopmode} • Âm lượng: %{volume}"
-nowplaying_author_title: "Tác giả"
-nowplaying_total_duration_title: "Thời lượng"
-nowplaying_request_title: "Yêu cầu bởi"
 
 ### Lệnh Tạm dừng (Pause)!
 pause_msg: |
@@ -140,7 +132,6 @@ stop_msg: "<:stop:1220831796430897272> **%{title} đã bị dừng**"
 volume_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
 volume_invalid: "<:warnings:1220876158254710936> Giá trị âm lượng không hợp lệ. Vui lòng dùng số từ **1** đến **100**"
 volume_msg: "<:voldown:1220831827825135637> **Đã đặt âm lượng %{volume}%, thưởng thức nào %{user}**"
-volume_max: "<:warnings:1220876158254710936> **Âm lượng đã ở mức tối đa 100%**"
 
 ### Lệnh Spotify Playlist!
 spotify_playlist_placeholder: "Thêm vào hàng chờ và phát cho bạn ♥"
@@ -152,7 +143,6 @@ spotify_play_playlist: |
   ### đã được thêm vào hàng chờ
 spotify_playlist_empty: "Bạn không có danh sách phát trên Spotify."
 spotify_playlist_not_connected: "Vui lòng kết nối tài khoản Spotify trước!"
-spotify_playlist_notfound: "Không tìm thấy playlist bạn chọn. Vui lòng thử lại hoặc chọn playlist khác."
 spotify_playlist_error: "Lỗi khi lấy danh sách phát. Vui lòng thử lại sau."
 spotify_playlist_active: "Vui lòng đợi 30s trước khi gửi yêu cầu mới.\nNếu bạn đã chọn rồi, bạn có thể gửi yêu cầu mới."
 

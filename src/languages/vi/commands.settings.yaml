@@ -1,5 +1,4 @@
-### Lệnh đặt ngôn ngữ! ###
-provide_lang: "<:wrong:1220876213896216686> **Ngôn ngữ không hợp lệ. Vui lòng dùng** `%{languages}`"
+﻿### Lệnh đặt ngôn ngữ! ###
 provide_lang_list: "<:wrong:1220876213896216686> **Ngôn ngữ không hợp lệ. Các ngôn ngữ được hỗ trợ:**"
 lang_set: "<:lang:1220885875773280316> **Ngôn ngữ đã được đặt thành** `%{language}`"
 lang_change: "<:lang:1220885875773280316> **Ngôn ngữ đã được chuyển sang** `%{language}`"
@@ -17,14 +16,9 @@ setup_topic: "♪ Những ai muốn hát luôn tìm thấy bài ca. ♪"
 setup_msg: "*`Thiết lập Hệ thống Nhạc thành công tại`* %{channel}\n```Lưu ý: Đừng xóa bất kỳ tin nhắn nào mình đã tạo để bot hoạt động đúng.```"
 setup_null: "*`Đã xóa kênh thiết lập thành công!`*"
 setup_deleted: "*`Đã xóa kênh thiết lập thành công!`*"
-setup_null_inguild: "<:wrong:1220876213896216686> **Không tìm thấy Hệ thống Nhạc trên máy chủ này! Sẵn sàng xóa dữ liệu**"
-setup_queuemsg: "**Vào kênh thoại và phát nhạc bằng tên hoặc URL ở đây nhé!**"
-setup_playembed_author: "Hiện không có bài hát nào đang phát"
 
 ### Đặt lại dữ liệu máy chủ! ###
-reset_data_desc: "<:okee:1220876098456256512> **Cơ sở dữ liệu cho máy chủ này đã được đặt lại**"
 ### Đặt lại dữ liệu người dùng! ###
-reset_data_user_success: "<:okee:1220876098456256512> **Dữ liệu tài khoản của bạn đã được đặt lại**"
 
 ### Lệnh chủ đề (Themes)!
 error_themes: "<:wrong:1220876213896216686> Không hợp lệ... Vui lòng thử lại."
@@ -41,61 +35,14 @@ lastfm_logout_title: "Đăng xuất Last.fm"
 lastfm_logout_desc: "<:okee:1220876098456256512> Bạn đã đăng xuất khỏi Last.fm thành công"
 
 ### Tính năng Last.fm đang bị tắt!
-lastfm_feature_disabled_title: "Tính năng Last.fm đã bị tắt."
-lastfm_feature_disabled_desc: "Tính năng Last.fm hiện đang bị tắt. Vui lòng liên hệ quản trị viên để biết thêm chi tiết."
 
 ### Kết nối Spotify!
-spotify_connect_error: |
-  <:wrong:1220876213896216686> Đã xảy ra lỗi khi kết nối tài khoản Spotify của bạn.
-  <:blankers:1220848705289064669><:info:1220848388455661608>  Vui lòng đảm bảo Spotify ID đúng và thử lại sau.
-
-spotify_connect_success: "Đăng nhập thành công!! Bạn đã đăng nhập dưới tên **%{name}**"
-spotify_connect_provide_id: "Vui lòng cung cấp Spotify ID hợp lệ."
-
 ### Ngắt kết nối Spotify!
-spotify_disconnect_error: "<:wrong:1220876213896216686> Đã xảy ra lỗi khi ngắt kết nối tài khoản Spotify của bạn."
-spotify_disconnect_success: "Đã ngắt kết nối tài khoản Spotify thành công."
-spotify_disconnect_not_connected: "Bạn chưa kết nối tài khoản Spotify."
 
 ### Tính năng Spotify Connect bị tắt!
-spotify_feature_disabled_title: "Tính năng Spotify Connect đã bị tắt."
-spotify_feature_disabled_desc: "Tính năng Spotify Connect hiện đang bị tắt. Vui lòng liên hệ quản trị viên để biết thêm chi tiết."
 
 ### Thông báo YouTube!
-notify_youtube_not_found: "Không tìm thấy thông báo cho kênh YouTube **%{ytchannel}**."
-notify_youtube_removed: "Bạn đã xóa thông báo cho kênh YouTube **%{ytchannel}**."
-notify_youtube_disabled: "Tính năng Thông báo YouTube hiện đang tắt. Liên hệ staff để biết thêm chi tiết."
-notify_youtube_already: "Thông báo cho kênh YouTube %{ytchannel} đã được thiết lập."
-notify_youtube_invalid_channel: "Có lỗi khi chỉ định kênh văn bản hợp lệ. Vui lòng kiểm tra!"
-notify_youtube_set: "Thông báo YouTube đã được đặt cho **%{ytchannel}** trong %{channelid}."
-notify_youtube_404: |
-  Không tìm thấy ID kênh YouTube đã cung cấp.
-  Để tìm ID kênh, vào trang kênh YouTube và kiểm tra URL.
-  ID kênh là chuỗi ký tự sau `/channel/` (ví dụ: `UC_x5XG1OV2P6uZZ5FSM9Ttw`).
-notify_youtube_limit_reached_non_premium: |
-  Bạn đã đạt giới hạn %{limit} thông báo.
-  Bằng cách nâng cấp lên [premium](%{premium}), bạn có thể thiết lập tới 10 thông báo.
-
-notify_youtube_limit_reached_premium: |
-  Bạn đã đạt giới hạn %{limit} thông báo.
-  Đây là mức tối đa cho phép. Hãy xóa một vài thông báo để nhường chỗ cho thông báo mới nếu cần.
-
 ### Thông báo Twitch!
-notify_twitch_not_found: "Không tìm thấy thông báo cho tên Twitch **%{twitchusername}**."
-notify_twitch_removed: "Bạn đã xóa thông báo cho tên Twitch **%{twitchusername}**."
-notify_twitch_disabled: "Tính năng Thông báo Twitch hiện đang tắt. Liên hệ staff để biết thêm chi tiết."
-notify_twitch_already: "Bạn đã thiết lập thông báo cho Twitch %{twitchusername}."
-notify_twitch_invalid_channel: "Có lỗi khi chỉ định kênh văn bản hợp lệ. Vui lòng kiểm tra!"
-notify_twitch_set: "Thông báo Twitch đã được đặt cho **%{twitchusername}** trong %{channelid}."
-notify_twitch_error: "Đã xảy ra lỗi khi xử lý thông báo Twitch cho **%{twitchusername}** trong kênh **%{channelid}**. Vui lòng thử lại hoặc liên hệ hỗ trợ nếu vấn đề vẫn tiếp diễn."
-notify_twitch_limit_reached_non_premium: |
-  Bạn đã đạt giới hạn %{limit} thông báo.
-  Bằng cách nâng cấp lên [premium](%{premium}), bạn có thể thiết lập tới 10 thông báo.
-
-notify_twitch_limit_reached_premium: |
-  Bạn đã đạt giới hạn %{limit} thông báo.
-  Đây là mức tối đa cho phép. Hãy xóa một vài thông báo để nhường chỗ cho thông báo mới nếu cần.
-
 ### Tính năng Temp Voice!
 tempvoice_setup: "Tính năng Temp Voice đã %{status}."
 tempvoice_disabled: "Temp Voice đã bị tắt."

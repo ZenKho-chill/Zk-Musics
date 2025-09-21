@@ -1,6 +1,5 @@
-### privacy policy commands
+﻿### privacy policy commands
 privacy_title: "Chính sách bảo mật của %{bot}"
-privacy_label: Chính sách bảo mật
 privacy_desc: |
   **Thỏa thuận người dùng**
   Khi sử dụng [%{bot}](%{serversupport}) ("bot") trên server, bot sẽ thu thập một số dữ liệu người dùng cần thiết. Dữ liệu thu thập bao gồm nhưng không giới hạn ở Discord ID, tên người dùng Discord và vai trò trên server. Việc sử dụng bot đồng nghĩa với việc bạn chấp nhận các điều khoản chính sách này.
@@ -20,7 +19,6 @@ privacy_desc: |
 ### The following terms and conditions apply to the use of the bot.
 ### terms of services commands
 termsofservice_title: "Điều khoản dịch vụ của %{bot}"
-tos_label: "Điều khoản dịch vụ"
 termsofservice_desc: |
   **Thỏa thuận sử dụng**
   Bằng cách mời [%{bot}](%{serversupport}) ("bot") và sử dụng các tính năng của nó, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật của bot.

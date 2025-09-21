@@ -1,7 +1,6 @@
-joined_title: "📥 Joined a Guild!"
+﻿joined_title: "📥 Joined a Guild!"
 leave_title: "📥 Left a Guild!"
 guild_name: "Name"
-guild_id: "ID"
 guild_owner: "Owner"
 guild_member_count: "Member count"
 guild_creation_date: "Creation date"
