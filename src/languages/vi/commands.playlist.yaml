@@ -33,6 +33,7 @@ pl_create_created: |
 pl_create_created_footer: "Gõ /pl editor để chỉnh sửa playlist của bạn!"
 ### lệnh xóa playlist (pl-delete) ###
 pl_delete_invalid: "<:wrong:1220876213896216686> Vui lòng cung cấp ID Playlist hợp lệ!"
+pl_delete_notfound: "<:warnings:1220876158254710936> Không tìm thấy playlist với ID này!"
 delete_notfound: "<:warnings:1220876158254710936> Vui lòng cung cấp ID Playlist hợp lệ!"
 pl_delete_owner: "<:wrong:1220876213896216686> Bạn không phải **chủ Playlist**"
 pl_delete_confirm: "Bạn có muốn xóa `%{playlist_id}` không?"
@@ -50,6 +51,10 @@ pl_detail_notnumber: "<:warnings:1220876158254710936> Vui lòng nhập số tran
 pl_detail_page_notfound: "<:warnings:1220876158254710936> Chỉ có **%{page} trang**"
 
 ### lệnh chỉnh sửa playlist (pl-editor) ###
+pl_editor_invalid: "<:wrong:1220876213896216686> Vui lòng cung cấp ID Playlist và lựa chọn hợp lệ! (public/private)"
+pl_editor_owner: "<:wrong:1220876213896216686> Bạn không phải **chủ Playlist**!"
+pl_editor_public: "✅ Đã đặt playlist `%{playlist}` thành **Công khai**"
+pl_editor_private: "✅ Đã đặt playlist `%{playlist}` thành **Riêng tư**"
 pl_edit_playlist_id_label: "Nhập **ID Playlist mới** `[a-z, A-Z, 0-9]`"
 pl_edit_playlist_name_label: "Nhập **Tên Playlist mới**"
 pl_edit_playlist_des_label: "Nhập **Mô tả Playlist mới**"
@@ -105,11 +110,18 @@ pl_remove_song_notfound: "<:wrong:1220876213896216686> Không tìm thấy bài!"
 pl_remove_removed: "<:bin:1220831964890927235> Đã xóa **bài số %{position}** khỏi `%{name}`"
 
 ### lệnh lưu hàng chờ vào playlist (pl-SaveQueue) ###
-pl_savequeue_invalid: "<:wrong:1220876213896216686> Vui lòng cung cấp ID Playlist hợp lệ!"
+pl_savequeue_invalid: "<:wrong:1220876213896216686> Vui lòng cung cấp tên Playlist hợp lệ!"
+pl_savequeue_toolong: "<:wrong:1220876213896216686> Tên Playlist quá dài (tối đa 50 ký tự)!"
+pl_savequeue_no_player: "<:wrong:1220876213896216686> Hiện không có nhạc đang phát!"
+pl_savequeue_no_queue: "<:wrong:1220876213896216686> Hàng đợi nhạc đang trống!"
+pl_savequeue_limit_playlist: "<:wrong:1220876213896216686> Bạn đã đạt giới hạn **%{limit}** Playlist!"
+pl_savequeue_no_playlists: "<:wrong:1220876213896216686> Bạn chưa có playlist nào! Hãy tạo playlist trước."
+pl_savequeue_select_playlist: "🎵 **Chọn playlist để lưu hàng đợi:**\n📀 **Đang phát:** %{current}\n📋 **Hàng đợi:** %{queue} bài"
 pl_savequeue_notfound: "<:wrong:1220876213896216686> Vui lòng cung cấp ID Playlist hợp lệ!"
 pl_savequeue_owner: "<:wrong:1220876213896216686> Bạn không phải **chủ Playlist**!"
 pl_savequeue_no_tracks: "<:wrong:1220876213896216686> Hiện không có bài nào đang phát!"
-pl_savequeue_no_new_saved: "<:wrong:1220876213896216686> Bài đã tồn tại trong `%{name}`"
-pl_savequeue_saved: "<:okee:1220876098456256512> Đã lưu **%{tracks} bài** vào `%{name}`"
+pl_savequeue_no_new_saved: "<:wrong:1220876213896216686> Tất cả bài đã tồn tại trong `%{name}`"
+pl_savequeue_saved: "<:okee:1220876098456256512> Đã lưu **%{tracks} bài mới** vào `%{name}`"
+pl_savequeue_error: "<:wrong:1220876213896216686> Có lỗi xảy ra khi lưu tracks vào playlist!"
 
 pl_error_no_node: "Không tìm thấy server Lavalink. Vui lòng thử lại sau **5 phút**"

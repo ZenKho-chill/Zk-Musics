@@ -138,9 +138,9 @@ export class CommandHandler {
     }
   }
 
-  public async deferReply() {
+  public async deferReply(options?: { ephemeral?: boolean }) {
     if (this.interaction) {
-      const data = await this.interaction.deferReply({ ephemeral: false });
+      const data = await this.interaction.deferReply({ ephemeral: options?.ephemeral || false });
       return (this.msg = data);
     } else {
       const data = await (this.message?.channel as TextChannel).send(

@@ -34,6 +34,7 @@ pl_create_created_footer: "Type /pl editor to edit your playlist!"
 
 ### pl-delete commands ###
 pl_delete_invalid: "<:wrong:1220876213896216686> Please provide a valid Playlist ID!"
+pl_delete_notfound: "<:warnings:1220876158254710936> Playlist with this ID not found!"
 delete_notfound: "<:warnings:1220876158254710936> Please provide a valid Playlist ID!"
 pl_delete_owner: "<:wrong:1220876213896216686> You are not the **Playlist Owner**"
 pl_delete_confirm: "Do you want to delete `%{playlist_id}`"
@@ -51,6 +52,10 @@ pl_detail_notnumber: "<:warnings:1220876158254710936> Please provide a valid pag
 pl_detail_page_notfound: "<:warnings:1220876158254710936> There are only **%{page} Pages**"
 
 ### pl-editor commands! ###
+pl_editor_invalid: "<:wrong:1220876213896216686> Please provide a valid Playlist ID and choice! (public/private)"
+pl_editor_owner: "<:wrong:1220876213896216686> You are not the **Playlist Owner**!"
+pl_editor_public: "✅ Set playlist `%{playlist}` to **Public**"
+pl_editor_private: "✅ Set playlist `%{playlist}` to **Private**"
 pl_edit_playlist_id_label: "Enter your **New Playlist ID** `[a-z, A-Z, 0-9]`"
 pl_edit_playlist_name_label: "Enter your **New Playlist Name**"
 pl_edit_playlist_des_label: "Enter your **New Playlist Description**"
@@ -106,11 +111,18 @@ pl_remove_song_notfound: "<:wrong:1220876213896216686> Song not found!"
 pl_remove_removed: "<:bin:1220831964890927235> Removed **%{position} Number** song from `%{name}`"
 
 ### pl-SaveQueue command! ###
-pl_savequeue_invalid: "<:wrong:1220876213896216686> Please provide a valid Playlist ID!"
+pl_savequeue_invalid: "<:wrong:1220876213896216686> Please provide a valid Playlist name!"
+pl_savequeue_toolong: "<:wrong:1220876213896216686> Playlist name is too long (maximum 50 characters)!"
+pl_savequeue_no_player: "<:wrong:1220876213896216686> No music is currently playing!"
+pl_savequeue_no_queue: "<:wrong:1220876213896216686> Music queue is empty!"
+pl_savequeue_limit_playlist: "<:wrong:1220876213896216686> You have reached the limit of **%{limit}** Playlists!"
+pl_savequeue_no_playlists: "<:wrong:1220876213896216686> You don't have any playlists! Please create a playlist first."
+pl_savequeue_select_playlist: "🎵 **Select playlist to save queue:**\n📀 **Now playing:** %{current}\n📋 **Queue:** %{queue} songs"
 pl_savequeue_notfound: "<:wrong:1220876213896216686> Please provide a valid Playlist ID!"
 pl_savequeue_owner: "<:wrong:1220876213896216686> You are not the **Playlist Owner**!"
 pl_savequeue_no_tracks: "<:wrong:1220876213896216686> No song is currently playing!"
-pl_savequeue_no_new_saved: "<:wrong:1220876213896216686> Song already exists in `%{name}`"
-pl_savequeue_saved: "<:okee:1220876098456256512> Saved **%{tracks} Songs** to `%{name}`"
+pl_savequeue_no_new_saved: "<:wrong:1220876213896216686> All songs already exist in `%{name}`"
+pl_savequeue_saved: "<:okee:1220876098456256512> Saved **%{tracks} new songs** to `%{name}`"
+pl_savequeue_error: "<:wrong:1220876213896216686> An error occurred while saving tracks to playlist!"
 
 pl_error_no_node: "No Lavalink server was found. Please try again after **5 Minutes**"
