@@ -10,11 +10,12 @@ import { Manager } from "../../manager.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ZklinkPlayerState } from "../../Zklink/main.js";
 import { ClearMusicStatusChannel, ClearMusicStatusChannelWithDelay } from "../../utilities/UpdateStatusChannel.js";
+import { logWarn, logDebug, logInfo } from "../../utilities/Logger.js";
 
 export default class {
   async execute(client: Manager, oldState: VoiceState, newState: VoiceState) {
     if (!client.isDatabaseConnected)
-      return client.logger.warn(
+      return logWarn(
         "DatabaseService",
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
@@ -36,14 +37,14 @@ export default class {
 
       // Xóa voice status channel khi bot bị kick/disconnect
       if (lastVoiceChannel) {
-        client.logger.debug(
+        logDebug(
           "VoiceStateUpdate", 
           `Bot bị kick/disconnect, xóa voice status cho Guild ${newState.guild.id} (Channel: ${lastVoiceChannel})`
         );
         await ClearMusicStatusChannelWithDelay(client, newState.guild.id, lastVoiceChannel, 500);
       } else {
         // Nếu không có channel ID, log và skip - đây là trường hợp bình thường
-        client.logger.debug(
+        logDebug(
           "VoiceStateUpdate", 
           `Bot bị kick/disconnect từ Guild ${newState.guild.id}, nhưng không xác định được voice channel. Voice status sẽ tự động expire.`
         );
@@ -54,7 +55,7 @@ export default class {
       if (existingTimeout) {
         clearTimeout(existingTimeout);
         client.leaveDelay.delete(newState.guild.id);
-        client.logger.debug(
+        logDebug(
           "VoiceStateUpdate",
           `Đã hủy leave timeout vì bot bị kick khỏi voice channel`
         );
@@ -187,22 +188,22 @@ export default class {
             
             try {
               // Xóa voice status trước khi stop player
-              client.logger.debug(
+              logDebug(
                 "VoiceStateUpdate", 
                 `Auto-leave timeout, xóa voice status cho Guild ${newState.guild.id} (Channel: ${newPlayer.voiceId})`
               );
               await ClearMusicStatusChannelWithDelay(client, newState.guild.id, newPlayer.voiceId, 500);
               
               newPlayer.stop(is247 && is247.twentyfourseven ? false : true);
-              client.logger.info(
+              logInfo(
                 "VoiceStateUpdate",
                 `Bot đã tự động rời voice channel ${newState.guild.name} do không có ai trong kênh`
               );
             } catch (error) {
-              client.logger.warn("VoiceStateUpdate", `Lỗi khi stop player: ${error.message}`);
+              logWarn("VoiceStateUpdate", `Lỗi khi stop player: ${error.message}`);
             }
           } else {
-            client.logger.debug(
+            logDebug(
               "VoiceStateUpdate",
               `Player đã bị destroy trước đó, bỏ qua auto leave`
             );

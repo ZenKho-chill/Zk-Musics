@@ -1,16 +1,17 @@
 import Fastify from "fastify";
 import { Manager } from "../manager.js";
 import { WebSocket } from "@fastify/websocket";
+import { logInfo } from "../utilities/Logger.js";
 
 export class WebsocketRoute {
   constructor(protected client: Manager) {}
 
   main(fastify: Fastify.FastifyInstance) {
     fastify.get("/websocket", { websocket: true }, (socket, req) => {
-      this.client.logger.info(WebsocketRoute.name, `${req.method} ${req.routeOptions.url}`);
+      logInfo("WebsocketRoute", `${req.method} ${req.routeOptions.url}`);
       socket.on("close", (code, reason) => {
-        this.client.logger.info(
-          WebsocketRoute.name,
+        logInfo(
+          "WebsocketRoute",
           `Đóng kết nối với code: ${code}, lý do: ${reason}`
         );
       });
@@ -18,8 +19,8 @@ export class WebsocketRoute {
       this.client.wsl.set(String(req.headers["guild-id"]), {
         send: (data) => socket.send(JSON.stringify(data)),
       });
-      this.client.logger.info(
-        WebsocketRoute.name,
+      logInfo(
+        "WebsocketRoute",
         `Websocket đã mở cho guildId: ${req.headers["guild-id"]}`
       );
     });

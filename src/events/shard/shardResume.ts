@@ -1,8 +1,10 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import chalk from "chalk";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export default class {
   async execute(client: Manager, id: number) {
-    client.logger.info("ShardResume", chalk.cyanBright(`Shard ${id} đã tiếp tục!`));
+    logInfo("ShardResume", chalk.cyanBright(`Shard ${id} đã tiếp tục!`));
   }
 }

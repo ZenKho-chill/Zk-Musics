@@ -2,6 +2,7 @@ import { Manager } from "../manager.js";
 import { Headers, LavalinkDataType } from "../@types/Lavalink.js";
 import { GetLavalinkServer } from "./GetLavalinkServer.js";
 import { ZklinkWebsocket } from "../Zklink/main.js";
+import { logInfo } from "../utilities/Logger.js";
 
 export class CheckLavalinkServer {
   client: Manager;
@@ -12,8 +13,8 @@ export class CheckLavalinkServer {
 
   async execute(isLogEnable: boolean) {
     if (isLogEnable)
-      this.client.logger.info(
-        CheckLavalinkServer.name,
+      logInfo(
+        "CheckLavalinkServer",
         "Đang kiểm tra server lavalink cho autofix"
       );
 

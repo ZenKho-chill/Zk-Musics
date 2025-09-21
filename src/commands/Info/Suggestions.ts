@@ -1,10 +1,17 @@
 import { EmbedBuilder, Attachment, ApplicationCommandOptionType } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import moment from "moment";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Command } from "../../structures/Command.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Config } from "../../@types/Config.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 const data: Config = new ConfigData().data;
 
@@ -121,7 +128,7 @@ export default class implements Command {
 
       return handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
-      client.logger.warn("Suggestion", "Lỗi khi thực thi lệnh suggestions");
+      logWarn("Suggestion", "Lỗi khi thực thi lệnh suggestions");
       return handler.editReply({
         embeds: [
           new EmbedBuilder()

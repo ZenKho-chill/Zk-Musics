@@ -1,13 +1,20 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { EmbedBuilder, TextChannel, MessageFlags } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import util from "node:util";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, message: string, data: Record<string, any>) {
-    client.logger.info("PlayerException", `Player gặp ngoại lệ ${util.inspect(message)}`);
+    logInfo("PlayerException", `Player gặp ngoại lệ ${util.inspect(message)}`);
 
     /////////// Cập nhật thiết lập nhạc ///////////
     await client.UpdateMusic(player);
@@ -39,7 +46,7 @@ export default class {
         try {
           await msg.delete();
         } catch (error) {
-          client.logger.info(
+          logInfo(
             "PlayerException",
             `Đã xóa tin nhắn trước đó tại @ ${msg.guild!.name} / ${player.guildId}`
           );

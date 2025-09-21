@@ -1,7 +1,11 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { AutoReconnect } from "../schema/AutoReconnect.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { VoiceChannel } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkLoopMode, ZklinkPlayer } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export class AutoReconnectLavalinkService {
   client: Manager;
@@ -11,29 +15,29 @@ export class AutoReconnectLavalinkService {
   }
 
   async execute() {
-    this.client.logger.info(
+    this.logInfo(
       AutoReconnectLavalinkService.name,
       `Đang thiết lập dữ liệu cho lavalink...`
     );
-    this.client.logger.info(
+    this.logInfo(
       AutoReconnectLavalinkService.name,
       `Auto ReConnect đang thu thập dữ liệu player 24/7`
     );
     const maindata = await this.client.db.autoreconnect.all();
 
     if (!maindata || maindata.length == 0) {
-      this.client.logger.info(
+      this.logInfo(
         AutoReconnectLavalinkService.name,
         `Auto ReConnect tìm thấy trong 0 server!`
       );
-      this.client.logger.info(
+      this.logInfo(
         AutoReconnectLavalinkService.name,
         `Hoàn tất thiết lập dữ liệu cho lavalink!`
       );
       return;
     }
 
-    this.client.logger.info(
+    this.logInfo(
       AutoReconnectLavalinkService.name,
       `Auto ReConnect tìm thấy trong ${Object.keys(maindata).length} server!`
     );
@@ -41,14 +45,14 @@ export class AutoReconnectLavalinkService {
 
     let retry_interval = setInterval(async () => {
       if (this.client.lavalinkUsing.length == 0 || this.client.Zklink.nodes.size == 0)
-        return this.client.logger.info(
+        return this.logInfo(
           AutoReconnectLavalinkService.name,
           `Không có lavalink khả dụng, thử lại sau 3 giây!`
         );
 
       clearInterval(retry_interval);
 
-      this.client.logger.info(
+      this.logInfo(
         AutoReconnectLavalinkService.name,
         `Lavalink khả dụng, xóa interval và tiếp tục thiết lập!`
       );
@@ -57,12 +61,12 @@ export class AutoReconnectLavalinkService {
         setTimeout(async () => this.connectChannel(data));
       }
 
-      this.client.logger.info(
+      this.logInfo(
         AutoReconnectLavalinkService.name,
         `Đã kết nối lại với tất cả ${Object.keys(maindata).length} server!`
       );
 
-      this.client.logger.info(
+      this.logInfo(
         AutoReconnectLavalinkService.name,
         `Hoàn tất thiết lập dữ liệu cho lavalink!`
       );
@@ -76,7 +80,7 @@ export class AutoReconnectLavalinkService {
       .fetch(data.value.voice)
       .catch(() => undefined)) as VoiceChannel;
     if (!channel || !voice) {
-      this.client.logger.info(
+      this.logInfo(
         AutoReconnectLavalinkService.name,
         `Kênh voice/text cuối cùng mà bot đã tham gia ở guild [${data.value.guild}] không tìm thấy, bỏ qua...`
       );
@@ -84,7 +88,7 @@ export class AutoReconnectLavalinkService {
     }
 
     if (!data.value.twentyfourseven && voice.members.filter((m) => !m.user.bot).size == 0) {
-      this.client.logger.info(
+      this.logInfo(
         AutoReconnectLavalinkService.name,
         `Guild [${data.value.guild}] có 0 thành viên trong kênh voice cuối cùng bot tham gia, bỏ qua...`
       );
@@ -104,7 +108,7 @@ export class AutoReconnectLavalinkService {
     });
 
     if (!this.client.config.features.AUTO_RESUME)
-      return this.client.logger.info(
+      return this.logInfo(
         AutoReconnectLavalinkService.name,
         `Tự động resume bị tắt, bỏ qua tất cả.`
       );

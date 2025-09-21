@@ -17,6 +17,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { EmojiValidator } from "../utilities/EmojiValidator.js";
+import { logInfo, logWarn, logError } from "../utilities/Logger.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -87,7 +88,7 @@ export class WebServer {
         }?user=${encodeURIComponent(userId)}&token=${encodeURIComponent(token)}`;
         res.redirect(redirectUrl);
       } catch (error) {
-        this.client.logger.error(WebServer.name, error);
+        logError("WebServer", "Error processing Last.fm authentication", { error });
         const redirectUrl = `${
           this.client.config.features.WebServer.LAST_FM_SCROBBLED.RedirectOnError
         }?user=${encodeURIComponent(userId)}&token=${encodeURIComponent(token)}`;
@@ -187,9 +188,9 @@ export class WebServer {
             components: [ButtonVote],
           });
 
-          client.logger.info(WebServer.name, `${voteUser.tag} vừa vote trên Top.gg`);
+          logInfo("WebServer", `${voteUser.tag} vừa vote trên Top.gg`);
         } catch (error) {
-          this.client.logger.warn(WebServer.name, error as string);
+          logWarn("WebServer", "Error processing vote", { error: error as string });
         }
       })
     );
@@ -295,6 +296,6 @@ export class WebServer {
 
   expose() {
     this.app.listen(this.port);
-    this.client.logger.info(WebServer.name, `WebServer đang chạy ở cổng: ${this.port}`);
+    logInfo("WebServer", `WebServer đang chạy ở cổng: ${this.port}`);
   }
 }

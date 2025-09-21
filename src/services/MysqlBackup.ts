@@ -1,6 +1,9 @@
 import { Manager } from "../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import mysqldumpModule from "mysqldump";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import cron from "node-cron";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 
 const mysqldump = mysqldumpModule.default;
 
@@ -32,7 +35,7 @@ export default class MysqlBackupService {
         });
 
         if (!dump || !dump.dump) {
-          client.logger.warn(
+          logWarn(
             MysqlBackupService.name,
             "Dump rỗng hoặc không hợp lệ, bản sao lưu sẽ không được gửi."
           );
@@ -53,12 +56,12 @@ export default class MysqlBackupService {
               },
             ],
           });
-          client.logger.info(
+          logInfo(
             MysqlBackupService.name,
             `File sao lưu ${backupFileName} đã được gửi tới kênh Discord.`
           );
         } else {
-          client.logger.warn(
+          logWarn(
             MysqlBackupService.name,
             "ID kênh không hợp lệ hoặc kênh không phải là kênh văn bản."
           );

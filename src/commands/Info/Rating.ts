@@ -1,10 +1,17 @@
 import { Accessableby, Command } from "../../structures/Command.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ApplicationCommandOptionType, EmbedBuilder, WebhookClient } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import moment from "moment";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Config } from "../../@types/Config.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -145,7 +152,7 @@ export default class implements Command {
         .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_succes")}`);
       handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
-      client.logger.warn("Rating", "Lỗi khi thực thi lệnh Rating");
+      logWarn("Rating", "Lỗi khi thực thi lệnh Rating");
       const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_failure")}`);

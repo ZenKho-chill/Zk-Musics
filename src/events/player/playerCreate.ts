@@ -1,7 +1,11 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import chalk from "chalk";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
@@ -10,7 +14,7 @@ export default class {
     // Lưu voice channel ID để có thể sử dụng khi cần xóa voice status
     if (player.voiceId) {
       player.data.set("initial-voice-channel-id", player.voiceId);
-      client.logger.debug(
+      logDebug(
         "PlayerCreate",
         `Đã lưu voice channel ID ${player.voiceId} cho Guild ${player.guildId}`
       );
@@ -20,13 +24,13 @@ export default class {
     await UpdateMusicStatusChannel(client, player);
     /////////// Cập nhật kênh trạng thái nhạc //////////
 
-    client.logger.info(
+    logInfo(
       "PlayerCreate",
       `${chalk.hex("#f2d7b7")("Player Created in @ ")}${chalk.hex("#f2d7b7")(
         guild?.name
       )} / ${chalk.hex("#f2d7b7")(player.guildId)}`
     );
-    client.logger.info(
+    logInfo(
       "PlayerCreate",
       `${chalk.hex("#f2d7b7")("Player đã được tạo tại @ ")} ${chalk.hex("#f2d7b7")(
         guild?.name

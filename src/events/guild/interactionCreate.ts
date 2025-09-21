@@ -28,6 +28,7 @@ import { RateLimitResponder } from "../../services/RateLimitResponder.js";
 import { RateLimitManager } from "@sapphire/ratelimits";
 import { AutocompleteManager } from "../../services/AutocompleteManager.js";
 import { TopggServiceEnum } from "../../services/TopggService.js";
+import { logWarn, logInfo, logError } from "../../utilities/Logger.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 const commandRateLimitManager = new RateLimitManager(1000);
 
@@ -43,7 +44,7 @@ export default class {
     if (!interaction.guild || interaction.user.bot) return;
 
     if (!client.isDatabaseConnected)
-      return client.logger.warn(
+      return logWarn(
         "DatabaseService",
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
@@ -586,7 +587,7 @@ export default class {
 
       if (attachments) handler.attactments.push(attachments);
 
-      client.logger.info(
+      logInfo(
         "Slash Commands",
         `${chalk.hex("#00D100").bold(commandNameArray.join("-"))} được sử dụng bởi ${chalk.hex(
           "#00D100"
@@ -625,7 +626,7 @@ export default class {
 
       command.execute(client, handler);
     } catch (error) {
-      client.logger.error("CommandManager", error);
+      logError("CommandManager", error);
       interaction.reply({
         content: `${client.i18n.get(language, "interaction", "unexpected_error")}\n ${error}`,
       });

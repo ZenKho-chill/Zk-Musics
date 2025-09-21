@@ -1,4 +1,5 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import {
   ComponentType,
   TextChannel,
@@ -10,25 +11,40 @@ import {
 } from "discord.js";
 
 import Axios from "axios";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ScrobbleToLastFM } from "../../utilities/ScrobbleToLastFM.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { MilestoneTrack } from "../../utilities/MilestoneTrack.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TopArtist } from "../../utilities/TopArtist.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TopTrack } from "../../utilities/TopTrack.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TrackTitle } from "../../utilities/TrackTitle.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { zkcard } from "zkcard";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { filterSelect, playerRowOne, playerRowTwo } from "../../utilities/PlayerControlButton.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ControlButtonEnum } from "../../database/schema/ControlButton.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import chalk from "chalk";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { cli } from "winston/lib/winston/config/index.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export function scheduleScrobble(client: Manager, player: ZklinkPlayer) {
   const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
 
   if (!lastfmConfig || !lastfmConfig.scheduleScrobble) {
-    client.logger.warn("TrackStart", "Last.fm scrobble config không được cấu hình đúng cách");
+    logWarn("TrackStart", "Last.fm scrobble config không được cấu hình đúng cách");
     return;
   }
 
@@ -39,14 +55,14 @@ export function scheduleScrobble(client: Manager, player: ZklinkPlayer) {
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, track: ZklinkTrack) {
     if (!client.isDatabaseConnected)
-      return client.logger.warn(
+      return logWarn(
         "DatabaseService",
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
-    client.logger.info(
+    logInfo(
       "TrackStart",
       `${chalk.hex("#53ec53")("Player đã bắt đầu tại @ ")}${chalk.hex("#53ec53")(
         guild?.name
@@ -356,7 +372,7 @@ export default class {
         try {
           return button.run(client, message, String(language), player, nplaying, collector);
         } catch (err) {
-          client.logger.warn("ButtonError", err as string);
+          logWarn("ButtonError", err as string);
         }
       }
     });

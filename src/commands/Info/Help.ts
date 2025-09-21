@@ -9,13 +9,21 @@ import {
   AutocompleteInteraction,
 } from "discord.js";
 import { stripIndents } from "common-tags";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Accessableby, Command } from "../../structures/Command.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Config } from "../../@types/Config.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { EmojiValidator } from "../../utilities/EmojiValidator.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -327,7 +335,7 @@ export default class implements Command {
                 });
               }
             } catch (error) {
-              client.logger.error("Help Command", `Collector error: ${error}`);
+              logError("Help Command", `Collector error: ${error}`);
             } finally {
               // Đảm bảo collector được cleanup
               collector.removeAllListeners();

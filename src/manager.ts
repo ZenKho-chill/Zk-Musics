@@ -41,6 +41,7 @@ import chalk from "chalk";
 import TempVoiceService from "./services/TempVoiceService.js";
 import { AssistanceHandler } from "./@guild-helpers/AssistanceHandler.js";
 import { StatisticsHandler } from "./@guild-helpers/StatisticsHandler.js";
+import { logger, logInfo, logWarn } from "./utilities/Logger.js";
 config();
 
 function getShard(clusterManager: ClusterManager) {
@@ -147,6 +148,10 @@ export class Manager extends Client {
       id: clusterManager ? cluster.worker.id : 0,
     };
     this.logger = new LogManager(this, this.cluster.id);
+    
+    // Khởi tạo logger utility với manager
+    logger.setManager(this);
+    
     this.manifest = new ManifestLoader().data;
     this.owner = this.config.bot.OWNER_ID;
     this.color_main = (this.config.bot.EMBED_COLOR_MAIN || "#f4e0c7") as ColorResolvable;
@@ -235,15 +240,15 @@ export class Manager extends Client {
   }
 
   public start() {
-    this.logger.info("ClientManager", "Đang khởi động client Zk Music's...");
-    this.logger.info("ClientManager", `Phiên bản: ${this.manifest.metadata.bot.version}`);
-    this.logger.info("ClientManager", `Tên mã: ${this.manifest.metadata.bot.codename}`);
-    this.logger.info(
+    logInfo("ClientManager", "Đang khởi động client Zk Music's...");
+    logInfo("ClientManager", `Phiên bản: ${this.manifest.metadata.bot.version}`);
+    logInfo("ClientManager", `Tên mã: ${this.manifest.metadata.bot.codename}`);
+    logInfo(
       "ClientManager",
       `Phiên bản Autofix: ${this.manifest.metadata.autofix.version}`
     );
     if (this.config.features.HIDE_LINK && this.config.features.REPLACE_LINK) {
-      this.logger.warn(
+      logWarn(
         "ClientManager",
         chalk.bold.red(
           "Bạn chỉ có thể bật một tính năng: HIDE_LINK hoặc REPLACE_LINK. Vui lòng tắt một trong hai để tiếp tục."

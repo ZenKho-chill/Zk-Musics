@@ -7,15 +7,24 @@ import { EmbedBuilder, TextChannel } from "discord.js";
 import DailyRotateFile from "winston-daily-rotate-file";
 const { timestamp, printf } = winston.format;
 
-type InfoDataType = {
+type LogLevel = "info" | "debug" | "warn" | "error" | "unhandled";
+
+interface LogData {
   message: string;
-  level: string;
+  level: LogLevel;
   timestamp?: string;
-};
+  source?: string;
+  metadata?: any;
+}
+
+interface LogOptions {
+  metadata?: any;
+}
 
 export class LogManager {
   private preLog: winston.Logger;
   private padding = 28;
+  
   constructor(
     private client: Manager,
     private clusterId: number
@@ -47,49 +56,61 @@ export class LogManager {
     });
   }
 
-  public info(className: string, msg: string) {
+  public info(source: string, message: string, options?: LogOptions) {
     return this.preLog.log({
       level: "info",
-      message: `${className.padEnd(this.padding)} | ${msg}`,
+      message: message,
+      source: source,
+      metadata: options?.metadata
     });
   }
 
-  public debug(className: string, msg: string) {
+  public debug(source: string, message: string, options?: LogOptions) {
     this.preLog.log({
       level: "debug",
-      message: `${className.padEnd(this.padding)} | ${msg}`,
+      message: message,
+      source: source,
+      metadata: options?.metadata
     });
     return;
   }
 
-  public warn(className: string, msg: string) {
+  public warn(source: string, message: string, options?: LogOptions) {
     this.preLog.log({
-      level: "warn",
-      message: `${className.padEnd(this.padding)} | ${msg}`,
+      level: "warn", 
+      message: message,
+      source: source,
+      metadata: options?.metadata
     });
-    this.sendDiscord("warning", msg, className);
+    this.sendDiscord("warning", message, source);
     return;
   }
 
-  public error(className: string, msg: unknown) {
+  public error(source: string, message: unknown, options?: LogOptions) {
+    const errorMessage = typeof message === 'string' ? message : util.inspect(message);
     this.preLog.log({
       level: "error",
-      message: `${className.padEnd(this.padding)} | ${util.inspect(msg)}`,
+      message: errorMessage,
+      source: source,
+      metadata: options?.metadata
     });
-    this.sendDiscord("error", util.inspect(msg), className);
+    this.sendDiscord("error", errorMessage, source);
     return;
   }
 
-  public unhandled(className: string, msg: unknown) {
+  public unhandled(source: string, message: unknown, options?: LogOptions) {
+    const errorMessage = typeof message === 'string' ? message : util.inspect(message);
     this.preLog.log({
       level: "unhandled",
-      message: `${className.padEnd(this.padding)} | ${util.inspect(msg)}`,
+      message: errorMessage,
+      source: source,
+      metadata: options?.metadata
     });
-    this.sendDiscord("unhandled", util.inspect(msg), className);
+    this.sendDiscord("unhandled", errorMessage, source);
     return;
   }
 
-  private filter(info: InfoDataType) {
+  private filter(info: any) {
     const pad = 9;
 
     switch (info.level) {
@@ -108,16 +129,20 @@ export class LogManager {
 
   private get consoleFormat() {
     const colored = chalk.hex("#86cecb")("|");
-    const timeStamp = (info: InfoDataType) => chalk.hex("#00ddc0")(info.timestamp);
-    const msg = (info: InfoDataType) => chalk.hex("#86cecb")(info.message);
+    const timeStamp = (info: any) => chalk.hex("#00ddc0")(info.timestamp);
+    const msg = (info: any) => chalk.hex("#86cecb")(info.message);
+    const source = (info: any) => chalk.hex("#86cecb")(info.source?.padEnd(this.padding) || "Unknown".padEnd(this.padding));
     const cluster = chalk.hex("#86cecb")(`CỤM_${this.clusterId}`);
     const zk = chalk.hex("#f4e0c7")(`ZK MUSIC'S`);
+    const metadata = (info: any) => info.metadata ? chalk.hex("#808080")(`[${util.inspect(info.metadata, { compact: true, depth: 1 })}]`) : "";
+    
     return winston.format.combine(
       timestamp(),
-      printf((info: InfoDataType) => {
+      printf((info: any) => {
+        const metaStr = metadata(info);
         return `${timeStamp(info)} ${colored} ${zk} ${colored} ${this.filter(
           info
-        )} ${colored} ${cluster} ${colored} ${msg(info)}`;
+        )} ${colored} ${cluster} ${colored} ${source(info)} ${colored} ${msg(info)}${metaStr ? ' ' + metaStr : ''}`;
       })
     );
   }
@@ -126,8 +151,9 @@ export class LogManager {
     const pad = 9;
     return winston.format.combine(
       timestamp(),
-      printf((info: InfoDataType) => {
-        return `${info.timestamp} | ${info.level.toUpperCase().padEnd(pad)} | ${info.message}`;
+      printf((info: any) => {
+        const metaStr = info.metadata ? ` | ${util.inspect(info.metadata, { compact: true, depth: 1 })}` : "";
+        return `${info.timestamp} | ${info.level.toUpperCase().padEnd(pad)} | ${info.source?.padEnd(this.padding) || "Unknown".padEnd(this.padding)} | ${info.message}${metaStr}`;
       })
     );
   }

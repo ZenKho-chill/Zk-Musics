@@ -1,8 +1,13 @@
 import cron from "node-cron";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { Snowflake } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { Manager } from "../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { request } from "undici";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import chalk from "chalk";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 export enum TopggServiceEnum {
   ERROR,
   VOTED,
@@ -24,20 +29,20 @@ export class TopggService {
     if (res.status == 200) {
       this.isTokenAvalible = true;
       this.botId = userId;
-      this.client.logger.info(
+      this.logInfo(
         TopggService.name,
         chalk.italic(`Dịch vụ TopGG đã được cài đặt thành công!`)
       );
       return true;
     }
-    this.client.logger.warn(TopggService.name, "Có sự cố khi cài đặt dịch vụ TopGG");
-    this.client.logger.warn(TopggService.name, await res.text());
+    this.logWarn(TopggService.name, "Có sự cố khi cài đặt dịch vụ TopGG");
+    this.logWarn(TopggService.name, await res.text());
     return false;
   }
 
   public async checkVote(userId: string): Promise<TopggServiceEnum> {
     if (!this.botId || !this.isTokenAvalible) {
-      this.client.logger.error(
+      this.logError(
         TopggService.name,
         "Dịch vụ TopGG chưa được cấu hình! check vote sẽ luôn trả về lỗi"
       );
@@ -45,7 +50,7 @@ export class TopggService {
     }
     const res = await this.fetch(`/bots/${this.botId}/check?userId=${userId}`);
     if (res.status !== 200) {
-      this.client.logger.error(TopggService.name, "Có lỗi khi lấy dữ liệu từ top.gg");
+      this.logError(TopggService.name, "Có lỗi khi lấy dữ liệu từ top.gg");
       return TopggServiceEnum.ERROR;
     }
     const jsonRes = (await res.json()) as { voted: number };
@@ -67,7 +72,7 @@ export class TopggService {
     cron.schedule("0 */1 * * * *", () =>
       this.updateStatisticCount(this.client.guilds.cache.size, this.shardCount)
     );
-    this.client.logger.info(
+    this.logInfo(
       TopggService.name,
       chalk.italic(`Thống kê TopGG đã được bật thành công!`)
     );

@@ -6,12 +6,19 @@ import {
   ChatInputCommandInteraction,
 } from "discord.js";
 import { Accessableby, Command } from "../../structures/Command.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { SpotifygetAccessToken } from "../../utilities/SpotifygetAccessToken.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import axios from "axios";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Config } from "../../@types/Config.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -120,7 +127,7 @@ export default class implements Command {
           flags: MessageFlags.Ephemeral,
         });
       } catch (error) {
-        client.logger.warn(
+        logWarn(
           "Spotify",
           `Lưu ID Spotify hoặc lấy profile người dùng thất bại: ${error}`
         );
@@ -159,7 +166,7 @@ export default class implements Command {
           flags: MessageFlags.Ephemeral,
         });
       } catch (error) {
-        client.logger.warn("Spotify", `Ngắt kết nối ID Spotify thất bại: ${error}`);
+        logWarn("Spotify", `Ngắt kết nối ID Spotify thất bại: ${error}`);
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,

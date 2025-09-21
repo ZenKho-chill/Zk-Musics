@@ -1,13 +1,16 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkNode } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import chalk from "chalk";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export default class {
   execute(client: Manager, node: ZklinkNode, code: number, reason: Buffer) {
     client.Zklink.players.forEach((player, index) => {
       if (player.node.options.name == node.options.name) player.destroy().catch(() => {});
     });
-    client.logger.debug(
+    logDebug(
       "NodeDisconnect",
       chalk.red(`Lavalink ${node.options.name}: Đã ngắt kết nối, Mã: ${code}, Lý do: ${reason}`)
     );

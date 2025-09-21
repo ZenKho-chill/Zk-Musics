@@ -1,5 +1,7 @@
 import { AutocompleteInteraction } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { Manager } from "../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 
 export class AutocompleteManager {
   client: Manager;
@@ -47,7 +49,7 @@ export class AutocompleteManager {
         ? (command as any).autocomplete(this.client, this.interaction, language)
         : true;
     } catch (error) {
-      this.client.logger.error(AutocompleteManager.name, error);
+      this.logError(AutocompleteManager.name, error);
     }
     return;
   }

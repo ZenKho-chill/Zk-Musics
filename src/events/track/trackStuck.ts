@@ -1,14 +1,21 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TextChannel, EmbedBuilder, MessageFlags } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import chalk from "chalk";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, data: Record<string, any>) {
     if (!client.isDatabaseConnected)
-      return client.logger.warn(
+      return logWarn(
         "DatabaseService",
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
@@ -54,7 +61,7 @@ export default class {
       );
     }
 
-    client.logger.error(
+    logError(
       "TrackStuck",
       `${chalk.hex("#fc2c03")("Bài bị kẹt tại @ ")}${chalk.hex("#fc2c03")(
         guild!.name

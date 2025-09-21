@@ -1,11 +1,19 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { EmbedBuilder, TextChannel, AttachmentBuilder, User, MessageFlags } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer } from "../../Zklink/Player/ZklinkPlayer.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkTrack } from "../../Zklink/Player/ZklinkTrack.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TrackTitle } from "../../utilities/TrackTitle.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { zkcard } from "zkcard";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export class PlayerUpdateLoader {
   client: Manager;
   constructor(client: Manager) {
@@ -243,7 +251,7 @@ export class PlayerUpdateLoader {
           files: attachment ? [attachment] : [], // Thêm tập tin đính kèm nếu tồn tại
         })
         .catch((error) => {
-          client.logger.info(
+          logInfo(
             "loadUpdate",
             `Lỗi khi chỉnh sửa tin nhắn tại @ ${playMsg.guild!.name} / ${playMsg.guildId}`
           );
@@ -291,7 +299,7 @@ export class PlayerUpdateLoader {
           files: [], // Thêm tập tin đính kèm ở đây
         })
         .catch((error) => {
-          client.logger.info(
+          logInfo(
             "LoadUpdate",
             `Không thể chỉnh sửa tin nhắn tại @ ${playMsg.guild!.name} / ${playMsg.guildId}`
           );

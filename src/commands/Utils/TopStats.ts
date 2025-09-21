@@ -1,10 +1,17 @@
 import { Accessableby, Command } from "../../structures/Command.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { EmbedBuilder } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Config } from "../../@types/Config.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 const data: Config = new ConfigData().data;
 
@@ -122,7 +129,7 @@ export default class implements Command {
         ],
       });
     } catch (error) {
-      client.logger.warn("TopStats", "Lỗi khi tạo ảnh thống kê top");
+      logWarn("TopStats", "Lỗi khi tạo ảnh thống kê top");
       await handler.editReply({
         embeds: [
           new EmbedBuilder()

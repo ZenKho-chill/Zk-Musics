@@ -1,10 +1,17 @@
 import { ApplicationCommandOptionType, TextChannel, EmbedBuilder, ChatInputCommandInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Accessableby, Command } from "../../structures/Command.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Config } from "../../@types/Config.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -65,13 +72,13 @@ export default class implements Command {
             await playing_channel.send({ embeds: [announcement] });
             successfulGuilds++;
           } catch (err) {
-            client.logger.warn(
+            logWarn(
               "Announcement",
               `Lỗi khi gửi tin nhắn trong kênh ${playing_channel.id}`
             );
           }
         } else {
-          client.logger.warn(
+          logWarn(
             "Announcement",
             `Không tìm thấy kênh có ID ${player.textId} trong ${guild.name}.`
           );
@@ -236,7 +243,7 @@ export default class implements Command {
             handler.args[0] = collectedInput;
             await this.execute(client, handler);
           } catch (error) {
-            client.logger.warn("Announcement", `Lỗi khi thực thi lệnh`);
+            logWarn("Announcement", `Lỗi khi thực thi lệnh`);
           }
         });
 
@@ -260,7 +267,7 @@ export default class implements Command {
       // Nếu không có cả file và URL, xử lý bình thường
       await this.processAnnouncement(client, handler, input!, finalImageUrl);
     } catch (error) {
-      client.logger.warn("Announcement", `Lỗi khi gửi thông báo`);
+      logWarn("Announcement", `Lỗi khi gửi thông báo`);
     }
   }
 }

@@ -11,20 +11,21 @@ import {
   MessageFlags,
 } from "discord.js";
 import { GuildLanguageManager } from "../../utilities/GuildLanguageManager.js";
+import { logInfo } from "../../utilities/Logger.js";
 
 export default class {
   async execute(client: Manager, guild: Guild) {
     const BlacklistGuild = await client.db.BlacklistGuild.get(guild.id);
     if (BlacklistGuild) {
       await guild.leave();
-      client.logger.info(
+      logInfo(
         "GuildCreate",
         `Đã chặn guild ${guild.name} không được gia nhập do hạn chế blacklist (tự rời)`
       );
       return;
     }
     
-    client.logger.info("GuildCreate", `Đã tham gia guild ${guild.name} @ ${guild.id}`);
+    logInfo("GuildCreate", `Đã tham gia guild ${guild.name} @ ${guild.id}`);
     
     // Auto-detect và set ngôn ngữ cho guild dựa trên preferred_locale
     await GuildLanguageManager.setupGuildLanguage(client, guild);
@@ -83,7 +84,7 @@ export default class {
       await channel.send({
         embeds: [embed],
       });
-      client.logger.info(
+      logInfo(
         "GuildCreate",
         `Đã gửi tin nhắn chào mừng tới kênh sự kiện cho guild ${guild.name}`
       );
@@ -155,7 +156,7 @@ export default class {
         });
       }
     } catch (error) {
-      client.logger.info(
+      logInfo(
         "GuildCreate",
         `Không thể gửi tin giới thiệu bot cho guild @ ${guild.name} @ ${guild.id}` + error
       );

@@ -2,6 +2,7 @@ import util from "node:util";
 import { Guild, GuildMember } from "discord.js";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
+import { logInfo } from "../../utilities/Logger.js";
 
 export class PostCreatePlayer {
   guild: Guild | null = null;
@@ -9,8 +10,8 @@ export class PostCreatePlayer {
   constructor(protected client: Manager) {}
 
   async main(req: Fastify.FastifyRequest, res: Fastify.FastifyReply) {
-    this.client.logger.info(
-      PostCreatePlayer.name,
+    logInfo(
+      "PostCreatePlayer",
       `${req.method} ${req.routeOptions.url} dữ_liệu=${req.body ? util.inspect(req.body) : "{}"}`
     );
     const data = req.body as Record<string, string>;

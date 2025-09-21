@@ -9,6 +9,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import chalk from "chalk";
+import { logInfo } from "../../utilities/Logger.js";
 
 export class Helper {
   client: Manager;
@@ -32,8 +33,8 @@ export class Helper {
 
       // Xử lý khi bấm nút chọn Role
       if (interaction.customId == "role-1") {
-        this.client.logger.info(
-          Helper.name,
+        logInfo(
+          "Helper",
           `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
             .hex("#00D100")
             .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME1)}`
@@ -59,8 +60,8 @@ export class Helper {
           });
         }
       } else if (interaction.customId == "role-2") {
-        this.client.logger.info(
-          Helper.name,
+        logInfo(
+          "Helper",
           `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
             .hex("#00D100")
             .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME2)}`
@@ -86,8 +87,8 @@ export class Helper {
           });
         }
       } else if (interaction.customId == "role-3") {
-        this.client.logger.info(
-          Helper.name,
+        logInfo(
+          "Helper",
           `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
             .hex("#00D100")
             .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME3)}`
@@ -113,8 +114,8 @@ export class Helper {
           });
         }
       } else if (interaction.customId == "role-4") {
-        this.client.logger.info(
-          Helper.name,
+        logInfo(
+          "Helper",
           `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
             .hex("#00D100")
             .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME4)}`
@@ -140,8 +141,8 @@ export class Helper {
           });
         }
       } else if (interaction.customId == "role-5") {
-        this.client.logger.info(
-          Helper.name,
+        logInfo(
+          "Helper",
           `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
             .hex("#00D100")
             .bold(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_NAME)}`
@@ -210,8 +211,8 @@ export class Helper {
     interaction: ButtonInteraction,
     language: any
   ): Promise<void> {
-    client.logger.info(
-      Helper.name,
+    logInfo(
+      "Helper",
       `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
         .hex("#00D100")
         .bold("Xem Luật Lệ")}`
@@ -279,8 +280,8 @@ export class Helper {
     interaction: ButtonInteraction,
     language: any
   ): Promise<void> {
-    client.logger.info(
-      Helper.name,
+    logInfo(
+      "Helper",
       `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
         .hex("#00D100")
         .bold("Ủng Hộ Chúng Tôi")}`
@@ -340,8 +341,8 @@ export class Helper {
     interaction: ButtonInteraction,
     language: any
   ): Promise<void> {
-    client.logger.info(
-      Helper.name,
+    logInfo(
+      "Helper",
       `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
         .hex("#00D100")
         .bold("Chọn Role")}`

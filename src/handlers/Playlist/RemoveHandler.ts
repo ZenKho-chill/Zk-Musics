@@ -15,6 +15,7 @@ import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import humanizeDuration from "humanize-duration";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
+import { logInfo, logDebug, logError } from "../../utilities/Logger.js";
 
 const data: Config = new ConfigData().data;
 
@@ -80,20 +81,20 @@ export class PlaylistRemoveHandler {
     });
 
     let playlistCollectorHandled = false; // Flag để tránh double processing
-    console.log(`[PLAYLIST_REMOVE] Started playlist collector for user ${handler.user?.id}`);
+    logInfo("PlaylistRemoveHandler", `Started playlist collector for user ${handler.user?.id}`);
 
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
-      console.log(`[PLAYLIST_REMOVE] Playlist collector received interaction from ${interaction.user.id}`);
-      console.log(`[PLAYLIST_REMOVE] Interaction state - replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
-      console.log(`[PLAYLIST_REMOVE] Playlist collector handled flag: ${playlistCollectorHandled}`);
+      logDebug("PlaylistRemoveHandler", `Playlist collector received interaction from ${interaction.user.id}`);
+      logDebug("PlaylistRemoveHandler", `Interaction state - replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
+      logDebug("PlaylistRemoveHandler", `Playlist collector handled flag: ${playlistCollectorHandled}`);
       
       if (playlistCollectorHandled) {
-        console.log(`[PLAYLIST_REMOVE] Playlist collector already handled, ignoring`);
+        logDebug("PlaylistRemoveHandler", "Playlist collector already handled, ignoring");
         return;
       }
       
       if (interaction.user.id !== handler.user?.id) {
-        console.log(`[PLAYLIST_REMOVE] Wrong user tried to use dropdown: ${interaction.user.id}`);
+        logDebug("PlaylistRemoveHandler", `Wrong user tried to use dropdown: ${interaction.user.id}`);
         return interaction.reply({
           content: "❌ Bạn không thể sử dụng dropdown này!",
           flags: 64, // MessageFlags.Ephemeral
@@ -101,20 +102,20 @@ export class PlaylistRemoveHandler {
       }
 
       const selectedPlaylistId = interaction.values[0];
-      console.log(`[PLAYLIST_REMOVE] Selected playlist ID: ${selectedPlaylistId}`);
+      logInfo("PlaylistRemoveHandler", `Selected playlist ID: ${selectedPlaylistId}`);
       
       // Đánh dấu đã xử lý và stop collector ngay
       playlistCollectorHandled = true;
       collector.stop();
-      console.log(`[PLAYLIST_REMOVE] Set handled flag and stopped playlist collector`);
+      logDebug("PlaylistRemoveHandler", "Set handled flag and stopped playlist collector");
       
       // Hiển thị danh sách bài hát để chọn xóa (gộp với disable dropdown)
-      console.log(`[PLAYLIST_REMOVE] Calling showTrackSelection for playlist ${selectedPlaylistId}`);
+      logDebug("PlaylistRemoveHandler", `Calling showTrackSelection for playlist ${selectedPlaylistId}`);
       await this.showTrackSelection(client, handler, interaction, selectedPlaylistId, selectMenu);
     });
 
     collector.on("end", async (_, reason) => {
-      console.log(`[PLAYLIST_REMOVE] Playlist collector ended with reason: ${reason}, handled: ${playlistCollectorHandled}`);
+      logDebug("PlaylistRemoveHandler", `Playlist collector ended with reason: ${reason}, handled: ${playlistCollectorHandled}`);
       if (reason === "time" && !playlistCollectorHandled) {
         selectMenu.setDisabled(true);
         const disabledRow = new ActionRowBuilder<StringSelectMenuBuilder>()
@@ -139,8 +140,8 @@ export class PlaylistRemoveHandler {
     playlistId: string,
     selectMenu: StringSelectMenuBuilder
   ) {
-    console.log(`[TRACK_SELECTION] Starting track selection for playlist ${playlistId}`);
-    console.log(`[TRACK_SELECTION] Initial interaction state - replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
+    logInfo("PlaylistTrackSelection", `Starting track selection for playlist ${playlistId}`);
+    logDebug("PlaylistTrackSelection", `Initial interaction state - replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
 
     const playlist = await client.db.playlist.get(playlistId);
 
@@ -201,14 +202,14 @@ export class PlaylistRemoveHandler {
       });
 
     try {
-      console.log(`[TRACK_SELECTION] Attempting to update interaction with track menu`);
+      logDebug("PlaylistTrackSelection", "Attempting to update interaction with track menu");
       await interaction.update({
         embeds: [trackEmbed],
         components: [trackActionRow],
       });
-      console.log(`[TRACK_SELECTION] Successfully updated interaction with track menu`);
+      logDebug("PlaylistTrackSelection", "Successfully updated interaction with track menu");
     } catch (error) {
-      console.error(`[TRACK_SELECTION] Error updating interaction:`, error);
+      logError("PlaylistTrackSelection", "Error updating interaction", { error });
       return;
     }
 
@@ -219,15 +220,15 @@ export class PlaylistRemoveHandler {
     });
 
     let collectorHandled = false; // Flag để tránh double edit
-    console.log(`[TRACK_SELECTION] Started track collector for user ${handler.user?.id}`);
+    logInfo("PlaylistTrackSelection", `Started track collector for user ${handler.user?.id}`);
 
     trackCollector.on("collect", async (trackInteraction: StringSelectMenuInteraction) => {
-      console.log(`[TRACK_SELECTION] Track collector received interaction from ${trackInteraction.user.id}`);
-      console.log(`[TRACK_SELECTION] Track interaction state - replied: ${trackInteraction.replied}, deferred: ${trackInteraction.deferred}`);
-      console.log(`[TRACK_SELECTION] Collector handled flag: ${collectorHandled}`);
+      logDebug("PlaylistTrackSelection", `Track collector received interaction from ${trackInteraction.user.id}`);
+      logDebug("PlaylistTrackSelection", `Track interaction state - replied: ${trackInteraction.replied}, deferred: ${trackInteraction.deferred}`);
+      logDebug("PlaylistTrackSelection", `Collector handled flag: ${collectorHandled}`);
       
       if (trackInteraction.user.id !== handler.user?.id) {
-        console.log(`[TRACK_SELECTION] Wrong user tried to use dropdown: ${trackInteraction.user.id}`);
+        logDebug("PlaylistTrackSelection", `Wrong user tried to use dropdown: ${trackInteraction.user.id}`);
         return trackInteraction.reply({
           content: "❌ Bạn không thể sử dụng dropdown này!",
           flags: 64, // MessageFlags.Ephemeral
@@ -235,26 +236,26 @@ export class PlaylistRemoveHandler {
       }
 
       const selectedPosition = parseInt(trackInteraction.values[0]);
-      console.log(`[TRACK_SELECTION] Selected track position: ${selectedPosition}`);
+      logInfo("PlaylistTrackSelection", `Selected track position: ${selectedPosition}`);
       
       // Đánh dấu đã xử lý
       collectorHandled = true;
-      console.log(`[TRACK_SELECTION] Setting collector handled flag to true`);
+      logDebug("PlaylistTrackSelection", "Setting collector handled flag to true");
       
       // Stop collector để tránh timeout conflict
       trackCollector.stop();
-      console.log(`[TRACK_SELECTION] Stopped track collector`);
+      logDebug("PlaylistTrackSelection", "Stopped track collector");
       
       // Hiển thị confirmation để xóa bài hát (dùng trackInteraction.update trực tiếp)
-      console.log(`[TRACK_SELECTION] Calling showRemoveConfirmation for position ${selectedPosition}`);
+      logInfo("PlaylistTrackSelection", `Calling showRemoveConfirmation for position ${selectedPosition}`);
       await this.showRemoveConfirmation(client, handler, trackInteraction, playlistId, selectedPosition, playlist, trackSelectMenu);
     });
 
     trackCollector.on("end", async (_, reason) => {
-      console.log(`[TRACK_SELECTION] Track collector ended with reason: ${reason}, handled: ${collectorHandled}`);
+      logDebug("PlaylistTrackSelection", `Track collector ended with reason: ${reason}, handled: ${collectorHandled}`);
       // Chỉ xử lý timeout nếu chưa được xử lý
       if (reason === "time" && !collectorHandled) {
-        console.log(`[TRACK_SELECTION] Handling track selection timeout`);
+        logInfo("PlaylistTrackSelection", "Handling track selection timeout");
         const timeoutEmbed = new EmbedBuilder()
           .setDescription("⏰ Thời gian chọn bài hát đã hết!")
           .setColor(client.color_main);
@@ -265,7 +266,7 @@ export class PlaylistRemoveHandler {
             components: [],
           });
         } catch (error) {
-          console.error(`[TRACK_SELECTION] Error handling timeout:`, error);
+          logError("PlaylistTrackSelection", "Error handling timeout", { error });
         }
       }
     });
@@ -280,8 +281,8 @@ export class PlaylistRemoveHandler {
     playlist: any,
     trackSelectMenu: StringSelectMenuBuilder
   ) {
-    console.log(`[REMOVE_CONFIRMATION] Starting confirmation for playlist ${playlistId}, position ${position}`);
-    console.log(`[REMOVE_CONFIRMATION] Confirmation interaction state - replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
+    logInfo("PlaylistRemoveConfirmation", `Starting confirmation for playlist ${playlistId}, position ${position}`);
+    logDebug("PlaylistRemoveConfirmation", `Confirmation interaction state - replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
 
     const trackToRemove = playlist.tracks[position - 1];
     const duration = new FormatDuration().parse(trackToRemove.length || 0);
@@ -313,15 +314,17 @@ export class PlaylistRemoveHandler {
       .setColor("#ff4444");
 
     try {
-      console.log(`[REMOVE_CONFIRMATION] Attempting to update interaction with confirmation dialog`);
+      logDebug("PlaylistRemoveConfirmation", "Attempting to update interaction with confirmation dialog");
       await interaction.update({
         embeds: [confirmEmbed],
         components: [confirmButtons],
       });
-      console.log(`[REMOVE_CONFIRMATION] Successfully updated interaction with confirmation dialog`);
+      logDebug("PlaylistRemoveConfirmation", "Successfully updated interaction with confirmation dialog");
     } catch (error) {
-      console.error(`[REMOVE_CONFIRMATION] Error updating confirmation:`, error);
-      console.error(`[REMOVE_CONFIRMATION] Interaction state - replied: ${interaction.replied}, deferred: ${interaction.deferred}`);
+      logError("PlaylistRemoveConfirmation", "Error updating confirmation", { 
+        error, 
+        interactionState: { replied: interaction.replied, deferred: interaction.deferred }
+      });
       return;
     }
 
@@ -330,28 +333,28 @@ export class PlaylistRemoveHandler {
       time: 60000, // 1 phút timeout
     });
 
-    console.log(`[REMOVE_CONFIRMATION] Started button collector for user ${handler.user?.id}`);
+    logInfo("PlaylistRemoveConfirmation", `Started button collector for user ${handler.user?.id}`);
 
     confirmCollector.on("collect", async (buttonInteraction) => {
-      console.log(`[REMOVE_CONFIRMATION] Button collector received interaction from ${buttonInteraction.user.id}`);
-      console.log(`[REMOVE_CONFIRMATION] Button interaction state - replied: ${buttonInteraction.replied}, deferred: ${buttonInteraction.deferred}`);
+      logDebug("PlaylistRemoveConfirmation", `Button collector received interaction from ${buttonInteraction.user.id}`);
+      logDebug("PlaylistRemoveConfirmation", `Button interaction state - replied: ${buttonInteraction.replied}, deferred: ${buttonInteraction.deferred}`);
       
       const buttonId = buttonInteraction.customId;
-      console.log(`[REMOVE_CONFIRMATION] Button clicked: ${buttonId}`);
+      logDebug("PlaylistRemoveConfirmation", `Button clicked: ${buttonId}`);
       
       // Stop collector ngay để tránh multiple collect
       confirmCollector.stop();
-      console.log(`[REMOVE_CONFIRMATION] Stopped button collector`);
+      logDebug("PlaylistRemoveConfirmation", "Stopped button collector");
 
       if (buttonId === "confirm_remove") {
-        console.log(`[REMOVE_CONFIRMATION] Processing confirm remove for track at position ${position}`);
+        logInfo("PlaylistRemoveConfirmation", `Processing confirm remove for track at position ${position}`);
         try {
           // Lấy playlist mới nhất và xóa bài hát
           const currentPlaylist = await client.db.playlist.get(playlistId);
           if (currentPlaylist && currentPlaylist.tracks) {
             currentPlaylist.tracks.splice(position - 1, 1);
             await client.db.playlist.set(playlistId, currentPlaylist);
-            console.log(`[REMOVE_CONFIRMATION] Successfully removed track from database`);
+            logInfo("PlaylistRemoveConfirmation", "Successfully removed track from database");
           }
 
           const successEmbed = new EmbedBuilder()
@@ -366,60 +369,66 @@ export class PlaylistRemoveHandler {
             .setColor("#00ff00");
 
           try {
-            console.log(`[REMOVE_CONFIRMATION] Attempting to update with success message`);
+            logDebug("PlaylistRemoveConfirmation", "Attempting to update with success message");
             await buttonInteraction.update({
               embeds: [successEmbed],
               components: [], // Xóa tất cả components
             });
-            console.log(`[REMOVE_CONFIRMATION] Successfully updated with success message`);
+            logDebug("PlaylistRemoveConfirmation", "Successfully updated with success message");
           } catch (error) {
-            console.error(`[REMOVE_CONFIRMATION] Error updating success message:`, error);
-            console.error(`[REMOVE_CONFIRMATION] Button interaction state - replied: ${buttonInteraction.replied}, deferred: ${buttonInteraction.deferred}`);
+            logError("PlaylistRemoveConfirmation", "Error updating success message", { 
+              error,
+              interactionState: { replied: buttonInteraction.replied, deferred: buttonInteraction.deferred }
+            });
           }
         } catch (error) {
-          console.error(`[REMOVE_CONFIRMATION] Error removing track:`, error);
+          logError("PlaylistRemoveConfirmation", "Error removing track", { error });
           const errorEmbed = new EmbedBuilder()
             .setTitle("❌ Lỗi xóa bài hát")
             .setDescription("Đã xảy ra lỗi khi xóa bài hát. Vui lòng thử lại!")
             .setColor("#ff0000");
 
           try {
-            console.log(`[REMOVE_CONFIRMATION] Attempting to update with error message`);
+            logDebug("PlaylistRemoveConfirmation", "Attempting to update with error message");
             await buttonInteraction.update({
               embeds: [errorEmbed],
               components: [], // Xóa tất cả components
             });
-            console.log(`[REMOVE_CONFIRMATION] Successfully updated with error message`);
+            logDebug("PlaylistRemoveConfirmation", "Successfully updated with error message");
           } catch (error) {
-            console.error(`[REMOVE_CONFIRMATION] Error updating error message:`, error);
-            console.error(`[REMOVE_CONFIRMATION] Button interaction state - replied: ${buttonInteraction.replied}, deferred: ${buttonInteraction.deferred}`);
+            logError("PlaylistRemoveConfirmation", "Error updating error message", { 
+              error,
+              interactionState: { replied: buttonInteraction.replied, deferred: buttonInteraction.deferred }
+            });
           }
         }
       } else if (buttonId === "cancel_remove") {
-        console.log(`[REMOVE_CONFIRMATION] Processing cancel remove`);
+        logInfo("PlaylistRemoveConfirmation", "Processing cancel remove");
         const cancelEmbed = new EmbedBuilder()
           .setTitle("❌ Đã hủy xóa bài hát")
           .setDescription("Bài hát không bị xóa khỏi playlist.")
           .setColor(client.color_main);
 
         try {
-          console.log(`[REMOVE_CONFIRMATION] Attempting to update with cancel message`);
+          logDebug("PlaylistRemoveConfirmation", "Attempting to update with cancel message");
           await buttonInteraction.update({
             embeds: [cancelEmbed],
             components: [], // Xóa tất cả components
           });
-          console.log(`[REMOVE_CONFIRMATION] Successfully updated with cancel message`);
+          logDebug("PlaylistRemoveConfirmation", "Successfully updated with cancel message");
         } catch (error) {
-          console.error(`[REMOVE_CONFIRMATION] Error updating cancel message:`, error);
-          console.error(`[REMOVE_CONFIRMATION] Button interaction state - replied: ${buttonInteraction.replied}, deferred: ${buttonInteraction.deferred}`);
+          logError("PlaylistRemoveConfirmation", "Error updating cancel message", { 
+            error,
+            interactionState: { replied: buttonInteraction.replied, deferred: buttonInteraction.deferred }
+          });
         }
       }
     });
 
     confirmCollector.on("end", async (_, reason) => {
-      console.log(`[REMOVE_CONFIRMATION] Button collector ended with reason: ${reason}`);
+      logDebug("PlaylistRemoveConfirmation", `Button collector ended with reason: ${reason}`);
       if (reason === "time") {
-        console.log(`[REMOVE_CONFIRMATION] Handling timeout`);
+        logInfo("PlaylistRemoveConfirmation", "Handling timeout");
         const timeoutEmbed = new EmbedBuilder()
           .setTitle("⏰ Hết thời gian xác nhận")
           .setDescription(
@@ -430,14 +439,14 @@ export class PlaylistRemoveHandler {
           .setColor("#ffaa00");
 
         try {
-          console.log(`[REMOVE_CONFIRMATION] Attempting to edit reply with timeout message`);
+          logDebug("PlaylistRemoveConfirmation", "Attempting to edit reply with timeout message");
           await handler.editReply({
             embeds: [timeoutEmbed],
             components: [],
           });
-          console.log(`[REMOVE_CONFIRMATION] Successfully edited reply with timeout message`);
+          logDebug("PlaylistRemoveConfirmation", "Successfully edited reply with timeout message");
         } catch (error) {
-          console.error(`[REMOVE_CONFIRMATION] Error handling timeout:`, error);
+          logError("PlaylistRemoveConfirmation", "Error handling timeout", { error });
         }
       }
     });

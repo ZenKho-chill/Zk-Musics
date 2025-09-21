@@ -1,19 +1,25 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TextChannel } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import chalk from "chalk";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
     if (!client.isDatabaseConnected)
-      return client.logger.warn(
+      return logWarn(
         "DatabaseService",
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
-    client.logger.info(
+    logInfo(
       "TrackEnd",
       `${chalk.hex("#f08080")("Bài hát kết thúc tại @ ")}${chalk.hex("#f08080")(
         guild!.name

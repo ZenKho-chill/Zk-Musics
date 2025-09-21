@@ -1,20 +1,26 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TextChannel, EmbedBuilder, MessageFlags } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, track: ZklinkTrack, message: string) {
     if (!client.isDatabaseConnected)
-      return client.logger.warn(
+      return logWarn(
         "DatabaseService",
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
-    client.logger.warn("TrackResolveError", message);
+    logWarn("TrackResolveError", message);
 
     /////////// Cập nhật thiết lập nhạc //////////
     await client.UpdateMusic(player);
@@ -54,7 +60,7 @@ export default class {
       );
     }
 
-    client.logger.error("TrackResolveError", `Lỗi track tại ${guild!.name} / ${player.guildId}.`);
+    logError("TrackResolveError", `Lỗi track tại ${guild!.name} / ${player.guildId}.`);
 
     const data247 = await new Mode247Builder(client, player).get(player.guildId);
     if (data247 !== null && data247 && data247.twentyfourseven && channel)

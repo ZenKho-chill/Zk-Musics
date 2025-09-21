@@ -11,6 +11,7 @@ import { Manager } from "../manager.js";
 import md5 from "md5";
 import { ZklinkPlayer } from "../Zklink/main.js";
 import Axios from "axios";
+import { logWarn } from "./Logger.js";
 
 function generateApiSignature(client: Manager, params: { [key: string]: string }) {
   const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
@@ -83,7 +84,7 @@ export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
   } catch (error: any) {
     const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
 
-    client.logger.warn(ScrobbleToLastFM.name, `Lỗi khi scrobble lên LastFM: ${error}`);
+    logWarn("ScrobbleToLastFM", `Lỗi khi scrobble lên LastFM: ${error}`, { error });
 
     if (
       error.response &&

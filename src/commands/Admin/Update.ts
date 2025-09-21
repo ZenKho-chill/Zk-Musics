@@ -4,6 +4,7 @@ import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -96,7 +97,7 @@ export default class implements Command {
           const sentMessage = await channelToSend.send(description);
           
           // Log success
-          client.logger.info("Update Command", `Đã gửi thông báo cập nhật thành công đến kênh ${channelToSend.name} (${channelToSend.id})`);
+          logInfo("Update Command", `Đã gửi thông báo cập nhật thành công đến kênh ${channelToSend.name} (${channelToSend.id})`);
           
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
@@ -109,10 +110,10 @@ export default class implements Command {
 
           // Xóa tin nhắn do người dùng gửi
           await msg.delete().catch(() => {
-            client.logger.warn("Update Command", "Không thể xóa tin nhắn của người dùng");
+            logWarn("Update Command", "Không thể xóa tin nhắn của người dùng");
           });
         } catch (err) {
-          client.logger.error("Update Command", `Lỗi khi gửi tin nhắn cập nhật: ${err}`);
+          logError("Update Command", `Lỗi khi gửi tin nhắn cập nhật: ${err}`);
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
@@ -137,7 +138,7 @@ export default class implements Command {
         collector?.removeAllListeners();
       });
     } catch (error) {
-      client.logger.error("Update Command", `Lỗi chung trong lệnh update: ${error}`);
+      logError("Update Command", `Lỗi chung trong lệnh update: ${error}`);
 
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
@@ -147,7 +148,7 @@ export default class implements Command {
         );
 
       await handler.editReply({ embeds: [embed] }).catch(() => {
-        client.logger.error("Update Command", "Không thể gửi tin nhắn lỗi");
+        logError("Update Command", "Không thể gửi tin nhắn lỗi");
       });
     }
   }

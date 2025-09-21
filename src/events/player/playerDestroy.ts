@@ -1,20 +1,27 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { EmbedBuilder, TextChannel, MessageFlags } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UpdateMusicStatusChannel, ClearMusicStatusChannelWithDelay } from "../../utilities/UpdateStatusChannel.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import chalk from "chalk";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
     if (!client.isDatabaseConnected)
-      return client.logger.warn(
+      return logWarn(
         "DatabaseService",
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
-    client.logger.info(
+    logInfo(
       "PlayerDestroy",
       `${chalk.hex("#dc143c")("Player đã bị hủy tại @ ")}${chalk.hex("#dc143c")(
         guild?.name
@@ -45,7 +52,7 @@ export default class {
         await UpdateMusicStatusChannel(client, player);
       }
     } else {
-      client.logger.debug(
+      logDebug(
         "PlayerDestroy",
         `Voice status đã được xóa trong voiceStateUpdate, bỏ qua xử lý tại PlayerDestroy cho Guild ${player.guildId}`
       );

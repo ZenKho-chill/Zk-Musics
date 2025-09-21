@@ -3,6 +3,7 @@ import { Manager } from "../../manager.js";
 import Fastify from "fastify";
 import { ZklinkLoopMode } from "../../Zklink/Interface/Constants.js";
 import { ZklinkPlayer } from "../../Zklink/Player/ZklinkPlayer.js";
+import { logInfo } from "../../utilities/Logger.js";
 
 export type TrackRes = {
   title: string;
@@ -20,8 +21,8 @@ export class PatchControl {
   constructor(protected client: Manager) {}
 
   async main(req: Fastify.FastifyRequest, res: Fastify.FastifyReply) {
-    this.client.logger.info(
-      PatchControl.name,
+    logInfo(
+      "PatchControl",
       `${req.method} ${req.routeOptions.url} dữ_liệu=${req.body ? util.inspect(req.body) : "{}"}`
     );
     const isValid = await this.checker(req, res);

@@ -1,5 +1,7 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import cron from "node-cron";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export class TracksArtistsCleanUp {
   client: Manager;
@@ -12,7 +14,7 @@ export class TracksArtistsCleanUp {
   async execute() {
     // Lên lịch xóa dữ liệu top tracks và top artists mỗi 25 ngày
     cron.schedule("5 0 25 * *", async () => {
-      this.client.logger.info(
+      this.logInfo(
         TracksArtistsCleanUp.name,
         "Đang chạy tác vụ theo lịch để xóa top tracks và top artists"
       );
@@ -24,13 +26,13 @@ export class TracksArtistsCleanUp {
     try {
       // Xóa tất cả dữ liệu từ TopTrack
       await this.client.db.TopTrack.deleteAll();
-      this.client.logger.info(TracksArtistsCleanUp.name, "Đã xóa tất cả dữ liệu TopTrack.");
+      this.logInfo(TracksArtistsCleanUp.name, "Đã xóa tất cả dữ liệu TopTrack.");
 
       // Xóa tất cả dữ liệu từ TopArtist
       await this.client.db.TopArtist.deleteAll();
-      this.client.logger.info(TracksArtistsCleanUp.name, "Đã xóa tất cả dữ liệu TopArtist.");
+      this.logInfo(TracksArtistsCleanUp.name, "Đã xóa tất cả dữ liệu TopArtist.");
     } catch (error) {
-      this.client.logger.error(
+      this.logError(
         TracksArtistsCleanUp.name,
         "Xóa dữ liệu TopTrack và TopArtist thất bại: " + error
       );

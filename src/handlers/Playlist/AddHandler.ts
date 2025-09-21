@@ -19,6 +19,7 @@ import { ConfigData } from "../../services/ConfigData.js";
 import { Manager } from "../../manager.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { GlobalInteraction } from "../../@types/Interaction.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 const data = new ConfigData().data;
 
@@ -89,7 +90,7 @@ export class PlaylistAddHandler {
 
       // Kiểm tra xem interaction đã được acknowledge chưa
       if (interaction.replied || interaction.deferred) {
-        console.log("Playlist selection interaction already acknowledged, skipping...");
+        logInfo("AddHandler", "Playlist selection interaction already acknowledged, skipping...");
         return;
       }
 
@@ -99,7 +100,7 @@ export class PlaylistAddHandler {
         // Defer update để edit tin nhắn gốc thay vì tạo mới
         await interaction.deferUpdate();
       } catch (error) {
-        console.error("Error deferring playlist selection update:", error);
+        logError("AddHandler", "Error deferring playlist selection update", { error });
         return;
       }
 
@@ -170,8 +171,8 @@ export class PlaylistAddHandler {
       components: [buttonRow],
     });
 
-    console.log(`[DEBUG] Button created with ID: song_input_modal_${playlistId}`);
-    console.log(`[DEBUG] Reply message created: ${!!replyMessage}`);
+    logDebug("AddHandler", "Button created", { buttonId: `song_input_modal_${playlistId}` });
+    logDebug("AddHandler", "Reply message created", { messageExists: !!replyMessage });
 
     // Collector cho button - sử dụng replyMessage thay vì interaction.message
     const buttonCollector = replyMessage.createMessageComponentCollector({
@@ -179,7 +180,7 @@ export class PlaylistAddHandler {
       time: 300000, // 5 phút
     });
 
-    console.log(`[DEBUG] Button collector created: ${!!buttonCollector}`);
+    logDebug("AddHandler", "Button collector created", { collectorExists: !!buttonCollector });
 
     // Collector cho mention message
     const messageFilter = (m: any) => {
@@ -194,8 +195,11 @@ export class PlaylistAddHandler {
 
     // Handle button click
     buttonCollector.on("collect", async (buttonInt: ButtonInteraction) => {
-      console.log(`[DEBUG] Button clicked: ${buttonInt.customId}`);
-      console.log(`[DEBUG] User ID: ${buttonInt.user.id}, Expected: ${handler.user?.id}`);
+      logDebug("AddHandler", "Button clicked", { 
+        customId: buttonInt.customId,
+        userId: buttonInt.user.id, 
+        expectedUserId: handler.user?.id 
+      });
       
       if (buttonInt.user.id !== handler.user?.id) {
         return buttonInt.reply({
@@ -205,7 +209,7 @@ export class PlaylistAddHandler {
       }
 
       if (buttonInt.customId.startsWith("song_input_modal_")) {
-        console.log(`[DEBUG] Starting modal show process`);
+        logDebug("AddHandler", "Starting modal show process");
         // Không defer reply ở đây vì sẽ show modal
         await this.showSongInputModal(buttonInt, client, playlistId, language, handler);
         // Stop collectors sau khi show modal
@@ -216,7 +220,7 @@ export class PlaylistAddHandler {
 
     // Handle mention message
     messageCollector?.on("collect", async (message) => {
-      console.log(`[DEBUG] Message collected from user: ${message.author.id}`);
+      logDebug("AddHandler", "Message collected from user", { userId: message.author.id });
       const input = message.content
         .replace(new RegExp(`<@!?${client.user?.id}>`, 'g'), '') // Xóa mention
         .trim();
@@ -228,7 +232,7 @@ export class PlaylistAddHandler {
       }
 
       if (input) {
-        console.log(`[DEBUG] Processing search with input: ${input}`);
+        logDebug("AddHandler", "Processing search with input", { input });
         // Stop collectors trước khi xử lý để tránh duplicate
         buttonCollector.stop();
         messageCollector?.stop();
@@ -248,7 +252,7 @@ export class PlaylistAddHandler {
           components: [],
         });
       } catch (error) {
-        console.error("Error handling timeout:", error);
+        logError("AddHandler", "Error handling timeout", { error });
       }
     };
 
@@ -258,7 +262,10 @@ export class PlaylistAddHandler {
 
     buttonCollector.on("end", async (collected) => {
       collectorsEnded++;
-      console.log(`[DEBUG] Button collector ended. Collected: ${collected.size}, Total ended: ${collectorsEnded}`);
+      logDebug("AddHandler", "Button collector ended", { 
+        collectedSize: collected.size, 
+        totalEnded: collectorsEnded 
+      });
       
       if (collected.size > 0) {
         hasProcessedInteraction = true;
@@ -266,14 +273,17 @@ export class PlaylistAddHandler {
       
       // Chỉ timeout khi cả 2 collectors đã end và không có interaction nào thành công
       if (collectorsEnded === 2 && !hasProcessedInteraction) {
-        console.log(`[DEBUG] Both collectors ended with no interactions, triggering timeout`);
+        logDebug("AddHandler", "Both collectors ended with no interactions, triggering timeout");
         await handleTimeout();
       }
     });
 
     messageCollector?.on("end", async (collected) => {
       collectorsEnded++;
-      console.log(`[DEBUG] Message collector ended. Collected: ${collected.size}, Total ended: ${collectorsEnded}`);
+      logDebug("AddHandler", "Message collector ended", { 
+        collectedSize: collected.size, 
+        totalEnded: collectorsEnded 
+      });
       
       if (collected.size > 0) {
         hasProcessedInteraction = true;
@@ -281,7 +291,7 @@ export class PlaylistAddHandler {
       
       // Chỉ timeout khi cả 2 collectors đã end và không có interaction nào thành công
       if (collectorsEnded === 2 && !hasProcessedInteraction) {
-        console.log(`[DEBUG] Both collectors ended with no interactions, triggering timeout`);
+        logDebug("AddHandler", "Both collectors ended with no interactions, triggering timeout");
         await handleTimeout();
       }
     });
@@ -311,13 +321,13 @@ export class PlaylistAddHandler {
 
     modal.addComponents(actionRow);
 
-    console.log(`[DEBUG] Showing modal for user ${interaction.user.id}`);
+    logDebug("AddHandler", "Showing modal for user", { userId: interaction.user.id });
     
     try {
       await interaction.showModal(modal);
-      console.log(`[DEBUG] Modal shown successfully`);
+      logDebug("AddHandler", "Modal shown successfully");
     } catch (showError) {
-      console.error(`[ERROR] Failed to show modal:`, showError);
+      logError("AddHandler", "Failed to show modal", { error: showError });
       return;
     }
 
@@ -346,7 +356,7 @@ export class PlaylistAddHandler {
       
     } catch (error) {
       // Modal timeout hoặc error
-      console.error("Modal submit error:", error);
+      logError("AddHandler", "Modal submit error", { error });
       
       // Thông báo timeout cho user qua original interaction
       try {
@@ -359,7 +369,7 @@ export class PlaylistAddHandler {
           components: [],
         });
       } catch (editError) {
-        console.error("Error editing reply after modal timeout:", editError);
+        logError("AddHandler", "Error editing reply after modal timeout", { error: editError });
       }
     }
   }
@@ -419,7 +429,7 @@ export class PlaylistAddHandler {
 
       // Kiểm tra xem interaction đã được acknowledge chưa
       if (buttonInt.replied || buttonInt.deferred) {
-        console.log("Button interaction already acknowledged, skipping...");
+        logInfo("AddHandler", "Button interaction already acknowledged, skipping...");
         return;
       }
 
@@ -443,7 +453,7 @@ export class PlaylistAddHandler {
           });
         }
       } catch (error) {
-        console.error("Error in button interaction:", error);
+        logError("AddHandler", "Error in button interaction", { error });
         return;
       }
     });
@@ -522,14 +532,14 @@ export class PlaylistAddHandler {
 
       // Kiểm tra xem interaction đã được acknowledge chưa
       if (selectInt.replied || selectInt.deferred) {
-        console.log("Track selection interaction already acknowledged, skipping...");
+        logInfo("AddHandler", "Track selection interaction already acknowledged, skipping...");
         return;
       }
 
       try {
         await selectInt.deferUpdate();
       } catch (error) {
-        console.error("Error deferring track selection update:", error);
+        logError("AddHandler", "Error deferring track selection update", { error });
         return;
       }
       
@@ -727,7 +737,7 @@ export class PlaylistAddHandler {
       try {
         await msg.delete();
       } catch (error) {
-        console.log("Could not delete user message:", error);
+        logInfo("AddHandler", "Could not delete user message", { error });
       }
 
       const input = msg.content.trim();
@@ -797,7 +807,7 @@ export class PlaylistAddHandler {
       }
 
     } catch (error) {
-      console.error("Error searching/adding song:", error);
+      logError("AddHandler", "Error searching/adding song", { error });
       await handler.editReply({
         embeds: [
           new EmbedBuilder()
@@ -908,14 +918,14 @@ export class PlaylistAddHandler {
       if (interaction.customId === "search_result_select" && interaction.isStringSelectMenu()) {
         // Kiểm tra xem interaction đã được acknowledge chưa
         if (interaction.replied || interaction.deferred) {
-          console.log("Search result interaction already acknowledged, skipping...");
+          logInfo("AddHandler", "Search result interaction already acknowledged, skipping...");
           return;
         }
 
         try {
           await interaction.deferUpdate();
         } catch (error) {
-          console.error("Error deferring search result update:", error);
+          logError("AddHandler", "Error deferring search result update", { error });
           return;
         }
 
@@ -964,7 +974,7 @@ export class PlaylistAddHandler {
             components: [disabledRow],
           });
         } catch (error) {
-          console.log("Error updating timeout message:", error);
+          logError("AddHandler", "Error updating timeout message", { error });
         }
       }
     });

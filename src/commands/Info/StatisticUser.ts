@@ -14,6 +14,7 @@ import { Manager } from "../../manager.js";
 import { UserStatistics } from "../../database/schema/UserStatistics.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logError } from "../../utilities/Logger.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -307,7 +308,7 @@ async function fetchFirstMessageDate(guild: Guild, userId: Snowflake): Promise<s
         }
       }
     } catch (error) {
-      console.error(error);
+      logError("StatisticUser", "Error getting earliest message", { error });
       continue;
     }
   }

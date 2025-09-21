@@ -6,12 +6,19 @@ import {
   MessageFlags,
 } from "discord.js";
 import { ZklinkPlayer } from "../Zklink/Player/ZklinkPlayer.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import chalk from "chalk";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { Manager } from "../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { GuildMember, Interaction } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { TopggServiceEnum } from "../services/TopggService.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import axios from "axios";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { EmojiValidator } from "../utilities/EmojiValidator.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 export default class FilterMenu {
   async execute(client: Manager) {
     const filterInfo: { [key: string]: string } = {
@@ -876,7 +883,7 @@ export default class FilterMenu {
           })}`,
           flags: MessageFlags.Ephemeral,
         });
-        client.logger.info(
+        logInfo(
           "FilterMenu",
           `${chalk.hex("#00D100").bold(selectedFilter)} được sử dụng bởi ${chalk
             .hex("#00D100")

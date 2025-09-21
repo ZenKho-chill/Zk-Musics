@@ -1,5 +1,6 @@
 import { SpotifyOptions } from "./Plugin.js";
 import { SpotifyRequest } from "./SpotifyRequest.js";
+import { logWarn } from "../../../utilities/Logger.js";
 
 export class RequestManager {
   private requests: SpotifyRequest[] = [];
@@ -10,8 +11,8 @@ export class RequestManager {
       for (const client of options.clients) this.requests.push(new SpotifyRequest(client));
       this.mode = "multi";
       // eslint-disable-next-line no-console
-      console.warn(
-        "\x1b[31m%s\x1b[0m",
+      logWarn(
+        "Spotify",
         "Bạn đang dùng chế độ multi client, đôi khi vẫn có THỂ BỊ RATE LIMITED. Tôi không chịu trách nhiệm nếu IP bị cấm."
       );
     } else {

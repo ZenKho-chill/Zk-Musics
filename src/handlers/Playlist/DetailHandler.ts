@@ -11,6 +11,7 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import humanizeDuration from "humanize-duration";
+import { logInfo, logDebug, logWarn, logError } from "../../utilities/Logger.js";
 
 const data: Config = new ConfigData().data;
 
@@ -124,7 +125,7 @@ export class PlaylistDetailHandler {
 
       // Kiểm tra xem interaction đã được acknowledge chưa
       if (interaction.replied || interaction.deferred) {
-        console.log("Playlist detail selection interaction already acknowledged, skipping...");
+        logInfo("DetailHandler", "Playlist detail selection interaction already acknowledged, skipping...");
         return;
       }
 
@@ -132,7 +133,7 @@ export class PlaylistDetailHandler {
         // Defer update để edit tin nhắn gốc
         await interaction.deferUpdate();
       } catch (error) {
-        console.error("Error deferring playlist detail selection update:", error);
+        logError("PlaylistDetailHandler", "Error deferring playlist detail selection update", { error });
         return;
       }
 
@@ -229,7 +230,7 @@ export class PlaylistDetailHandler {
     // Kiểm tra độ dài content để đảm bảo không vượt 1024 characters
     let finalTrackList = trackList;
     if (trackList.length > 1020) { // Để lại một chút buffer
-      console.warn("Track list too long, truncating...");
+      logWarn("DetailHandler", "Track list too long, truncating...");
       finalTrackList = trackList.substring(0, 1020) + "...";
     }
 
@@ -303,7 +304,7 @@ export class PlaylistDetailHandler {
         try {
           await pageInteraction.deferUpdate();
         } catch (error) {
-          console.error("Error deferring page selection update:", error);
+          logError("PlaylistDetailHandler", "Error deferring page selection update", { error });
           return;
         }
 
@@ -327,7 +328,7 @@ export class PlaylistDetailHandler {
               components: disabledComponents,
             });
           } catch (error) {
-            console.log("Error updating timeout message:", error);
+            logError("DetailHandler", "Error updating timeout message", { error });
           }
         }
       });

@@ -9,13 +9,21 @@ import {
   MessageFlags,
 } from "discord.js";
 import { ZklinkPlayer, ZklinkTrack, ZklinkSearchResultType } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Accessableby, Command } from "../../structures/Command.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { SpotifygetAccessToken } from "../../utilities/SpotifygetAccessToken.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import axios from "axios";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Config } from "../../@types/Config.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const data: Config = new ConfigData().data;
 let isCollectorActive = false;
 
@@ -289,7 +297,7 @@ export default class implements Command {
         }
       });
     } catch (error) {
-      client.logger.warn("SpotifyPlaylist", `Lấy playlists từ Spotify thất bại: ${error}`);
+      logWarn("SpotifyPlaylist", `Lấy playlists từ Spotify thất bại: ${error}`);
       await handler.editReply({
         content: " ",
         embeds: [

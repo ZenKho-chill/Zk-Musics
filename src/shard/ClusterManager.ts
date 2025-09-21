@@ -9,6 +9,7 @@ import { resolve } from "path";
 import { join, dirname } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { ClusterCommand, WorkerResponse } from "../@types/Cluster.js";
+import { logInfo, logDebug, logWarn, logError } from "../utilities/Logger.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 config();
@@ -40,7 +41,7 @@ export class ClusterManager {
       }
     );
 
-    console.log(`Tổng cluster: ${this.options.totalClusters}, Tổng shard: ${this.totalShards}`);
+    logInfo("ClusterManager", `Tổng cluster: ${this.options.totalClusters}, Tổng shard: ${this.totalShards}`);
   }
 
   public async start() {
@@ -163,7 +164,23 @@ export class ClusterManager {
     const date = new Date().toISOString();
     const prettyLevel = level.toUpperCase().padEnd(pad);
     const prettyClass = "ClusterManager".padEnd(28);
-    console.log(`${date} - ${prettyLevel} - ${prettyClass} - ${msg}`);
+    // Sử dụng logger mới thay vì console.log
+    switch (level.toLowerCase()) {
+      case "info":
+        logInfo("ClusterManager", msg);
+        break;
+      case "debug":
+        logDebug("ClusterManager", msg);
+        break;
+      case "warn":
+        logWarn("ClusterManager", msg);
+        break;
+      case "error":
+        logError("ClusterManager", msg);
+        break;
+      default:
+        logInfo("ClusterManager", msg);
+    }
   }
 
   protected async commandLoader() {

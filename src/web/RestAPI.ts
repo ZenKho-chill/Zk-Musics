@@ -5,6 +5,7 @@ import { WebsocketRoute } from "./websocket.js";
 import { PlayerRoute } from "./player.js";
 import { getSearch } from "./route/getSearch.js";
 import { getCommands } from "./route/getCommands.js";
+import { logInfo, logError } from "../utilities/Logger.js";
 
 export class RestAPI {
   app: Fastify.FastifyInstance;
@@ -67,7 +68,7 @@ export class RestAPI {
         "Ở đây không có Zk Music's, nhưng bạn vẫn có thể mỉm cười 😊",
         "Đừng lo, Zk Music's không phải là tất cả đâu 😎",
       ];
-      client.logger.info("HealthRouterService", `${request.method} ${request.routeOptions.url}`);
+      logInfo("HealthRouterService", `${request.method} ${request.routeOptions.url}`);
       reply.send({ zk: response[Math.floor(Math.random() * response.length)] });
     });
 
@@ -75,17 +76,17 @@ export class RestAPI {
 
     this.app
       .listen({ port, host: "0.0.0.0" })
-      .then(() => this.client.logger.info(RestAPI.name, `Server đang chạy ở cổng ${port}`))
+      .then(() => logInfo("RestAPI", `Server đang chạy ở cổng ${port}`))
       .catch((err) => {
         if (this.client.config.bot.TOKEN.length > 1) {
           this.client.config.features.RestAPI.port = this.client.config.features.RestAPI.port + 1;
           const newPort = this.client.config.features.RestAPI.port;
           return this.app
             .listen({ port: newPort, host: "0.0.0.0" })
-            .then(() => this.client.logger.info(RestAPI.name, `Server đang chạy ở cổng ${newPort}`))
-            .catch((err) => this.client.logger.error(RestAPI.name, err));
+            .then(() => logInfo("RestAPI", `Server đang chạy ở cổng ${newPort}`))
+            .catch((err) => logError("RestAPI", "Failed to start server on new port", { error: err }));
         } else {
-          this.client.logger.error(RestAPI.name, err);
+          logError("RestAPI", "Failed to start server", { error: err });
         }
       });
   }

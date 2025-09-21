@@ -12,6 +12,7 @@ import { Manager } from "../../manager.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logInfo, logDebug, logWarn, logError } from "../../utilities/Logger.js";
 
 const data: Config = new ConfigData().data;
 
@@ -185,20 +186,20 @@ export class PlaylistEditorHandler {
           
           // Xác nhận lại việc cập nhật
           const updatedPlaylist = await client.db.playlist.get(playlistId);
-          console.log(`[DEBUG] Sau khi cập nhật với sub-key - Playlist ${playlistId} private: ${updatedPlaylist?.private}`);
+          logDebug("PlaylistEditorHandler", `Sau khi cập nhật với sub-key - Playlist ${playlistId} private: ${updatedPlaylist?.private}`);
           
           // Nếu vẫn không work, thử cách 2
           if (updatedPlaylist?.private !== false) {
-            console.log(`[DEBUG] Sub-key không work, thử cách 2 - full object update`);
+            logDebug("PlaylistEditorHandler", "Sub-key không work, thử cách 2 - full object update");
             updatedPlaylist.private = false;
             await client.db.playlist.set(playlistId, updatedPlaylist);
             
             // Xác nhận lần cuối
             const finalCheck = await client.db.playlist.get(playlistId);
-            console.log(`[DEBUG] Sau khi cập nhật full object - Playlist ${playlistId} private: ${finalCheck?.private}`);
+            logDebug("PlaylistEditorHandler", `Sau khi cập nhật full object - Playlist ${playlistId} private: ${finalCheck?.private}`);
           }
         } catch (error) {
-          console.error(`[ERROR] Cập nhật playlist thất bại:`, error);
+          logError("PlaylistEditorHandler", "Cập nhật playlist thất bại", { error });
         }
         
         const successEmbed = new EmbedBuilder()
@@ -223,20 +224,20 @@ export class PlaylistEditorHandler {
           
           // Xác nhận lại việc cập nhật
           const updatedPlaylist = await client.db.playlist.get(playlistId);
-          console.log(`[DEBUG] Sau khi cập nhật với sub-key - Playlist ${playlistId} private: ${updatedPlaylist?.private}`);
+          logDebug("PlaylistEditorHandler", `Sau khi cập nhật với sub-key - Playlist ${playlistId} private: ${updatedPlaylist?.private}`);
           
           // Nếu vẫn không work, thử cách 2
           if (updatedPlaylist?.private !== true) {
-            console.log(`[DEBUG] Sub-key không work, thử cách 2 - full object update`);
+            logDebug("PlaylistEditorHandler", "Sub-key không work, thử cách 2 - full object update");
             updatedPlaylist.private = true;
             await client.db.playlist.set(playlistId, updatedPlaylist);
             
             // Xác nhận lần cuối
             const finalCheck = await client.db.playlist.get(playlistId);
-            console.log(`[DEBUG] Sau khi cập nhật full object - Playlist ${playlistId} private: ${finalCheck?.private}`);
+            logDebug("PlaylistEditorHandler", `Sau khi cập nhật full object - Playlist ${playlistId} private: ${finalCheck?.private}`);
           }
         } catch (error) {
-          console.error(`[ERROR] Cập nhật playlist thất bại:`, error);
+          logError("PlaylistEditorHandler", "Cập nhật playlist thất bại", { error });
         }
         
         const successEmbed = new EmbedBuilder()

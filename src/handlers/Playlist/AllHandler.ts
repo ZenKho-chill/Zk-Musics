@@ -13,6 +13,7 @@ import { Playlist } from "../../database/schema/Playlist.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 const data: Config = new ConfigData().data;
 
@@ -121,7 +122,7 @@ export class PlaylistAllHandler {
 
       // Kiểm tra xem interaction đã được acknowledge chưa
       if (interaction.replied || interaction.deferred) {
-        console.log("Playlist selection interaction already acknowledged, skipping...");
+        logInfo("AllHandler", "Playlist selection interaction already acknowledged, skipping...");
         return;
       }
 
@@ -129,7 +130,7 @@ export class PlaylistAllHandler {
         // Defer update để edit tin nhắn gốc
         await interaction.deferUpdate();
       } catch (error) {
-        console.error("Error deferring playlist selection update:", error);
+        logError("AllHandler", "Error deferring playlist selection update", { error });
         return;
       }
 
@@ -207,7 +208,7 @@ export class PlaylistAllHandler {
     // Kiểm tra độ dài content để đảm bảo không vượt 1024 characters
     let finalTrackList = trackList;
     if (trackList.length > 1020) { // Để lại một chút buffer
-      console.warn("Track list too long, truncating...");
+      logWarn("AllHandler", "Track list too long, truncating...");
       finalTrackList = trackList.substring(0, 1020) + "...";
     }
 
@@ -281,7 +282,7 @@ export class PlaylistAllHandler {
         try {
           await pageInteraction.deferUpdate();
         } catch (error) {
-          console.error("Error deferring page selection update:", error);
+          logError("AllHandler", "Error deferring page selection update", { error });
           return;
         }
 
@@ -305,7 +306,7 @@ export class PlaylistAllHandler {
               components: disabledComponents,
             });
           } catch (error) {
-            console.log("Error updating timeout message:", error);
+            logError("AllHandler", "Error updating timeout message", { error });
           }
         }
       });

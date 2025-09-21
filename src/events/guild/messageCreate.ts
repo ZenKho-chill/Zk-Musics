@@ -20,6 +20,7 @@ import { RateLimitResponder } from "../../services/RateLimitResponder.js";
 import { RateLimitManager } from "@sapphire/ratelimits";
 import { TopggServiceEnum } from "../../services/TopggService.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
+import { logWarn, logInfo, logError } from "../../utilities/Logger.js";
 const commandRateLimitManager = new RateLimitManager(1000);
 
 export default class {
@@ -27,7 +28,7 @@ export default class {
     if (message.author.bot || message.channel.type == ChannelType.DM) return;
 
     if (!client.isDatabaseConnected)
-      return client.logger.warn(
+      return logWarn(
         "DatabaseService",
         "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
       );
@@ -489,7 +490,7 @@ export default class {
               try {
                 await sentMessage.delete();
               } catch (error) {
-                client.logger.error("TopggService", `Top gg service error`);
+                logError("TopggService", `Top gg service error`);
               }
             }, client.config.features.DELETE_MSG_TIMEOUT);
           }
@@ -579,7 +580,7 @@ export default class {
 
       if (message.attachments.size !== 0) handler.addAttachment(message.attachments);
 
-      client.logger.info(
+      logInfo(
         "Prefix Commands",
         `${chalk.hex("#00FFC3")(command.name.join("-"))} được sử dụng bởi ${chalk.hex("#00FFC3")(
           message.author.displayName
@@ -616,7 +617,7 @@ export default class {
 
       command.execute(client, handler);
     } catch (error) {
-      client.logger.error("CommandManager", error);
+      logError("CommandManager", error);
       message.reply({
         content: `${client.i18n.get(language, "interaction", "unexpected_error")}\n ${error}`,
       });

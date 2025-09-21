@@ -1,9 +1,10 @@
 import { Manager } from "../../manager.js";
 import { EmbedBuilder, Guild, TextChannel } from "discord.js";
+import { logInfo, logWarn } from "../../utilities/Logger.js";
 
 export default class {
   async execute(client: Manager, guild: Guild) {
-    client.logger.info("GuildDelete", `Đã rời guild ${guild.name} @ ${guild.id}`);
+    logInfo("GuildDelete", `Đã rời guild ${guild.name} @ ${guild.id}`);
     const language = client.config.bot.LANGUAGE;
     client.guilds.cache.delete(`${guild!.id}`);
     await client.db.setup.delete(guild.id);
@@ -65,12 +66,12 @@ export default class {
       await channel.send({
         embeds: [embed],
       });
-      client.logger.info(
+      logInfo(
         "GuildDelete",
         `Đã gửi tin nhắn rời tới kênh sự kiện cho guild ${guild.name}`
       );
     } catch (err) {
-      client.logger.warn("GuildDelete", `Gửi tin tới kênh sự kiện thất bại: ${err}`);
+      logWarn("GuildDelete", `Gửi tin tới kênh sự kiện thất bại: ${err}`);
     }
   }
 }

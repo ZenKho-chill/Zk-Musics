@@ -1,13 +1,14 @@
 import util from "node:util";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
+import { logInfo } from "../../utilities/Logger.js";
 
 export async function getCurrentPosition(
   client: Manager,
   req: Fastify.FastifyRequest,
   res: Fastify.FastifyReply
 ) {
-  client.logger.info(
+  logInfo(
     "StatusRouterService",
     `${req.method} ${req.routeOptions.url} params=${req.params ? util.inspect(req.params) : "{}"}`
   );

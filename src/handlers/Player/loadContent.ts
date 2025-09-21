@@ -1,15 +1,26 @@
 import { Manager } from "../../manager.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { EmbedBuilder, Message, GuildMember, TextChannel } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ConvertTime } from "../../utilities/ConvertTime.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { GlobalInteraction } from "../../@types/Interaction.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 // Các lệnh nút
 import { ButtonPrevious } from "./ButtonCommands/Previous.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ButtonSkip } from "./ButtonCommands/Skip.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ButtonStop } from "./ButtonCommands/Stop.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ButtonLoop } from "./ButtonCommands/Loop.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ButtonPause } from "./ButtonCommands/Pause.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { RateLimitManager } from "@sapphire/ratelimits";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkTrack } from "../../Zklink/main.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const rateLimitManager = new RateLimitManager(2000);
 
 /**
@@ -28,7 +39,7 @@ export class PlayerContentLoader {
       this.client.on("interactionCreate", this.interaction.bind(null, this.client));
       this.client.on("messageCreate", this.message.bind(null, this.client));
     } catch (err) {
-      this.client.logger.error(PlayerContentLoader.name, err);
+      this.logError(PlayerContentLoader.name, err);
     }
   }
 

@@ -1,6 +1,7 @@
 import { Manager } from "../manager.js";
 import { ZklinkPlayer } from "../Zklink/Player/ZklinkPlayer.js";
 import { PermissionsBitField } from "discord.js";
+import { logInfo, logDebug, logWarn, logError } from "./Logger.js";
 
 export async function UpdateMusicStatusChannel(client: Manager, player: ZklinkPlayer) {
   const guildId = player.guildId;
@@ -10,8 +11,8 @@ export async function UpdateMusicStatusChannel(client: Manager, player: ZklinkPl
   const voiceStatus = client.config.features.VOICE_STATUS_CHANNEL ?? true;
 
   if (!voiceStatus) {
-    client.logger.info(
-      UpdateMusicStatusChannel.name,
+    logInfo(
+      "UpdateMusicStatusChannel",
       `Trạng thái voice đã bị tắt trong config, bỏ qua cập nhật.`
     );
     return;
@@ -32,14 +33,15 @@ export async function UpdateMusicStatusChannel(client: Manager, player: ZklinkPl
 
     await client.rest.put(url, { body: { status: statusText } });
 
-    client.logger.info(
-      UpdateMusicStatusChannel.name,
+    logInfo(
+      "UpdateMusicStatusChannel",
       `Đã cập nhật trạng thái nhạc cho Guild ${guildId}: ${statusText}`
     );
   } catch (error) {
-    client.logger.error(
-      UpdateMusicStatusChannel.name,
-      `Cập nhật trạng thái nhạc thất bại cho Guild ${guildId}: ${error.message}`
+    logError(
+      "UpdateMusicStatusChannel",
+      `Cập nhật trạng thái nhạc thất bại cho Guild ${guildId}: ${error.message}`,
+      { error }
     );
   }
 }
@@ -76,8 +78,8 @@ export async function ClearMusicStatusChannel(client: Manager, guildId: string, 
   const voiceStatus = client.config.features.VOICE_STATUS_CHANNEL ?? true;
 
   if (!voiceStatus) {
-    client.logger.debug(
-      ClearMusicStatusChannel.name,
+    logDebug(
+      "ClearMusicStatusChannel",
       `Trạng thái voice đã bị tắt trong config, bỏ qua xóa trạng thái.`
     );
     return;
@@ -86,8 +88,8 @@ export async function ClearMusicStatusChannel(client: Manager, guildId: string, 
   // Kiểm tra guild có tồn tại không
   const guild = client.guilds.cache.get(guildId);
   if (!guild) {
-    client.logger.debug(
-      ClearMusicStatusChannel.name,
+    logDebug(
+      "ClearMusicStatusChannel",
       `Guild ${guildId} không tồn tại trong cache, có thể bot đã bị kick khỏi server.`
     );
     return;
@@ -117,8 +119,8 @@ export async function ClearMusicStatusChannel(client: Manager, guildId: string, 
     const activePlayer = client.Zklink?.players.get(guildId);
     if (activePlayer && activePlayer.voiceId) {
       targetVoiceChannel = activePlayer.voiceId;
-      client.logger.debug(
-        ClearMusicStatusChannel.name,
+      logDebug(
+        "ClearMusicStatusChannel",
         `Sử dụng voice channel từ active player: ${targetVoiceChannel}`
       );
     }
@@ -130,8 +132,8 @@ export async function ClearMusicStatusChannel(client: Manager, guildId: string, 
     const initialVoiceChannel = activePlayer?.data.get("initial-voice-channel-id") as string;
     if (initialVoiceChannel) {
       targetVoiceChannel = initialVoiceChannel;
-      client.logger.debug(
-        ClearMusicStatusChannel.name,
+      logDebug(
+        "ClearMusicStatusChannel",
         `Sử dụng initial voice channel từ player data: ${targetVoiceChannel}`
       );
     }
@@ -146,8 +148,8 @@ export async function ClearMusicStatusChannel(client: Manager, guildId: string, 
         const voiceChannels = channels.filter(channel => channel?.isVoiceBased());
         
         if (voiceChannels.size > 0) {
-          client.logger.debug(
-            ClearMusicStatusChannel.name,
+          logDebug(
+            "ClearMusicStatusChannel",
             `Tìm thấy ${voiceChannels.size} voice channels, thử xóa voice status cho từng channel`
           );
           
@@ -157,15 +159,15 @@ export async function ClearMusicStatusChannel(client: Manager, guildId: string, 
               const url = `/channels/${channelId}/voice-status` as const;
               await client.rest.put(url, { body: { status: "" } });
               
-              client.logger.info(
-                ClearMusicStatusChannel.name,
+              logInfo(
+                "ClearMusicStatusChannel",
                 `Đã xóa voice status thành công cho Guild ${guildId} (Channel: ${channelId})`
               );
               return; // Thành công, thoát khỏi loop
             } catch (channelError: any) {
               // Bỏ qua lỗi cho channel này và thử channel tiếp theo
-              client.logger.debug(
-                ClearMusicStatusChannel.name,
+              logDebug(
+                "ClearMusicStatusChannel",
                 `Không thể xóa voice status cho channel ${channelId}: ${channelError.message}`
               );
             }
@@ -173,8 +175,8 @@ export async function ClearMusicStatusChannel(client: Manager, guildId: string, 
         }
       }
     } catch (error: any) {
-      client.logger.debug(
-        ClearMusicStatusChannel.name,
+      logDebug(
+        "ClearMusicStatusChannel",
         `Lỗi khi tìm voice channels: ${error.message}`
       );
     }
@@ -184,14 +186,14 @@ export async function ClearMusicStatusChannel(client: Manager, guildId: string, 
     
     if (hasGuildAccess) {
       // Nếu bot vẫn có quyền nhưng không tìm thấy voice channel
-      client.logger.debug(
-        ClearMusicStatusChannel.name,
+      logDebug(
+        "ClearMusicStatusChannel",
         `Đã thử tất cả methods nhưng không thể xóa voice status cho Guild ${guildId}. Voice status sẽ tự động expire sau 10-15 phút.`
       );
     } else {
       // Nếu bot mất quyền trong guild thì đây là trường hợp bình thường
-      client.logger.debug(
-        ClearMusicStatusChannel.name,
+      logDebug(
+        "ClearMusicStatusChannel",
         `Bot không có quyền truy cập Guild ${guildId}, voice status sẽ tự động expire. Đây là trường hợp bình thường khi bot bị kick.`
       );
     }
@@ -204,25 +206,25 @@ export async function ClearMusicStatusChannel(client: Manager, guildId: string, 
     // Xóa voice status bằng cách gửi status trống
     await client.rest.put(url, { body: { status: "" } });
 
-    client.logger.info(
-      ClearMusicStatusChannel.name,
+    logInfo(
+      "ClearMusicStatusChannel",
       `Đã xóa trạng thái voice channel cho Guild ${guildId} (Channel: ${targetVoiceChannel})`
     );
   } catch (error: any) {
     // Kiểm tra lỗi cụ thể để log phù hợp
     if (error.code === 50001 || error.code === 50013) {
-      client.logger.warn(
-        ClearMusicStatusChannel.name,
+      logWarn(
+        "ClearMusicStatusChannel",
         `Không có quyền truy cập voice channel ${targetVoiceChannel} trong Guild ${guildId}. Bot có thể đã bị kick.`
       );
     } else if (error.code === 10003) {
-      client.logger.warn(
-        ClearMusicStatusChannel.name,
+      logWarn(
+        "ClearMusicStatusChannel",
         `Voice channel ${targetVoiceChannel} không tồn tại trong Guild ${guildId}. Channel có thể đã bị xóa.`
       );
     } else {
-      client.logger.error(
-        ClearMusicStatusChannel.name,
+      logError(
+        "ClearMusicStatusChannel",
         `Xóa trạng thái voice channel thất bại cho Guild ${guildId}: ${error.message} (Code: ${error.code || 'Unknown'})`
       );
     }

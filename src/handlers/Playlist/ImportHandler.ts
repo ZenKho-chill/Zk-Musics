@@ -11,6 +11,7 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import { ZklinkSearchResultType, ZklinkTrack } from "../../Zklink/main.js";
+import { logInfo, logDebug, logWarn, logError } from "../../utilities/Logger.js";
 
 const data: Config = new ConfigData().data;
 
@@ -177,60 +178,60 @@ export class PlaylistImportHandler {
     const tracks = playlist.tracks;
     let addedCount = 0;
 
-    console.log(`[DEBUG] ImportHandler: Starting to add ${tracks.length} tracks to queue`);
+    logDebug("PlaylistImportHandler", `Starting to add ${tracks.length} tracks to queue`);
 
     for (const trackData of tracks) {
       try {
-        console.log(`[DEBUG] ImportHandler: Searching track "${trackData.title}" with URI: ${trackData.uri}`);
+        logDebug("PlaylistImportHandler", `Searching track "${trackData.title}" with URI: ${trackData.uri}`);
         
         // Tìm kiếm track để lấy đầy đủ thông tin
         const searchResult = await client.Zklink.search(trackData.uri, {
           requester: interaction.user,
         });
 
-        console.log(`[DEBUG] ImportHandler: Search result - Found ${searchResult.tracks?.length || 0} tracks, Type: ${searchResult.type}`);
+        logDebug("PlaylistImportHandler", `Search result - Found ${searchResult.tracks?.length || 0} tracks, Type: ${searchResult.type}`);
 
         if (searchResult.tracks && searchResult.tracks.length > 0) {
           const track = searchResult.tracks[0];
-          console.log(`[DEBUG] ImportHandler: Adding track "${track.title}" to queue`);
+          logDebug("PlaylistImportHandler", `Adding track "${track.title}" to queue`);
           
           // Thử cả 2 cách add track
           try {
             if (addedCount === 0) {
               // Track đầu tiên - set làm current
-              console.log(`[DEBUG] ImportHandler: Setting first track as current`);
+              logDebug("PlaylistImportHandler", "Setting first track as current");
               player.queue.current = track;
-              console.log(`[DEBUG] ImportHandler: Current track set successfully`);
+              logDebug("PlaylistImportHandler", "Current track set successfully");
             } else {
               // Các track khác - add vào queue
-              console.log(`[DEBUG] ImportHandler: Adding to queue`);
+              logDebug("PlaylistImportHandler", "Adding to queue");
               player.queue.add(track);
             }
           } catch (addError) {
-            console.error(`[ERROR] ImportHandler: Error adding track:`, addError);
+            logError("PlaylistImportHandler", "Error adding track", { addError });
           }
           
-          console.log(`[DEBUG] ImportHandler: Queue size after add: ${player.queue.size}`);
-          console.log(`[DEBUG] ImportHandler: Queue length: ${player.queue.length}`);
-          console.log(`[DEBUG] ImportHandler: Has current track: ${!!player.queue.current}`);
+          logDebug("PlaylistImportHandler", `Queue size after add: ${player.queue.size}`);
+          logDebug("PlaylistImportHandler", `Queue length: ${player.queue.length}`);
+          logDebug("PlaylistImportHandler", `Has current track: ${!!player.queue.current}`);
           
           addedCount++;
         } else {
-          console.log(`[DEBUG] ImportHandler: No tracks found for "${trackData.title}"`);
+          logDebug("PlaylistImportHandler", `No tracks found for "${trackData.title}"`);
         }
       } catch (error) {
-        console.log(`[ERROR] ImportHandler: Không thể thêm track "${trackData.title}":`, error);
+        logError("PlaylistImportHandler", `Không thể thêm track "${trackData.title}"`, { error });
       }
     }
 
-    console.log(`[DEBUG] ImportHandler: Finished adding tracks. Added: ${addedCount}, Queue size: ${player.queue.size}`);
+    logDebug("PlaylistImportHandler", `Finished adding tracks. Added: ${addedCount}, Queue size: ${player.queue.size}`);
 
     // Kiểm tra có tracks không (current track hoặc queue)
     const hasMusic = player.queue.current || player.queue.size > 0;
-    console.log(`[DEBUG] ImportHandler: Has music to play: ${hasMusic}`);
+    logDebug("PlaylistImportHandler", `Has music to play: ${hasMusic}`);
     
     if (!hasMusic) {
-      console.log(`[ERROR] ImportHandler: No music available to play!`);
+      logError("PlaylistImportHandler", "No music available to play!");
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
@@ -241,14 +242,14 @@ export class PlaylistImportHandler {
     }
 
     // Phát nhạc - luôn luôn gọi play() để ensure player starts
-    console.log(`[DEBUG] ImportHandler: Player state - Playing: ${player.playing}, Paused: ${player.paused}, Has current: ${!!player.queue.current}`);
+    logDebug("PlaylistImportHandler", `Player state - Playing: ${player.playing}, Paused: ${player.paused}, Has current: ${!!player.queue.current}`);
     
     try {
-      console.log(`[DEBUG] ImportHandler: Calling player.play()...`);
+      logDebug("PlaylistImportHandler", "Calling player.play()...");
       await player.play();
-      console.log(`[DEBUG] ImportHandler: Player.play() completed`);
+      logDebug("PlaylistImportHandler", "Player.play() completed");
     } catch (playError) {
-      console.error(`[ERROR] ImportHandler: Error calling player.play():`, playError);
+      logError("PlaylistImportHandler", "Error calling player.play()", { playError });
     }
 
     const embed = new EmbedBuilder()

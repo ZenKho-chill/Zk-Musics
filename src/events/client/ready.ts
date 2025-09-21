@@ -2,10 +2,11 @@ import { Manager } from "../../manager.js";
 import { TopggService } from "../../services/TopggService.js";
 import { PresenceStatusData } from "discord.js";
 import chalk from "chalk";
+import { logInfo } from "../../utilities/Logger.js";
 
 export default class {
   async execute(client: Manager) {
-    client.logger.info("ClientReady", chalk.white(`Đã đăng nhập @ ${client.user!.tag}`));
+    logInfo("ClientReady", chalk.white(`Đã đăng nhập @ ${client.user!.tag}`));
 
     let guilds = client.guilds.cache.size;
     let members = client.guilds.cache.reduce((a, b) => a + b.memberCount, 0);
