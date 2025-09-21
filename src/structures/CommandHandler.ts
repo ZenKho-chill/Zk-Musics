@@ -167,7 +167,7 @@ export class CommandHandler {
 
   public async editReply(data: BaseMessageOptions): Promise<GlobalMsg> {
     if (!this.msg) {
-      this.logError(CommandHandler.name, "Bạn chưa gọi deferReply()");
+      logError(CommandHandler.name, "Bạn chưa gọi deferReply()");
       return;
     }
     if (this.interaction) {

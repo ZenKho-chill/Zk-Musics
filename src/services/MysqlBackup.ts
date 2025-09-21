@@ -1,7 +1,5 @@
 import { Manager } from "../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import mysqldumpModule from "mysqldump";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import cron from "node-cron";
 import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 

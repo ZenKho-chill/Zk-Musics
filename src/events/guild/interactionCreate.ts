@@ -28,8 +28,8 @@ import { RateLimitResponder } from "../../services/RateLimitResponder.js";
 import { RateLimitManager } from "@sapphire/ratelimits";
 import { AutocompleteManager } from "../../services/AutocompleteManager.js";
 import { TopggServiceEnum } from "../../services/TopggService.js";
-import { logWarn, logInfo, logError } from "../../utilities/Logger.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
+import { logWarn, logInfo, logError } from "../../utilities/Logger.js";
 const commandRateLimitManager = new RateLimitManager(1000);
 
 /**

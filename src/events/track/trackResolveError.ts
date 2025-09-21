@@ -1,13 +1,8 @@
 import { Manager } from "../../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TextChannel, EmbedBuilder, MessageFlags } from "discord.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {

@@ -1,17 +1,10 @@
 import { fileURLToPath, pathToFileURL } from "url";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { Manager } from "../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import path from "path";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import readdirRecursive from "recursive-readdir";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { ApplicationCommandOptionType, REST, Routes } from "discord.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { CommandInterface, UploadCommandInterface } from "../@types/Interaction.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { join, dirname } from "path";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { BotInfoType } from "../@types/User.js";
 import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 
@@ -47,13 +40,13 @@ export class CommandDeployer {
   async execute() {
     const command = [];
 
-    this.logInfo(CommandDeployer.name, "Đang đọc file interaction...");
+    logInfo(CommandDeployer.name, "Đang đọc file interaction...");
 
     const store = await this.combineDir();
 
     command.push(...this.parseEngine(store));
 
-    this.logInfo(
+    logInfo(
       CommandDeployer.name,
       "Đã đọc xong file interaction, đang thiết lập REST..."
     );
@@ -61,7 +54,7 @@ export class CommandDeployer {
     const rest = new REST({ version: "10" }).setToken(this.client.config.bot.TOKEN);
     const client = await rest.get(Routes.user());
 
-    this.logInfo(
+    logInfo(
       CommandDeployer.name,
       `Đã thiết lập REST cho ${(client as BotInfoType).username}#${
         (client as BotInfoType).discriminator
@@ -69,7 +62,7 @@ export class CommandDeployer {
     );
 
     if (command.length === 0)
-      return this.logInfo(
+      return logInfo(
         CommandDeployer.name,
         "Không có interaction nào được load. Kết thúc auto deploy..."
       );
@@ -78,7 +71,7 @@ export class CommandDeployer {
       body: command,
     });
 
-    this.logInfo(
+    logInfo(
       CommandDeployer.name,
       `Đã triển khai interaction! Kết thúc auto deploy...`
     );

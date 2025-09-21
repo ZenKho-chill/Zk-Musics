@@ -17,8 +17,8 @@ import {
   MessageFlags,
 } from "discord.js";
 import { EmojiValidator } from "../utilities/EmojiValidator.js";
-import { logInfo, logWarn, logError } from "../utilities/Logger.js";
 const __filename = fileURLToPath(import.meta.url);
+import { logInfo, logWarn, logError } from "../utilities/Logger.js";
 const __dirname = path.dirname(__filename);
 
 export class WebServer {

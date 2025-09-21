@@ -1,11 +1,7 @@
 import { Manager } from "../../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import cron from "node-cron";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Premium } from "../schema/Premium.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { GuildPremium } from "../schema/GuildPremium.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { EmbedBuilder } from "discord.js";
 import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
@@ -19,7 +15,7 @@ export class PremiumScheduleSetup {
   async execute() {
     this.setupChecker();
     cron.schedule("0 * * * *", () => {
-      this.logInfo(
+      logInfo(
         PremiumScheduleSetup.name,
         "Đang chạy tác vụ theo lịch cho người dùng và guild Premium"
       );
@@ -33,7 +29,7 @@ export class PremiumScheduleSetup {
       (data) => data.value.isPremium == true && data.value.expiresAt !== "lifetime"
     );
     if (users && users.length !== 0) this.checkUser(users.map((data) => data.value));
-    this.logInfo(
+    logInfo(
       PremiumScheduleSetup.name,
       `Đang kiểm tra ${users.length} người dùng Premium`
     );
@@ -43,7 +39,7 @@ export class PremiumScheduleSetup {
       (data) => data.value.isPremium == true && data.value.expiresAt !== "lifetime"
     );
     if (guilds && guilds.length !== 0) this.checkGuild(guilds.map((data) => data.value));
-    this.logInfo(
+    logInfo(
       PremiumScheduleSetup.name,
       `Đang kiểm tra ${guilds.length} guild Premium`
     );
@@ -54,7 +50,7 @@ export class PremiumScheduleSetup {
       try {
         if (data.expiresAt !== "lifetime" && Date.now() >= data.expiresAt) {
           await this.client.db.premium.delete(data.id);
-          this.logInfo(
+          logInfo(
             PremiumScheduleSetup.name,
             `Đã xóa Premium của người dùng ${data.redeemedBy.username}`
           );
@@ -72,7 +68,7 @@ export class PremiumScheduleSetup {
           );
         }
       } catch (error) {
-        this.logError(PremiumScheduleSetup.name, `Không thể xóa người dùng ${data.id}`);
+        logError(PremiumScheduleSetup.name, `Không thể xóa người dùng ${data.id}`);
       }
     }
   }
@@ -82,7 +78,7 @@ export class PremiumScheduleSetup {
       try {
         if (data.expiresAt !== "lifetime" && Date.now() >= data.expiresAt) {
           await this.client.db.preGuild.delete(data.id);
-          this.logInfo(
+          logInfo(
             PremiumScheduleSetup.name,
             `Đã xóa Premium của guild ${data.redeemedBy.name}`
           );
@@ -101,7 +97,7 @@ export class PremiumScheduleSetup {
           );
         }
       } catch (error) {
-        this.logError(PremiumScheduleSetup.name, `Không thể xóa guild ${data.id}`);
+        logError(PremiumScheduleSetup.name, `Không thể xóa guild ${data.id}`);
       }
     }
   }
@@ -125,7 +121,7 @@ export class PremiumScheduleSetup {
 
       channel.send({ embeds: [embed] });
     } catch (error) {
-      this.logError(PremiumScheduleSetup.name, "Gửi log tới kênh thất bại: " + error);
+      logError(PremiumScheduleSetup.name, "Gửi log tới kênh thất bại: " + error);
     }
   }
 }

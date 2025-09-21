@@ -1,18 +1,12 @@
 import readdirRecursive from "recursive-readdir";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { resolve, relative } from "path";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { join, dirname } from "path";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { fileURLToPath, pathToFileURL } from "url";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { KeyCheckerEnum } from "../../@types/KeyChecker.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { PlayerButton } from "../../@types/Button.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export class PlayerButtonsLoader {
   client: Manager;
@@ -30,12 +24,12 @@ export class PlayerButtonsLoader {
     }
 
     if (this.client.plButton.size) {
-      this.logInfo(
+      logInfo(
         PlayerButtonsLoader.name,
         `${this.client.plButton.size} nút điều khiển player đã được tải!`
       );
     } else {
-      this.logWarn(
+      logWarn(
         PlayerButtonsLoader.name,
         `Không có nút player nào được tải, mọi thứ ổn chứ?`
       );
@@ -47,7 +41,7 @@ export class PlayerButtonsLoader {
     const command = new (await import(pathToFileURL(commandFile).toString())).default();
 
     if (!command.name?.length) {
-      this.logWarn(
+      logWarn(
         PlayerButtonsLoader.name,
         `"${rltPath}" File nút player không có tên. Bỏ qua...`
       );
@@ -55,7 +49,7 @@ export class PlayerButtonsLoader {
     }
 
     if (this.client.plButton.get(command.name)) {
-      this.logWarn(
+      logWarn(
         PlayerButtonsLoader.name,
         `"${command.name}" nút player đã được cài. Bỏ qua...`
       );
@@ -65,7 +59,7 @@ export class PlayerButtonsLoader {
     const checkRes = this.keyChecker(command);
 
     if (checkRes !== KeyCheckerEnum.Pass) {
-      this.logWarn(
+      logWarn(
         PlayerButtonsLoader.name,
         `"${command.name}" nút player chưa được triển khai đúng [${checkRes}]. Bỏ qua...`
       );

@@ -1,13 +1,9 @@
 import { MongoConnectDriver } from "./driver/mongodb.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { JSONConnectDriver } from "./driver/json.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { MySQLConnectDriver } from "./driver/mysql.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { PostgresConnectDriver } from "./driver/postgres.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 
 export class DatabaseService {
   client: Manager;
@@ -38,7 +34,7 @@ export class DatabaseService {
           break;
       }
     } catch (error) {
-      return this.logError("DatabaseService", String(error));
+      return logError("DatabaseService", String(error));
     }
   }
 }

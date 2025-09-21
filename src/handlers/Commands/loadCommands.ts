@@ -1,18 +1,12 @@
 import readdirRecursive from "recursive-readdir";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { resolve, relative } from "path";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { join, dirname } from "path";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { fileURLToPath, pathToFileURL } from "url";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { KeyCheckerEnum } from "../../@types/KeyChecker.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Command } from "../../structures/Command.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export class CommandLoader {
   client: Manager;
@@ -35,24 +29,24 @@ export class CommandLoader {
       const array2 = commandColl.filter((command) => command.name.length === 2).size;
       const array3 = commandColl.filter((command) => command.name.length === 3).size;
       const haveInteraction = commandColl.filter((command) => command.usingInteraction).size;
-      this.logInfo(CommandLoader.name, `Kết quả tải lệnh:`);
-      this.logInfo(CommandLoader.name, `${array1} lệnh không có tiền tố`);
-      this.logInfo(CommandLoader.name, `${array2} lệnh có 1 tiền tố`);
-      this.logInfo(CommandLoader.name, `${array3} lệnh có 2 tiền tố`);
-      this.logInfo(
+      logInfo(CommandLoader.name, `Kết quả tải lệnh:`);
+      logInfo(CommandLoader.name, `${array1} lệnh không có tiền tố`);
+      logInfo(CommandLoader.name, `${array2} lệnh có 1 tiền tố`);
+      logInfo(CommandLoader.name, `${array3} lệnh có 2 tiền tố`);
+      logInfo(
         CommandLoader.name,
         `${haveInteraction} lệnh hỗ trợ Interaction/Prefix`
       );
-      this.logInfo(
+      logInfo(
         CommandLoader.name,
         `${commandColl.size - haveInteraction} lệnh chỉ hỗ trợ Prefix`
       );
-      this.logInfo(
+      logInfo(
         CommandLoader.name,
         `Tổng cộng ${commandColl.size} lệnh đã được tải!`
       );
     } else {
-      this.logWarn(CommandLoader.name, `Không có lệnh nào được tải, mọi thứ ổn chứ?`);
+      logWarn(CommandLoader.name, `Không có lệnh nào được tải, mọi thứ ổn chứ?`);
     }
   }
 
@@ -61,12 +55,12 @@ export class CommandLoader {
     const command = new (await import(pathToFileURL(commandFile).toString())).default();
 
     if (!command.name?.length) {
-      this.logWarn(CommandLoader.name, `"${rltPath}" File lệnh không có tên. Bỏ qua...`);
+      logWarn(CommandLoader.name, `"${rltPath}" File lệnh không có tên. Bỏ qua...`);
       return;
     }
 
     if (this.client.commands.has(command.name)) {
-      this.logWarn(
+      logWarn(
         CommandLoader.name,
         `"${command.name}" lệnh đã được cài đặt. Bỏ qua...`
       );
@@ -76,7 +70,7 @@ export class CommandLoader {
     const checkRes = this.keyChecker(command);
 
     if (checkRes !== KeyCheckerEnum.Pass) {
-      this.logWarn(
+      logWarn(
         CommandLoader.name,
         `"${command.name}" lệnh không được triển khai đúng [${checkRes}]. Bỏ qua...`
       );

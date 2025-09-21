@@ -1,62 +1,33 @@
 import { IDriver, QuickDB } from "zk.quick.db";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Handler } from "../handler.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 // Định nghĩa schema
 import { AutoReconnect } from "../schema/AutoReconnect.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Playlist } from "../schema/Playlist.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Code } from "../schema/Code.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Premium } from "../schema/Premium.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Setup } from "../schema/Setup.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Language } from "../schema/Language.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Prefix } from "../schema/Prefix.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ControlButton } from "../schema/ControlButton.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { QuickDatabasePlus } from "../../structures/QuickDatabasePlus.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { BlacklistUser } from "../schema/BlacklistUser.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { BlacklistGuild } from "../schema/BlacklistGuild.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Maintenance } from "../schema/Maintenanc.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Themes } from "../schema/Themes.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Votes } from "../schema/Votes.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CommandGlobalUsage } from "../schema/CommandGlobalUsage.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { CommandUserUsage } from "../schema/CommandUserUsage.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { PlayedSongUser } from "../schema/PlayedSongUser.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { PlayedSongGuild } from "../schema/PlayedSongGuild.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { PlayedSongGlobal } from "../schema/PlayedSongGlobal.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { LastFm } from "../schema/LastFm.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { SpotifyId } from "../schema/SpotifyId.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { VoteReminders } from "../schema/VoteReminders.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TopTrack } from "../schema/TopTrack.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TopArtist } from "../schema/TopArtist.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TempVoiceChannel } from "../schema/TempVoiceChannel.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TempVoiceChannelSetting } from "../schema/TempVoiceChannelSetting.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UserStatistics } from "../schema/UserStatistics.js";
 import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
@@ -79,7 +50,7 @@ export class TableSetup {
     await baseDB.init();
     const end = Date.now();
 
-    this.logInfo(
+    logInfo(
       "DatabaseService",
       `Đã kết nối tới cơ sở dữ liệu! [${this.driverName}] [${end - start}ms]`
     );

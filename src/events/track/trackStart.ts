@@ -1,5 +1,4 @@
 import { Manager } from "../../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import {
   ComponentType,
   TextChannel,
@@ -9,37 +8,23 @@ import {
   MessageFlagsBitField,
   MessageFlags,
 } from "discord.js";
+import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 import Axios from "axios";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ScrobbleToLastFM } from "../../utilities/ScrobbleToLastFM.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { MilestoneTrack } from "../../utilities/MilestoneTrack.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TopArtist } from "../../utilities/TopArtist.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TopTrack } from "../../utilities/TopTrack.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { TrackTitle } from "../../utilities/TrackTitle.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { zkcard } from "zkcard";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { filterSelect, playerRowOne, playerRowTwo } from "../../utilities/PlayerControlButton.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ControlButtonEnum } from "../../database/schema/ControlButton.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import chalk from "chalk";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { cli } from "winston/lib/winston/config/index.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export function scheduleScrobble(client: Manager, player: ZklinkPlayer) {
   const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
 

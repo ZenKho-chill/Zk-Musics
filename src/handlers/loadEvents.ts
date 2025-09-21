@@ -1,14 +1,10 @@
 import readdirRecursive from "recursive-readdir";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { resolve } from "path";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { join, dirname } from "path";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { fileURLToPath, pathToFileURL } from "url";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { Manager } from "../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
+import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 
 export class ClientEventsLoader {
   client: Manager;
@@ -23,7 +19,7 @@ export class ClientEventsLoader {
       let eventsFile = await readdirRecursive(eventsPath);
       await this.registerPath(eventsFile);
     }
-    this.logInfo(ClientEventsLoader.name, `${this.counter} Sự kiện đã được tải!`);
+    logInfo(ClientEventsLoader.name, `${this.counter} Sự kiện đã được tải!`);
   }
 
   async registerPath(eventsPath: string[]) {

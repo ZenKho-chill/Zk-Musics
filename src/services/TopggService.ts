@@ -1,11 +1,7 @@
 import cron from "node-cron";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { Snowflake } from "discord.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { Manager } from "../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import { request } from "undici";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import chalk from "chalk";
 import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 export enum TopggServiceEnum {
@@ -29,20 +25,20 @@ export class TopggService {
     if (res.status == 200) {
       this.isTokenAvalible = true;
       this.botId = userId;
-      this.logInfo(
+      logInfo(
         TopggService.name,
         chalk.italic(`Dịch vụ TopGG đã được cài đặt thành công!`)
       );
       return true;
     }
-    this.logWarn(TopggService.name, "Có sự cố khi cài đặt dịch vụ TopGG");
-    this.logWarn(TopggService.name, await res.text());
+    logWarn(TopggService.name, "Có sự cố khi cài đặt dịch vụ TopGG");
+    logWarn(TopggService.name, await res.text());
     return false;
   }
 
   public async checkVote(userId: string): Promise<TopggServiceEnum> {
     if (!this.botId || !this.isTokenAvalible) {
-      this.logError(
+      logError(
         TopggService.name,
         "Dịch vụ TopGG chưa được cấu hình! check vote sẽ luôn trả về lỗi"
       );
@@ -50,7 +46,7 @@ export class TopggService {
     }
     const res = await this.fetch(`/bots/${this.botId}/check?userId=${userId}`);
     if (res.status !== 200) {
-      this.logError(TopggService.name, "Có lỗi khi lấy dữ liệu từ top.gg");
+      logError(TopggService.name, "Có lỗi khi lấy dữ liệu từ top.gg");
       return TopggServiceEnum.ERROR;
     }
     const jsonRes = (await res.json()) as { voted: number };
@@ -72,7 +68,7 @@ export class TopggService {
     cron.schedule("0 */1 * * * *", () =>
       this.updateStatisticCount(this.client.guilds.cache.size, this.shardCount)
     );
-    this.logInfo(
+    logInfo(
       TopggService.name,
       chalk.italic(`Thống kê TopGG đã được bật thành công!`)
     );

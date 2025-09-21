@@ -1,5 +1,4 @@
 import { Manager } from "../manager.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 import {
   VoiceState,
   ChannelType,
