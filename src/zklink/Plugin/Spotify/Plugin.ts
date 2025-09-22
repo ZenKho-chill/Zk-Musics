@@ -78,7 +78,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
    * @returns string
    */
   public sourceName(): string {
-    return "spotify";
+    return "Spotify";
   }
 
   /**
@@ -288,7 +288,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
       {
         encoded: "",
         info: {
-          sourceName: "spotify",
+          sourceName: "Spotify",
           identifier: spotifyTrack.id,
           isSeekable: true,
           author: spotifyTrack.artists[0] ? spotifyTrack.artists[0].name : "Không rõ",

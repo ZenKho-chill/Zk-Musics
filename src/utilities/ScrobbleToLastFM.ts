@@ -119,7 +119,7 @@ export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
 
         const LastFMbutton = new ActionRowBuilder<ButtonBuilder>().addComponents(
           new ButtonBuilder()
-            .setLabel("Đăng nhập")
+            .setLabel(client.i18n.get("vi", "system", "login"))
             .setStyle(ButtonStyle.Link)
             .setURL(LoginLastFM_Url)
         );

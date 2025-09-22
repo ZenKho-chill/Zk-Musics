@@ -96,7 +96,7 @@ export class Lavalink4 extends AbstractDriver {
     const res = await fetch(url, options);
 
     if (res.status == 204) {
-      this.debug("Player đã bị hủy");
+      this.debug("Người chơi đã bị hủy");
       return undefined;
     }
     if (res.status !== 200) {

@@ -17,7 +17,7 @@ export class PremiumScheduleSetup {
     cron.schedule("0 * * * *", () => {
       logInfo(
         PremiumScheduleSetup.name,
-        "Đang chạy tác vụ theo lịch cho người dùng và guild Premium"
+        "Premium task đang chạy..."
       );
       this.setupChecker();
     });

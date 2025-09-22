@@ -66,7 +66,7 @@ export class ClusterManager {
           if (!command) {
             return worker.send(
               JSON.stringify({
-                error: { code: 404, message: "Không tìm thấy lệnh!" },
+                error: { code: 404, message: "Không tìm thấy lệnh" },
               })
             );
           }

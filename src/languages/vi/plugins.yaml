@@ -1,0 +1,24 @@
+# Plugin Language File (Vietnamese)
+
+# Plugin names and display names
+apple_name: "apple"
+apple_display_name: "Apple Music"
+deezer_name: "deezer"
+deezer_display_name: "Deezer"
+niconico_name: "niconico"
+niconico_display_name: "Niconico"
+spotify_name: "spotify"
+spotify_display_name: "Spotify"
+spotify_search: "spsearch"
+player_moved_name: "PlayerMoved"
+voice_receiver_name: "VoiceReceiver"
+youtube_converter_name: "YoutubeConverter"
+
+# Plugin error messages
+name_not_implemented: "Hàm name() chưa được triển khai."
+type_not_implemented: "Hàm type() chưa được triển khai. Hãy trả về ZklinkPluginType.Default hoặc ZklinkPluginType.SourceResolver"
+source_name_not_implemented: "Hàm sourceName() chưa được triển khai."
+source_identify_not_implemented: "Hàm sourceIdentify() chưa được triển khai."
+search_direct_not_implemented: "Hàm searchDirect() chưa được triển khai."
+voice_receiver_not_supported: "Plugin này không hỗ trợ voice receiver!"
+voice_receiver_node_not_supported: "Node này không hỗ trợ voice receiver, vui lòng dùng Nodelink2 để sử dụng tính năng này!"

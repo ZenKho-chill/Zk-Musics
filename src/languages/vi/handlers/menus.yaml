@@ -1,0 +1,12 @@
+# Menu handler messages
+unauthorized_user: "❌ Bạn không thể sử dụng menu này!"
+menu_disabled: "❌ Menu này hiện đang bị vô hiệu hóa!"
+dropdown_unauthorized: "❌ Bạn không thể sử dụng dropdown này!"
+selection_invalid: "❌ Lựa chọn không hợp lệ!"
+playlist_menus:
+  track_added: "✅ Đã thêm bài hát vào playlist"
+  track_removed: "✅ Đã xóa bài hát khỏi playlist"
+  playlist_created: "✅ Tạo playlist thành công"
+  playlist_deleted: "✅ Xóa playlist thành công"
+  playlist_not_found: "❌ Không tìm thấy playlist"
+  playlist_empty: "❌ Playlist trống"

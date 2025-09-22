@@ -284,7 +284,7 @@ export class Helper {
       "Helper",
       `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
         .hex("#00D100")
-        .bold("Ủng Hộ Chúng Tôi")}`
+        .bold(client.i18n.get("vi", "commands", "info.about.support_us"))}`
     );
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(

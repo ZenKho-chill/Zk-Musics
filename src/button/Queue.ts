@@ -333,17 +333,17 @@ export default class implements PlayerButton {
     let src = client.config.PLAYER_SOURCENAME.UNKNOWN; // Mặc định là UNKNOWN nếu nguồn không xác định
     if (source === "youtube") {
       src = client.config.PLAYER_SOURCENAME.YOUTUBE;
-    } else if (source === "spotify") {
+    } else if (source === "spotify_name") {
       src = client.config.PLAYER_SOURCENAME.SPOTIFY;
     } else if (source === "tidal") {
       src = client.config.PLAYER_SOURCENAME.TIDAL;
     } else if (source === "soundcloud") {
       src = client.config.PLAYER_SOURCENAME.SOUNDCLOUD;
-    } else if (source === "deezer") {
+    } else if (source === "deezer_name") {
       src = client.config.PLAYER_SOURCENAME.DEEZER;
     } else if (source === "twitch") {
       src = client.config.PLAYER_SOURCENAME.TWITCH;
-    } else if (source === "apple") {
+    } else if (source === "apple_name") {
       src = client.config.PLAYER_SOURCENAME.APPLE_MUSIC;
     } else if (source === "applemusic") {
       src = client.config.PLAYER_SOURCENAME.APPLE_MUSIC;

@@ -54,7 +54,7 @@ export default class implements Command {
 
     if (!handler.guild) {
       return handler.editReply({
-        content: "Lệnh này chỉ có thể sử dụng trong server.",
+        content: client.i18n.get(handler.language, "common", "errors.guild_only"),
       });
     }
 
@@ -98,7 +98,7 @@ export default class implements Command {
         ],
       });
     } else {
-      return handler.editReply({ content: "Không tìm thấy người dùng" });
+      return handler.editReply({ content: client.i18n.get("vi", "web", "api.user_not_found") });
     }
   }
 }

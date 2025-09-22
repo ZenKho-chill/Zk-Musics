@@ -69,7 +69,7 @@ export default class implements Command {
 
     if (isCollectorActive) {
       const responseEmbed = new EmbedBuilder()
-        .setDescription(`${client.i18n.get(handler.language, "commands.music", "search_active")}`)
+        .setDescription(`${client.i18n.get("vi", "commands.music", "search_active")}`)
         .setColor(client.color_main);
 
       if (handler.interaction) {
@@ -95,7 +95,7 @@ export default class implements Command {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`${client.i18n.get(handler.language, "commands.music", "play_arg")}`)
+            .setDescription(`${client.i18n.get("vi", "commands.music", "play_arg")}`)
             .setColor(client.color_main),
         ],
       });
@@ -105,7 +105,7 @@ export default class implements Command {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`${client.i18n.get(handler.language, "interaction", "no_in_voice")}`)
+            .setDescription(`${client.i18n.get("vi", "interaction", "no_in_voice")}`)
             .setColor(client.color_main),
         ],
       });
@@ -115,7 +115,7 @@ export default class implements Command {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`${client.i18n.get(handler.language, "commands.music", "play_emoji")}`)
+            .setDescription(`${client.i18n.get("vi", "commands.music", "play_emoji")}`)
             .setColor(client.color_main),
         ],
       });
@@ -132,7 +132,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.music", "url_no_allowed")}`
+                `${client.i18n.get("vi", "commands.music", "url_no_allowed")}`
               )
               .setColor(client.color_main),
           ],
@@ -213,17 +213,17 @@ export default class implements Command {
       let src = client.config.SEARCH_COMMANDS_EMOJI.UNKNOWN; // Mặc định là UNKNOWN nếu nguồn không xác định
       if (source === "youtube") {
         src = client.config.SEARCH_COMMANDS_EMOJI.YOUTUBE;
-      } else if (source === "spotify") {
+      } else if (source === "spotify_name") {
         src = client.config.SEARCH_COMMANDS_EMOJI.SPOTIFY;
       } else if (source === "tidal") {
         src = client.config.SEARCH_COMMANDS_EMOJI.TIDAL;
       } else if (source === "soundcloud") {
         src = client.config.SEARCH_COMMANDS_EMOJI.SOUNDCLOUD;
-      } else if (source === "deezer") {
+      } else if (source === "deezer_name") {
         src = client.config.SEARCH_COMMANDS_EMOJI.DEEZER;
       } else if (source === "twitch") {
         src = client.config.SEARCH_COMMANDS_EMOJI.TWITCH;
-      } else if (source === "apple") {
+      } else if (source === "apple_name") {
         src = client.config.SEARCH_COMMANDS_EMOJI.APPLE_MUSIC;
       } else if (source === "youtube_music") {
         src = client.config.SEARCH_COMMANDS_EMOJI.YOUTUBE_MUSIC;
@@ -238,7 +238,7 @@ export default class implements Command {
     const row1 = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
       new StringSelectMenuBuilder()
         .setCustomId("select_song")
-        .setPlaceholder(client.i18n.get(handler.language, "commands.music", "search_placeholder"))
+        .setPlaceholder(client.i18n.get("vi", "commands.music", "search_placeholder"))
         .setMinValues(1)
         .setMaxValues(1)
         .addOptions(options)
@@ -277,7 +277,7 @@ export default class implements Command {
           return true;
         else {
           message.reply({
-            content: `${client.i18n.get(handler.language, "interaction", "no_same_voice")}`,
+            content: `${client.i18n.get("vi", "interaction", "no_same_voice")}`,
             flags: MessageFlags.Ephemeral,
           });
           return false;
@@ -323,7 +323,7 @@ export default class implements Command {
         await interaction.update({
           embeds: [
             new EmbedBuilder()
-              .setDescription(`${client.i18n.get(handler.language, "interaction", "no_player")}`)
+              .setDescription(`${client.i18n.get("vi", "interaction", "no_player")}`)
               .setColor(client.color_main),
           ],
           components: [],
@@ -388,7 +388,7 @@ export default class implements Command {
       handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`${client.i18n.get(handler.language, "interaction", "no_same_voice")}`)
+            .setDescription(`${client.i18n.get("vi", "interaction", "no_same_voice")}`)
             .setColor(client.color_main),
         ],
       });

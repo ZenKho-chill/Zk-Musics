@@ -16,7 +16,7 @@ export async function deletePlayer(
   const player = client.Zklink.players.get(guildId);
   if (!player) {
     res.code(404);
-    res.send({ error: "Không tìm thấy player hiện tại!" });
+    res.send({ error: client.i18n.get("vi", "web", "api.player_not_found") });
     return;
   }
   await player.destroy();

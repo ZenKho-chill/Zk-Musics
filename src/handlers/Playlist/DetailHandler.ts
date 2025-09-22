@@ -116,7 +116,7 @@ export class PlaylistDetailHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: "❌ Bạn không thể sử dụng dropdown này!",
+          content: client.i18n.get(handler.language, "commands", "playlist.access.cannot_use_dropdown"),
           ephemeral: true,
         });
       }
@@ -151,7 +151,7 @@ export class PlaylistDetailHandler {
           .addComponents(selectMenu);
 
         const timeoutEmbed = new EmbedBuilder()
-          .setDescription("⏰ Thời gian chọn playlist đã hết!")
+          .setDescription(client.i18n.get(handler.language, "commands", "playlist.timeouts.playlist_selection"))
           .setColor(client.color_main);
 
         await handler.editReply({

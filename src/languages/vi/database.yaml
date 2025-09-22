@@ -1,0 +1,7 @@
+# Database Language File (Vietnamese)
+
+# Database tasks
+premium_task_running: "Đang chạy tác vụ theo lịch cho người dùng và guild premium"
+cleanup_task_running: "Đang chạy tác vụ theo lịch để xóa top tracks và top artists"
+toptrack_cleared: "Đã xóa tất cả dữ liệu TopTrack."
+topartist_cleared: "Đã xóa tất cả dữ liệu TopArtist."

@@ -36,7 +36,7 @@ export default class implements Command {
       required: true,
       choices: [
         {
-          name: "Đăng nhập",
+          name: "login",
           value: "login",
         },
         {
@@ -95,7 +95,7 @@ export default class implements Command {
       );
 
       const embed = new EmbedBuilder()
-        .setTitle(`${client.i18n.get(handler.language, "commands.settings", "lastfm_login_title")}`)
+        .setTitle(`${client.i18n.get("vi", "commands.settings", "lastfm_login_title")}`)
         .setDescription(
           `${client.i18n.get(handler.language, "commands.settings", "lastfm_login_desc", {
             url: authUrl,
@@ -148,10 +148,10 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setTitle(
-          `${client.i18n.get(handler.language, "commands.settings", "lastfm_logout_title")}`
+          `${client.i18n.get("vi", "commands.settings", "lastfm_logout_title")}`
         )
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.settings", "lastfm_logout_desc")}`
+          `${client.i18n.get("vi", "commands.settings", "lastfm_logout_desc")}`
         )
         .setColor(client.color_main);
 

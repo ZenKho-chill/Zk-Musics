@@ -1,0 +1,11 @@
+# API Language File (Vietnamese)
+
+# Niconico API
+niconico_error: "Niconico API lỗi: "
+niconico_empty_response: "Niconico API trả về response rỗng"
+
+# Spotify API
+spotify_error: "Spotify API lỗi: "
+spotify_empty_response: "Spotify API trả về response rỗng"
+spotify_rate_limited: "Bị giới hạn rate bởi spotify"
+all_requests_rate_limited: "Không có request khả dụng [ALL_RATE_LIMITED]"

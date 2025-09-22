@@ -16,7 +16,7 @@ import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js"
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
-  public name = ["spotify", "manage"];
+  public name = ["spotify_name", "manage"];
   public description = "Quản lý kết nối Spotify của bạn";
   public category = "Settings";
   public accessableby = data.COMMANDS_ACCESS.SETTINGS.Spotify;

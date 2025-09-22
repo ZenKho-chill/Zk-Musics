@@ -34,7 +34,7 @@ export class PageQueue {
 
   async slashPage(interaction: CommandInteraction, queueDuration: string) {
     if (!interaction && !(interaction as CommandInteraction).channel)
-      throw new Error("Kênh không thể truy cập.");
+      throw new Error("Không thể truy cập kênh");
     if (!this.pages) throw new Error("Chưa cung cấp trang.");
 
     const row1 = new ButtonBuilder()
@@ -119,7 +119,7 @@ export class PageQueue {
 
   async slashPlaylistPage(interaction: CommandInteraction) {
     if (!interaction && !(interaction as CommandInteraction).channel)
-      throw new Error("Kênh không thể truy cập.");
+      throw new Error("Không thể truy cập kênh");
     if (!this.pages) throw new Error("Chưa cung cấp trang.");
 
     const row1 = new ButtonBuilder()
@@ -212,7 +212,7 @@ export class PageQueue {
   }
 
   async prefixPage(message: Message, queueDuration: string) {
-    if (!message && !(message as Message).channel) throw new Error("Kênh không thể truy cập.");
+    if (!message && !(message as Message).channel) throw new Error("Không thể truy cập kênh");
     if (!this.pages) throw new Error("Chưa cung cấp trang.");
 
     const row1 = new ButtonBuilder()
@@ -294,7 +294,7 @@ export class PageQueue {
   }
 
   async prefixPlaylistPage(message: Message) {
-    if (!message && !(message as Message).channel) throw new Error("Kênh không thể truy cập.");
+    if (!message && !(message as Message).channel) throw new Error("Không thể truy cập kênh");
     if (!this.pages) throw new Error("Chưa cung cấp trang.");
 
     const row1 = new ButtonBuilder()
@@ -389,7 +389,7 @@ export class PageQueue {
 
   async buttonPage(interaction: ButtonInteraction, queueDuration: string) {
     if (!interaction && !(interaction as unknown as CommandInteraction).channel)
-      throw new Error("Kênh không thể truy cập.");
+      throw new Error("Không thể truy cập kênh");
     if (!this.pages) throw new Error("Chưa cung cấp trang.");
 
     const row1 = new ButtonBuilder()

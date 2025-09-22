@@ -19,6 +19,27 @@ setup_deleted: "*`Đã xóa kênh thiết lập thành công!`*"
 
 ### Đặt lại dữ liệu máy chủ! ###
 ### Đặt lại dữ liệu người dùng! ###
+reset_data:
+  no_permission: "Bạn không có quyền quản lý máy chủ này."
+  success_all_guild: "Đã xóa thành công tất cả danh mục cơ sở dữ liệu của máy chủ."
+  success_language: "Đã xóa thành công cơ sở dữ liệu Ngôn ngữ."
+  success_twentyfourseven: "Đã xóa thành công cơ sở dữ liệu Twenty Four Seven."
+  success_setup: "Đã xóa thành công cơ sở dữ liệu Cài đặt nhạc."
+  success_prefix: "Đã xóa thành công cơ sở dữ liệu Tiền tố."
+  success_tempvoice: "Đã xóa thành công cơ sở dữ liệu Kênh tạm."
+  success_all_user: "Đã xóa thành công tất cả danh mục cơ sở dữ liệu của người dùng."
+  success_themes: "Đã xóa thành công cơ sở dữ liệu Giao diện."
+  success_commandusage: "Đã xóa thành công cơ sở dữ liệu Lịch sử dùng lệnh."
+  success_playedsong: "Đã xóa thành công cơ sở dữ liệu Bài đã phát."
+  success_toptrack: "Đã xóa thành công cơ sở dữ liệu Bài hàng đầu."
+  success_topartist: "Đã xóa thành công cơ sở dữ liệu Nghệ sĩ hàng đầu."
+  success_spotify: "Đã xóa thành công cơ sở dữ liệu Spotify."
+  success_lastfm: "Đã xóa thành công cơ sở dữ liệu Last.fm."
+  success_votes: "Đã xóa thành công cơ sở dữ liệu Bình chọn."
+  success_votereminder: "Đã xóa thành công cơ sở dữ liệu Nhắc nhớ bình chọn."
+  success_userstatistics: "Đã xóa thành công cơ sở dữ liệu Thống kê người dùng."
+  success_playlist: "Đã xóa thành công cơ sở dữ liệu Playlist."
+  title: "Đặt lại dữ liệu"
 
 ### Lệnh chủ đề (Themes)!
 error_themes: "<:wrong:1220876213896216686> Không hợp lệ... Vui lòng thử lại."

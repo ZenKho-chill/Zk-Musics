@@ -34,7 +34,7 @@ export default class implements Command {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription("❌ Unable to get user information.")
+            .setDescription(client.i18n.get("vi", "errors", "cannot_get_user_info"))
             .setColor("#FF0000"),
         ],
       });

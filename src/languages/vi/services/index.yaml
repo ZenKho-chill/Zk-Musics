@@ -1,0 +1,35 @@
+# Services Language File (Vietnamese)
+
+# TopGG Service
+topgg:
+  setup_success: "Dịch vụ TopGG đã được cài đặt thành công!"
+  stats_enabled: "Thống kê TopGG đã được bật thành công!"
+
+# Temp Voice Service  
+temp_voice:
+  channel_expired: "Kênh voice tạm thời đã hết hạn"
+
+# MySQL Backup Service
+mysql_backup:
+  empty_dump: "Dump rỗng hoặc không hợp lệ, bản sao lưu sẽ không được gửi."
+  backup_sent: "File sao lưu {filename} đã được gửi tới kênh Discord."
+  invalid_channel: "ID kênh không hợp lệ hoặc kênh không phải là kênh văn bản."
+
+# Config Data Service
+config:
+  no_data: "File cấu hình không chứa dữ liệu, vui lòng kiểm tra file config.example.yml để tham khảo"
+  no_bot: "File cấu hình không chứa trường bot, vui lòng kiểm tra file config.example.yml để tham khảo"
+  no_lavalink: "File cấu hình không chứa trường lavalink, vui lòng kiểm tra file config.example.yml để tham khảo"
+  no_owner: "File cấu hình không chứa OWNER_ID, vui lòng kiểm tra file config.example.yml để tham khảo"
+  no_token: "File cấu hình không chứa TOKEN, vui lòng kiểm tra file config.example.yml để tham khảo"
+  no_nodes: "File cấu hình không chứa NODES, vui lòng kiểm tra file config.example.yml để tham khảo"
+
+# Command Deployer Service
+command_deployer:
+  reading_interactions: "Đang đọc file interaction..."
+  setup_rest: "Đã đọc xong file interaction, đang thiết lập REST..."
+  rest_setup_complete: "Đã thiết lập REST cho {username}#{discriminator}"
+
+# Log Manager Service
+log_manager:
+  check_log_channel: "Kiểm tra xem logchannel có được cấu hình không"

@@ -79,7 +79,7 @@ export default class {
 
     logInfo(
       "QueueEmpty",
-      `${chalk.hex("#00ffff")("Hàng chờ (queue) đã rỗng tại @ ")}${chalk.hex("#00ffff")(
+      `${chalk.hex("#00ffff")(client.i18n.get("vi", "events", "player.queue_empty"))}${chalk.hex("#00ffff")(
         guild?.name
       )} / ${chalk.hex("#00ffff")(player.guildId)}`
     );

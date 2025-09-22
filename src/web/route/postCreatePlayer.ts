@@ -47,10 +47,10 @@ export class PostCreatePlayer {
     const Guild = await this.client.guilds.fetch(data["guildId"]).catch(() => undefined);
     if (!Guild) return this.errorRes(req, res, "Không tìm thấy guild");
     const isPlayerExist = this.client.Zklink.players.get(Guild.id);
-    if (isPlayerExist) return this.errorRes(req, res, "Player đã tồn tại trong guild này");
+    if (isPlayerExist) return this.errorRes(req, res, this.client.i18n.get("vi", "web", "api.player_already_exists"));
     this.guild = Guild;
     const Member = await Guild.members.fetch(data["userId"]).catch(() => undefined);
-    if (!Member) return this.errorRes(req, res, "Không tìm thấy người dùng");
+    if (!Member) return this.errorRes(req, res, this.client.i18n.get("vi", "web", "api.user_not_found"));
     if (!Member.voice.channel || !Member.voice)
       return this.errorRes(req, res, "Người dùng chưa vào voice");
     this.member = Member;

@@ -81,7 +81,7 @@ export default class implements Command {
       if (type === "guild") {
         if (!handler.member?.permissions.has(PermissionFlagsBits.ManageGuild)) {
           return handler.interaction.reply({
-            content: "Bạn không có quyền quản lý máy chủ này.",
+            content: client.i18n.get("vi", "commands", "settings.reset_data.no_permission"),
             flags: MessageFlags.Ephemeral,
           });
         }
@@ -96,27 +96,27 @@ export default class implements Command {
               client.db.TempVoiceChannel.delete(guildId!),
               client.db.TempVoiceChannelSetting.delete(guildId!),
             ]);
-            resultMessage = "Đã xóa thành công tất cả danh mục cơ sở dữ liệu của máy chủ.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_all_guild");
             break;
           case "language":
             await client.db.language.delete(guildId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Ngôn ngữ.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_language");
             break;
           case "twentyfourseven":
             await client.db.autoreconnect.delete(guildId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Twenty Four Seven.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_twentyfourseven");
             break;
           case "setup":
             await client.db.setup.delete(guildId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Cài đặt nhạc.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_setup");
             break;
           case "prefix":
             await client.db.prefix.delete(guildId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Tiền tố.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_prefix");
             break;
           case "tempvoice":
             await client.db.TempVoiceChannelSetting.delete(guildId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Kênh tạm.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_tempvoice");
             break;
           default:
             resultMessage = "Danh mục cơ sở dữ liệu máy chủ không hợp lệ.";
@@ -138,51 +138,51 @@ export default class implements Command {
               client.db.UserStatistics.delete(`${userId!}`),
               client.db.playlist.delete(userId!),
             ]);
-            resultMessage = "Đã xóa thành công tất cả danh mục cơ sở dữ liệu của người dùng.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_all_user");
             break;
           case "themes":
             await client.db.Themes.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Giao diện.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_themes");
             break;
           case "commandusage":
             await client.db.CommandUserUsage.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Lịch sử dùng lệnh.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_commandusage");
             break;
           case "playedsong":
             await client.db.PlayedSongUser.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Bài đã phát.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_playedsong");
             break;
           case "toptrack":
             await client.db.TopTrack.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Bài hàng đầu.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_toptrack");
             break;
           case "topartist":
             await client.db.TopArtist.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Nghệ sĩ hàng đầu.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_topartist");
             break;
-          case "spotify":
+          case "spotify_name":
             await client.db.SpotifyId.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Spotify.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_spotify");
             break;
           case "lastfm":
             await client.db.LastFm.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Last.fm.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_lastfm");
             break;
           case "votes":
             await client.db.votes.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Bình chọn.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_votes");
             break;
           case "votereminder":
             await client.db.VoteReminders.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Nhắc nhớ bình chọn.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_votereminder");
             break;
           case "userstatistics":
             await client.db.UserStatistics.delete(`${userId!}`);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Thống kê người dùng.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_userstatistics");
             break;
           case "playlist":
             await client.db.playlist.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Playlist.";
+            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_playlist");
             break;
           default:
             resultMessage = "Danh mục cơ sở dữ liệu người dùng không hợp lệ.";
@@ -195,7 +195,7 @@ export default class implements Command {
         flags: MessageFlags.Ephemeral,
       });
     } catch (error) {
-      logInfo("Đặt lại dữ liệu", `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
+      logInfo(client.i18n.get("vi", "commands", "settings.reset_data.title"), `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
       await handler.interaction.reply({
         content: `Đã xảy ra lỗi khi xóa cơ sở dữ liệu\n\`${error.message}\``,
         flags: MessageFlags.Ephemeral,

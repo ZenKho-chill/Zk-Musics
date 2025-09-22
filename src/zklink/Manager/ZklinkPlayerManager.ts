@@ -28,7 +28,7 @@ export class ZklinkPlayerManager extends ZklinkDatabase<ZklinkPlayer> {
     if (createdPlayer) return createdPlayer;
     const getCustomNode = this.manager.nodes.get(String(options.nodeName ? options.nodeName : ""));
     const node = getCustomNode ? getCustomNode : await this.manager.nodes.getLeastUsed();
-    if (!node) throw new Error("Không tìm thấy node nào để kết nối");
+    if (!node) throw new Error("Người chơi đã được tạo");
     const customPlayer =
       this.manager.ZklinkOptions.options!.structures &&
       this.manager.ZklinkOptions.options!.structures.player;
@@ -50,7 +50,7 @@ export class ZklinkPlayerManager extends ZklinkDatabase<ZklinkPlayer> {
     // @ts-ignore
     player.on("connectionUpdate", onUpdate);
     player.state = ZklinkPlayerState.CONNECTED;
-    this.debug("Đã tạo Player tại " + options.guildId);
+    this.debug("Người chơi đã được tạo" + options.guildId);
     // @ts-ignore
     this.manager.emit(ZklinkEvents.PlayerCreate, player);
     const voiceReceiver = this.manager.plugins.get("Zklink-voiceReceiver") as ZklinkPlugin;

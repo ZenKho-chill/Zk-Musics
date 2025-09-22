@@ -30,7 +30,7 @@ class NiconicoDL {
       .querySelectorAll("div")
       .filter((a) => a.rawAttributes.id === "js-initial-watch-data");
     if (matchResult.length === 0) {
-      throw Error("Không thể lấy HTML trang video...");
+      throw Error("URL không hợp lệ");
     }
     const patterns = {
       "&lt;": "<",

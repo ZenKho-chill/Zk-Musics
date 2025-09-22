@@ -17,7 +17,7 @@ const data: Config = new ConfigData().data;
 
 export default class PlaylistCommand implements Command {
   public name = ["pl", "playlist"];
-  public description = "Quản lý danh sách phát";
+  public description = "Manage playlists"; // This will be overridden by i18n
   public category = "Playlist";
   public accessableby = data.COMMANDS_ACCESS.PLAYLIST.All;
   public usage = "";
@@ -31,20 +31,20 @@ export default class PlaylistCommand implements Command {
   public options = [
     {
       name: "action",
-      description: "Hành động thực hiện",
+      description: "Action to perform", // Will be overridden by i18n
       type: ApplicationCommandOptionType.String,
       required: true,
       choices: [
-        { name: "Thêm bài hát", value: "add" },
-        { name: "Xem tất cả bài hát", value: "all" },
-        { name: "Tạo mới", value: "create" },
-        { name: "Xóa", value: "delete" },
-        { name: "Chi tiết", value: "detail" },
-        { name: "Chế độ", value: "editor" },
-        { name: "Phát nhạc", value: "import" },
-        { name: "Thông tin", value: "info" },
-        { name: "Xóa bài hát", value: "remove" },
-        { name: "Lưu hàng đợi", value: "savequeue" },
+        { name: "Add song", value: "add" },
+        { name: "View all songs", value: "all" },
+        { name: "Create new", value: "create" },
+        { name: "Delete", value: "delete" },
+        { name: "Details", value: "detail" },
+        { name: "Settings", value: "editor" },
+        { name: "Import/Play", value: "import" },
+        { name: "Information", value: "info" },
+        { name: "Remove song", value: "remove" },
+        { name: "Save queue", value: "savequeue" },
       ],
     },
   ];
@@ -58,7 +58,7 @@ export default class PlaylistCommand implements Command {
     if (!action) {
       await handler.deferReply({ ephemeral: true });
       return handler.editReply({
-        content: "❌ Vui lòng chọn một hành động hợp lệ!",
+        content: client.i18n.get(handler.language, "commands", "playlist.errors.invalid_action"),
       });
     }
 
@@ -129,11 +129,11 @@ export default class PlaylistCommand implements Command {
       if (!handler.interaction.deferred && !handler.interaction.replied && action !== "create") {
         await handler.deferReply({ ephemeral: true });
         await handler.editReply({
-          content: "❌ Đã xảy ra lỗi khi thực hiện lệnh!",
+          content: client.i18n.get(handler.language, "commands", "playlist.errors.execution_error"),
         });
       } else if (handler.interaction.deferred) {
         await handler.editReply({
-          content: "❌ Đã xảy ra lỗi khi thực hiện lệnh!",
+          content: client.i18n.get(handler.language, "commands", "playlist.errors.execution_error"),
         });
       }
     }

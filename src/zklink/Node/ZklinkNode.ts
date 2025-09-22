@@ -40,7 +40,7 @@ export class ZklinkNode {
     this.options = options;
     const getDriver = this.manager.drivers.filter((driver) => driver.id === options.driver);
     if (!getDriver || getDriver.length == 0) {
-      this.debug("Không tìm thấy driver, sử dụng lavalink v4 thay thế");
+      this.debug("Không tìm thấy driver");
       this.driver = new Lavalink4();
     } else {
       this.debug(`Đang sử dụng driver: ${getDriver[0].id}`);

@@ -46,7 +46,7 @@ export class ZklinkFilter {
     this.debug(
       filter !== "clear"
         ? `Filter ${filter} đã được đặt thành công.`
-        : "Tất cả filter đã được đặt lại về vị trí mặc định thành công."
+        : "Reset thành công"
     );
 
     return this.player;
@@ -66,7 +66,7 @@ export class ZklinkFilter {
       },
     });
 
-    this.debug("Tất cả filter đã được đặt lại về vị trí mặc định thành công.");
+    this.debug("Reset thành công");
 
     return this.player;
   }
@@ -166,7 +166,7 @@ export class ZklinkFilter {
       },
     });
 
-    this.debug("Đã đặt filter tuỳ chỉnh thành công. Dữ liệu: " + util.inspect(filter));
+    this.debug("Reset thành công" + util.inspect(filter));
 
     return this.player;
   }
@@ -180,6 +180,6 @@ export class ZklinkFilter {
   }
 
   protected checkDestroyed(): void {
-    if (this.player.state === ZklinkPlayerState.DESTROYED) throw new Error("Player đã bị huỷ");
+    if (this.player.state === ZklinkPlayerState.DESTROYED) throw new Error("Reset thành công");
   }
 }

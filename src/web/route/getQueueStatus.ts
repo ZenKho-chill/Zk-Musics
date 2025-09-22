@@ -17,7 +17,7 @@ export async function getQueueStatus(
   const player = client.Zklink.players.get(guildId);
   if (!player) {
     res.code(400);
-    res.send({ error: "Không tìm thấy player hiện tại!" });
+    res.send({ error: client.i18n.get("vi", "web", "api.player_not_found") });
     return;
   }
   return res.send({

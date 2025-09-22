@@ -87,7 +87,7 @@ export class PlaylistEditorHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: "❌ Bạn không thể sử dụng dropdown này!",
+          content: client.i18n.get(handler.language, "commands", "playlist.access.cannot_use_dropdown"),
           ephemeral: true,
         });
       }
@@ -105,7 +105,7 @@ export class PlaylistEditorHandler {
           .addComponents(selectMenu);
 
         const timeoutEmbed = new EmbedBuilder()
-          .setDescription("⏰ Thời gian chọn playlist đã hết!")
+          .setDescription(client.i18n.get(handler.language, "commands", "playlist.timeouts.playlist_selection"))
           .setColor(client.color_main);
 
         await handler.editReply({
@@ -144,13 +144,13 @@ export class PlaylistEditorHandler {
       new ButtonBuilder()
         .setStyle(ButtonStyle.Primary)
         .setCustomId("set_public")
-        .setLabel("Đặt Công khai")
+        .setLabel(client.i18n.get(handler.language, "commands", "playlist.privacy.set_public"))
         .setEmoji("🌐")
         .setDisabled(!playlist.private), // Disable nếu đã public
       new ButtonBuilder()
         .setStyle(ButtonStyle.Secondary)
         .setCustomId("set_private")
-        .setLabel("Đặt Riêng tư")
+        .setLabel(client.i18n.get(handler.language, "commands", "playlist.privacy.set_private"))
         .setEmoji("🔒")
         .setDisabled(playlist.private), // Disable nếu đã private
     ]);
@@ -203,7 +203,7 @@ export class PlaylistEditorHandler {
         }
         
         const successEmbed = new EmbedBuilder()
-          .setTitle("✅ Đã cập nhật playlist")
+          .setTitle(client.i18n.get(handler.language, "commands", "playlist.success.playlist_updated"))
           .setDescription(
             `${client.i18n.get(handler.language, "commands.playlist", "pl_editor_public", {
               playlist: playlist.name || playlistId,
@@ -241,7 +241,7 @@ export class PlaylistEditorHandler {
         }
         
         const successEmbed = new EmbedBuilder()
-          .setTitle("✅ Đã cập nhật playlist")
+          .setTitle(client.i18n.get(handler.language, "commands", "playlist.success.playlist_updated"))
           .setDescription(
             `${client.i18n.get(handler.language, "commands.playlist", "pl_editor_private", {
               playlist: playlist.name || playlistId,

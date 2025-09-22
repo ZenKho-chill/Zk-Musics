@@ -219,7 +219,7 @@ export class ZklinkPlayer extends EventEmitter {
     this.node.rest.destroyPlayer(this.guildId);
     this.manager.players.delete(this.guildId);
     this.state = ZklinkPlayerState.DESTROYED;
-    this.debug("Player đã bị huỷ tại " + this.guildId);
+    this.debug("Người chơi đã bị hủy" + this.guildId);
     this.voiceId = "";
     // @ts-ignore
     this.manager.emit(ZklinkEvents.PlayerDestroy, this);
@@ -237,7 +237,7 @@ export class ZklinkPlayer extends EventEmitter {
 
     if (track && !(track instanceof ZklinkTrack)) throw new Error("track phải là một ZklinkTrack");
 
-    if (!track && !this.queue.totalSize) throw new Error("Không có track nào để phát");
+    if (!track && !this.queue.totalSize) throw new Error("Người chơi đã bị hủy");
 
     if (!options || typeof options.replaceCurrent !== "boolean")
       options = { ...options, replaceCurrent: false };
@@ -247,7 +247,7 @@ export class ZklinkPlayer extends EventEmitter {
       this.queue.current = track;
     } else if (!this.queue.current) this.queue.current = this.queue.shift();
 
-    if (!this.queue.current) throw new Error("Không có track nào để phát");
+    if (!this.queue.current) throw new Error("Người chơi đã bị hủy");
 
     const current = this.queue.current;
 
@@ -434,7 +434,7 @@ export class ZklinkPlayer extends EventEmitter {
     this.checkDestroyed();
     if (!this.queue.current) throw new Error("Player không có track hiện tại trong hàng đợi");
     if (!this.queue.current.isSeekable)
-      throw new Error("Track hiện tại không thể tua (not seekable)");
+      throw new Error("Người chơi đã bị hủy");
 
     position = Number(position);
 
@@ -651,7 +651,7 @@ export class ZklinkPlayer extends EventEmitter {
 
     const filterData = ZklinkFilterData[filter as keyof typeof ZklinkFilterData];
 
-    if (!filterData) throw new Error("Không tìm thấy filter");
+    if (!filterData) throw new Error("Người chơi đã bị hủy");
 
     await this.send({
       guildId: this.guildId,
@@ -688,7 +688,7 @@ export class ZklinkPlayer extends EventEmitter {
   }
 
   protected checkDestroyed(): void {
-    if (this.state === ZklinkPlayerState.DESTROYED) throw new Error("Player đã bị huỷ");
+    if (this.state === ZklinkPlayerState.DESTROYED) throw new Error("Người chơi đã bị hủy");
   }
 
   /**

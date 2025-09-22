@@ -15,7 +15,7 @@ export class TracksArtistsCleanUp {
     cron.schedule("5 0 25 * *", async () => {
       logInfo(
         TracksArtistsCleanUp.name,
-        "Đang chạy tác vụ theo lịch để xóa top tracks và top artists"
+        "Database cleanup task đang chạy..."
       );
       await this.TracksArtistsCleanUp();
     });
@@ -25,11 +25,11 @@ export class TracksArtistsCleanUp {
     try {
       // Xóa tất cả dữ liệu từ TopTrack
       await this.client.db.TopTrack.deleteAll();
-      logInfo(TracksArtistsCleanUp.name, "Đã xóa tất cả dữ liệu TopTrack.");
+      logInfo(TracksArtistsCleanUp.name, "TopTrack đã được xóa");
 
       // Xóa tất cả dữ liệu từ TopArtist
       await this.client.db.TopArtist.deleteAll();
-      logInfo(TracksArtistsCleanUp.name, "Đã xóa tất cả dữ liệu TopArtist.");
+      logInfo(TracksArtistsCleanUp.name, "TopArtist đã được xóa");
     } catch (error) {
       logError(
         TracksArtistsCleanUp.name,

@@ -1,0 +1,144 @@
+# Playlist Commands Language File (Vietnamese)
+description: "Quản lý danh sách phát"
+category: "Playlist"
+
+# Command options
+options:
+  action:
+    description: "Hành động thực hiện"
+    choices:
+      add: "Thêm bài hát"
+      all: "Xem tất cả bài hát"
+      create: "Tạo mới"
+      delete: "Xóa"
+      detail: "Chi tiết"
+      editor: "Chế độ"
+      import: "Phát nhạc"
+      info: "Thông tin"
+      remove: "Xóa bài hát"
+      savequeue: "Lưu hàng đợi"
+
+# General playlist messages
+general:
+  not_found: "<:warnings:1220876158254710936> Không tìm thấy playlist với ID này!"
+  invalid_id: "<:warnings:1220876158254710936> Vui lòng cung cấp ID playlist hợp lệ!"
+  no_description: "Không có mô tả nào được cung cấp!"
+
+# Playlist actions
+actions:
+  add:
+    description: "Thêm bài hát vào playlist"
+
+# Error messages
+errors:
+  invalid_action: "❌ Vui lòng chọn một hành động hợp lệ!"
+  execution_error: "❌ Đã xảy ra lỗi khi thực hiện lệnh!"
+  no_playlists: "❌ Bạn chưa có playlist nào!"
+  playlist_not_found: "❌ Không tìm thấy playlist!"
+  not_owner: "❌ Bạn không phải là chủ sở hữu của playlist này!"
+  create_failed: "❌ Đã xảy ra lỗi khi tạo playlist! Vui lòng thử lại."
+
+# Success messages  
+success:
+  playlist_created: "✅ Tạo Playlist Thành Công!"
+  playlist_updated: "✅ Đã cập nhật playlist"
+  playlist_deleted: "✅ Đã xóa playlist thành công!"
+  song_added: "✅ Đã thêm bài hát"
+  song_added_to_playlist: "✅ Đã thêm bài hát vào playlist!"
+  song_removed: "✅ Đã xóa bài hát"
+
+# Extended error messages for handlers
+handler_errors:
+  no_playlists_create_first: "❌ Bạn chưa có playlist nào! Hãy tạo playlist trước bằng lệnh `/pl action:Tạo mới`"
+  no_playlists_to_delete: "❌ Bạn chưa có playlist nào để xóa!"
+  no_playlists_to_edit: "❌ Bạn chưa có playlist nào để chỉnh sửa!"
+  no_playlists_to_remove_songs: "❌ Bạn chưa có playlist nào để xóa bài hát!"
+  no_playlists_to_view: "❌ Không có playlist nào để xem!"
+  no_playlists_to_view_info: "❌ Không có playlist nào để xem thông tin!"
+  playlist_no_songs: "❌ Playlist này không có bài hát nào!"
+  playlist_no_songs_to_remove: "❌ Playlist này không có bài hát nào để xóa!"
+  invalid_song_input: "❌ Vui lòng nhập tên bài hát hoặc link hợp lệ!"
+  song_search_error: "❌ Có lỗi xảy ra khi tìm kiếm bài hát!"
+  song_not_found_selected: "❌ Không tìm thấy bài hát đã chọn!"
+  no_matching_songs: "Lỗi: không tìm thấy bài hát phù hợp"
+  cannot_add_to_queue: "❌ Không thể thêm bài hát vào queue!"
+  need_voice_channel: "❌ Bạn cần vào voice channel để phát nhạc!"
+  playlist_private: "❌ Playlist này là riêng tư!"
+  remove_song_error_detailed: "Đã xảy ra lỗi khi xóa bài hát. Vui lòng thử lại!"
+  remove_song_error_title: "❌ Lỗi xóa bài hát"
+
+# Validation specific errors
+validation_errors:
+  name_empty: "❌ Tên playlist không được để trống!"
+  name_too_long: "❌ Tên playlist không được vượt quá 16 ký tự!"
+  description_too_long: "❌ Mô tả playlist không được vượt quá 1000 ký tự!"
+
+# User interface elements
+ui_elements:
+  playlist_selected_header: "📋 Playlist đã chọn"
+  confirm_add_button: "✅ Xác nhận thêm"
+  cancel_button: "❌ Hủy"
+  confirm_delete_warning: "⚠️ Xác nhận xóa playlist"
+  confirm_remove_song_warning: "⚠️ Xác nhận xóa bài hát"
+
+# Privacy settings
+privacy:
+  set_public: "Đặt Công khai"
+  set_private: "Đặt Riêng tư"
+
+# Status messages
+status:
+  cancelled_add: "❌ Đã hủy thêm bài hát."
+  cancelled_delete: "❌ Đã hủy xóa playlist"
+  cancelled_remove: "❌ Đã hủy xóa bài hát"
+  error_icon: "❌"
+
+# Timeout messages
+timeouts:
+  playlist_selection: "⏰ Thời gian chọn playlist đã hết!"
+  song_selection: "⏰ Thời gian chọn bài hát đã hết!"
+
+# Access control messages
+access:
+  cannot_use_menu: "❌ Bạn không thể sử dụng menu này!"
+  cannot_use_dropdown: "❌ Bạn không thể sử dụng dropdown này!"
+    success: "✅ Đã thêm bài hát vào playlist `{name}`"
+    failed: "❌ Không thể thêm bài hát vào playlist"
+  
+  create:
+    description: "Tạo playlist mới"
+    success: "✅ Tạo playlist `{name}` thành công"
+    failed: "❌ Không thể tạo playlist"
+  
+  delete:
+    description: "Xóa playlist"
+    success: "<:okee:1220876098456256512> Playlist `{name}` đã được **Xóa** thành công"
+    cancelled: "<:warnings:1220876158254710936> Đã hủy **Xóa** Playlist!"
+  
+  import:
+    description: "Nhập playlist từ nguồn bên ngoài"
+    success: "✅ Nhập playlist thành công"
+    failed: "❌ Không thể nhập playlist"
+
+# Playlist information
+info:
+  owner: "Chủ sở hữu"
+  id: "ID"
+  description: "Mô tả"
+  visibility: "Hiển thị"
+  track_count: "Số bài"
+  duration: "Thời lượng"
+  created: "Được tạo"
+
+# Playlist visibility
+visibility:
+  public: "Công khai"
+  private: "Riêng tư"
+  set_public: "✅ Đặt playlist `{playlist}` thành **Công khai**"
+  set_private: "✅ Đặt playlist `{playlist}` thành **Riêng tư**"
+  is_private: "Playlist là **Riêng tư**"
+
+# Playlist editor
+editor:
+  invalid_choice: "<:wrong:1220876213896216686> Vui lòng cung cấp ID Playlist hợp lệ và lựa chọn! (public/private)"
+  updated: "✅ Cập nhật cài đặt playlist thành công"

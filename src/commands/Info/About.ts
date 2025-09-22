@@ -53,7 +53,7 @@ export default class implements Command {
       .setImage(client.config.bot.IMAGES_URL_ABOUT);
     if (client.config.bot.TEAM_NAME && client.config.bot.TEAM_URL) {
       AboutEmbed.addFields({
-        name: "Đội ngũ",
+        name: client.i18n.get(handler.language, "commands", "info.about.team"),
         value: `**[${client.config.bot.TEAM_NAME}](${client.config.bot.TEAM_URL})**`,
         inline: true,
       });
@@ -67,7 +67,7 @@ export default class implements Command {
 
     if (client.config.bot.PREMIUM_URL) {
       AboutEmbed.addFields({
-        name: "Ủng hộ",
+        name: client.i18n.get(handler.language, "commands", "info.about.support"),
         value: `**[Nhận Premium](${client.config.bot.PREMIUM_URL})**`,
         inline: true,
       });

@@ -12,6 +12,13 @@ filter_menu_on: |
   <:pop:1220849334606626946> **Filter %{name} on!** 
   <:blankers:1220848705289064669><:sparkle:1220846124961890304> **Your music is going to sound even cooler now!**
 
+# Player lifecycle messages
+player_created: "Player created at @ "
+player_destroyed: "Player destroyed at @ "
+player_stopped: "Player stopped at @ "
+queue_empty: "Queue empty at @ "
+track_started: "Player started at @ "
+
 player_get_exception: "Uh-oh! Looks like there's a hiccup with the track. Want me to give it another shot?"
 player_track_error: "The track had an issue, Can you please try it once more?"
 player_track_stuck: "I'm so sad :(, the track got stuck. Maybe a retry will cheer us up?"

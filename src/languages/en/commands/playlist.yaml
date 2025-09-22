@@ -1,0 +1,70 @@
+# Playlist Commands Language File
+description: "Manage playlists"
+category: "Playlist"
+
+# Command options
+options:
+  action:
+    description: "Action to perform"
+    choices:
+      add: "Add song"
+      all: "View all songs"
+      create: "Create new"
+      delete: "Delete"
+      detail: "Details"
+      editor: "Settings"
+      import: "Import/Play"
+      info: "Information"
+      remove: "Remove song"
+      savequeue: "Save queue"
+
+# General playlist messages
+general:
+  not_found: "<:warnings:1220876158254710936> Playlist with this ID not found!"
+  invalid_id: "<:warnings:1220876158254710936> Please provide a valid Playlist ID!"
+  no_description: "No description is provided!"
+
+# Playlist actions
+actions:
+  add:
+    description: "Add song to playlist"
+    success: "✅ Added song to playlist `{name}`"
+    failed: "❌ Failed to add song to playlist"
+  
+  create:
+    description: "Create a new playlist"
+    success: "✅ Created playlist `{name}` successfully"
+    failed: "❌ Failed to create playlist"
+  
+  delete:
+    description: "Delete a playlist"
+    success: "<:okee:1220876098456256512> Playlist `{name}` has been successfully **Deleted**"
+    cancelled: "<:warnings:1220876158254710936> Cancelled **Deletion** Playlist!"
+  
+  import:
+    description: "Import playlist from external source"
+    success: "✅ Imported playlist successfully"
+    failed: "❌ Failed to import playlist"
+
+# Playlist information
+info:
+  owner: "Owner"
+  id: "ID"
+  description: "Description"
+  visibility: "Visibility"
+  track_count: "Tracks"
+  duration: "Duration"
+  created: "Created"
+
+# Playlist visibility
+visibility:
+  public: "Public"
+  private: "Private"
+  set_public: "✅ Set playlist `{playlist}` to **Public**"
+  set_private: "✅ Set playlist `{playlist}` to **Private**"
+  is_private: "Playlist is **Private**"
+
+# Playlist editor
+editor:
+  invalid_choice: "<:wrong:1220876213896216686> Please provide a valid Playlist ID and choice! (public/private)"
+  updated: "✅ Playlist settings updated successfully"

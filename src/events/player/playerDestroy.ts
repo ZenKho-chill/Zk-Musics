@@ -17,7 +17,7 @@ export default class {
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
     logInfo(
       "PlayerDestroy",
-      `${chalk.hex("#dc143c")("Player đã bị hủy tại @ ")}${chalk.hex("#dc143c")(
+      `${chalk.hex("#dc143c")(client.i18n.get("vi", "events", "player.player_destroyed"))}${chalk.hex("#dc143c")(
         guild?.name
       )} / ${chalk.hex("#dc143c")(player.guildId)}`
     );
