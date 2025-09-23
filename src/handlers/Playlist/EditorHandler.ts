@@ -87,7 +87,7 @@ export class PlaylistEditorHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: client.i18n.get(handler.language, "commands", "playlist.access.cannot_use_dropdown"),
+          content: client.i18n.get(handler.language, "client.commands.playlist", "access_cannot_use_dropdown"),
           ephemeral: true,
         });
       }
@@ -105,7 +105,7 @@ export class PlaylistEditorHandler {
           .addComponents(selectMenu);
 
         const timeoutEmbed = new EmbedBuilder()
-          .setDescription(client.i18n.get(handler.language, "commands", "playlist.timeouts.playlist_selection"))
+          .setDescription(client.i18n.get(handler.language, "server.events", "playlist_selection_timeout"))
           .setColor(client.color_main);
 
         await handler.editReply({
@@ -130,7 +130,7 @@ export class PlaylistEditorHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.playlist", "pl_editor_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands.playlist", "pl_editor_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -144,13 +144,13 @@ export class PlaylistEditorHandler {
       new ButtonBuilder()
         .setStyle(ButtonStyle.Primary)
         .setCustomId("set_public")
-        .setLabel(client.i18n.get(handler.language, "commands", "playlist.privacy.set_public"))
+        .setLabel(client.i18n.get(handler.language, "client.commands.playlist", "privacy_set_public"))
         .setEmoji("🌐")
         .setDisabled(!playlist.private), // Disable nếu đã public
       new ButtonBuilder()
         .setStyle(ButtonStyle.Secondary)
         .setCustomId("set_private")
-        .setLabel(client.i18n.get(handler.language, "commands", "playlist.privacy.set_private"))
+        .setLabel(client.i18n.get(handler.language, "client.commands.playlist", "privacy_set_private"))
         .setEmoji("🔒")
         .setDisabled(playlist.private), // Disable nếu đã private
     ]);
@@ -203,9 +203,9 @@ export class PlaylistEditorHandler {
         }
         
         const successEmbed = new EmbedBuilder()
-          .setTitle(client.i18n.get(handler.language, "commands", "playlist.success.playlist_updated"))
+          .setTitle(client.i18n.get(handler.language, "client.commands.playlist", "success_playlist_updated"))
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.playlist", "pl_editor_public", {
+            `${client.i18n.get(handler.language, "client.commands.playlist", "pl_editor_public", {
               playlist: playlist.name || playlistId,
             })}\n\n` +
             `🔍 **Debug:** Đã thử cập nhật playlist thành công khai`
@@ -241,9 +241,9 @@ export class PlaylistEditorHandler {
         }
         
         const successEmbed = new EmbedBuilder()
-          .setTitle(client.i18n.get(handler.language, "commands", "playlist.success.playlist_updated"))
+          .setTitle(client.i18n.get(handler.language, "client.commands.playlist", "success_playlist_updated"))
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.playlist", "pl_editor_private", {
+            `${client.i18n.get(handler.language, "client.commands.playlist", "pl_editor_private", {
               playlist: playlist.name || playlistId,
             })}`
           )

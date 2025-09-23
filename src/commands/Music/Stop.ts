@@ -32,7 +32,7 @@ export default class implements Command {
     if (!currentTrack) {
       const skipped = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "no_songs_playing")}`
+          `${client.i18n.get(handler.language, "client.commands", "music.no_songs_playing")}`
         )
         .setColor(client.color_main);
 
@@ -48,7 +48,7 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.music", "stop_msg", {
+        `${client.i18n.get(handler.language, "client.commands", "music.stop_msg", {
           channel: channel!.name,
           user: handler.user!.displayName || handler.user!.tag,
           title: this.getTitle(client, currentTrack),

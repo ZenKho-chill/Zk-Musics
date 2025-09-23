@@ -17,14 +17,14 @@ export async function getMemberStatus(
   const player = client.Zklink.players.get(guildId);
   if (!player) {
     res.code(400);
-    res.send({ error: client.i18n.get("vi", "web", "api.player_not_found") });
+    res.send({ error: client.i18n.get(client.config.bot.LANGUAGE, "server.web", "api_player_not_found") });
     return;
   }
   const userId = req.headers["user-id"] as string;
   const Guild = await client.guilds.fetch(guildId).catch(() => undefined);
   if (!Guild) {
     res.code(400);
-    res.send({ error: client.i18n.get("vi", "web", "api.guild_not_found") });
+    res.send({ error: client.i18n.get(client.config.bot.LANGUAGE, "server.web", "api_guild_not_found") });
     return;
   }
   const Member = await Guild.members.fetch(userId).catch(() => undefined);

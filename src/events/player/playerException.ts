@@ -30,7 +30,7 @@ export default class {
 
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
-      .setDescription(`${client.i18n.get(language, "events.player", "player_get_exception")}`);
+      .setDescription(`${client.i18n.get(language, "server.events", "player.player_get_exception")}`);
     if (text_channel) {
       const msg = await text_channel.send({
         embeds: [embed],

@@ -77,7 +77,7 @@ export default class implements Command {
         const channel = interaction.guild?.channels.cache.get(guildSettings.createVoiceChannelId);
         if (channel) {
           await channel.delete(
-            `${client.i18n.get(handler.language, "commands.settings", "tempvoice_disabled")}`
+            `${client.i18n.get(handler.language, "client.commands", "settings.tempvoice_disabled")}`
           );
         }
       }
@@ -88,7 +88,7 @@ export default class implements Command {
     }
 
     await interaction.reply({
-      content: `${client.i18n.get(handler.language, "commands.settings", "tempvoice_setup", {
+      content: `${client.i18n.get(handler.language, "client.commands", "settings.tempvoice_setup", {
         status: status === "create" ? "kích hoạt" : "vô hiệu",
       })}`,
       flags: MessageFlags.Ephemeral,

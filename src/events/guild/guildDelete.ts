@@ -24,37 +24,37 @@ export default class {
       const owner = await client.users.fetch(guild.ownerId);
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `${client.i18n.get(language, "events.guild", "leave_title")}`,
+          name: `${client.i18n.get(language, "server.events", "guild.leave_title")}`,
         })
         .setThumbnail(guild.iconURL({ size: 1024 }))
         .addFields([
           {
-            name: `${client.i18n.get(language, "events.guild", "guild_name")}`,
+            name: `${client.i18n.get(language, "server.events", "guild.guild_name")}`,
             value: `\`${guild.name}\` \n \`${guild.id}\``,
             inline: true,
           },
           {
-            name: `${client.i18n.get(language, "events.guild", "guild_member_count")}`,
+            name: `${client.i18n.get(language, "server.events", "guild.guild_member_count")}`,
             value: `\`${guild.memberCount}\` Thành viên`,
             inline: true,
           },
           {
-            name: `${client.i18n.get(language, "events.guild", "guild_owner")}`,
+            name: `${client.i18n.get(language, "server.events", "guild.guild_owner")}`,
             value: `\`${owner.displayName}\` \n \`${owner.id}\``,
             inline: true,
           },
           {
-            name: `${client.i18n.get(language, "events.guild", "guild_creation_date")}`,
+            name: `${client.i18n.get(language, "server.events", "guild.guild_creation_date")}`,
             value: `<t:${Math.floor(guild.createdTimestamp / 1000)}:F>`,
             inline: true,
           },
           {
-            name: `${client.i18n.get(language, "events.guild", "guild_join_date")}`,
+            name: `${client.i18n.get(language, "server.events", "guild.guild_join_date")}`,
             value: `<t:${Math.floor(guild.joinedTimestamp / 1000)}:F>`,
             inline: true,
           },
           {
-            name: `${client.i18n.get(language, "events.guild", "current_server_count")}`,
+            name: `${client.i18n.get(language, "server.events", "guild.current_server_count")}`,
             value: `\`${client.guilds.cache.size}\` Server`,
             inline: true,
           },

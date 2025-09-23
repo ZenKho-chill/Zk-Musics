@@ -35,7 +35,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+              `${client.i18n.get(handler.language, "client.commands.music", "no_songs_playing", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -111,7 +111,7 @@ export default class implements Command {
 
     const embeded = new EmbedBuilder();
     embeded.setAuthor({
-      name: `${client.i18n.get("vi", "commands.music", "nowplaying_title")}`,
+      name: `${client.i18n.get("vi", "client.commands.music", "nowplaying_title")}`,
     });
     embeded.setColor(client.color_second);
     if (new FormatDuration().parse(song!.duration) !== "Live Stream") {

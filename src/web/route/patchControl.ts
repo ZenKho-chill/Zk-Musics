@@ -130,7 +130,7 @@ export class PatchControl {
     const player = this.client.Zklink.players.get(guildId);
     if (!player) {
       res.code(404);
-      res.send({ error: this.client.i18n.get("vi", "web", "api.player_not_found") });
+      res.send({ error: this.client.i18n.get("vi", "server.web", "api.player_not_found") });
       return false;
     }
     if (req.headers["content-type"] !== "application/json") {

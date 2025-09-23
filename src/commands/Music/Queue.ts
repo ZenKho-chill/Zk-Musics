@@ -41,7 +41,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get("vi", "commands.music", "queue_number_invalid")}`
+              `${client.i18n.get("vi", "client.commands", "music.queue_number_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -96,7 +96,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `${client.i18n.get("vi", "commands.music", "queue_title")}`,
+          name: `${client.i18n.get("vi", "client.commands", "music.queue_title")}`,
         })
         .setThumbnail(
           // Dùng avatar bot nếu nguồn là soundcloud, nếu không dùng artworkUrl hoặc thumbnail mặc định
@@ -106,7 +106,7 @@ export default class implements Command {
         )
         .setColor(client.color_second)
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "queue_description", {
+          `${client.i18n.get(handler.language, "client.commands", "music.queue_description", {
             title: this.getTitle(client, song!),
             request: String(song!.requester),
             duration: new FormatDuration().parse(song!.duration),
@@ -114,7 +114,7 @@ export default class implements Command {
           })}`
         )
         .setFooter({
-          text: `${client.i18n.get(handler.language, "commands.music", "queue_footer", {
+          text: `${client.i18n.get(handler.language, "client.commands", "music.queue_footer", {
             page: String(i + 1),
             pages: String(pagesNum),
             queue_lang: String(player.queue.length),
@@ -150,7 +150,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get("vi", "commands.music", "queue_notnumber")}`
+                `${client.i18n.get("vi", "client.commands", "music.queue_notnumber")}`
               )
               .setColor(client.color_main),
           ],
@@ -160,7 +160,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.music", "queue_page_notfound", {
+                `${client.i18n.get(handler.language, "client.commands", "music.queue_page_notfound", {
                   page: String(pagesNum),
                 })}`
               )

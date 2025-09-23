@@ -11,6 +11,6 @@ export class PlayerLoader {
     new PlayerContentLoader(client);
     new PlayerUpdateLoader(client);
     new PlayerSetupLoader(client);
-    logInfo(PlayerLoader.name, client.i18n.get("vi", "services", "zklink.events_loaded"));
+    logInfo(PlayerLoader.name, client.i18n.get("vi", "server.services", "zklink.events_loaded"));
   }
 }

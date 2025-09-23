@@ -91,7 +91,7 @@ export default class implements Command {
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.admin", "announcement_failure")}`
+          `${client.i18n.get(handler.language, "client.commands", "admin.announcement_failure")}`
         );
       await handler.editReply({ embeds: [embed], components: [] });
     }
@@ -219,7 +219,7 @@ export default class implements Command {
         const embed = new EmbedBuilder()
           .setColor(client.color_main)
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.admin", "announcement_desc")}`
+            `${client.i18n.get(handler.language, "client.commands", "admin.announcement_desc")}`
           );
 
         await handler.editReply({ embeds: [embed] });
@@ -246,7 +246,7 @@ export default class implements Command {
             const embed = new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.admin", "announcement_timeout")}`
+                `${client.i18n.get(handler.language, "client.commands", "admin.announcement_timeout")}`
               );
 
             await handler.editReply({ embeds: [embed] });

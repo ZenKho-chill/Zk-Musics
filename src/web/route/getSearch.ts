@@ -25,7 +25,7 @@ export async function getSearch(
   const user = await client.users.fetch(requester).catch(() => undefined);
   if (!query) {
     res.code(400);
-    res.send({ error: client.i18n.get("vi", "web", "api.search_param_missing") });
+    res.send({ error: client.i18n.get(client.config.bot.LANGUAGE, "server.web", "api_search_param_missing") });
     return;
   }
   const result = await client.Zklink.search(query, {

@@ -18,7 +18,7 @@ export class PlaylistSaveQueueHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.playlist", "pl_savequeue_no_player")}`
+              `${client.i18n.get(handler.language, "client.commands.playlist", "pl_savequeue_no_player")}`
             )
             .setColor(client.color_main),
         ],
@@ -32,7 +32,7 @@ export class PlaylistSaveQueueHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.playlist", "pl_savequeue_no_tracks")}`
+              `${client.i18n.get(handler.language, "client.commands.playlist", "pl_savequeue_no_tracks")}`
             )
             .setColor(client.color_main),
         ],
@@ -49,7 +49,7 @@ export class PlaylistSaveQueueHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.playlist", "pl_savequeue_no_playlists")}`
+              `${client.i18n.get(handler.language, "client.commands.playlist", "pl_savequeue_no_playlists")}`
             )
             .setColor(client.color_main),
         ],
@@ -78,7 +78,7 @@ export class PlaylistSaveQueueHandler {
 
     const embed = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.playlist", "pl_savequeue_select_playlist", {
+        `${client.i18n.get(handler.language, "client.commands.playlist", "pl_savequeue_select_playlist", {
           current: current?.title || "Không có",
           queue: String(queue.length || 0)
         })}`
@@ -107,7 +107,7 @@ export class PlaylistSaveQueueHandler {
           return interaction.editReply({
             embeds: [
               new EmbedBuilder()
-                .setDescription(`${client.i18n.get(handler.language, "commands.playlist", "pl_savequeue_notfound")}`)
+                .setDescription(`${client.i18n.get(handler.language, "client.commands.playlist", "pl_savequeue_notfound")}`)
                 .setColor(client.color_main),
             ],
             components: [],
@@ -133,7 +133,7 @@ export class PlaylistSaveQueueHandler {
           await handler.editReply({
             embeds: [
               new EmbedBuilder()
-                .setDescription(`${client.i18n.get(handler.language, "commands.playlist", "pl_timeout")}`)
+                .setDescription(`${client.i18n.get(handler.language, "client.commands.playlist", "pl_timeout")}`)
                 .setColor(client.color_main),
             ],
             components: [disabledRow],
@@ -177,7 +177,7 @@ export class PlaylistSaveQueueHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.playlist", "pl_savequeue_no_new_saved", {
+              `${client.i18n.get(handler.language, "client.commands.playlist", "pl_savequeue_no_new_saved", {
                 name: playlist.name,
               })}`
             )
@@ -201,7 +201,7 @@ export class PlaylistSaveQueueHandler {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.playlist", "pl_savequeue_saved", {
+          `${client.i18n.get(handler.language, "client.commands.playlist", "pl_savequeue_saved", {
             name: playlist.name,
             tracks: String(Result.length),
           })}`
@@ -217,7 +217,7 @@ export class PlaylistSaveQueueHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.playlist", "pl_savequeue_error")}`
+              `${client.i18n.get(handler.language, "client.commands.playlist", "pl_savequeue_error")}`
             )
             .setColor(client.color_main),
         ],

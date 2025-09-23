@@ -70,7 +70,7 @@ export default class implements Command {
           new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "redeem_invalid_mode")}`
+              `${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid_mode")}`
             ),
         ],
       });
@@ -82,7 +82,7 @@ export default class implements Command {
           new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "redeem_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid")}`
             ),
         ],
       });
@@ -99,7 +99,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.admin", "redeem_invalid_guild")}`
+                `${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid_guild")}`
               ),
           ],
         });
@@ -113,7 +113,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.admin", "redeem_invalid_user")}`
+                `${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid_user")}`
               ),
           ],
         });
@@ -133,8 +133,8 @@ export default class implements Command {
         .setDescription(
           `${client.i18n.get(
             handler.language,
-            "commands.admin",
-            type === "guild" ? "redeem_already_guild" : "redeem_already"
+            "client.commands",
+            type === "guild" ? "admin.redeem_already_guild" : "admin.redeem_already"
           )}`
         );
       return handler.editReply({ embeds: [embed] });
@@ -145,14 +145,14 @@ export default class implements Command {
     if (!premium) {
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.admin", "redeem_invalid")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid")}`);
       return handler.editReply({ embeds: [embed] });
     }
 
     if (premium.expiresAt !== "lifetime" && premium.expiresAt < Date.now()) {
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.admin", "redeem_invalid")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid")}`);
       return handler.editReply({ embeds: [embed] });
     }
 
@@ -173,14 +173,14 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setAuthor({
-        name: `${client.i18n.get(handler.language, "commands.admin", "redeem_title")}`,
+        name: `${client.i18n.get(handler.language, "client.commands", "admin.redeem_title")}`,
         iconURL: client.user!.displayAvatarURL(),
         url: `https://discord.com/oauth2/authorize?client_id=${
           client.user!.id
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.admin", "redeem_desc", {
+        `${client.i18n.get(handler.language, "client.commands", "admin.redeem_desc", {
           expires: premium.expiresAt !== "lifetime" ? expires : "lifetime",
           plan: `${planFormatted}`,
           type: type,
@@ -188,7 +188,7 @@ export default class implements Command {
         })}`
       )
       .setFooter({
-        text: `${client.i18n.get(handler.language, "commands.admin", "redeem_footer")}`,
+        text: `${client.i18n.get(handler.language, "client.commands", "admin.redeem_footer")}`,
       })
       .setColor(client.color_main);
 
@@ -272,7 +272,7 @@ export default class implements Command {
 
     const embedField: APIEmbedField[] = [
       {
-        name: `${client.i18n.get(language, "commands.admin", "display_names")}`,
+        name: `${client.i18n.get(language, "client.commands", "admin.display_names")}`,
         value: `${targetName}`,
       },
       {
@@ -280,7 +280,7 @@ export default class implements Command {
         value: `${targetId}`,
       },
       {
-        name: `${client.i18n.get(language, "commands.admin", "createdAt")}`,
+        name: `${client.i18n.get(language, "client.commands", "admin.createdAt")}`,
         value: `<t:${Math.floor(
           (premium
             ? premium.redeemedBy.createdAt
@@ -288,19 +288,19 @@ export default class implements Command {
         )}:F>`,
       },
       {
-        name: `${client.i18n.get(language, "commands.admin", "redeemedAt")}`,
+        name: `${client.i18n.get(language, "client.commands", "admin.redeemedAt")}`,
         value: `${redeemedAtFormatted}`,
       },
       {
-        name: `${client.i18n.get(language, "commands.admin", "expiresAt")}`,
+        name: `${client.i18n.get(language, "client.commands", "admin.expiresAt")}`,
         value: `${expiresAtFormatted}`,
       },
       {
-        name: `${client.i18n.get(language, "commands.admin", "plan")}`,
+        name: `${client.i18n.get(language, "client.commands", "admin.plan")}`,
         value: `${planFormatted}`,
       },
       {
-        name: `${client.i18n.get(language, "commands.admin", "code")}`,
+        name: `${client.i18n.get(language, "client.commands", "admin.code")}`,
         value: `${code}`,
       },
     ];
@@ -313,7 +313,7 @@ export default class implements Command {
           client.user!.id
         }&permissions=8&scope=bot`,
       })
-      .setTitle(`${client.i18n.get(language, "commands.admin", premium ? "title" : "guild_title")}`)
+      .setTitle(`${client.i18n.get(language, "client.commands", premium ? "admin.title" : "admin.guild_title")}`)
       .addFields(embedField)
       .setTimestamp()
       .setColor(client.color_main);

@@ -38,7 +38,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "volume_number_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands", "music.volume_number_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -51,7 +51,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "volume_number_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands", "music.volume_number_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -61,7 +61,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "volume_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands", "music.volume_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -77,7 +77,7 @@ export default class implements Command {
 
     const changevol = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.music", "volume_msg", {
+        `${client.i18n.get(handler.language, "client.commands", "music.volume_msg", {
           volume: value,
           user: handler.user!.displayName || handler.user!.tag,
         })}`

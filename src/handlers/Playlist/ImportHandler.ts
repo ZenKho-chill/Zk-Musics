@@ -27,7 +27,7 @@ export class PlaylistImportHandler {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(client.i18n.get(handler.language, "commands", "playlist.errors.no_playlists"))
+            .setDescription(client.i18n.get(handler.language, "client.commands.playlist", "errors_no_playlists"))
             .setColor(client.color_main),
         ],
       });
@@ -68,7 +68,7 @@ export class PlaylistImportHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: client.i18n.get(handler.language, "commands", "playlist.access.cannot_use_menu"),
+          content: client.i18n.get(handler.language, "client.commands.playlist", "access_cannot_use_menu"),
           ephemeral: true,
         });
       }
@@ -118,7 +118,7 @@ export class PlaylistImportHandler {
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(client.i18n.get("vi", "commands", "playlist.errors.playlist_not_found"))
+            .setDescription(client.i18n.get(language, "client.commands.playlist", "errors_playlist_not_found"))
             .setColor(client.color_main),
         ],
       });

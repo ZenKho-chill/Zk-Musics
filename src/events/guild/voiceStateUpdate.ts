@@ -129,7 +129,7 @@ export default class {
           ? await leaveEmbed.send({
               embeds: [
                 new EmbedBuilder()
-                  .setDescription(`${client.i18n.get(language, "events.player", "leave_resume")}`)
+                  .setDescription(`${client.i18n.get(language, "server.events", "player.leave_resume")}`)
                   .setColor(client.color_main),
               ],
             })
@@ -158,7 +158,7 @@ export default class {
         const msg = await leaveEmbed.send({
           embeds: [
             new EmbedBuilder()
-              .setDescription(`${client.i18n.get(language, "events.player", "leave_pause")}`)
+              .setDescription(`${client.i18n.get(language, "server.events", "player.leave_pause")}`)
               .setColor(client.color_main),
           ],
         });

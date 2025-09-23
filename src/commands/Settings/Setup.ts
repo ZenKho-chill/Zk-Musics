@@ -47,7 +47,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.settings", "setup_arg_error", {
+              `${client.i18n.get(handler.language, "client.commands.settings", "setup_arg_error", {
                 text: "**create** hoặc **delete**",
               })}`
             )
@@ -65,7 +65,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.settings", "setup_enable")}`
+                `${client.i18n.get(handler.language, "client.commands.settings", "setup_enable")}`
               )
               .setColor(client.color_main),
           ],
@@ -78,12 +78,12 @@ export default class implements Command {
       const textChannel = await handler.guild!.channels.create({
         name: "yeu-cau-bai-hat",
         type: ChannelType.GuildText,
-        topic: `${client.i18n.get(handler.language, "commands.settings", "setup_topic")}`,
+        topic: `${client.i18n.get(handler.language, "client.commands.settings", "setup_topic")}`,
         parent: parent.id,
       });
       const queueMsg = `${client.i18n.get(
         handler.language,
-        "commands.settings",
+        "client.commands.settings",
         "setup_queuemsg"
       )}`;
 
@@ -92,7 +92,7 @@ export default class implements Command {
         .setAuthor({
           name: `${client.i18n.get(
             handler.language,
-            "commands.settings",
+            "client.commands.settings",
             "setup_playembed_author"
           )}`,
         })
@@ -124,7 +124,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.settings", "setup_msg", {
+          `${client.i18n.get(handler.language, "client.commands.settings", "setup_msg", {
             channel: String(textChannel),
           })}`
         )
@@ -134,7 +134,7 @@ export default class implements Command {
       const SetupChannel = await client.db.setup.get(`${handler.guild!.id}`);
 
       const embed_none = new EmbedBuilder()
-        .setDescription(`${client.i18n.get(handler.language, "commands.settings", "setup_null")}`)
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.settings", "setup_null")}`)
         .setColor(client.color_main);
 
       if (SetupChannel == null) return handler.editReply({ embeds: [embed_none] });
@@ -152,7 +152,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.settings", "setup_deleted", {
+          `${client.i18n.get(handler.language, "client.commands.settings", "setup_deleted", {
             channel: String(fetchedTextChannel),
           })}`
         )
@@ -169,7 +169,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.settings", "setup_null")}`
+                `${client.i18n.get(handler.language, "client.commands.settings", "setup_null")}`
               )
               .setColor(client.color_main),
           ],

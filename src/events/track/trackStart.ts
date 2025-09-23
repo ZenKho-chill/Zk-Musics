@@ -49,7 +49,7 @@ export default class {
 
     logInfo(
       "TrackStart",
-      `${chalk.hex("#53ec53")(client.i18n.get("vi", "events", "player.track_started"))}${chalk.hex("#53ec53")(
+      `${chalk.hex("#53ec53")(client.i18n.get("vi", "server.events", "player.track_started"))}${chalk.hex("#53ec53")(
         guild?.name
       )} / ${chalk.hex("#53ec53")(player.guildId)}`
     );
@@ -204,8 +204,8 @@ export default class {
 
     const embeded1 = new EmbedBuilder()
       .setAuthor({
-        name: client.i18n.get(language, "events.player", "track_author"),
-        iconURL: client.i18n.get(language, "events.player", "track_author_icon"),
+        name: client.i18n.get(language, "server.events", "player.track_author"),
+        iconURL: client.i18n.get(language, "server.events", "player.track_author_icon"),
       })
       .setDescription(`**${TrackTitle(client, track)}**`)
       .setImage(`attachment://zk.png`)
@@ -229,8 +229,8 @@ export default class {
 
     const embeded2 = new EmbedBuilder()
       .setAuthor({
-        name: client.i18n.get(language, "events.player", "track_author"),
-        iconURL: client.i18n.get(language, "events.player", "track_author_icon"),
+        name: client.i18n.get(language, "server.events", "player.track_author"),
+        iconURL: client.i18n.get(language, "server.events", "player.track_author_icon"),
       })
       .setDescription(`**${TrackTitle(client, track)}**`)
       .setColor(client.color_second)
@@ -248,19 +248,19 @@ export default class {
       )
       .addFields(
         {
-          name: client.i18n.get(language, "events.player", "track_song_author"),
+          name: client.i18n.get(language, "server.events", "player.track_song_author"),
           value: `[${Author || "Không xác định"}](https://google.com/search?q=${encodeURIComponent(
             song?.author || "Không xác định"
           )})`,
           inline: true,
         },
         {
-          name: client.i18n.get(language, "events.player", "track_requested_by"),
+          name: client.i18n.get(language, "server.events", "player.track_requested_by"),
           value: `**${song?.requester || "Không xác định"}**`,
           inline: true,
         },
         {
-          name: client.i18n.get(language, "events.player", "track_duration"),
+          name: client.i18n.get(language, "server.events", "player.track_duration"),
           value: `\`${new FormatDuration().parse(song?.duration)}\``,
           inline: true,
         }
@@ -334,7 +334,7 @@ export default class {
           return true;
         else {
           message.reply({
-            content: `${client.i18n.get(language, "events.player", "no_same_voice")}`,
+            content: `${client.i18n.get(language, "server.events", "player.no_same_voice")}`,
             flags: MessageFlags.Ephemeral,
           });
           return false;

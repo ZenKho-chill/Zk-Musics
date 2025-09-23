@@ -68,7 +68,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "premium_code_arg_error", {
+              `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_arg_error", {
                 text: "**Hàng ngày**, **Hàng tuần**, **Hàng tháng**, **Hàng năm**, **Trọn đời**",
               })}`
             )
@@ -80,7 +80,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "premium_code_arg_error", {
+              `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_arg_error", {
                 text: "**Số**",
               })}`
             )
@@ -142,7 +142,7 @@ export default class implements Command {
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.admin", "premium_code_desc", {
+        `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_desc", {
           codes_length: String(codes.length),
           codes: codes.join("\n"),
           plan: String(plan),
@@ -152,17 +152,17 @@ export default class implements Command {
       )
       .addFields([
         {
-          name: `${client.i18n.get(handler.language, "commands.admin", "premium_code_plan")}`,
+          name: `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_plan")}`,
           value: `${plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(time / 1000)}:R>`}`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(handler.language, "commands.admin", "premium_code_expired")}`,
+          name: `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_expired")}`,
           value: `${plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(time / 1000)}:F>`}`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(handler.language, "commands.admin", "premium_code_generateby")}`,
+          name: `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_generateby")}`,
           value: `${handler.user!.displayName} - ${handler.user!.id}`,
           inline: false,
         },
@@ -191,7 +191,7 @@ export default class implements Command {
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(language, "commands.admin", "premium_code_desc", {
+        `${client.i18n.get(language, "client.commands", "admin.premium_code_desc", {
           codes_length: String(codes.length),
           codes: codes.join("\n"),
           plan: String(plan),
@@ -203,21 +203,21 @@ export default class implements Command {
       )
       .addFields([
         {
-          name: `${client.i18n.get(language, "commands.admin", "premium_code_plan")}`,
+          name: `${client.i18n.get(language, "client.commands", "admin.premium_code_plan")}`,
           value: `${
             plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(Number(expiresAt) / 1000)}:R>`
           }`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(language, "commands.admin", "premium_code_expired")}`,
+          name: `${client.i18n.get(language, "client.commands", "admin.premium_code_expired")}`,
           value: `${
             plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(Number(expiresAt) / 1000)}:F>`
           }`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(language, "commands.admin", "premium_code_generateby")}`,
+          name: `${client.i18n.get(language, "client.commands", "admin.premium_code_generateby")}`,
           value: `${handler.user!.displayName} - ${handler.user!.id}`,
           inline: false,
         },

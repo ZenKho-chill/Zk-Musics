@@ -41,7 +41,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.utils", "user_arg_error", {
+              `${client.i18n.get(handler.language, "client.commands", "utils.user_arg_error", {
                 text: "**@mention**",
               })}`
             )
@@ -98,7 +98,7 @@ export default class implements Command {
         ],
       });
     } else {
-      return handler.editReply({ content: client.i18n.get("vi", "web", "api.user_not_found") });
+      return handler.editReply({ content: client.i18n.get("vi", "server.web", "api.user_not_found") });
     }
   }
 }

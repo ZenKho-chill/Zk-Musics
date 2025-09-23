@@ -50,8 +50,8 @@ export default class implements Command {
             .setDescription(
               `${client.i18n.get(
                 handler.language,
-                "commands.admin",
-                "premium_remove_invalid_params",
+                "client.commands",
+                "admin.premium_remove_invalid_params",
                 {
                   example: `\`${client.prefix}pr user/guild <user_id/guild_id>\``,
                 }
@@ -73,8 +73,8 @@ export default class implements Command {
             .setDescription(
               `${client.i18n.get(
                 handler.language,
-                "commands.admin",
-                "premium_remove_invalid_type",
+                "client.commands",
+                "admin.premium_remove_invalid_type",
                 {
                   type: "**Guild** or **user**",
                 }
@@ -90,7 +90,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "premium_remove_404", {
+              `${client.i18n.get(handler.language, "client.commands", "admin.premium_remove_404", {
                 id: id as string,
                 type: `${(type as string).toUpperCase()}`,
               })}`
@@ -128,18 +128,18 @@ export default class implements Command {
             inline: false,
           },
           {
-            name: `${client.i18n.get(handler.language, "commands.admin", "premium_remove_id")}`,
+            name: `${client.i18n.get(handler.language, "client.commands", "admin.premium_remove_id")}`,
             value: `\`${db.redeemedBy.id}\``,
             inline: false,
           },
           {
-            name: `${client.i18n.get(handler.language, "commands.admin", "premium_remove_by")}`,
+            name: `${client.i18n.get(handler.language, "client.commands", "admin.premium_remove_by")}`,
             value: `\`${handler.user?.displayName}\``,
             inline: false,
           },
         ])
         .setFooter({
-          text: `${client.i18n.get(handler.language, "commands.admin", "premium_remove_footer", {
+          text: `${client.i18n.get(handler.language, "client.commands", "admin.premium_remove_footer", {
             user: userDescription,
           })}`,
         })
@@ -156,7 +156,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.admin", "premium_remove_already", {
+          `${client.i18n.get(handler.language, "client.commands", "admin.premium_remove_already", {
             user: userDescription,
           })}`
         )
@@ -191,12 +191,12 @@ export default class implements Command {
           inline: false,
         },
         {
-          name: `${client.i18n.get(language, "commands.admin", "premium_remove_id")}`,
+          name: `${client.i18n.get(language, "client.commands", "admin.premium_remove_id")}`,
           value: `\`${id}\``,
           inline: false,
         },
         {
-          name: `${client.i18n.get(language, "commands.admin", "premium_remove_by")}`,
+          name: `${client.i18n.get(language, "client.commands", "admin.premium_remove_by")}`,
           value: `\`${handler.user?.displayName}\``,
           inline: false,
         },

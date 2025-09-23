@@ -96,7 +96,7 @@ export class PlaylistRemoveHandler {
       if (interaction.user.id !== handler.user?.id) {
         logDebug("PlaylistRemoveHandler", `Wrong user tried to use dropdown: ${interaction.user.id}`);
         return interaction.reply({
-          content: client.i18n.get(handler.language, "commands", "playlist.access.cannot_use_dropdown"),
+          content: client.i18n.get(handler.language, "client.commands.playlist", "access_cannot_use_dropdown"),
           flags: 64, // MessageFlags.Ephemeral
         });
       }
@@ -122,7 +122,7 @@ export class PlaylistRemoveHandler {
           .addComponents(selectMenu);
 
         const timeoutEmbed = new EmbedBuilder()
-          .setDescription(client.i18n.get(handler.language, "commands", "playlist.timeouts.playlist_selection"))
+          .setDescription(client.i18n.get(handler.language, "server.events", "playlist_selection_timeout"))
           .setColor(client.color_main);
 
         await handler.editReply({
@@ -150,7 +150,7 @@ export class PlaylistRemoveHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.playlist", "pl_remove_notfound")}`
+              `${client.i18n.get(handler.language, "client.commands.playlist", "pl_remove_notfound")}`
             )
             .setColor(client.color_main),
         ],
@@ -230,7 +230,7 @@ export class PlaylistRemoveHandler {
       if (trackInteraction.user.id !== handler.user?.id) {
         logDebug("PlaylistTrackSelection", `Wrong user tried to use dropdown: ${trackInteraction.user.id}`);
         return trackInteraction.reply({
-          content: client.i18n.get(handler.language, "commands", "playlist.access.cannot_use_dropdown"),
+          content: client.i18n.get(handler.language, "client.commands.playlist", "access_cannot_use_dropdown"),
           flags: 64, // MessageFlags.Ephemeral
         });
       }
@@ -257,7 +257,7 @@ export class PlaylistRemoveHandler {
       if (reason === "time" && !collectorHandled) {
         logInfo("PlaylistTrackSelection", "Handling track selection timeout");
         const timeoutEmbed = new EmbedBuilder()
-          .setDescription(client.i18n.get(handler.language, "commands", "playlist.timeouts.song_selection"))
+          .setDescription(client.i18n.get(handler.language, "server.events", "song_selection_timeout"))
           .setColor(client.color_main);
 
         try {
@@ -358,9 +358,9 @@ export class PlaylistRemoveHandler {
           }
 
           const successEmbed = new EmbedBuilder()
-            .setTitle(client.i18n.get(handler.language, "commands", "playlist.success.song_removed"))
+            .setTitle(client.i18n.get(handler.language, "client.commands.playlist", "success_song_removed"))
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.playlist", "pl_remove_removed", {
+              `${client.i18n.get(handler.language, "client.commands.playlist", "pl_remove_removed", {
                 name: trackToRemove.title || "Unknown Title",
                 position: String(position),
                 playlist: playlist.name || playlistId,
@@ -405,7 +405,7 @@ export class PlaylistRemoveHandler {
       } else if (buttonId === "cancel_remove") {
         logInfo("PlaylistRemoveConfirmation", "Processing cancel remove");
         const cancelEmbed = new EmbedBuilder()
-          .setTitle(client.i18n.get(handler.language, "commands", "playlist.status.cancelled_remove"))
+          .setTitle(client.i18n.get(handler.language, "client.commands.playlist", "status_cancelled_remove"))
           .setDescription("Bài hát không bị xóa khỏi playlist.")
           .setColor(client.color_main);
 

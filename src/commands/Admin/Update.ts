@@ -56,7 +56,7 @@ export default class implements Command {
       const filter = (msg: Message) => msg.author.id === handler.user?.id;
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(client.i18n.get(handler.language, "commands.admin", "update_provide_desc")); // Mô tả lấy từ i18n
+        .setDescription(client.i18n.get(handler.language, "client.commands", "admin.update_provide_desc")); // Mô tả lấy từ i18n
 
       await handler.editReply({ embeds: [embed] });
 
@@ -72,7 +72,7 @@ export default class implements Command {
             const embed = new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.admin", "update_cancelled")}`
+                `${client.i18n.get(handler.language, "client.commands", "admin.update_cancelled")}`
               );
             await handler.editReply({ embeds: [embed] });
             return;
@@ -84,7 +84,7 @@ export default class implements Command {
             const embed = new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.admin", "update_length_exceeded")}`
+                `${client.i18n.get(handler.language, "client.commands", "admin.update_length_exceeded")}`
               );
             await handler.editReply({ embeds: [embed] });
 
@@ -102,7 +102,7 @@ export default class implements Command {
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `✅ ${client.i18n.get(handler.language, "commands.admin", "update_success")}\n` +
+              `✅ ${client.i18n.get(handler.language, "client.commands", "admin.update_success")}\n` +
               `📤 **Kênh:** ${channelToSend.name}\n` +
               `🔗 **Link:** [Xem tin nhắn](${sentMessage.url})`
             );
@@ -117,7 +117,7 @@ export default class implements Command {
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `❌ ${client.i18n.get(handler.language, "commands.admin", "update_failure")}\n` +
+              `❌ ${client.i18n.get(handler.language, "client.commands", "admin.update_failure")}\n` +
               `📝 **Chi tiết:** ${err instanceof Error ? err.message : "Lỗi không xác định"}`
             );
           await handler.editReply({ embeds: [embed] });
@@ -129,7 +129,7 @@ export default class implements Command {
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              client.i18n.get(handler.language, "commands.admin", "update_timeout_failure")
+              client.i18n.get(handler.language, "client.commands", "admin.update_timeout_failure")
             );
 
           handler.editReply({ embeds: [embed] });
@@ -143,7 +143,7 @@ export default class implements Command {
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
-          `❌ ${client.i18n.get(handler.language, "commands.admin", "update_failure")}\n` +
+          `❌ ${client.i18n.get(handler.language, "client.commands", "admin.update_failure")}\n` +
           `📝 **Chi tiết:** ${error instanceof Error ? error.message : "Lỗi không xác định"}`
         );
 

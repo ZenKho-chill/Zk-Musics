@@ -57,15 +57,15 @@ export default class implements Command {
         .setTitle(
           `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "lastfm_feature_disabled_title"
+            "client.commands",
+            "settings.lastfm_feature_disabled_title"
           )}`
         )
         .setDescription(
           `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "lastfm_feature_disabled_desc"
+            "client.commands",
+            "settings.lastfm_feature_disabled_desc"
           )}`
         )
         .setColor(client.color_main);
@@ -95,14 +95,14 @@ export default class implements Command {
       );
 
       const embed = new EmbedBuilder()
-        .setTitle(`${client.i18n.get("vi", "commands.settings", "lastfm_login_title")}`)
+        .setTitle(`${client.i18n.get("vi", "client.commands", "settings.lastfm_login_title")}`)
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.settings", "lastfm_login_desc", {
+          `${client.i18n.get(handler.language, "client.commands", "settings.lastfm_login_desc", {
             url: authUrl,
           })}`
         )
         .setFooter({
-          text: `${client.i18n.get(handler.language, "commands.settings", "lastfm_login_footer", {
+          text: `${client.i18n.get(handler.language, "client.commands", "settings.lastfm_login_footer", {
             expired:
               String(client.config.features.WebServer.LAST_FM_SCROBBLED.ExpiredLink / 1000) +
               " giây",
@@ -135,7 +135,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.settings", "lastfm_not_login_desc", {
+                `${client.i18n.get(handler.language, "client.commands", "settings.lastfm_not_login_desc", {
                   name: this.name[0],
                 })}`
               )
@@ -148,10 +148,10 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setTitle(
-          `${client.i18n.get("vi", "commands.settings", "lastfm_logout_title")}`
+          `${client.i18n.get("vi", "client.commands", "settings.lastfm_logout_title")}`
         )
         .setDescription(
-          `${client.i18n.get("vi", "commands.settings", "lastfm_logout_desc")}`
+          `${client.i18n.get("vi", "client.commands", "settings.lastfm_logout_desc")}`
         )
         .setColor(client.color_main);
 

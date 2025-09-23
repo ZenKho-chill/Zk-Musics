@@ -1,10 +1,10 @@
 /**
  * Language Helper Utility
- * Provides easy-to-use methods for accessing localized strings
+ * Provides easy-to-use methods for accessing localized strings với cấu trúc client/server mới
  */
 
 import { Manager } from "../manager.js";
-import { SupportedLocale, LanguageSection } from "../@types/Language.js";
+import { SupportedLocale, LanguageSection, LanguageContext, BaseSectionName } from "../@types/Language.js";
 import { I18nArgs } from "@hammerhq/localization";
 
 export class LanguageHelper {
@@ -17,80 +17,83 @@ export class LanguageHelper {
   }
 
   /**
-   * Get localized string
+   * Get localized string với cấu trúc client/server mới
    */
-  public get(section: LanguageSection, key: string, args?: I18nArgs): string {
-    return this.client.i18n.get(this.locale, section, key, args);
+  public get(context: LanguageContext, section: BaseSectionName, key: string, args?: I18nArgs): string {
+    const fullSection = `${context}.${section}` as LanguageSection;
+    return this.client.i18n.get(this.locale, fullSection, key, args);
   }
 
   /**
    * Get nested key using dot notation
    */
-  public getNested(section: LanguageSection, keyPath: string, args?: I18nArgs): string {
-    return this.client.i18n.getNested(this.locale, section, keyPath, args);
+  public getNested(context: LanguageContext, section: BaseSectionName, keyPath: string, args?: I18nArgs): string {
+    const fullSection = `${context}.${section}` as LanguageSection;
+    return this.client.i18n.getNested(this.locale, fullSection, keyPath, args);
   }
 
   /**
-   * Get error message
+   * Get client error message
    */
   public error(key: string, args?: I18nArgs): string {
-    return this.get('errors', key, args);
+    return this.get('client', 'errors', key, args);
   }
 
   /**
-   * Get UI message
+   * Get client UI message
    */
   public ui(key: string, args?: I18nArgs): string {
-    return this.get('ui', key, args);
+    return this.get('client', 'ui', key, args);
   }
 
   /**
-   * Get validation message
+   * Get server validation message
    */
   public validation(key: string, args?: I18nArgs): string {
-    return this.get('validation', key, args);
+    return this.get('server', 'validation', key, args);
   }
 
   /**
-   * Get common message
+   * Get client message
    */
   public message(key: string, args?: I18nArgs): string {
-    return this.get('messages', key, args);
+    return this.get('client', 'messages', key, args);
   }
 
   /**
-   * Get command message
+   * Get client command message
    */
   public command(category: string, key: string, args?: I18nArgs): string {
-    return this.getNested('commands', `${category}.${key}`, args);
+    return this.getNested('client', 'commands', `${category}.${key}`, args);
   }
 
   /**
-   * Get handler message
+   * Get server handler message
    */
   public handler(type: string, key: string, args?: I18nArgs): string {
-    return this.getNested('handlers', `${type}.${key}`, args);
+    return this.getNested('server', 'handlers', `${type}.${key}`, args);
   }
 
   /**
-   * Get service message
+   * Get server service message
    */
   public service(service: string, key: string, args?: I18nArgs): string {
-    return this.getNested('services', `${service}.${key}`, args);
+    return this.getNested('server', 'services', `${service}.${key}`, args);
   }
 
   /**
-   * Get event message
+   * Get server event message
    */
   public event(type: string, key: string, args?: I18nArgs): string {
-    return this.getNested('events', `${type}.${key}`, args);
+    return this.getNested('server', 'events', `${type}.${key}`, args);
   }
 
   /**
-   * Check if key exists
+   * Check if key exists với cấu trúc mới
    */
-  public hasKey(section: LanguageSection, key: string): boolean {
-    return this.client.i18n.hasKey(this.locale, section, key);
+  public hasKey(context: LanguageContext, section: BaseSectionName, key: string): boolean {
+    const fullSection = `${context}.${section}` as LanguageSection;
+    return this.client.i18n.hasKey(this.locale, fullSection, key);
   }
 
   /**

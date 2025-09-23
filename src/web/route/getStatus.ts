@@ -18,7 +18,7 @@ export async function getStatus(
   const player = client.Zklink.players.get(guildId);
   if (!player) {
     res.code(400);
-    res.send({ error: client.i18n.get("vi", "web", "api.current_player_not_found") });
+    res.send({ error: client.i18n.get("vi", "server.web", "api.current_player_not_found") });
     return;
   }
   if (req.headers["user-id"]) {

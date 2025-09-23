@@ -48,7 +48,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.info", "premium_check_invalid", {
+              `${client.i18n.get(handler.language, "client.commands.info", "premium_check_invalid", {
                 prefix: client.prefix,
               })}`
             )
@@ -76,7 +76,7 @@ export default class implements Command {
         .setAuthor({
           name: `${client.i18n.get(
             handler.language,
-            "commands.info",
+            "client.commands.info",
             "premium_check_user_profile_author"
           )}`,
           iconURL: client.user!.displayAvatarURL(),
@@ -85,7 +85,7 @@ export default class implements Command {
           }&permissions=8&scope=bot`,
         })
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.info", "premium_check_user_profile_desc", {
+          `${client.i18n.get(handler.language, "client.commands.info", "premium_check_user_profile_desc", {
             user: String(handler.user?.displayName),
             plan:
               PremiumPlan.expiresAt !== "lifetime"
@@ -112,7 +112,7 @@ export default class implements Command {
         .setAuthor({
           name: `${client.i18n.get(
             handler.language,
-            "commands.info",
+            "client.commands.info",
             "premium_check_guild_profile_author"
           )}`,
           iconURL: client.user!.displayAvatarURL(),
@@ -123,7 +123,7 @@ export default class implements Command {
         .setDescription(
           `${client.i18n.get(
             handler.language,
-            "commands.info",
+            "client.commands.info",
             "premium_check_guild_profile_desc",
             {
               guild: String(handler.guild?.name),
@@ -146,7 +146,7 @@ export default class implements Command {
       .setAuthor({
         name: `${client.i18n.get(
           handler.language,
-          "commands.info",
+          "client.commands.info",
           "premium_check_owner_profile_author"
         )}`,
         iconURL: client.user!.displayAvatarURL(),
@@ -155,7 +155,7 @@ export default class implements Command {
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.info", "premium_check_user_profile_desc", {
+        `${client.i18n.get(handler.language, "client.commands.info", "premium_check_user_profile_desc", {
           user: String(handler.user?.displayName),
           plan: "lifetime",
           expires: "lifetime",
@@ -170,7 +170,7 @@ export default class implements Command {
       .setAuthor({
         name: `${client.i18n.get(
           handler.language,
-          "commands.info",
+          "client.commands.info",
           "premium_check_admin_profile_author"
         )}`,
         iconURL: client.user!.displayAvatarURL(),
@@ -179,7 +179,7 @@ export default class implements Command {
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.info", "premium_check_user_profile_desc", {
+        `${client.i18n.get(handler.language, "client.commands.info", "premium_check_user_profile_desc", {
           user: String(handler.user?.displayName),
           plan: "lifetime",
           expires: "lifetime",
@@ -194,7 +194,7 @@ export default class implements Command {
       .setAuthor({
         name: `${client.i18n.get(
           handler.language,
-          "commands.info",
+          "client.commands.info",
           "premium_check_user_profile_author"
         )}`,
         iconURL: client.user!.displayAvatarURL(),
@@ -205,7 +205,7 @@ export default class implements Command {
       .setDescription(
         `${client.i18n.get(
           handler.language,
-          "commands.info",
+          "client.commands.info",
           "premium_check_user_profile_error_desc",
           {
             user: String(handler.user?.displayName),
@@ -219,7 +219,7 @@ export default class implements Command {
       noPremiumButton.addComponents(
         new ButtonBuilder()
           .setLabel(
-            client.i18n.get(handler.language, "commands.info", "premium_check_premium_button")
+            client.i18n.get(handler.language, "client.commands.info", "premium_check_premium_button")
           )
           .setStyle(ButtonStyle.Link)
           .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
@@ -238,7 +238,7 @@ export default class implements Command {
       .setAuthor({
         name: `${client.i18n.get(
           handler.language,
-          "commands.info",
+          "client.commands.info",
           "premium_check_guild_profile_author"
         )}`,
         iconURL: client.user!.displayAvatarURL(),
@@ -246,7 +246,7 @@ export default class implements Command {
       .setDescription(
         `${client.i18n.get(
           handler.language,
-          "commands.info",
+          "client.commands.info",
           "premium_check_guild_profile_error_desc",
           {
             guild: String(handler.guild?.name),
@@ -260,7 +260,7 @@ export default class implements Command {
       noPremiumButton.addComponents(
         new ButtonBuilder()
           .setLabel(
-            client.i18n.get(handler.language, "commands.info", "premium_check_premium_button")
+            client.i18n.get(handler.language, "client.commands.info", "premium_check_premium_button")
           )
           .setStyle(ButtonStyle.Link)
           .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)

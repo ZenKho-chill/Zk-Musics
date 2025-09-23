@@ -81,7 +81,7 @@ export default class implements Command {
       if (type === "guild") {
         if (!handler.member?.permissions.has(PermissionFlagsBits.ManageGuild)) {
           return handler.interaction.reply({
-            content: client.i18n.get("vi", "commands", "settings.reset_data.no_permission"),
+            content: client.i18n.get("vi", "client.commands.settings", "no_permission"),
             flags: MessageFlags.Ephemeral,
           });
         }
@@ -96,27 +96,27 @@ export default class implements Command {
               client.db.TempVoiceChannel.delete(guildId!),
               client.db.TempVoiceChannelSetting.delete(guildId!),
             ]);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_all_guild");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_all_guild");
             break;
           case "language":
             await client.db.language.delete(guildId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_language");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_language");
             break;
           case "twentyfourseven":
             await client.db.autoreconnect.delete(guildId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_twentyfourseven");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_twentyfourseven");
             break;
           case "setup":
             await client.db.setup.delete(guildId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_setup");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_setup");
             break;
           case "prefix":
             await client.db.prefix.delete(guildId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_prefix");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_prefix");
             break;
           case "tempvoice":
             await client.db.TempVoiceChannelSetting.delete(guildId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_tempvoice");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_tempvoice");
             break;
           default:
             resultMessage = "Danh mục cơ sở dữ liệu máy chủ không hợp lệ.";
@@ -138,51 +138,51 @@ export default class implements Command {
               client.db.UserStatistics.delete(`${userId!}`),
               client.db.playlist.delete(userId!),
             ]);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_all_user");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_all_user");
             break;
           case "themes":
             await client.db.Themes.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_themes");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_themes");
             break;
           case "commandusage":
             await client.db.CommandUserUsage.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_commandusage");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_commandusage");
             break;
           case "playedsong":
             await client.db.PlayedSongUser.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_playedsong");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_playedsong");
             break;
           case "toptrack":
             await client.db.TopTrack.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_toptrack");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_toptrack");
             break;
           case "topartist":
             await client.db.TopArtist.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_topartist");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_topartist");
             break;
           case "spotify_name":
             await client.db.SpotifyId.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_spotify");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_spotify");
             break;
           case "lastfm":
             await client.db.LastFm.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_lastfm");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_lastfm");
             break;
           case "votes":
             await client.db.votes.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_votes");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_votes");
             break;
           case "votereminder":
             await client.db.VoteReminders.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_votereminder");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_votereminder");
             break;
           case "userstatistics":
             await client.db.UserStatistics.delete(`${userId!}`);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_userstatistics");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_userstatistics");
             break;
           case "playlist":
             await client.db.playlist.delete(userId!);
-            resultMessage = client.i18n.get("vi", "commands", "settings.reset_data.success_playlist");
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "success_playlist");
             break;
           default:
             resultMessage = "Danh mục cơ sở dữ liệu người dùng không hợp lệ.";
@@ -195,7 +195,7 @@ export default class implements Command {
         flags: MessageFlags.Ephemeral,
       });
     } catch (error) {
-      logInfo(client.i18n.get("vi", "commands", "settings.reset_data.title"), `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
+      logInfo(client.i18n.get("vi", "client.commands.settings", "title"), `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
       await handler.interaction.reply({
         content: `Đã xảy ra lỗi khi xóa cơ sở dữ liệu\n\`${error.message}\``,
         flags: MessageFlags.Ephemeral,

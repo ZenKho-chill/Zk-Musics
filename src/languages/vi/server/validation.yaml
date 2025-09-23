@@ -1,0 +1,10 @@
+# Validation messages
+invalid_url: "❌ Invalid URL provided!"
+invalid_command: "❌ Invalid command!"
+missing_parameter: "❌ Missing required parameter: {parameter}"
+invalid_parameter: "❌ Invalid parameter: {parameter}"
+parameter_too_long: "❌ Parameter too long: {parameter} (max: {max})"
+parameter_too_short: "❌ Parameter too short: {parameter} (min: {min})"
+invalid_number: "❌ Invalid number: {value}"
+number_out_of_range: "❌ Number out of range: {value} (range: {min}-{max})"
+invalid_choice: "❌ Invalid choice: {choice}"

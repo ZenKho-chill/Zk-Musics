@@ -51,7 +51,7 @@ export class PageQueue {
     const curPage = await interaction.editReply({
       embeds: [
         this.pages[page].setFooter({
-          text: `${this.client.i18n.get(this.language, "commands.music", "queue_footer", {
+          text: `${this.client.i18n.get(this.language, "client.commands.music", "queue_footer", {
             page: String(page + 1),
             pages: String(this.pages.length),
             queue_lang: String(this.queueLength),
@@ -80,7 +80,7 @@ export class PageQueue {
       curPage.edit({
         embeds: [
           this.pages[page].setFooter({
-            text: `${this.client.i18n.get(this.language, "commands.music", "queue_footer", {
+            text: `${this.client.i18n.get(this.language, "client.commands.music", "queue_footer", {
               page: String(page + 1),
               pages: String(this.pages.length),
               queue_lang: String(this.queueLength),
@@ -100,7 +100,7 @@ export class PageQueue {
       curPage.edit({
         embeds: [
           this.pages[page].setFooter({
-            text: `${this.client.i18n.get(this.language, "commands.music", "queue_footer", {
+            text: `${this.client.i18n.get(this.language, "client.commands.music", "queue_footer", {
               page: String(page + 1),
               pages: String(this.pages.length),
               queue_lang: String(this.queueLength),
@@ -138,7 +138,7 @@ export class PageQueue {
         this.pages[page].setFooter({
           text: `${this.client.i18n.get(
             this.language,
-            "commands.playlist",
+            "client.commands.playlist",
             "pl_all_view_embed_footer",
             {
               page: String(page + 1),
@@ -170,7 +170,7 @@ export class PageQueue {
           this.pages[page].setFooter({
             text: `${this.client.i18n.get(
               this.language,
-              "commands.playlist",
+              "client.commands.playlist",
               "pl_all_view_embed_footer",
               {
                 page: String(page + 1),
@@ -193,7 +193,7 @@ export class PageQueue {
           this.pages[page].setFooter({
             text: `${this.client.i18n.get(
               this.language,
-              "commands.playlist",
+              "client.commands.playlist",
               "pl_all_view_embed_footer",
               {
                 page: String(page + 1),
@@ -229,7 +229,7 @@ export class PageQueue {
     const curPage = await message.reply({
       embeds: [
         this.pages[page].setFooter({
-          text: `${this.client.i18n.get(this.language, "commands.music", "queue_footer", {
+          text: `${this.client.i18n.get(this.language, "client.commands.music", "queue_footer", {
             page: String(page + 1),
             pages: String(this.pages.length),
             queue_lang: String(this.queueLength),
@@ -258,7 +258,7 @@ export class PageQueue {
       curPage.edit({
         embeds: [
           this.pages[page].setFooter({
-            text: `${this.client.i18n.get(this.language, "commands.music", "queue_footer", {
+            text: `${this.client.i18n.get(this.language, "client.commands.music", "queue_footer", {
               page: String(page + 1),
               pages: String(this.pages.length),
               queue_lang: String(this.queueLength),
@@ -277,7 +277,7 @@ export class PageQueue {
       curPage.edit({
         embeds: [
           this.pages[page].setFooter({
-            text: `${this.client.i18n.get(this.language, "commands.music", "queue_footer", {
+            text: `${this.client.i18n.get(this.language, "client.commands.music", "queue_footer", {
               page: String(page + 1),
               pages: String(this.pages.length),
               queue_lang: String(this.queueLength),
@@ -313,7 +313,7 @@ export class PageQueue {
         this.pages[page].setFooter({
           text: `${this.client.i18n.get(
             this.language,
-            "commands.playlist",
+            "client.commands.playlist",
             "pl_all_view_embed_footer",
             {
               page: String(page + 1),
@@ -346,7 +346,7 @@ export class PageQueue {
           this.pages[page].setFooter({
             text: `${this.client.i18n.get(
               this.language,
-              "commands.playlist",
+              "client.commands.playlist",
               "pl_all_view_embed_footer",
               {
                 page: String(page + 1),
@@ -369,7 +369,7 @@ export class PageQueue {
           this.pages[page].setFooter({
             text: `${this.client.i18n.get(
               this.language,
-              "commands.playlist",
+              "client.commands.playlist",
               "pl_all_view_embed_footer",
               {
                 page: String(page + 1),
@@ -406,7 +406,7 @@ export class PageQueue {
     const curPage = await interaction.reply({
       embeds: [
         this.pages[page].setFooter({
-          text: `${this.client.i18n.get(this.language, "commands.music", "queue_footer", {
+          text: `${this.client.i18n.get(this.language, "client.commands.music", "queue_footer", {
             page: String(page + 1),
             pages: String(this.pages.length),
             queue_lang: String(this.queueLength),
@@ -436,7 +436,7 @@ export class PageQueue {
       interaction.editReply({
         embeds: [
           this.pages[page].setFooter({
-            text: `${this.client.i18n.get(this.language, "commands.music", "queue_footer", {
+            text: `${this.client.i18n.get(this.language, "client.commands.music", "queue_footer", {
               page: String(page + 1),
               pages: String(this.pages.length),
               queue_lang: String(this.queueLength),
@@ -456,7 +456,7 @@ export class PageQueue {
       interaction.editReply({
         embeds: [
           this.pages[page].setFooter({
-            text: `${this.client.i18n.get(this.language, "commands.music", "queue_footer", {
+            text: `${this.client.i18n.get(this.language, "client.commands.music", "queue_footer", {
               page: String(page + 1),
               pages: String(this.pages.length),
               queue_lang: String(this.queueLength),

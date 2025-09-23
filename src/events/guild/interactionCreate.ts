@@ -117,14 +117,14 @@ export default class {
       interaction: ChatInputCommandInteraction | CommandInteraction,
       permissionResult: CheckPermissionResultInterface
     ) {
-      const selfErrorString = `${client.i18n.get(language, "interaction", "no_perms", {
+      const selfErrorString = `${client.i18n.get(language, "server.handlers", "no_perms", {
         perm: permissionResult.result,
       })}`;
       const embed = new EmbedBuilder()
         .setDescription(
           permissionResult.channel == "Self"
             ? selfErrorString
-            : `${client.i18n.get(language, "interaction", "no_perms_channel", {
+            : `${client.i18n.get(language, "server.handlers", "no_perms_channel", {
                 perm: permissionResult.result,
                 channel: permissionResult.channel,
               })}`
@@ -162,7 +162,7 @@ export default class {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(language, "interaction", "no_manage_guild_perms", {
+              `${client.i18n.get(language, "server.handlers", "no_manage_guild_perms", {
                 perm: "ManageGuild",
               })}`
             )
@@ -181,7 +181,7 @@ export default class {
         return interaction.reply({
           embeds: [
             new EmbedBuilder()
-              .setDescription(`${client.i18n.get(language, "interaction", "no_player")}`)
+              .setDescription(`${client.i18n.get(language, "server.handlers", "no_player")}`)
               .setColor(client.color_main),
           ],
         });
@@ -197,7 +197,7 @@ export default class {
         return (interaction as NoAutoInteraction).reply({
           embeds: [
             new EmbedBuilder()
-              .setDescription(`${client.i18n.get(language, "interaction", "no_same_voice")}`)
+              .setDescription(`${client.i18n.get(language, "server.handlers", "no_same_voice")}`)
               .setColor(client.color_main),
           ],
         });
@@ -207,7 +207,7 @@ export default class {
       return interaction.reply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`${client.i18n.get(language, "interaction", "no_node")}`)
+            .setDescription(`${client.i18n.get(language, "server.handlers", "no_node")}`)
             .setColor(client.color_main),
         ],
       });
@@ -260,7 +260,7 @@ export default class {
       return interaction.reply({
         embeds: [
           new EmbedBuilder().setColor(client.color_main).setDescription(
-            `${client.i18n.get(language, "interaction", "blacklist_user", {
+            `${client.i18n.get(language, "server.handlers", "blacklist_user", {
               user: interaction.user.displayName,
               serversupport: client.config.bot.SERVER_SUPPORT_URL,
             })}`
@@ -274,7 +274,7 @@ export default class {
       return interaction.reply({
         embeds: [
           new EmbedBuilder().setColor(client.color_main).setDescription(
-            `${client.i18n.get(language, "interaction", "blacklist_guild", {
+            `${client.i18n.get(language, "server.handlers", "blacklist_guild", {
               user: interaction.user.displayName,
               guild: interaction.guild.name,
               serversupport: client.config.bot.SERVER_SUPPORT_URL,
@@ -291,10 +291,10 @@ export default class {
           return interaction.reply({
             embeds: [
               new EmbedBuilder()
-                .setTitle(`${client.i18n.get(language, "interaction", "maintenance_title")}`)
+                .setTitle(`${client.i18n.get(language, "server.handlers", "maintenance_title")}`)
                 .setColor(client.color_main)
                 .setDescription(
-                  `${client.i18n.get(language, "interaction", "maintenance_desc", {
+                  `${client.i18n.get(language, "server.handlers", "maintenance_desc", {
                     bot: client.user!.username,
                     serversupport: client.config.bot.SERVER_SUPPORT_URL,
                   })}`
@@ -308,10 +308,10 @@ export default class {
     if (command.accessableby.includes(Accessableby.Premium) && !userPerm.Premium) {
       const noPremiumUserEmbed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "interaction", "no_premium_author"),
+          name: client.i18n.get(language, "server.handlers", "no_premium_author"),
         })
         .setDescription(
-          `${client.i18n.get(language, "interaction", "no_premium_desc", {
+          `${client.i18n.get(language, "server.handlers", "no_premium_desc", {
             user: `${interaction.user}`,
             serversupport: client.config.bot.SERVER_SUPPORT_URL,
             premium: client.config.bot.PREMIUM_URL,
@@ -322,7 +322,7 @@ export default class {
       if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get(language, "interaction", "no_premium_button"))
+            .setLabel(client.i18n.get(language, "server.handlers", "no_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -338,10 +338,10 @@ export default class {
     if (command.accessableby.includes(Accessableby.PremiumRole) && !userPerm.PremiumRole) {
       const noPremiumUserEmbed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "interaction", "no_premium_role_author"),
+          name: client.i18n.get(language, "server.handlers", "no_premium_role_author"),
         })
         .setDescription(
-          `${client.i18n.get(language, "interaction", "no_premium_role_desc", {
+          `${client.i18n.get(language, "server.handlers", "no_premium_role_desc", {
             user: `${interaction.user}`,
             serversupport: client.config.bot.SERVER_SUPPORT_URL,
             premium: client.config.bot.PREMIUM_URL,
@@ -352,7 +352,7 @@ export default class {
       if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get(language, "interaction", "no_premium_role_button"))
+            .setLabel(client.i18n.get(language, "server.handlers", "no_premium_role_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -369,7 +369,7 @@ export default class {
       return interaction.reply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`${client.i18n.get(language, "interaction", "owner_only")}`)
+            .setDescription(`${client.i18n.get(language, "server.handlers", "owner_only")}`)
             .setColor(client.color_main),
         ],
       });
@@ -379,7 +379,7 @@ export default class {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(language, "interaction", "no_admin_perms", {
+              `${client.i18n.get(language, "server.handlers", "no_admin_perms", {
                 perm: "admin",
               })}`
             )
@@ -390,10 +390,10 @@ export default class {
     if (command.accessableby.includes(Accessableby.UserPremium) && !userPerm.UserPremium) {
       const noPremiumUserEmbed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "interaction", "no_user_premium_plan_author"),
+          name: client.i18n.get(language, "server.handlers", "no_user_premium_plan_author"),
         })
         .setDescription(
-          `${client.i18n.get(language, "interaction", "no_user_premium_plan_desc", {
+          `${client.i18n.get(language, "server.handlers", "no_user_premium_plan_desc", {
             user: `${interaction.user}`,
             serversupport: client.config.bot.SERVER_SUPPORT_URL,
             premium: client.config.bot.PREMIUM_URL,
@@ -404,7 +404,7 @@ export default class {
       if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get(language, "interaction", "no_user_premium_button"))
+            .setLabel(client.i18n.get(language, "server.handlers", "no_user_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -420,10 +420,10 @@ export default class {
     if (command.accessableby.includes(Accessableby.GuildPremium) && !userPerm.GuildPremium) {
       const noPremiumGuildEmbed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "interaction", "no_guild_premium_plan_author"),
+          name: client.i18n.get(language, "server.handlers", "no_guild_premium_plan_author"),
         })
         .setDescription(
-          `${client.i18n.get(language, "interaction", "no_guild_premium_plan_desc", {
+          `${client.i18n.get(language, "server.handlers", "no_guild_premium_plan_desc", {
             user: `${interaction.user}`,
             serversupport: client.config.bot.SERVER_SUPPORT_URL,
             premium: client.config.bot.PREMIUM_URL,
@@ -434,7 +434,7 @@ export default class {
       if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get(language, "interaction", "no_guild_premium_button"))
+            .setLabel(client.i18n.get(language, "server.handlers", "no_guild_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -462,10 +462,10 @@ export default class {
           if (voteChecker == TopggServiceEnum.ERROR) {
             const embed = new EmbedBuilder()
               .setAuthor({
-                name: client.i18n.get(language, "interaction", "topgg_error_author"),
+                name: client.i18n.get(language, "server.handlers", "topgg_error_author"),
               })
               .setDescription(
-                client.i18n.get(language, "interaction", "topgg_error_desc", {
+                client.i18n.get(language, "server.handlers", "topgg_error_desc", {
                   serversupport: client.config.bot.SERVER_SUPPORT_URL,
                   premium: client.config.bot.PREMIUM_URL,
                 })
@@ -483,10 +483,10 @@ export default class {
           if (voteChecker == TopggServiceEnum.UNVOTED) {
             const embed = new EmbedBuilder()
               .setAuthor({
-                name: client.i18n.get(language, "interaction", "topgg_unvote_author"),
+                name: client.i18n.get(language, "server.handlers", "topgg_unvote_author"),
               })
               .setDescription(
-                client.i18n.get(language, "interaction", "topgg_unvote_desc", {
+                client.i18n.get(language, "server.handlers", "topgg_unvote_desc", {
                   user: `${interaction.user}`,
                   serversupport: client.config.bot.SERVER_SUPPORT_URL,
                   premium: client.config.bot.PREMIUM_URL,
@@ -497,7 +497,7 @@ export default class {
             if (client.config.MENU_HELP_EMOJI.E_VOTE) {
               VoteButton.addComponents(
                 new ButtonBuilder()
-                  .setLabel(client.i18n.get(language, "interaction", "topgg_unvote_button"))
+                  .setLabel(client.i18n.get(language, "server.handlers", "topgg_unvote_button"))
                   .setStyle(ButtonStyle.Link)
                   .setEmoji(client.config.MENU_HELP_EMOJI.E_VOTE)
                   .setURL(`https://top.gg/bot/${client.user?.id}/vote`)
@@ -506,7 +506,7 @@ export default class {
             if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
               VoteButton.addComponents(
                 new ButtonBuilder()
-                  .setLabel(client.i18n.get(language, "interaction", "premium_button"))
+                  .setLabel(client.i18n.get(language, "server.handlers", "premium_button"))
                   .setStyle(ButtonStyle.Link)
                   .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
                   .setURL(client.config.bot.PREMIUM_URL)
@@ -628,7 +628,7 @@ export default class {
     } catch (error) {
       logError("CommandManager", error);
       interaction.reply({
-        content: `${client.i18n.get(language, "interaction", "unexpected_error")}\n ${error}`,
+        content: `${client.i18n.get(language, "server.handlers", "unexpected_error")}\n ${error}`,
       });
     }
   }

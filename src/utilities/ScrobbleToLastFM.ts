@@ -112,14 +112,14 @@ export async function ScrobbleToLastFM(client: Manager, player: ZklinkPlayer) {
 
       if (channel) {
         const embed = new EmbedBuilder().setColor(client.color_second).setDescription(
-          `${client.i18n.get(language, "events.player", "expired_login_session", {
+          `${client.i18n.get(language, "server.events.player", "expired_login_session", {
             user: `<@${requesterId}>`,
           })}`
         );
 
         const LastFMbutton = new ActionRowBuilder<ButtonBuilder>().addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get("vi", "system", "login"))
+            .setLabel(client.i18n.get(language, "server.system", "login"))
             .setStyle(ButtonStyle.Link)
             .setURL(LoginLastFM_Url)
         );

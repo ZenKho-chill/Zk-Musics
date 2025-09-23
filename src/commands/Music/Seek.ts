@@ -42,7 +42,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "seek_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands", "music.seek_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -62,7 +62,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+              `${client.i18n.get(handler.language, "client.commands", "music.no_songs_playing", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -76,7 +76,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "seek_beyond", {
+              `${client.i18n.get(handler.language, "client.commands", "music.seek_beyond", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -89,7 +89,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "seek_not_seekable", {
+              `${client.i18n.get(handler.language, "client.commands.music", "seek_not_seekable", {
                 user: handler.user!.displayName || handler.user!.tag,
                 title: this.getTitle(client, currentTrack),
               })}`
@@ -112,7 +112,7 @@ export default class implements Command {
 
     const seeked = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.music", "seek_msg", {
+        `${client.i18n.get(handler.language, "client.commands.music", "seek_msg", {
           duration: Duration,
           user: handler.user!.displayName || handler.user!.tag,
           title: this.getTitle(client, currentTrack),

@@ -72,7 +72,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "play_arg", {
+              `${client.i18n.get(handler.language, "client.commands", "music.play_arg", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
               })}`
@@ -87,7 +87,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "play_no_in_voice", {
+              `${client.i18n.get(handler.language, "client.commands", "music.play_no_in_voice", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
               })}`
@@ -103,7 +103,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "play_emoji", {
+              `${client.i18n.get(handler.language, "client.commands", "music.play_emoji", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
               })}`
@@ -121,7 +121,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "youtube_disabled", {
+              `${client.i18n.get(handler.language, "client.commands", "music.youtube_disabled", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
                 serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
@@ -166,7 +166,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "play_match", {
+              `${client.i18n.get(handler.language, "client.commands", "music.play_match", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
               })}`
@@ -181,7 +181,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "play_queue_max", {
+              `${client.i18n.get(handler.language, "client.commands", "music.play_queue_max", {
                 limitqueue: String(client.config.features.MAX_QUEUE),
                 premium: client.config.bot.PREMIUM_URL,
                 user: handler.user!.displayName || handler.user!.tag,
@@ -201,7 +201,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "play_playlist_max", {
+              `${client.i18n.get(handler.language, "client.commands", "music.play_playlist_max", {
                 limitqueue: String(client.config.features.MAX_QUEUE),
                 premium: client.config.bot.PREMIUM_URL,
                 user: handler.user!.displayName || handler.user!.tag,
@@ -229,7 +229,7 @@ export default class implements Command {
 
     if (result.type === "TRACK") {
       embed.setDescription(
-        `${client.i18n.get(handler.language, "commands.music", "play_track", {
+        `${client.i18n.get(handler.language, "client.commands", "music.play_track", {
           title: this.getTitle(client, result.type, tracks),
           duration: new ConvertTime().parse(tracks[0].duration as number),
           request: String(tracks[0].requester),
@@ -244,7 +244,7 @@ export default class implements Command {
       if (!player.playing) player.play();
     } else if (result.type === "PLAYLIST") {
       embed.setDescription(
-        `${client.i18n.get(handler.language, "commands.music", "play_playlist", {
+        `${client.i18n.get(handler.language, "client.commands", "music.play_playlist", {
           title: this.getTitle(client, result.type, tracks, value),
           duration: new ConvertTime().parse(TotalDuration),
           songs: String(tracks.length),
@@ -260,7 +260,7 @@ export default class implements Command {
       if (!player.playing) player.play();
     } else if (result.type === "SEARCH") {
       embed.setDescription(
-        `${client.i18n.get(handler.language, "commands.music", "play_result", {
+        `${client.i18n.get(handler.language, "client.commands", "music.play_result", {
           title: this.getTitle(client, result.type, tracks),
           duration: new ConvertTime().parse(tracks[0].duration as number),
           request: String(tracks[0].requester),
@@ -282,7 +282,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "play_no_same_voice")}`
+              `${client.i18n.get(handler.language, "client.commands", "music.play_no_same_voice")}`
             )
             .setColor(client.color_main),
         ],
@@ -347,8 +347,8 @@ export default class implements Command {
 
     if (client.lavalinkUsing.length == 0) {
       choice.push({
-        name: `${client.i18n.get(language, "commands.music", "no_node")}`,
-        value: `${client.i18n.get(language, "commands.music", "no_node")}`,
+        name: `${client.i18n.get(language, "client.commands", "music.no_node")}`,
+        value: `${client.i18n.get(language, "client.commands", "music.no_node")}`,
       });
       return;
     }

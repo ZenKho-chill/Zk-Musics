@@ -43,8 +43,8 @@ export class WebsocketRoute {
       return false;
     }
     if (this.client.wsl.get(String(req.headers["guild-id"]))) {
-      socket.send(JSON.stringify({ error: this.client.i18n.get("vi", "web", "websocket.guild_connection_exists") }));
-      socket.close(1000, JSON.stringify({ error: this.client.i18n.get("vi", "web", "websocket.guild_connection_exists") }));
+      socket.send(JSON.stringify({ error: this.client.i18n.get("vi", "server.web", "websocket.guild_connection_exists") }));
+      socket.close(1000, JSON.stringify({ error: this.client.i18n.get("vi", "server.web", "websocket.guild_connection_exists") }));
       return false;
     }
     return true;

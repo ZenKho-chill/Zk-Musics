@@ -29,7 +29,7 @@ export default class {
     );
     logInfo(
       "PlayerCreate",
-      `${chalk.hex("#f2d7b7")(client.i18n.get("vi", "events", "player.player_created"))}${chalk.hex("#f2d7b7")(
+      `${chalk.hex("#f2d7b7")(client.i18n.get("vi", "server.events", "player_created"))}${chalk.hex("#f2d7b7")(
         guild?.name
       )} / ${chalk.hex("#f2d7b7")(player.guildId)}`
     );

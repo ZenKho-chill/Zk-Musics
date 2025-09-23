@@ -51,7 +51,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "premiumlist_invalid_type", {
+              `${client.i18n.get(handler.language, "client.commands", "admin.premiumlist_invalid_type", {
                 example: `\`${client.prefix} pml <user|guild> <số trang>\``,
                 user: String(handler.user?.displayName || handler.user?.tag),
                 botname: client.user!.username || client.user!.displayName,
@@ -68,8 +68,8 @@ export default class implements Command {
             .setDescription(
               `${client.i18n.get(
                 handler.language,
-                "commands.admin",
-                "premiumlist_invalid_page_number"
+                "client.commands",
+                "admin.premiumlist_invalid_page_number"
               )}`
             )
             .setColor(client.color_main),
@@ -104,8 +104,8 @@ export default class implements Command {
         .setAuthor({
           name: `${client.i18n.get(
             handler.language,
-            "commands.admin",
-            `premiumlist_${type}_list_title`,
+            "client.commands",
+            `admin.premiumlist_${type}_list_title`,
             {
               user: String(handler.user?.displayName || handler.user?.tag),
               botname: client.user!.username || client.user!.displayName,
@@ -127,7 +127,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "premiumlist_page_not_found", {
+              `${client.i18n.get(handler.language, "client.commands", "admin.premiumlist_page_not_found", {
                 page: String(pagesNum),
                 user: String(handler.user?.displayName || handler.user?.tag),
                 botname: client.user!.username || client.user!.displayName,

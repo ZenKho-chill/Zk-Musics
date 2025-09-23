@@ -84,7 +84,7 @@ export default class implements Command {
 
     if (!ChoicesName) {
       await handler.interaction.reply({
-        content: `${client.i18n.get(handler.language, "commands.settings", "error_themes")}`,
+        content: `${client.i18n.get(handler.language, "client.commands.settings", "error_themes")}`,
         flags: MessageFlags.Ephemeral,
       });
       return;
@@ -98,7 +98,7 @@ export default class implements Command {
 
     await client.db.Themes.set(`${handler.user!.id}`, new_data);
     await handler.interaction.reply({
-      content: `${client.i18n.get(handler.language, "commands.settings", "succes_themes", {
+      content: `${client.i18n.get(handler.language, "client.commands.settings", "succes_themes", {
         themes: ChoicesName.name,
       })}`,
       flags: MessageFlags.Ephemeral,

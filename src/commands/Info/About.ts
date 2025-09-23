@@ -36,14 +36,14 @@ export default class implements Command {
       .setColor(client.color_main)
       .setDescription(
         stripIndents`
-      ${client.i18n.get(handler.language, "commands.info", "about_desc1", {
+      ${client.i18n.get(handler.language, "client.commands", "info.about_desc1", {
         bot: `<@${client.user!.id}>`,
       })}
-      ${client.i18n.get(handler.language, "commands.info", "about_desc2", {
+      ${client.i18n.get(handler.language, "client.commands", "info.about_desc2", {
         prefix: client.prefix,
         website: client.config.bot.COMMANDS_URL,
       })}
-      ${client.i18n.get(handler.language, "commands.info", "about_desc3", {
+      ${client.i18n.get(handler.language, "client.commands", "info.about_desc3", {
         prefix: client.prefix,
         serversupport: client.config.bot.SERVER_SUPPORT_URL,
         website: client.config.bot.COMMANDS_URL,
@@ -53,7 +53,7 @@ export default class implements Command {
       .setImage(client.config.bot.IMAGES_URL_ABOUT);
     if (client.config.bot.TEAM_NAME && client.config.bot.TEAM_URL) {
       AboutEmbed.addFields({
-        name: client.i18n.get(handler.language, "commands", "info.about.team"),
+        name: client.i18n.get(handler.language, "client.commands", "info.about.team"),
         value: `**[${client.config.bot.TEAM_NAME}](${client.config.bot.TEAM_URL})**`,
         inline: true,
       });
@@ -67,7 +67,7 @@ export default class implements Command {
 
     if (client.config.bot.PREMIUM_URL) {
       AboutEmbed.addFields({
-        name: client.i18n.get(handler.language, "commands", "info.about.support"),
+        name: client.i18n.get(handler.language, "client.commands", "info.about.support"),
         value: `**[Nhận Premium](${client.config.bot.PREMIUM_URL})**`,
         inline: true,
       });

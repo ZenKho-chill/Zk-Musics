@@ -188,7 +188,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.utils", "mystats_error")}`
+              `${client.i18n.get(handler.language, "client.commands", "utils.mystats_error")}`
             )
             .setColor(client.color_main),
         ],

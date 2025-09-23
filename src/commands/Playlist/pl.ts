@@ -58,7 +58,7 @@ export default class PlaylistCommand implements Command {
     if (!action) {
       await handler.deferReply({ ephemeral: true });
       return handler.editReply({
-        content: client.i18n.get(handler.language, "commands", "playlist.errors.invalid_action"),
+        content: client.i18n.get(handler.language, "client.commands.playlist", "invalid_action"),
       });
     }
 
@@ -129,11 +129,11 @@ export default class PlaylistCommand implements Command {
       if (!handler.interaction.deferred && !handler.interaction.replied && action !== "create") {
         await handler.deferReply({ ephemeral: true });
         await handler.editReply({
-          content: client.i18n.get(handler.language, "commands", "playlist.errors.execution_error"),
+          content: client.i18n.get(handler.language, "client.commands.playlist", "execution_error"),
         });
       } else if (handler.interaction.deferred) {
         await handler.editReply({
-          content: client.i18n.get(handler.language, "commands", "playlist.errors.execution_error"),
+          content: client.i18n.get(handler.language, "client.commands.playlist", "execution_error"),
         });
       }
     }

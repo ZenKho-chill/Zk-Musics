@@ -10,9 +10,29 @@ export interface LanguageConfig {
 }
 
 /**
- * Language section categories
+ * Language section categories với cấu trúc client/server mới
  */
 export type LanguageSection = 
+  | 'client.commands'
+  | 'client.errors'
+  | 'client.messages'  
+  | 'client.ui'
+  | 'client.user-facing'
+  | 'server.events'
+  | 'server.handlers'
+  | 'server.services'
+  | 'server.internal'
+  | 'server.validation';
+
+/**
+ * Context type để xác định client hoặc server
+ */
+export type LanguageContext = 'client' | 'server';
+
+/**
+ * Section name without context
+ */
+export type BaseSectionName = 
   | 'commands'
   | 'events' 
   | 'handlers'
@@ -20,7 +40,9 @@ export type LanguageSection =
   | 'errors'
   | 'messages'
   | 'ui'
-  | 'validation';
+  | 'validation'
+  | 'user-facing'
+  | 'internal';
 
 /**
  * Supported locales

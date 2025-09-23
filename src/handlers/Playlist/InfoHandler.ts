@@ -88,7 +88,7 @@ export class PlaylistInfoHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: client.i18n.get(handler.language, "commands", "playlist.access.cannot_use_dropdown"),
+          content: client.i18n.get(handler.language, "client.commands.playlist", "access_cannot_use_dropdown"),
           ephemeral: true,
         });
       }
@@ -106,7 +106,7 @@ export class PlaylistInfoHandler {
           .addComponents(selectMenu);
 
         const timeoutEmbed = new EmbedBuilder()
-          .setDescription(client.i18n.get(handler.language, "commands", "playlist.timeouts.playlist_selection"))
+          .setDescription(client.i18n.get(handler.language, "server.events", "playlist_selection_timeout"))
           .setColor(client.color_main);
 
         await handler.editReply({
@@ -131,7 +131,7 @@ export class PlaylistInfoHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.playlist", "pl_info_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands.playlist", "pl_info_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -165,35 +165,35 @@ export class PlaylistInfoHandler {
       .setTitle(info.name)
       .addFields([
         {
-          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_owner")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.playlist", "pl_info_owner")}`,
           value: `${owner?.username || "Unknown User"}`,
         },
         {
-          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_id")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.playlist", "pl_info_id")}`,
           value: `||${info.id}||`,
         },
         {
-          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_des")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.playlist", "pl_info_des")}`,
           value: `${
             info.description === null || info.description === "null"
-              ? client.i18n.get(handler.language, "commands.playlist", "pl_info_no_des")
+              ? client.i18n.get(handler.language, "client.commands.playlist", "pl_info_no_des")
               : info.description
           }`,
         },
         {
-          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_private")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.playlist", "pl_info_private")}`,
           value: `${
             info.private
-              ? client.i18n.get(handler.language, "commands.playlist", "pl_private")
-              : client.i18n.get(handler.language, "commands.playlist", "pl_public")
+              ? client.i18n.get(handler.language, "client.commands.playlist", "pl_private")
+              : client.i18n.get(handler.language, "client.commands.playlist", "pl_public")
           }`,
         },
         {
-          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_created")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.playlist", "pl_info_created")}`,
           value: `${created}`,
         },
         {
-          name: `${client.i18n.get(handler.language, "commands.playlist", "pl_info_total")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.playlist", "pl_info_total")}`,
           value: `${info.tracks!.length} bài`,
         },
       ])

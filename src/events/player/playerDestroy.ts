@@ -87,7 +87,7 @@ export default class {
 
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
-      .setDescription(`${client.i18n.get(language, "events.player", "queue_end_desc")}`);
+      .setDescription(`${client.i18n.get(language, "server.events", "player.queue_end_desc")}`);
 
     if (!isSudoDestroy) {
       const setup = await client.db.setup.get(player.guildId);

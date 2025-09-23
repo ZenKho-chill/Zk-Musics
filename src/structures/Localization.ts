@@ -6,9 +6,9 @@ export class Localization extends I18n {
   }
 
   /**
-   * Get localized string with improved fallback support
+   * Get localized string with improved fallback support and new structure
    * @param locale Target locale (e.g., 'vi', 'en')
-   * @param section Section name (e.g., 'commands', 'handlers')
+   * @param section Section name (e.g., 'client.commands', 'server.services')
    * @param key Key path (supports nested keys with dot notation, e.g., 'music.play.description')
    * @param args Arguments for string interpolation
    */
@@ -42,16 +42,102 @@ export class Localization extends I18n {
   }
 
   /**
-   * Get string from common section
+   * Get string from client or server sections with improved fallback
+   * @param locale Target locale
+   * @param context 'client' or 'server'
+   * @param section Section name within context
+   * @param key Key to look for
+   * @param args Arguments for string interpolation
+   */
+  public getByContext(locale: string, context: 'client' | 'server', section: string, key: string, args?: I18nArgs): string {
+    // Try direct path first
+    const directPath = `${context}.${section}`;
+    try {
+      const result = this.get(locale, directPath, key, args);
+      if (!this.isErrorMessage(result)) {
+        return result;
+      }
+    } catch {
+      // Continue to fallback
+    }
+
+    // Try fallback in same context but different section
+    const contextSections = this.getContextSections(context);
+    for (const fallbackSection of contextSections) {
+      if (fallbackSection === section) continue;
+      
+      try {
+        const fallbackPath = `${context}.${fallbackSection}`;
+        const result = this.get(locale, fallbackPath, key, args);
+        if (!this.isErrorMessage(result)) {
+          return result;
+        }
+      } catch {
+        continue;
+      }
+    }
+
+    // Try opposite context as last resort
+    const oppositeContext = context === 'client' ? 'server' : 'client';
+    const oppositeSections = this.getContextSections(oppositeContext);
+    for (const oppositeSection of oppositeSections) {
+      try {
+        const oppositePath = `${oppositeContext}.${oppositeSection}`;
+        const result = this.get(locale, oppositePath, key, args);
+        if (!this.isErrorMessage(result)) {
+          return result;
+        }
+      } catch {
+        continue;
+      }
+    }
+
+    return `[Missing: ${context}.${section}.${key}]`;
+  }
+
+  /**
+   * Check if a result is an error message
+   */
+  private isErrorMessage(result: string): boolean {
+    return result.includes('not found') || result.startsWith('[') || result.includes('Error:');
+  }
+
+  /**
+   * Get available sections for a context
+   */
+  private getContextSections(context: 'client' | 'server'): string[] {
+    if (context === 'client') {
+      return ['commands', 'ui', 'messages', 'errors', 'user-facing'];
+    } else {
+      return ['services', 'events', 'handlers', 'internal', 'validation'];
+    }
+  }
+
+  /**
+   * Get string from common section (backward compatibility)
    * @param key Key to look for in common sections
    * @param args Arguments for string interpolation
    */
   private getFromCommon(key: string, args?: I18nArgs): string | null {
-    const commonSections = ['errors', 'messages', 'ui', 'validation'];
+    // Try client sections first (more user-visible)
+    const clientSections = ['client.errors', 'client.messages', 'client.ui'];
     
-    for (const commonSection of commonSections) {
+    for (const section of clientSections) {
       try {
-        const result = super.get("en", commonSection, key, args);
+        const result = super.get("en", section, key, args);
+        if (!result.includes("not found")) {
+          return result;
+        }
+      } catch {
+        continue;
+      }
+    }
+    
+    // Try server sections as fallback
+    const serverSections = ['server.validation', 'server.internal'];
+    for (const section of serverSections) {
+      try {
+        const result = super.get("en", section, key, args);
         if (!result.includes("not found")) {
           return result;
         }

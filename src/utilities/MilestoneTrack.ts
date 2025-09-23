@@ -37,7 +37,7 @@ export async function MilestoneTrack(client: Manager, player: ZklinkPlayer) {
     10000,
   ];
   if (milestones.includes(userData.totalSongsPlayed)) {
-    const description = client.i18n.get(language, "events.player", "milestone_track_desc", {
+    const description = client.i18n.get(language, "server.events.player", "milestone_track_desc", {
       user: `<@${userData.userId}>`,
       total: String(userData.totalSongsPlayed),
     });
@@ -47,7 +47,7 @@ export async function MilestoneTrack(client: Manager, player: ZklinkPlayer) {
         .setThumbnail(userData.avatarURL)
         .setDescription(description)
         .setFooter({
-          text: client.i18n.get(language, "events.player", "milestone_track_footer", {
+          text: client.i18n.get(language, "server.events.player", "milestone_track_footer", {
             user: userData.displayname || userData.username,
           }),
         });

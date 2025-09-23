@@ -33,7 +33,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+              `${client.i18n.get(handler.language, "client.commands", "music.no_songs_playing", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -44,7 +44,7 @@ export default class implements Command {
     player.queue.clear();
 
     const cleared = new EmbedBuilder()
-      .setDescription(`${client.i18n.get(handler.language, "commands.music", "clearqueue_msg")}`)
+      .setDescription(`${client.i18n.get(handler.language, "client.commands", "music.clearqueue_msg")}`)
       .setColor(client.color_main);
     await handler.editReply({ content: " ", embeds: [cleared] });
 

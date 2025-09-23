@@ -116,7 +116,7 @@ export class PlaylistDetailHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: client.i18n.get(handler.language, "commands", "playlist.access.cannot_use_dropdown"),
+          content: client.i18n.get(handler.language, "client.commands.playlist", "access_cannot_use_dropdown"),
           ephemeral: true,
         });
       }
@@ -151,7 +151,7 @@ export class PlaylistDetailHandler {
           .addComponents(selectMenu);
 
         const timeoutEmbed = new EmbedBuilder()
-          .setDescription(client.i18n.get(handler.language, "commands", "playlist.timeouts.playlist_selection"))
+          .setDescription(client.i18n.get(handler.language, "server.events", "playlist_selection_timeout"))
           .setColor(client.color_main);
 
         await handler.editReply({
@@ -176,7 +176,7 @@ export class PlaylistDetailHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(language, "commands.playlist", "pl_detail_notfound")}`
+              `${client.i18n.get(language, "client.commands.playlist", "pl_detail_notfound")}`
             )
             .setColor(client.color_main),
         ],
@@ -188,7 +188,7 @@ export class PlaylistDetailHandler {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(language, "commands.playlist", "pl_detail_private")}`
+              `${client.i18n.get(language, "client.commands.playlist", "pl_detail_private")}`
             )
             .setColor(client.color_main),
         ],

@@ -42,7 +42,7 @@ export class PlaylistAddHandler {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(client.i18n.get(handler.language, "commands", "playlist.handler_errors.no_playlists_create_first"))
+            .setDescription(client.i18n.get(handler.language, "client.commands.playlist", "handler_errors_no_playlists_create_first"))
             .setColor(client.color_main),
         ],
       });
@@ -83,7 +83,7 @@ export class PlaylistAddHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: client.i18n.get(handler.language, "handlers", "unauthorized_user"),
+          content: client.i18n.get(handler.language, "server.handlers", "unauthorized_user"),
           ephemeral: true,
         });
       }
@@ -136,7 +136,7 @@ export class PlaylistAddHandler {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(client.i18n.get(handler.language, "commands", "playlist.errors.playlist_not_found"))
+            .setDescription(client.i18n.get(handler.language, "client.commands.playlist", "errors_playlist_not_found"))
             .setColor(client.color_main),
         ],
       });
@@ -161,7 +161,7 @@ export class PlaylistAddHandler {
       )
       .setColor(client.color_main)
       .addFields({
-        name: client.i18n.get(handler.language, "commands", "playlist.ui_elements.playlist_selected_header"),
+        name: client.i18n.get(handler.language, "client.commands.playlist", "ui_elements_playlist_selected_header"),
         value: `**Tên:** ${playlist.name}\n**ID:** ||\`${playlistId}\`||`,
         inline: true,
       });
@@ -203,7 +203,7 @@ export class PlaylistAddHandler {
       
       if (buttonInt.user.id !== handler.user?.id) {
         return buttonInt.reply({
-          content: client.i18n.get(handler.language, "handlers", "unauthorized_user"),
+          content: client.i18n.get(handler.language, "server.handlers", "unauthorized_user"),
           ephemeral: true,
         });
       }
@@ -348,7 +348,7 @@ export class PlaylistAddHandler {
         await originalHandler.editReply({
           embeds: [
             new EmbedBuilder()
-              .setDescription(client.i18n.get(language, "commands", "playlist.handler_errors.invalid_song_input"))
+              .setDescription(client.i18n.get(language, "client.commands.playlist", "handler_errors_invalid_song_input"))
               .setColor(client.color_main),
           ],
         });
@@ -385,12 +385,12 @@ export class PlaylistAddHandler {
     
     const confirmButton = new ButtonBuilder()
       .setCustomId(`confirm_add_${playlistId}`)
-      .setLabel(client.i18n.get(language, "commands", "playlist.ui_elements.confirm_add_button"))
+      .setLabel(client.i18n.get(language, "client.commands.playlist", "ui_elements_confirm_add_button"))
       .setStyle(ButtonStyle.Success);
 
     const cancelButton = new ButtonBuilder()
       .setCustomId("cancel_add")
-      .setLabel(client.i18n.get(language, "commands", "playlist.ui_elements.cancel_button"))
+      .setLabel(client.i18n.get(language, "client.commands.playlist", "ui_elements_cancel_button"))
       .setStyle(ButtonStyle.Secondary);
 
     const buttonRow = new ActionRowBuilder<ButtonBuilder>()
@@ -422,7 +422,7 @@ export class PlaylistAddHandler {
     buttonCollector.on("collect", async (buttonInt: ButtonInteraction) => {
       if (buttonInt.user.id !== interaction.user.id) {
         return buttonInt.reply({
-          content: client.i18n.get(language, "handlers", "unauthorized_user"),
+          content: client.i18n.get(language, "server.handlers", "unauthorized_user"),
           ephemeral: true,
         });
       }
@@ -446,7 +446,7 @@ export class PlaylistAddHandler {
           await interaction.editReply({
             embeds: [
               new EmbedBuilder()
-                .setDescription(client.i18n.get("vi", "commands", "playlist.status.cancelled_add"))
+                .setDescription(client.i18n.get(language, "client.commands.playlist", "status_cancelled_add"))
                 .setColor(client.color_main),
             ],
             components: [],
@@ -525,7 +525,7 @@ export class PlaylistAddHandler {
     selectCollector.on("collect", async (selectInt: StringSelectMenuInteraction) => {
       if (selectInt.user.id !== interaction.user.id) {
         return selectInt.reply({
-          content: client.i18n.get(language, "handlers", "unauthorized_user"),
+          content: client.i18n.get(language, "server.handlers", "unauthorized_user"),
           ephemeral: true,
         });
       }
@@ -576,7 +576,7 @@ export class PlaylistAddHandler {
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(client.i18n.get("vi", "commands", "playlist.errors.playlist_not_found"))
+            .setDescription(client.i18n.get(language, "client.commands.playlist", "errors_playlist_not_found"))
             .setColor(client.color_main),
         ],
       });
@@ -587,7 +587,7 @@ export class PlaylistAddHandler {
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(client.i18n.get("vi", "commands", "playlist.errors.not_owner"))
+            .setDescription(client.i18n.get(language, "client.commands.playlist", "errors_not_owner"))
             .setColor(client.color_main),
         ],
       });
@@ -617,7 +617,7 @@ export class PlaylistAddHandler {
 
     // Thông báo thành công
     const successEmbed = new EmbedBuilder()
-      .setTitle(client.i18n.get("vi", "commands", "playlist.success.song_added"))
+      .setTitle(client.i18n.get(language, "client.commands.playlist", "success_song_added"))
       .setDescription(
         `**Bài hát:** ${track.title}\n` +
         `**Tác giả:** ${track.author}\n` +
@@ -657,8 +657,8 @@ export class PlaylistAddHandler {
 
     if (client.lavalinkUsing.length == 0) {
       choice.push({
-        name: `${client.i18n.get(language, "commands.playlist", "pl_error_no_node")}`,
-        value: `${client.i18n.get(language, "commands.playlist", "pl_error_no_node")}`,
+        name: `${client.i18n.get(language, "client.commands.playlist", "pl_error_no_node")}`,
+        value: `${client.i18n.get(language, "client.commands.playlist", "pl_error_no_node")}`,
       });
       return;
     }

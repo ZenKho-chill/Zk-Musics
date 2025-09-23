@@ -64,7 +64,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.utils", "kick_user_not_found", {
+              `${client.i18n.get(handler.language, "client.commands", "utils.kick_user_not_found", {
                 user: `<@${targetUser.id}>`,
               })}`
             )
@@ -78,7 +78,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.utils", "kick_user_ownerid", {
+              `${client.i18n.get(handler.language, "client.commands", "utils.kick_user_ownerid", {
                 user: `<@${targetUser.id}>`,
               })}`
             )
@@ -92,7 +92,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.utils", "kick_user_higher_role")}`
+              `${client.i18n.get(handler.language, "client.commands", "utils.kick_user_higher_role")}`
             )
             .setColor(client.color_main),
         ],
@@ -104,7 +104,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.utils", "kick_bot_higher_role")}`
+              `${client.i18n.get(handler.language, "client.commands", "utils.kick_bot_higher_role")}`
             )
             .setColor(client.color_main),
         ],
@@ -116,7 +116,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.utils", "kick_error", {
+              `${client.i18n.get(handler.language, "client.commands", "utils.kick_error", {
                 user: `<@${targetUser.id}>`,
               })}`
             )
@@ -133,7 +133,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.utils", "kick_success_dm", {
+              `${client.i18n.get(handler.language, "client.commands", "utils.kick_success_dm", {
                 moderator: `<@${handler.user!.id}>`,
                 guild: guild.name,
                 reason: reason || "Không có lý do được cung cấp",
@@ -150,7 +150,7 @@ export default class implements Command {
       embeds: [
         new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.utils", "kick_success", {
+            `${client.i18n.get(handler.language, "client.commands", "utils.kick_success", {
               user: `<@${targetUser.id}>`,
               reason: reason || "Không có lý do được cung cấp",
               moderator: `<@${handler.user!.id}>`,

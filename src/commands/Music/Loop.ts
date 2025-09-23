@@ -55,7 +55,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+              `${client.i18n.get(handler.language, "client.commands.music", "no_songs_playing", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -73,7 +73,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "loop_invalid", {
+              `${client.i18n.get(handler.language, "client.commands.music", "loop_invalid", {
                 mode: this.changeBold(mode_array).join(", "),
               })}`
             )
@@ -86,7 +86,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "loop_already", {
+              `${client.i18n.get(handler.language, "client.commands.music", "loop_already", {
                 mode: mode,
               })}`
             )
@@ -100,7 +100,7 @@ export default class implements Command {
 
       const looped = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "loop_current", {
+          `${client.i18n.get(handler.language, "client.commands.music", "loop_current", {
             user: handler.user!.displayName || handler.user!.tag,
             title: this.getTitle(client, currentTrack),
           })}`
@@ -113,7 +113,7 @@ export default class implements Command {
 
       const looped_queue = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "loop_all", {
+          `${client.i18n.get(handler.language, "client.commands.music", "loop_all", {
             user: handler.user!.displayName || handler.user!.tag,
           })}`
         )
@@ -124,7 +124,7 @@ export default class implements Command {
       if (client.config.features.AUTO_RESUME) this.setLoop247(client, player, ZklinkLoopMode.NONE);
 
       const looped = new EmbedBuilder()
-        .setDescription(`${client.i18n.get(handler.language, "commands.music", "unloop_all")}`)
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.music", "unloop_all")}`)
         .setColor(client.color_main);
       handler.editReply({ content: " ", embeds: [looped] });
     }

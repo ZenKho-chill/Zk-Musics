@@ -88,10 +88,10 @@ export default class implements PlayerButton {
       if (voteChecker == TopggServiceEnum.ERROR) {
         const embed = new EmbedBuilder()
           .setAuthor({
-            name: client.i18n.get(language, "interaction", "topgg_error_author"),
+            name: client.i18n.get(language, "server.handlers", "topgg_error_author"),
           })
           .setDescription(
-            client.i18n.get(language, "interaction", "topgg_error_desc", {
+            client.i18n.get(language, "server.handlers", "topgg_error_desc", {
               serversupport: client.config.bot.SERVER_SUPPORT_URL,
               premium: client.config.bot.PREMIUM_URL,
             })
@@ -107,10 +107,10 @@ export default class implements PlayerButton {
       if (voteChecker == TopggServiceEnum.UNVOTED) {
         const embed = new EmbedBuilder()
           .setAuthor({
-            name: client.i18n.get(language, "interaction", "topgg_unvote_author"),
+            name: client.i18n.get(language, "server.handlers", "topgg_unvote_author"),
           })
           .setDescription(
-            client.i18n.get(language, "interaction", "topgg_unvote_desc", {
+            client.i18n.get(language, "server.handlers", "topgg_unvote_desc", {
               user: message.user?.id
                 ? `<@${message.user.id}>`
                 : `${message.user?.tag || "Người dùng không rõ"}`,
@@ -123,7 +123,7 @@ export default class implements PlayerButton {
         if (client.config.MENU_HELP_EMOJI.E_VOTE) {
           VoteButton.addComponents(
             new ButtonBuilder()
-              .setLabel(client.i18n.get(language, "interaction", "topgg_unvote_button"))
+              .setLabel(client.i18n.get(language, "server.handlers", "topgg_unvote_button"))
               .setStyle(ButtonStyle.Link)
               .setEmoji(client.config.MENU_HELP_EMOJI.E_VOTE)
               .setURL(`https://top.gg/bot/${client.user?.id}/vote`)
@@ -132,7 +132,7 @@ export default class implements PlayerButton {
         if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
           VoteButton.addComponents(
             new ButtonBuilder()
-              .setLabel(client.i18n.get(language, "interaction", "premium_button"))
+              .setLabel(client.i18n.get(language, "server.handlers", "premium_button"))
               .setStyle(ButtonStyle.Link)
               .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
               .setURL(client.config.bot.PREMIUM_URL)
@@ -150,10 +150,10 @@ export default class implements PlayerButton {
     if (this.accessableby === "PremiumRole" && !userPerm.PremiumRole) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "interaction", "no_premium_role_author"),
+          name: client.i18n.get(language, "server.handlers", "no_premium_role_author"),
         })
         .setDescription(
-          `${client.i18n.get(language, "interaction", "no_premium_role_desc", {
+          `${client.i18n.get(language, "server.handlers", "no_premium_role_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
               : `${message.user?.tag || "Người dùng không rõ"}`,
@@ -166,7 +166,7 @@ export default class implements PlayerButton {
       if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get(language, "interaction", "no_premium_role_button"))
+            .setLabel(client.i18n.get(language, "server.handlers", "no_premium_role_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -184,10 +184,10 @@ export default class implements PlayerButton {
     if (this.accessableby === "Premium" && !userPerm.Premium) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "interaction", "no_premium_author"),
+          name: client.i18n.get(language, "server.handlers", "no_premium_author"),
         })
         .setDescription(
-          `${client.i18n.get(language, "interaction", "no_premium_desc", {
+          `${client.i18n.get(language, "server.handlers", "no_premium_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
               : `${message.user?.tag || "Người dùng không rõ"}`,
@@ -200,7 +200,7 @@ export default class implements PlayerButton {
       if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get(language, "interaction", "no_premium_button"))
+            .setLabel(client.i18n.get(language, "server.handlers", "no_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -218,10 +218,10 @@ export default class implements PlayerButton {
     if (this.accessableby === "UserPremium" && !userPerm.UserPremium) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "interaction", "no_user_premium_plan_author"),
+          name: client.i18n.get(language, "server.handlers", "no_user_premium_plan_author"),
         })
         .setDescription(
-          `${client.i18n.get(language, "interaction", "no_user_premium_plan_desc", {
+          `${client.i18n.get(language, "server.handlers", "no_user_premium_plan_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
               : `${message.user?.tag || "Người dùng không rõ"}`,
@@ -234,7 +234,7 @@ export default class implements PlayerButton {
       if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get(language, "interaction", "no_user_premium_button"))
+            .setLabel(client.i18n.get(language, "server.handlers", "no_user_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -252,10 +252,10 @@ export default class implements PlayerButton {
     if (this.accessableby === "GuildPremium" && !userPerm.GuildPremium) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "interaction", "no_guild_premium_plan_author"),
+          name: client.i18n.get(language, "server.handlers", "no_guild_premium_plan_author"),
         })
         .setDescription(
-          `${client.i18n.get(language, "interaction", "no_guild_premium_plan_desc", {
+          `${client.i18n.get(language, "server.handlers", "no_guild_premium_plan_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
               : `${message.user?.tag || "Người dùng không rõ"}`,
@@ -268,7 +268,7 @@ export default class implements PlayerButton {
       if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get(language, "interaction", "no_guild_premium_button"))
+            .setLabel(client.i18n.get(language, "server.handlers", "no_guild_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -286,10 +286,10 @@ export default class implements PlayerButton {
     if (this.accessableby === "PremiumStore" && !userPerm.PremiumStore) {
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "interaction", "no_premium_author"),
+          name: client.i18n.get(language, "server.handlers", "no_premium_author"),
         })
         .setDescription(
-          `${client.i18n.get(language, "interaction", "no_premium_desc", {
+          `${client.i18n.get(language, "server.handlers", "no_premium_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
               : `${message.user?.tag || "Người dùng không rõ"}`,
@@ -302,7 +302,7 @@ export default class implements PlayerButton {
       if (client.config.MENU_HELP_EMOJI.E_PREMIUM && client.config.bot.PREMIUM_URL) {
         PremiumCheckButton.addComponents(
           new ButtonBuilder()
-            .setLabel(client.i18n.get(language, "interaction", "no_premium_button"))
+            .setLabel(client.i18n.get(language, "server.handlers", "no_premium_button"))
             .setStyle(ButtonStyle.Link)
             .setEmoji(client.config.MENU_HELP_EMOJI.E_PREMIUM)
             .setURL(client.config.bot.PREMIUM_URL)
@@ -373,11 +373,11 @@ export default class implements PlayerButton {
       const str = songStrings.slice(i * 10, i * 10 + 10).join("");
 
       const embedQueue = new EmbedBuilder()
-        .setTitle(`${client.i18n.get(language, "button.player.music", "queue_title")}`)
+        .setTitle(`${client.i18n.get(language, "client.ui", "queue_title")}`)
         .setThumbnail(thumbnail)
         .setColor(client.color_second)
         .setDescription(
-          `${client.i18n.get(language, "button.player.music", "queue_description", {
+          `${client.i18n.get(language, "client.ui", "queue_description", {
             title: this.getTitle(client, song!),
             duration: new FormatDuration().parse(song?.duration),
             requester: `${song!.requester}`,
@@ -385,7 +385,7 @@ export default class implements PlayerButton {
           })}`
         )
         .setFooter({
-          text: `${client.i18n.get(language, "button.player.music", "queue_footer", {
+          text: `${client.i18n.get(language, "client.ui", "queue_footer", {
             page: `${i + 1}`,
             pages: `${pagesNum}`,
             queue_lang: `${player.queue.length}`,

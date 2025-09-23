@@ -27,11 +27,11 @@ export class ZklinkInit {
       resume: true,
       resumeTimeout: 600,
       retryCount: Infinity,
-      defaultSearchEngine: this.client.i18n.get("vi", "plugins", "apple_name"),
+      defaultSearchEngine: this.client.i18n.get("vi", "server.plugins", "apple_name"),
       retryTimeout: 3000,
       searchFallback: {
         enable: true,
-        engine: this.client.i18n.get("vi", "plugins", "spotify_name"),
+        engine: this.client.i18n.get("vi", "server.plugins", "spotify_name"),
       },
     };
   }

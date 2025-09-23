@@ -68,7 +68,7 @@ export default class implements Command {
       // Tạo Embed cho lỗi
       const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_failure")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.info", "rating_failure")}`);
 
       if (!RatingChannelID || RatingChannelID.length === 0) {
         // Nếu RatingChannelID không được cấu hình
@@ -91,7 +91,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "rating_failure", {
+                `${client.i18n.get(handler.language, "client.commands.info", "rating_failure", {
                   prefix: client.prefix,
                 })}`
               )
@@ -106,7 +106,7 @@ export default class implements Command {
           iconURL: handler.user?.displayAvatarURL(),
         })
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.info", "rating_desc", {
+          `${client.i18n.get(handler.language, "client.commands.info", "rating_desc", {
             rating: rating,
             user:
               `<@${handler.user?.id ?? ""}>` ||
@@ -143,13 +143,13 @@ export default class implements Command {
 
       const successEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_succes")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.info", "rating_succes")}`);
       handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
       logWarn("Rating", "Lỗi khi thực thi lệnh Rating");
       const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_failure")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.info", "rating_failure")}`);
 
       handler.editReply({ embeds: [errorEmbed] });
     }

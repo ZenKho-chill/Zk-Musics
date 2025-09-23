@@ -48,7 +48,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "report_failure")}`
+                `${client.i18n.get(handler.language, "client.commands.info", "report_failure")}`
               ),
           ],
         });
@@ -62,7 +62,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "report_failure")}`
+                `${client.i18n.get(handler.language, "client.commands.info", "report_failure")}`
               ),
           ],
         });
@@ -75,7 +75,7 @@ export default class implements Command {
         const errorEmbed = new EmbedBuilder()
           .setColor(client.color_main)
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.info", "report_provide_desc")}`
+            `${client.i18n.get(handler.language, "client.commands.info", "report_provide_desc")}`
           );
         await handler.editReply({
           embeds: [errorEmbed],
@@ -118,7 +118,7 @@ export default class implements Command {
 
       const successEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.info", "report_success")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.info", "report_success")}`);
 
       return handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
@@ -128,7 +128,7 @@ export default class implements Command {
           new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.info", "report_failure")}`
+              `${client.i18n.get(handler.language, "client.commands.info", "report_failure")}`
             ),
         ],
       });

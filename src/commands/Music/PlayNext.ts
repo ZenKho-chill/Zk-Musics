@@ -49,7 +49,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+              `${client.i18n.get(handler.language, "client.commands.music", "no_songs_playing", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
               })}`
@@ -65,7 +65,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "playnext_notfound", {
+              `${client.i18n.get(handler.language, "client.commands.music", "playnext_notfound", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
               })}`
@@ -83,7 +83,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "youtube_disabled", {
+              `${client.i18n.get(handler.language, "client.commands.music", "youtube_disabled", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
                 serversupport: client.config.bot.SERVER_SUPPORT_URL,
