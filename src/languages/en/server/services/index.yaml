@@ -1,35 +1,14 @@
 # Services Language File (English)
-
-# TopGG Service
-topgg:
-  setup_success: "TopGG service has been successfully configured!"
-  stats_enabled: "TopGG stats have been successfully enabled!"
-
-# Temp Voice Service  
-temp_voice:
-  channel_expired: "Temporary voice channel has expired"
-
-# MySQL Backup Service
-mysql_backup:
-  empty_dump: "Empty or invalid dump, backup will not be sent."
-  backup_sent: "Backup file {filename} has been sent to Discord channel."
-  invalid_channel: "Invalid channel ID or channel is not a text channel."
-
-# Config Data Service
-config:
-  no_data: "Config file contains no data, please check config.example.yml for reference"
-  no_bot: "Config file does not contain bot field, please check config.example.yml for reference"
-  no_lavalink: "Config file does not contain lavalink field, please check config.example.yml for reference"
-  no_owner: "Config file does not contain OWNER_ID, please check config.example.yml for reference"
-  no_token: "Config file does not contain TOKEN, please check config.example.yml for reference"
-  no_nodes: "Config file does not contain NODES, please check config.example.yml for reference"
-
-# Command Deployer Service
-command_deployer:
-  reading_interactions: "Reading interaction file..."
-  setup_rest: "Finished reading interaction file, setting up REST..."
-  rest_setup_complete: "REST setup complete for {username}#{discriminator}"
-
-# Log Manager Service
-log_manager:
-  check_log_channel: "Checking if logchannel is configured"
+no_owner: "No owner found"
+stats_enabled: "Statistics enabled"
+no_lavalink: "No Lavalink connection"
+check_log_channel: "Check log channel"
+no_data: "No data available"
+no_nodes: "No nodes available"
+topgg: "Top.gg"
+no_token: "No token provided"
+no_bot: "Bot not found"
+config: "Configuration"
+rest_setup_complete: "REST setup completed"
+log_manager: "Log manager"
+setup_success: "Setup completed successfully"

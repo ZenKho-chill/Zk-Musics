@@ -1,6 +1,6 @@
-# Zklink Core Language File (Vietnamese)
+# Tệp ngôn ngữ lõi Zklink (Tiếng Việt)
 
-# Player messages
+# Tin nhắn trình phát
 player:
   destroyed: "Player đã bị hủy"
   destroyed_at: "Player đã bị huỷ tại "
@@ -8,14 +8,14 @@ player:
   track_not_seekable: "Track hiện tại không thể tua (not seekable)"
   no_track_to_play: "Không có track nào để phát"
 
-# Search messages  
+# Tin nhắn tìm kiếm
 search:
   no_results: "Không tìm thấy kết quả"
   no_available_nodes: "Không có node khả dụng"
   invalid_url: "URL không hợp lệ"
   cannot_fetch_video_html: "Không thể lấy HTML trang video."
 
-# Filter messages
+# Tin nhắn bộ lọc
 filter:
   not_found: "Không tìm thấy filter"
   reset_success: "Tất cả filter đã được đặt lại về vị trí mặc định."
@@ -23,7 +23,7 @@ filter:
   filters_reset: "Tất cả filter đã được đặt lại về vị trí mặc định."
   filter_applied: "Đã đặt filter tuỳ chỉnh thành công. Dữ liệu: "
 
-# Node messages
+# Tin nhắn node
 node:
   no_nodes_found: "Không tìm thấy node nào để kết nối"
   driver_not_found: "Không tìm thấy driver, sử dụng lavalink v4 thay thế"
@@ -32,14 +32,12 @@ node:
 nico:
   html_fetch_error: "Không thể lấy HTML trang video..."
 
-# Voice receiver plugin
-voice_receiver:
-  connected: "Đã kết nối tới server nhận voice của nodelink!"
-  disconnected: "Đã huỷ kết nối tới server nhận voice của nodelink!"
-
-# WebSocket messages
+# Tin nhắn WebSocket
 websocket:
   connection_closed: "Đóng kết nối bình thường"
   secure_protocol: "wss:"
   invalid_continuation_frame: "Khung tiếp nối không hợp lệ"
   invalid_opcode: "Opcode không hợp lệ"
+
+# Additional keys
+track_loaded: "Track đã được tải"

@@ -10,15 +10,7 @@ network_error: "❌ Network connection error!"
 timeout_error: "❌ Request timed out!"
 unknown_error: "❌ An unknown error occurred!"
 
-# Additional common errors
-guild_only: "This command can only be used in a server"
-user_not_found: "User not found"
-channel_inaccessible: "Channel cannot be accessed"
-command_not_found: "Command not found!"
-
 # Vietnamese specific
 vietnamese:
   guild_only: "Lệnh này chỉ có thể sử dụng trong server."
   user_not_found: "Không tìm thấy người dùng"
-  channel_inaccessible: "Kênh không thể truy cập."
-  command_not_found: "Không tìm thấy lệnh!"

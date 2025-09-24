@@ -2,12 +2,6 @@
 enable: "Đã bật"
 disable: "Đã tắt"
 
-# maintenance
-maintenance_title: "Bảo trì"
-maintenance_desc: |
-  %{bot} hiện đang trong quá trình bảo trì. Vui lòng thử lại sau.
-  Để biết thêm thông tin, hãy tham gia [server hỗ trợ](%{serversupport}). Cảm ơn bạn!
-
 # Getting error!
 unexpected_error: "<:warnings:1220876158254710936> Đã có lỗi xảy ra. Vui lòng thử lại sau!"
 
@@ -19,35 +13,16 @@ no_perms: |
   <:warnings:1220876158254710936> Mình không có quyền **%{perm}**!
   <:blankers:1220848705289064669><:okee:1220876098456256512> Vui lòng cấp quyền **%{perm}** cho mình để thực hiện lệnh này.
 
-no_manage_guild_perms: |
-  <:warnings:1220876158254710936> Lệnh này yêu cầu quyền **%{perm}**!
-  <:blankers:1220848705289064669><:wrong:1220876213896216686> Bạn không có quyền thực hiện lệnh này!
-
-no_admin_perms: |
-  <:warnings:1220876158254710936> Lệnh này yêu cầu quyền **%{perm}**!
-  <:blankers:1220848705289064669><:wrong:1220876213896216686> Bạn không có quyền thực hiện lệnh này!
-
 # No permission!
 no_perms_channel: "<:warnings:1220876158254710936> Mình không có quyền **%{perm}** để thực hiện lệnh này!"
 
 # Execute when invalid
 no_node: "<:warnings:1220876158254710936> **Không tìm thấy server Lavalink. Vui lòng thử lại sau 5 phút**"
 
-# Client owner!
-owner_only: "<:warnings:1220876158254710936> Lệnh này chỉ có thể được thực hiện bởi **Owner** của bot"
-
 # Need to join voice & same voice to use command!
 no_player: "<:warnings:1220876158254710936> Hiện không có bài nào đang phát!"
 no_same_voice: "<:wrong:1220876213896216686> Bạn không ở cùng kênh thoại với mình!"
 no_in_voice: "<:wrong:1220876213896216686> Bạn chưa ở trong kênh thoại!"
-
-# Blacklist User
-blacklist_user: |
-  <:warnings:1220876158254710936> Có vẻ bạn đã bị blacklist! Bạn không được phép sử dụng lệnh.
-  <:blankers:1220848705289064669><:okee:1220876098456256512> Nếu bạn cho rằng đây là nhầm lẫn, vui lòng liên hệ **[developer](%{serversupport})**.
-
-# Blacklist Guild
-blacklist_guild: |
   <:warnings:1220876158254710936> Server này đã bị blacklist! Bạn không được phép sử dụng lệnh trong server này.
   <:blankers:1220848705289064669><:okee:1220876098456256512> Nếu bạn cho rằng đây là nhầm lẫn, vui lòng liên hệ **[developer](%{serversupport})**.
 
@@ -90,3 +65,12 @@ topgg_unvote_desc: |
 mention_content: |
   Này %{user}, tiền tố của mình trong server này là `%{prefix}`
   Bạn có thể ping mình để dùng lệnh hoặc gõ **/help** để xem các lệnh slash của mình ♡
+
+# Additional keys
+blacklist_guild: "Server này đã bị blacklist! Bạn không được phép sử dụng lệnh trong server này."
+maintenance_title: "Bot đang bảo trì"
+owner_only: "Lệnh này chỉ dành cho chủ sở hữu bot!"
+blacklist_user: "Bạn đã bị blacklist! Bạn không được phép sử dụng lệnh."
+no_admin_perms: "Bạn cần quyền quản trị viên để sử dụng lệnh này!"
+no_manage_guild_perms: "Bạn cần quyền quản lý server để sử dụng lệnh này!"
+maintenance_desc: "Bot hiện đang trong chế độ bảo trì. Vui lòng thử lại sau."

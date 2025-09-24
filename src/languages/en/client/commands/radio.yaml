@@ -1,8 +1,2 @@
 ﻿### Radio Commands
-radio_no_voice: "<:m_wrong:1193112008124530738> **You need to be in the same voice channel as me!"
-radio_no_same_voice: "<:m_wrong:1193112008124530738> You are not in the same voice channel as me!"
-radio_match: |
-  <:m_wrong:1193112008124530738> This radio station has died or link broken. Please **/report** to report it.
-  <:m_blank:1215234569008189450><:m_sparkle:1204848989992648704> Please contact the [staff](%{serversupport}) for further assistance.
 radio_play_track: "**<:m_singing:1196006929932234782> Started Playing [%{title}](%{serversupport}) Enjoy it!**"
-radio_placeholder: "Choose a provider to see available stations"

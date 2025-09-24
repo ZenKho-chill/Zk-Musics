@@ -1,0 +1,16 @@
+# Tệp ngôn ngữ Web API (Tiếng Việt)
+
+# Phản hồi API
+api:
+  player_not_found: "Không tìm thấy trình phát hiện tại!"
+  guild_not_found: "Không tìm thấy máy chủ!"
+  user_not_found: "Không tìm thấy người dùng!"
+  player_already_exists: "Trình phát đã tồn tại trong máy chủ này"
+  search_param_missing: "Không tìm thấy tham số tìm kiếm!"
+  current_player_not_found: "Không tìm thấy trình phát hiện tại!"
+  no_zk_music: "Ở đây không có Zk Music'"
+  dont_worry_zk_music: "Đừng lo, Zk Music'"
+
+# Tin nhắn WebSocket
+websocket:
+  guild_connection_exists: "Đã có kết nối cho máy chủ này"

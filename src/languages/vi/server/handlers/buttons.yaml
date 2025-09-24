@@ -1,8 +1,8 @@
-# Button handler messages
+# Tin nhắn xử lý nút bấm
 unauthorized_user: "❌ Bạn không thể sử dụng nút này!"
 button_disabled: "❌ Nút này hiện đang bị vô hiệu hóa!"
 
-# Player button messages
+# Tin nhắn nút điều khiển trình phát
 player_buttons:
   play_resumed: "▶️ Đã tiếp tục phát"
   play_paused: "⏸️ Đã tạm dừng"
@@ -17,7 +17,7 @@ player_buttons:
   autoplay_enabled: "🔁 Tự động phát: Bật"
   autoplay_disabled: "🔁 Tự động phát: Tắt"
 
-# Extended player messages from old file
+# Tin nhắn trình phát mở rộng từ file cũ
 autoplay:
   on: "Tự phát giờ đã **BẬT** — Thưởng thức âm nhạc nhé!"
   off: "Tự phát giờ đã **TẮT** — Mình sẽ không tự thêm nhạc nữa."

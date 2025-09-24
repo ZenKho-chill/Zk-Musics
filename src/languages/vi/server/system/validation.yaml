@@ -1,7 +1,7 @@
-# Validation messages
-invalid_url: "❌ Invalid URL provided!"
-invalid_command: "❌ Invalid command!"
-missing_parameter: "❌ Missing required parameter: {parameter}"
+# Tin nhắn xác thực
+invalid_url: "❌ URL không hợp lệ!"
+invalid_command: "❌ Lệnh không hợp lệ!"
+missing_parameter: "❌ Thiếu tham số bắt buộc: {parameter}"
 invalid_parameter: "❌ Invalid parameter: {parameter}"
 parameter_too_long: "❌ Parameter too long: {parameter} (max: {max})"
 parameter_too_short: "❌ Parameter too short: {parameter} (min: {min})"

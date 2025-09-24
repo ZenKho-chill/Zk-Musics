@@ -1,8 +1,2 @@
 ﻿### Lệnh Radio
-radio_no_voice: "<:m_wrong:1193112008124530738> **Bạn cần ở cùng kênh thoại với mình!**"
-radio_no_same_voice: "<:m_wrong:1193112008124530738> Bạn không ở cùng kênh thoại với mình!"
-radio_match: |
-  <:m_wrong:1193112008124530738> Nhà đài này có vẻ đã dừng hoặc link bị hỏng. Vui lòng **/report** để báo lỗi.
-  <:m_blank:1215234569008189450><:m_sparkle:1204848989992648704> Vui lòng liên hệ [staff](%{serversupport}) để được hỗ trợ.
 radio_play_track: "**<:m_singing:1196006929932234782> Bắt đầu phát [%{title}](%{serversupport}) — thưởng thức nhé!**"
-radio_placeholder: "Chọn nhà cung cấp để xem các kênh có sẵn"

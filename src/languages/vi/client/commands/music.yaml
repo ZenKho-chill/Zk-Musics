@@ -1,8 +1,8 @@
-# Music Commands Language File (Vietnamese)
+# Tệp ngôn ngữ lệnh âm nhạc (Tiếng Việt)
 description: "Phát nhạc từ bất kỳ nguồn nào"
 category: "Nhạc"
 
-# Search command
+# Lệnh tìm kiếm
 search:
   desc: "### HEY! Đã tìm thấy kết quả cho yêu cầu của bạn"
   end_desc2: "### Ôi! {user}, bạn đã không chọn bài kịp\n**Thử lại nhé!**"
@@ -13,29 +13,27 @@ search:
   active: "Ồ! Đang có tìm kiếm đang chạy. Vui lòng đợi 30s"
   track_selected: "## [`{title}`]({url}) `{author}` thưởng thức nhé ♥"
 
-# Play command
+# Lệnh phát nhạc
 play:
   description: "Phát một bài hát từ bất kỳ nguồn nào"
   no_songs_playing: "<:wrong:1220876213896216686> Hiện không có bài nào đang phát!"
-  url_not_allowed: "<:wrong:1220876213896216686> Vui lòng dùng tên bài/ca sĩ (không dùng URL)"
 
-# Queue management
+# Quản lý hàng chờ
 queue:
   clear:
     success: "<:bin:1220831964890927235> Hàng chờ đã **được xóa**"
   empty: "<:wrong:1220876213896216686> Hàng chờ đang rỗng. Vui lòng thêm vài bài trước"
 
-# Playback controls
+# Điều khiển phát
 playback:
   forward:
     success: "<:next:1220832036101820508> **{user} đã tua {title} đến** `{duration}`"
-    beyond_end: "<:warnings:1220876158254710936> Bài hát sắp kết thúc. Không thể tua quá thời lượng!"
   
   playnext:
     desc: "### {name} sẽ phát tiếp theo ♪"
     not_found: "<:wrong:1220876213896216686> Không tìm thấy bài!"
 
-# Loop modes
+# Chế độ lặp
 loop:
   current: |
     <:loop:1220832757496811570> **Đang lặp {title}
@@ -43,13 +41,12 @@ loop:
   all: "<:loop:1220832757496811570> **Đã bật chế độ lặp toàn bộ hàng chờ**"
   disable: "<:wrong:1220876213896216686> **Chế độ lặp đã bị TẮT**"
   invalid: "<:warnings:1220876158254710936> Chế độ lặp không hợp lệ. Vui lòng dùng **{mode}**"
-  already_set: "<:warnings:1220876158254710936> Chế độ lặp hiện đã là **{mode}**"
 
-# Lyrics
+# Lời bài hát
 lyrics:
   title: "Lời bài hát cho **{song}**"
 
-# Command options descriptions
+# Mô tả tùy chọn lệnh
 options:
   play:
     query: "Liên kết hoặc tên bài hát"
@@ -74,22 +71,20 @@ options:
   lyrics:
     song: "Tên bài hát"
 
-# Common messages
+# Tin nhắn phổ biến
 messages:
-  no_voice_channel: "Bạn cần vào voice channel để phát nhạc!"
+  no_player: "Không tìm thấy trình phát!"
   queue_empty: "Hàng chờ hiện đang trống!"
-  player_destroyed: "Player đã bị hủy"
-  track_not_seekable: "Track hiện tại không thể tua (not seekable)"
+  player_destroyed: "Trình phát đã bị hủy"
   not_found: "<:wrong:1291138140681273396> **Ôi không, mình không tìm thấy lời bài hát cho bài này!**"
   too_long: "**Ôi, lời bài hát này quá dài! Mình chỉ có thể hiển thị tối đa 4048 ký tự thôi!**"
   disabled: "**Ôi, tính năng lời bài hát hiện đang bị tắt!**"
-  no_query: "**Vui lòng cung cấp **tên bài hát** hợp lệ"
   error: "**Lỗi: {error}**"
 
-# Now playing
+# Đang phát
 nowplaying:
   title: "Đang phát..."
 
-# Error states
+# Trạng thái lỗi
 errors:
   no_node: "<:warnings:1220876158254710936> **Không tìm thấy server Lavalink. Vui lòng thử lại sau 5 phút**"

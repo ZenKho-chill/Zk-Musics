@@ -1,4 +1,4 @@
-# Menu handler messages
+# Tin nhắn xử lý menu
 unauthorized_user: "❌ Bạn không thể sử dụng menu này!"
 menu_disabled: "❌ Menu này hiện đang bị vô hiệu hóa!"
 dropdown_unauthorized: "❌ Bạn không thể sử dụng dropdown này!"

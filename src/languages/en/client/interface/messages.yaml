@@ -10,14 +10,6 @@ operation_completed: "✅ Operation completed successfully!"
 operation_failed: "❌ Operation failed!"
 please_wait: "⏳ Please wait..."
 
-# Music-related common messages
-music:
-  no_voice_channel: "You need to join a voice channel!"
-  not_in_same_voice: "You're not in the same voice channel as me!"
-  no_player: "No player found!"
-  player_destroyed: "Player was destroyed"
-  queue_empty: "Queue is empty!"
-  
 # UI elements
 ui:
   confirm: "✅ Confirm"
@@ -27,21 +19,13 @@ ui:
 # Permissions
 permissions:
   no_permission: "You don't have permission to use this command!"
-  manage_guild_required: "You need Manage Guild permission!"
   
 # Interaction responses
 interaction:
   cannot_use: "❌ You cannot use this menu/button!"
-  
-# Pagination
-pagination:
-  no_results: "No results found"
-  page_expired: "⏰ Page selection expired!"
 
 # Vietnamese common phrases
 vietnamese:
-  confirming: "Xác nhận"
-  cancelling: "Hủy bỏ" 
   expired: "đã hết hạn"
   created: "đã được tạo"
   updated: "đã được cập nhật"

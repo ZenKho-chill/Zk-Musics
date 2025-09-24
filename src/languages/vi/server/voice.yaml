@@ -1,6 +1,0 @@
-# Voice Language File (Vietnamese)
-
-# Voice connection messages
-connected_to_voice_server: "Đã kết nối tới server nhận voice của nodelink!"
-disconnected_from_voice_server: "Đã huỷ kết nối tới server nhận voice của nodelink!"
-connection_closed_normal: "Đóng kết nối bình thường"

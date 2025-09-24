@@ -18,12 +18,6 @@ options:
       remove: "Xóa bài hát"
       savequeue: "Lưu hàng đợi"
 
-# General playlist messages
-general:
-  not_found: "<:warnings:1220876158254710936> Không tìm thấy playlist với ID này!"
-  invalid_id: "<:warnings:1220876158254710936> Vui lòng cung cấp ID playlist hợp lệ!"
-  no_description: "Không có mô tả nào được cung cấp!"
-
 # Playlist actions
 actions:
   add:
@@ -125,20 +119,14 @@ info:
   owner: "Chủ sở hữu"
   id: "ID"
   description: "Mô tả"
-  visibility: "Hiển thị"
-  track_count: "Số bài"
   duration: "Thời lượng"
   created: "Được tạo"
-
-# Playlist visibility
-visibility:
-  public: "Công khai"
-  private: "Riêng tư"
-  set_public: "✅ Đặt playlist `{playlist}` thành **Công khai**"
-  set_private: "✅ Đặt playlist `{playlist}` thành **Riêng tư**"
-  is_private: "Playlist là **Riêng tư**"
 
 # Playlist editor
 editor:
   invalid_choice: "<:wrong:1220876213896216686> Vui lòng cung cấp ID Playlist hợp lệ và lựa chọn! (public/private)"
   updated: "✅ Cập nhật cài đặt playlist thành công"
+
+# Additional missing keys
+confirm_remove_button: "Xác nhận xóa"
+canceled_remove: "Đã hủy xóa"
