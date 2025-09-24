@@ -1,0 +1,8 @@
+# Tệp ngôn ngữ dịch vụ kênh thoại tạm thời (Tiếng Việt)
+
+# Quản lý kênh
+channel_expired: "Kênh thoại tạm đã hết hạn"
+channel_created: "Đã tạo kênh thoại tạm"
+channel_deleted: "Đã xóa kênh thoại tạm"
+max_channels_reached: "Đã đạt giới hạn số kênh tối đa"
+permission_denied: "Không có quyền tạo kênh thoại tạm"
