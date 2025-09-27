@@ -65,7 +65,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands.music", "playnext_notfound", {
+              `${client.i18n.get(handler.language, "client.commands.music", "playnext.notfound", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
               })}`
@@ -109,7 +109,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "playnext_notfound", {
+              `${client.i18n.get(handler.language, "client.commands.music", "playnext.notfound", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
               })}`
@@ -124,7 +124,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "playnext_queue_empty", {
+              `${client.i18n.get(handler.language, "client.commands.music", "playnext.queue_empty", {
                 user: handler.user!.displayName || handler.user!.tag,
                 botname: client.user!.username || client.user!.displayName,
               })}`
@@ -139,7 +139,7 @@ export default class implements Command {
 
     const embed = new EmbedBuilder();
     embed.setDescription(
-      `${client.i18n.get(handler.language, "commands.music", "playnext_desc", {
+      `${client.i18n.get(handler.language, "client.commands.music", "playnext.desc", {
         name: this.getTitle(client, track),
         duration: new ConvertTime().parse(player.position),
         request: String(track.requester),
@@ -220,8 +220,8 @@ export default class implements Command {
 
     if (client.lavalinkUsing.length == 0) {
       choice.push({
-        name: `${client.i18n.get(language, "commands.music", "no_node")}`,
-        value: `${client.i18n.get(language, "commands.music", "no_node")}`,
+        name: `${client.i18n.get(language, "client.commands.music", "play.no_node")}`,
+        value: `${client.i18n.get(language, "client.commands.music", "play.no_node")}`,
       });
       return;
     }
@@ -232,7 +232,7 @@ export default class implements Command {
     });
 
     if (searchRes.tracks.length == 0 || !searchRes.tracks) {
-      return choice.push({ name: "Lỗi: không có bài hát phù hợp", value: url });
+      return choice.push({ name: client.i18n.get(language, "client.commands.music", "playnext.autocomplete_error"), value: url });
     }
 
     for (let i = 0; i < 10; i++) {

@@ -1,0 +1,8 @@
+clear: {}
+number_invalid: "❌ | Số trang không hợp lệ!"
+title: "Danh sách phát"
+description: "**Đang phát:** {title} `[{duration}]` • {request}{rest}"
+footer: "Trang {page}/{pages} | {queue_lang} bài hát | Tổng thời lượng: {duration}"
+notnumber: "❌ | Vui lòng nhập số!"
+page_notfound: "❌ | Không tìm thấy trang! Chỉ có {page} trang."
+empty: "  `KHÔNG CÓ SẴN`"

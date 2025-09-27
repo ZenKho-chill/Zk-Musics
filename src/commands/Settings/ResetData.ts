@@ -119,7 +119,7 @@ export default class implements Command {
             resultMessage = client.i18n.get("vi", "client.commands.settings", "success_tempvoice");
             break;
           default:
-            resultMessage = "Danh mục cơ sở dữ liệu máy chủ không hợp lệ.";
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "resetdata.invalid_guild_category");
             break;
         }
       } else if (type === "user") {
@@ -185,7 +185,7 @@ export default class implements Command {
             resultMessage = client.i18n.get("vi", "client.commands.settings", "success_playlist");
             break;
           default:
-            resultMessage = "Danh mục cơ sở dữ liệu người dùng không hợp lệ.";
+            resultMessage = client.i18n.get("vi", "client.commands.settings", "resetdata.invalid_user_category");
             break;
         }
       }
@@ -195,9 +195,11 @@ export default class implements Command {
         flags: MessageFlags.Ephemeral,
       });
     } catch (error) {
-      logInfo(client.i18n.get("vi", "client.commands.settings", "title"), `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
+      logInfo(client.i18n.get("vi", "client.commands.settings", "resetdata.title"), `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
       await handler.interaction.reply({
-        content: `Đã xảy ra lỗi khi xóa cơ sở dữ liệu\n\`${error.message}\``,
+        content: client.i18n.get("vi", "client.commands.settings", "resetdata.error_message", {
+          error: (error as Error).message,
+        }),
         flags: MessageFlags.Ephemeral,
       });
     }

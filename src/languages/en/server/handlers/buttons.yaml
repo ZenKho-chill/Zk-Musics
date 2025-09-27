@@ -1,38 +1,7 @@
-# Button handler messages
-unauthorized_user: "❌ You cannot use this button!"
-button_disabled: "❌ This button is currently disabled!"
-
-# Player button messages
-player_buttons:
-  play_resumed: "▶️ Playback resumed"
-  play_paused: "⏸️ Playback paused"
-  track_skipped: "⏭️ Track skipped"
-  track_previous: "⏮️ Previous track"
-  playback_stopped: "⏹️ Playback stopped"
-  queue_shuffled: "🔀 Queue shuffled"
-  volume_changed: "🔊 Volume: {volume}%"
-  loop_disabled: "🔁 Loop: Off"
-  loop_track: "🔂 Loop: Track"
-  loop_queue: "🔁 Loop: Queue"
-  autoplay_enabled: "🔁 Autoplay: On"
-  autoplay_disabled: "🔁 Autoplay: Off"
-
-# Extended player messages from old file
-autoplay:
-  on: "Autoplay is now **Enabled**"
-  off: "Autoplay is now **Disabled**"
-  no_song: "No songs are playing!"
-
-loop:
-  current: |
-    <:loop:1220832757496811570> **Now Looping {title}
-    <:blankers:1220848705289064669><:sparkle:1220846124961890304> Enjoy it, {user}**
-  all: "<:loop:1220832757496811570> **{user} has been looping QUEUE mode**"
-  disabled: "<:wrong:1220876213896216686> **Looping mode has been DISABLED by {user}**"
-
-previous:
-  not_found: |
-    <:warnings:1220876158254710936> **No Previous song found in the queue! 
-    <:blankers:1220848705289064669><:pop:1220849334606626946> Why not /play more tracks and keep the music going?**
-  message: |
-    <:replay:1220881274378653787>  **Back to the previous song by {user}
+player_buttons: {}
+autoplay: {}
+loop: {}
+previous: {}
+error_client_user_unavailable: "Client user is not available"
+user_unknown: "Unknown user"
+title_unknown: "Unknown"

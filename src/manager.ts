@@ -240,12 +240,12 @@ export class Manager extends Client {
   }
 
   public start() {
-    logInfo("ClientManager", "Đang khởi động client Zk Music's...");
-    logInfo("ClientManager", `Phiên bản: ${this.manifest.metadata.bot.version}`);
-    logInfo("ClientManager", `Tên mã: ${this.manifest.metadata.bot.codename}`);
+    logInfo("ClientManager", this.i18n.get("vi", "server.system.core", "startup_begin"));
+    logInfo("ClientManager", `${this.i18n.get("vi", "server.system.core", "version_info")}: ${this.manifest.metadata.bot.version}`);
+    logInfo("ClientManager", `${this.i18n.get("vi", "server.system.core", "codename_info")}: ${this.manifest.metadata.bot.codename}`);
     logInfo(
       "ClientManager",
-      `Phiên bản Autofix: ${this.manifest.metadata.autofix.version}`
+      `${this.i18n.get("vi", "server.system.core", "autofix_version_info")}: ${this.manifest.metadata.autofix.version}`
     );
     if (this.config.features.HIDE_LINK && this.config.features.REPLACE_LINK) {
       logWarn(

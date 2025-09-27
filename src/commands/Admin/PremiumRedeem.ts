@@ -70,7 +70,7 @@ export default class implements Command {
           new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid_mode")}`
+              `${client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_invalid_mode")}`
             ),
         ],
       });
@@ -82,7 +82,7 @@ export default class implements Command {
           new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_invalid")}`
             ),
         ],
       });
@@ -99,7 +99,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid_guild")}`
+                `${client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_invalid_guild")}`
               ),
           ],
         });
@@ -113,7 +113,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid_user")}`
+                `${client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_invalid_user")}`
               ),
           ],
         });
@@ -133,8 +133,8 @@ export default class implements Command {
         .setDescription(
           `${client.i18n.get(
             handler.language,
-            "client.commands",
-            type === "guild" ? "admin.redeem_already_guild" : "admin.redeem_already"
+            "client.commands.admin.premium",
+            type === "guild" ? "redeem_already_guild" : "redeem_already"
           )}`
         );
       return handler.editReply({ embeds: [embed] });
@@ -145,14 +145,14 @@ export default class implements Command {
     if (!premium) {
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_invalid")}`);
       return handler.editReply({ embeds: [embed] });
     }
 
     if (premium.expiresAt !== "lifetime" && premium.expiresAt < Date.now()) {
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "client.commands", "admin.redeem_invalid")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_invalid")}`);
       return handler.editReply({ embeds: [embed] });
     }
 
@@ -168,19 +168,19 @@ export default class implements Command {
 
     const targetName =
       type === "guild"
-        ? (await client.guilds.fetch(targetId))?.name || "Máy chủ không xác định"
-        : (await client.users.fetch(targetId))?.username || "Người dùng không rõ";
+        ? (await client.guilds.fetch(targetId))?.name || client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_unknown_guild")
+        : (await client.users.fetch(targetId))?.username || client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_unknown_user");
 
     const embed = new EmbedBuilder()
       .setAuthor({
-        name: `${client.i18n.get(handler.language, "client.commands", "admin.redeem_title")}`,
+        name: `${client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_title")}`,
         iconURL: client.user!.displayAvatarURL(),
         url: `https://discord.com/oauth2/authorize?client_id=${
           client.user!.id
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(handler.language, "client.commands", "admin.redeem_desc", {
+        `${client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_desc", {
           expires: premium.expiresAt !== "lifetime" ? expires : "lifetime",
           plan: `${planFormatted}`,
           type: type,
@@ -188,7 +188,7 @@ export default class implements Command {
         })}`
       )
       .setFooter({
-        text: `${client.i18n.get(handler.language, "client.commands", "admin.redeem_footer")}`,
+        text: `${client.i18n.get(handler.language, "client.commands.admin.premium", "redeem_footer")}`,
       })
       .setColor(client.color_main);
 
@@ -266,21 +266,21 @@ export default class implements Command {
 
     const redeemedAtFormatted = redeemedAt
       ? `<t:${Math.floor(redeemedAt / 1000)}:F>`
-      : "Không xác định";
+      : client.i18n.get(language, "client.commands.admin.premium", "redeem_unknown_time");
     const expiresAtFormatted =
-      expiresAt === "lifetime" ? "Trọn đời" : `<t:${Math.floor(expiresAt / 1000)}:F>`;
+      expiresAt === "lifetime" ? client.i18n.get(language, "client.commands.admin.premium", "redeem_lifetime_text") : `<t:${Math.floor(expiresAt / 1000)}:F>`;
 
     const embedField: APIEmbedField[] = [
       {
-        name: `${client.i18n.get(language, "client.commands", "admin.display_names")}`,
+        name: `${client.i18n.get(language, "client.commands.admin.premium", "display_names")}`,
         value: `${targetName}`,
       },
       {
-        name: "Mã ID",
+        name: client.i18n.get(language, "client.commands.admin.premium", "redeem_code_id_field"),
         value: `${targetId}`,
       },
       {
-        name: `${client.i18n.get(language, "client.commands", "admin.createdAt")}`,
+        name: `${client.i18n.get(language, "client.commands.admin.premium", "createdAt")}`,
         value: `<t:${Math.floor(
           (premium
             ? premium.redeemedBy.createdAt
@@ -288,32 +288,32 @@ export default class implements Command {
         )}:F>`,
       },
       {
-        name: `${client.i18n.get(language, "client.commands", "admin.redeemedAt")}`,
+        name: `${client.i18n.get(language, "client.commands.admin.premium", "redeemedAt")}`,
         value: `${redeemedAtFormatted}`,
       },
       {
-        name: `${client.i18n.get(language, "client.commands", "admin.expiresAt")}`,
+        name: `${client.i18n.get(language, "client.commands.admin.premium", "expiresAt")}`,
         value: `${expiresAtFormatted}`,
       },
       {
-        name: `${client.i18n.get(language, "client.commands", "admin.plan")}`,
+        name: `${client.i18n.get(language, "client.commands.admin.premium", "plan")}`,
         value: `${planFormatted}`,
       },
       {
-        name: `${client.i18n.get(language, "client.commands", "admin.code")}`,
+        name: `${client.i18n.get(language, "client.commands.admin.premium", "code")}`,
         value: `${code}`,
       },
     ];
 
     const embed = new EmbedBuilder()
       .setAuthor({
-        name: `${client.user!.username} Nhật ký đổi mã Premium!`,
+        name: `${client.user!.username} ${client.i18n.get(language, "client.commands.admin.premium", "redeem_log_title")}`,
         iconURL: client.user!.displayAvatarURL(),
         url: `https://discord.com/oauth2/authorize?client_id=${
           client.user!.id
         }&permissions=8&scope=bot`,
       })
-      .setTitle(`${client.i18n.get(language, "client.commands", premium ? "admin.title" : "admin.guild_title")}`)
+      .setTitle(`${client.i18n.get(language, "client.commands.admin.premium", premium ? "title" : "guild_title")}`)
       .addFields(embedField)
       .setTimestamp()
       .setColor(client.color_main);

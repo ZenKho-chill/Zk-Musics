@@ -68,7 +68,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_arg_error", {
+              `${client.i18n.get(handler.language, "client.commands.admin.premium", "arg_error", {
                 text: "**Hàng ngày**, **Hàng tuần**, **Hàng tháng**, **Hàng năm**, **Trọn đời**",
               })}`
             )
@@ -135,14 +135,14 @@ export default class implements Command {
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
       .setAuthor({
-        name: `${client.user!.username} Mã Premium!`,
+        name: `${client.user!.username} ${client.i18n.get(handler.language, "client.commands.admin.premium", "embed_title")}`,
         iconURL: client.user!.displayAvatarURL(),
         url: `https://discord.com/oauth2/authorize?client_id=${
           client.user!.id
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_desc", {
+        `${client.i18n.get(handler.language, "client.commands.admin.premium", "code_desc", {
           codes_length: String(codes.length),
           codes: codes.join("\n"),
           plan: String(plan),
@@ -152,17 +152,17 @@ export default class implements Command {
       )
       .addFields([
         {
-          name: `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_plan")}`,
-          value: `${plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(time / 1000)}:R>`}`,
+          name: `${client.i18n.get(handler.language, "client.commands.admin.premium", "code_plan")}`,
+          value: `${plan === "lifetime" ? client.i18n.get(handler.language, "client.commands.admin.premium", "lifetime_text") : `<t:${Math.floor(time / 1000)}:R>`}`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_expired")}`,
-          value: `${plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(time / 1000)}:F>`}`,
+          name: `${client.i18n.get(handler.language, "client.commands.admin.premium", "code_expired")}`,
+          value: `${plan === "lifetime" ? client.i18n.get(handler.language, "client.commands.admin.premium", "lifetime_text") : `<t:${Math.floor(time / 1000)}:F>`}`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(handler.language, "client.commands", "admin.premium_code_generateby")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.admin.premium", "code_generateby")}`,
           value: `${handler.user!.displayName} - ${handler.user!.id}`,
           inline: false,
         },
@@ -184,14 +184,14 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setAuthor({
-        name: `${client.user!.username} Nhật ký mã Premium!`,
+        name: `${client.user!.username} ${client.i18n.get(language, "client.commands.admin.premium", "log_title")}`,
         iconURL: client.user!.displayAvatarURL(),
         url: `https://discord.com/oauth2/authorize?client_id=${
           client.user!.id
         }&permissions=8&scope=bot`,
       })
       .setDescription(
-        `${client.i18n.get(language, "client.commands", "admin.premium_code_desc", {
+        `${client.i18n.get(language, "client.commands.admin.premium", "code_desc", {
           codes_length: String(codes.length),
           codes: codes.join("\n"),
           plan: String(plan),
@@ -203,21 +203,21 @@ export default class implements Command {
       )
       .addFields([
         {
-          name: `${client.i18n.get(language, "client.commands", "admin.premium_code_plan")}`,
+          name: `${client.i18n.get(language, "client.commands.admin.premium", "code_plan")}`,
           value: `${
-            plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(Number(expiresAt) / 1000)}:R>`
+            plan === "lifetime" ? client.i18n.get(language, "client.commands.admin.premium", "lifetime_text") : `<t:${Math.floor(Number(expiresAt) / 1000)}:R>`
           }`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(language, "client.commands", "admin.premium_code_expired")}`,
+          name: `${client.i18n.get(language, "client.commands.admin.premium", "code_expired")}`,
           value: `${
-            plan === "lifetime" ? "Trọn đời" : `<t:${Math.floor(Number(expiresAt) / 1000)}:F>`
+            plan === "lifetime" ? client.i18n.get(language, "client.commands.admin.premium", "lifetime_text") : `<t:${Math.floor(Number(expiresAt) / 1000)}:F>`
           }`,
           inline: false,
         },
         {
-          name: `${client.i18n.get(language, "client.commands", "admin.premium_code_generateby")}`,
+          name: `${client.i18n.get(language, "client.commands.admin.premium", "code_generateby")}`,
           value: `${handler.user!.displayName} - ${handler.user!.id}`,
           inline: false,
         },

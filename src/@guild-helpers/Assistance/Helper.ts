@@ -35,9 +35,10 @@ export class Helper {
       if (interaction.customId == "role-1") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME1)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME1)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.SELECT_ROLES.ID1)) {
           await member.roles.add(this.client.config.HELPER_SETUP.SELECT_ROLES.ID1);
@@ -62,9 +63,10 @@ export class Helper {
       } else if (interaction.customId == "role-2") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME2)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME2)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.SELECT_ROLES.ID2)) {
           await member.roles.add(this.client.config.HELPER_SETUP.SELECT_ROLES.ID2);
@@ -89,9 +91,10 @@ export class Helper {
       } else if (interaction.customId == "role-3") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME3)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME3)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.SELECT_ROLES.ID3)) {
           await member.roles.add(this.client.config.HELPER_SETUP.SELECT_ROLES.ID3);
@@ -116,9 +119,10 @@ export class Helper {
       } else if (interaction.customId == "role-4") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME4)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME4)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.SELECT_ROLES.ID4)) {
           await member.roles.add(this.client.config.HELPER_SETUP.SELECT_ROLES.ID4);
@@ -143,9 +147,10 @@ export class Helper {
       } else if (interaction.customId == "role-5") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_NAME)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_NAME)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_ID)) {
           await member.roles.add(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_ID);
@@ -213,9 +218,10 @@ export class Helper {
   ): Promise<void> {
     logInfo(
       "Helper",
-      `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-        .hex("#00D100")
-        .bold("Xem Luật Lệ")}`
+      this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+        user: chalk.hex("#00D100").bold(interaction.user.displayName),
+        button: chalk.hex("#00D100").bold(this.client.i18n.get(language, "server.events.helper", "button_view_rules"))
+      })
     );
 
     const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -282,9 +288,10 @@ export class Helper {
   ): Promise<void> {
     logInfo(
       "Helper",
-      `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-        .hex("#00D100")
-        .bold(client.i18n.get("vi", "client.commands", "info.about.support_us"))}`
+      this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+        user: chalk.hex("#00D100").bold(interaction.user.displayName),
+        button: chalk.hex("#00D100").bold(this.client.i18n.get(language, "client.commands.info.about", "support_us"))
+      })
     );
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -343,9 +350,10 @@ export class Helper {
   ): Promise<void> {
     logInfo(
       "Helper",
-      `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-        .hex("#00D100")
-        .bold("Chọn Role")}`
+      this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+        user: chalk.hex("#00D100").bold(interaction.user.displayName),
+        button: chalk.hex("#00D100").bold(this.client.i18n.get(language, "server.events.helper", "button_select_role"))
+      })
     );
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(

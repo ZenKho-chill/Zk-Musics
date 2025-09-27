@@ -1,31 +1,5 @@
-# Các thành phần giao diện chung
-buttons:
-  play: "▶️"
-  pause: "⏸️"
-  stop: "⏹️"
-  skip: "⏭️"
-  previous: "⏮️"
-  shuffle: "🔀"
-  loop: "🔁"
-  volume_up: "🔊"
-  volume_down: "🔉"
-  queue: "📋"
-  autoplay: "🔁"
-  
-labels:
-  name: "Tên"
-  description: "Mô tả"
-  duration: "Thời lượng"
-  artist: "Nghệ sĩ"
-  album: "Album"
-  position: "Vị trí"
-  volume: "Âm lượng"
-  queue_length: "Độ dài hàng chờ"
-  
-states:
-  enabled: "Bật"
-  disabled: "Tắt"
-  playing: "Đang phát"
-  paused: "Tạm dừng"
-  stopped: "Dừng"
-  loading: "Đang tải"
+buttons: {}
+labels: {}
+states: {}
+unknown_title: "Không rõ"
+no_songs: "Không có bài"

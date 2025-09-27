@@ -73,7 +73,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `${client.i18n.get(handler.language, "client.commands", "music.shuffle_title")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.music", "shuffle.title")}`,
         })
         .setThumbnail(thumbnail)
         .setColor(client.color_main)
@@ -82,7 +82,7 @@ export default class implements Command {
             title: this.getTitle(client, song!),
             request: String(song!.requester),
             duration: new FormatDuration().parse(song!.duration),
-            rest: str == "" ? "  `KHÔNG KHẢ DỤNG`" : "\n" + str,
+            rest: str == "" ? client.i18n.get(handler.language, "client.commands.music", "queue.empty") : "\n" + str,
           })}`
         )
         .setFooter({

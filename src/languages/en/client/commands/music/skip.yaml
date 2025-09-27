@@ -1,0 +1,3 @@
+number_invalid: "❌ | Invalid position!"
+notfound: "❌ | No song to skip!"
+msg: "⏭️ | {user} skipped **{title}**!"

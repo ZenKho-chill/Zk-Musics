@@ -1,0 +1,8 @@
+add:
+  description: "Thêm bài hát vào playlist"
+create:
+  description: "Tạo playlist mới"
+delete:
+  description: "Xóa playlist"
+import:
+  description: "Nhập playlist từ nguồn bên ngoài"

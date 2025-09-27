@@ -34,7 +34,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands", "music.no_songs_playing", {
+              `${client.i18n.get(handler.language, "client.commands.music", "no_songs_playing", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -48,7 +48,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands", "music.replay_not_seekable", {
+              `${client.i18n.get(handler.language, "client.commands.music", "replay.not_seekable", {
                 title: this.getTitle(client, currentTrack),
               })}`
             )
@@ -61,7 +61,7 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(handler.language, "client.commands", "music.replay_msg", {
+        `              ${client.i18n.get(handler.language, "client.commands.music", "replay.msg", {
           user: handler.user!.displayName || handler.user!.tag,
           title: this.getTitle(client, currentTrack),
         })}`

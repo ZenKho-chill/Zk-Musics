@@ -1,0 +1,11 @@
+description: "Lặp bài trong hàng chờ (tất cả/hiện tại)!"
+option_description: "Loại vòng lặp"
+invalid: "❌ | Chế độ lặp không hợp lệ!"
+already: "❌ | Bài hát đã được lặp ở chế độ này!"
+current: "🔁 | {user} đã bật lặp cho bài **{title}**!"
+all: "🔁 | {user} đã bật lặp toàn bộ hàng chờ!"
+unloop_all: "🔄 | Đã tắt lặp!"
+choices:
+  song: "Bài"
+  queue: "Hàng chờ"
+  none: "Không"

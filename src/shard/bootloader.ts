@@ -13,7 +13,7 @@ export function bootBot(clusterManager?: ClusterManager) {
     .on("uncaughtExceptionMonitor", (error) => zk.logger.unhandled("AntiCrash", error))
     .on("exit", () => zk.logger.info("ClientManager", `Zk Music's đã tắt. Hẹn gặp lại lần sau!`))
     .on("SIGINT", () => {
-      zk.logger.info("ClientManager", `Đang tắt Zk Music's...`);
+      zk.logger.info("ClientManager", zk.i18n.get("vi", "server.system.core", "shutting_down"));
       process.exit(0);
     });
 

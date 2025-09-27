@@ -1,0 +1,8 @@
+arg_error: "❌ Please provide **{text}**!"
+enable: "❌ Music request channel is already set up!"
+topic: "Request songs here! 🎵"
+queuemsg: "🎵 | **No songs are currently playing**"
+playembed_author: "Request Music"
+msg: "✅ Successfully created music request channel at {channel}!"
+null: "❌ No music request channel is set up!"
+deleted: "✅ Successfully deleted music request channel!"

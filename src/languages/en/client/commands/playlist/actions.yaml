@@ -1,0 +1,8 @@
+add:
+  description: "Add song to playlist"
+create:
+  description: "Create new playlist"
+delete:
+  description: "Delete playlist"
+import:
+  description: "Import playlist from external source"

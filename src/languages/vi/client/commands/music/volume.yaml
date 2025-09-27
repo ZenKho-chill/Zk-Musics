@@ -1,0 +1,3 @@
+number_invalid: "❌ | Giá trị âm lượng không hợp lệ!"
+invalid: "❌ | Âm lượng phải từ 1 đến 100!"
+msg: "🔊 | {user} đã đặt âm lượng thành **{volume}%**!"

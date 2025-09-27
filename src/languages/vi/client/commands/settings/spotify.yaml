@@ -1,0 +1,8 @@
+feature_disabled_title: "❌ Tính năng Spotify đã bị tắt"
+feature_disabled_desc: "Tính năng Spotify hiện không khả dụng. Vui lòng liên hệ với quản trị viên để bật tính năng này."
+connect_provide_id: "❌ Vui lòng cung cấp ID Spotify của bạn!"
+connect_success: "✅ Đã kết nối thành công với tài khoản Spotify **{name}** (`{id}`)!"
+connect_error: "❌ Đã xảy ra lỗi khi kết nối với Spotify. Vui lòng kiểm tra ID và thử lại."
+disconnect_not_connected: "❌ Bạn chưa kết nối với tài khoản Spotify nào!"
+disconnect_success: "✅ Đã ngắt kết nối khỏi tài khoản Spotify thành công!"
+disconnect_error: "❌ Đã xảy ra lỗi khi ngắt kết nối Spotify."

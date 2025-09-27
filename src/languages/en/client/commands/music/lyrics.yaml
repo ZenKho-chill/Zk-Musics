@@ -1,0 +1,7 @@
+disable: "❌ | Lyrics feature is disabled!"
+noquery: "❌ | Please provide a song name or play a song first!"
+notfound: "❌ | No lyrics found for this song!"
+title: "📝 Lyrics - {song}"
+toolong: "📝 Lyrics are too long! View at: {url}"
+error: "❌ | An error occurred while fetching lyrics: {error}"
+log_error: "LyricsCommand Error:"

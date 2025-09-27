@@ -1,58 +1,15 @@
-﻿## Helper setup ##
-## RULES Events ##
-rules_title: "Nội quy server cộng đồng %{guild}!"
-rules_desc: |
-  - **Hãy tôn trọng nhau**
-    Luôn tuân theo [Điều khoản dịch vụ](https://discord.com/terms) và [Nguyên tắc cộng đồng](https://discord.com/guidelines) của Discord.
-  - **Khi cần giúp đỡ**
-    Hãy mô tả chi tiết nhất có thể về lỗi hoặc vấn đề bạn gặp phải.
-  - **Không ngôn từ thù ghét hoặc quấy rối**
-    Không được phép bàn luận có nội dung xúc phạm, thù ghét hay công kích cá nhân/nhóm.
-  - **Không troll hay gây hấn**
-    Tránh mọi hành động làm loạn hoặc châm ngòi mâu thuẫn.
-  - **Tôn trọng bản quyền**
-    Hãy tôn trọng quyền sở hữu trí tuệ: bản quyền, nhãn hiệu, bằng sáng chế...
-  - **Không spoil nếu chưa cảnh báo**
-    Nếu nói về nội dung chưa ai xem, nhớ cảnh báo spoil để tránh làm tụt mood người khác.
-  - **Dùng kênh đúng mục đích**
-    Nói chuyện đúng chỗ, đừng lạc đề trong kênh không liên quan.
-  - **Không spam hoặc viết IN HOA quá nhiều**
-    Đừng lạm dụng chữ in hoa hay spam tin nhắn liên tục.
-  - **Giữ voice chat trong lành**
-    Khi tham gia voice, hãy nói chuyện lịch sự, tránh gây ồn ào.
-  - **Không dùng bot lạ hoặc auto không được duyệt**
-    Chỉ bot được mod cho phép mới được hoạt động trong server.
-  - **Báo cáo vi phạm**
-    Nếu thấy ai vi phạm, hãy báo cho mod hoặc admin.
-  - **Vui vẻ là chính!**
-    Quan trọng nhất: hãy tận hưởng thời gian ở đây và cùng nhau tạo môi trường tích cực.
-
-  Cảm ơn bạn đã tham gia, chúc bạn có khoảng thời gian vui vẻ ở đây! ✨
-
-### SUPPORT US BUTTON ###
-support_us_title: "Làm sao để ủng hộ %{bot}"
-support_us_desc: "Bạn có thể ủng hộ tôi bằng cách vote cho %{bot}, mời %{bot} vào server của bạn, hoặc tham gia gói premium."
-support_us_footer: "Cảm ơn bạn đã cân nhắc ủng hộ %{bot}! Tôi rất trân trọng điều này ❤️"
-
-## ROLES EVENTS ##
-role_title: "Bạn có thể thêm hoặc gỡ role từ danh sách bên dưới."
-role_added: "<:okee:1220876098456256512> **[Thành công]** Role %{rolename} đã được thêm thành công!"
-role_removed: "<:bin:1220831964890927235> **[Đã gỡ]** Role %{rolename} đã bị gỡ bỏ."
-role_rules_added: "%{user} chúc bạn sẽ tuân thủ mọi nội quy, giờ bạn đã có quyền truy cập toàn server!"
-role_rules_already: "%{user} bạn đã chấp nhận nội quy trước đó rồi nha"
-role_desc: "Chúng tôi chỉ muốn chắc rằng bạn là người thật chứ không phải bot 🤖. Vui lòng giúp xác nhận bằng cách hoàn thành một bước kiểm tra nhỏ."
-
-### Top gg vote logs event ###
-vote_desc: |
-  <:topgg:1220879943177605241> %{voteuser} vừa vote cho %{votebot} trên **[Top.gg](%{voteurl})**  
-  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Cảm ơn bạn đã ủng hộ! Chúc bạn một ngày thật tuyệt ✨
-vote_footer: "Tổng số vote %{count}, bay cùng trí tưởng tượng nhé!"
-
-### Top gg vote logs reminder event ###
-reminder_label_name: "Nhắc nhở vote"
-reminder_label_emoji: "⏰"
-reminder_title: "Nhắc bạn đi vote nè"
-reminder_desc: "Tới giờ rồi! Bạn có thể vote lại trên **[Top.gg](%{voteurl})**."
-reminder_set_content: "Đã đặt nhắc nhở! Tôi sẽ nhắc bạn vote lại sau 12 giờ"
-
-### Welcomer events! ###
+log_button_press: "Người dùng {user} đã bấm nút {button}"
+role_added: "Đã thêm vai trò {rolename} cho bạn!"
+role_removed: "Đã xóa vai trò {rolename} khỏi bạn!"
+role_rules_added: "Đã thêm vai trò {rolename} cho {user}!"
+role_rules_already: "Bạn đã có vai trò {rolename}, {user}!"
+rules_title: "Luật lệ của {guild}"
+rules_desc: "Vui lòng đọc kỹ luật lệ. Hỗ trợ: {support}"
+support_us_title: "Ủng hộ chúng tôi - {guild}"
+support_us_desc: "Giúp chúng tôi phát triển bằng cách ủng hộ! Hỗ trợ: {support}"
+support_us_footer: "Cảm ơn sự ủng hộ của bạn! - {bot}"
+role_title: "Chọn Vai Trò Của Bạn"
+role_desc: "Chọn một vai trò phù hợp với bạn"
+button_view_rules: "Xem Luật Lệ"
+button_support_us: "Ủng Hộ Chúng Tôi"
+button_select_role: "Chọn Role"

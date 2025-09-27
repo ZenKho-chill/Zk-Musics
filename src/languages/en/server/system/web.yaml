@@ -1,17 +1,6 @@
 # Web service messages
-websocket: "WebSocket"
-search_param_missing: "Search parameter missing"
-api: "API"
-player_not_found: "Player not found"
-current_player_not_found: "Current player not found"
-guild_not_found: "Guild not found"
-user_not_found: "User not found"
-player_already_exists: "Player already exists"
-guild_connection_exists: "Guild connection already exists"
-dont_worry_zk_music: "Don't worry, Zk Music"
-no_zk_music: "No Zk Music"
-
-# API responses (nested structure to match Vietnamese)
+websocket:
+  guild_connection_exists: "Guild connection already exists"
 api:
   player_not_found: "Player not found"
   guild_not_found: "Guild not found"

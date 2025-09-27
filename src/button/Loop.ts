@@ -30,7 +30,7 @@ export default class implements PlayerButton {
     collector: InteractionCollector<ButtonInteraction<"cached">>
   ): Promise<any> {
     if (!client.user) {
-      throw new Error("Người dùng client không có sẵn");
+      throw new Error(client.i18n.get(language, "server.handlers.buttons", "error_client_user_unavailable"));
     }
 
     const response = await axios.get(
@@ -112,7 +112,7 @@ export default class implements PlayerButton {
             client.i18n.get(language, "server.handlers", "topgg_unvote_desc", {
               user: message.user?.id
                 ? `<@${message.user.id}>`
-                : `${message.user?.tag || "Người dùng không rõ"}`,
+                : `${message.user?.tag || client.i18n.get(language, "server.handlers.buttons", "user_unknown")}`,
               serversupport: client.config.bot.SERVER_SUPPORT_URL,
               premium: client.config.bot.PREMIUM_URL,
             })
@@ -155,7 +155,7 @@ export default class implements PlayerButton {
           `${client.i18n.get(language, "server.handlers", "no_premium_role_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
-              : `${message.user?.tag || "Người dùng không rõ"}`,
+              : `${message.user?.tag || client.i18n.get(language, "server.handlers.buttons", "user_unknown")}`,
             serversupport: client.config.bot.SERVER_SUPPORT_URL,
             premium: client.config.bot.PREMIUM_URL,
           })}`
@@ -189,7 +189,7 @@ export default class implements PlayerButton {
           `${client.i18n.get(language, "server.handlers", "no_premium_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
-              : `${message.user?.tag || "Người dùng không rõ"}`,
+              : `${message.user?.tag || client.i18n.get(language, "server.handlers.buttons", "user_unknown")}`,
             serversupport: client.config.bot.SERVER_SUPPORT_URL,
             premium: client.config.bot.PREMIUM_URL,
           })}`
@@ -223,7 +223,7 @@ export default class implements PlayerButton {
           `${client.i18n.get(language, "server.handlers", "no_user_premium_plan_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
-              : `${message.user?.tag || "Người dùng không rõ"}`,
+              : `${message.user?.tag || client.i18n.get(language, "server.handlers.buttons", "user_unknown")}`,
             serversupport: client.config.bot.SERVER_SUPPORT_URL,
             premium: client.config.bot.PREMIUM_URL,
           })}`
@@ -257,7 +257,7 @@ export default class implements PlayerButton {
           `${client.i18n.get(language, "server.handlers", "no_guild_premium_plan_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
-              : `${message.user?.tag || "Người dùng không rõ"}`,
+              : `${message.user?.tag || client.i18n.get(language, "server.handlers.buttons", "user_unknown")}`,
             serversupport: client.config.bot.SERVER_SUPPORT_URL,
             premium: client.config.bot.PREMIUM_URL,
           })}`
@@ -291,7 +291,7 @@ export default class implements PlayerButton {
           `${client.i18n.get(language, "server.handlers", "no_premium_desc", {
             user: message.user?.id
               ? `<@${message.user.id}>`
-              : `${message.user?.tag || "Người dùng không rõ"}`,
+              : `${message.user?.tag || client.i18n.get(language, "server.handlers.buttons", "user_unknown")}`,
             serversupport: client.config.bot.SERVER_SUPPORT_URL,
             premium: client.config.bot.PREMIUM_URL,
           })}`
@@ -338,8 +338,8 @@ export default class implements PlayerButton {
           `${client.i18n.get(language, "client.ui", "loop_current", {
             user: message.user?.id
               ? `<@${message.user.id}>`
-              : `${message.user?.tag || "Người dùng không rõ"}`,
-            title: currentTrack ? this.getTitle(client, currentTrack) : "Không rõ",
+              : `${message.user?.tag || client.i18n.get(language, "server.handlers.buttons", "user_unknown")}`,
+            title: currentTrack ? this.getTitle(client, currentTrack) : client.i18n.get(language, "client.ui", "unknown_title"),
           })}`
         );
 
@@ -362,7 +362,7 @@ export default class implements PlayerButton {
           `${client.i18n.get(language, "client.ui", "loop_all", {
             user: message.user?.id
               ? `<@${message.user.id}>`
-              : `${message.user?.tag || "Người dùng không rõ"}`,
+              : `${message.user?.tag || client.i18n.get(language, "server.handlers.buttons", "user_unknown")}`,
           })}`
         );
 
@@ -385,7 +385,7 @@ export default class implements PlayerButton {
           `${client.i18n.get(language, "client.ui", "unloop_all", {
             user: message.user?.id
               ? `<@${message.user.id}>`
-              : `${message.user?.tag || "Người dùng không rõ"}`,
+              : `${message.user?.tag || client.i18n.get(language, "server.handlers.buttons", "user_unknown")}`,
           })}`
         );
 

@@ -347,8 +347,8 @@ export default class implements Command {
 
     if (client.lavalinkUsing.length == 0) {
       choice.push({
-        name: `${client.i18n.get(language, "client.commands", "music.no_node")}`,
-        value: `${client.i18n.get(language, "client.commands", "music.no_node")}`,
+        name: `${client.i18n.get(language, "client.commands.music.play", "no_node")}`,
+        value: `${client.i18n.get(language, "client.commands.music.play", "no_node")}`,
       });
       return;
     }

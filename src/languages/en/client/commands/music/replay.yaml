@@ -1,0 +1,2 @@
+not_seekable: "❌ | This track is not seekable!"
+msg: "🔄 | {user} replayed **{title}**!"

@@ -115,7 +115,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `${client.user!.username} Gỡ Premium`,
+          name: `${client.user!.username} ${client.i18n.get(handler.language, "client.commands", "admin.premium_remove_embed_title")}`,
           iconURL: client.user!.displayAvatarURL(),
           url: `https://discord.com/oauth2/authorize?client_id=${
             client.user!.id
@@ -123,7 +123,7 @@ export default class implements Command {
         })
         .addFields([
           {
-            name: `${type === "guild" ? "Máy chủ" : "Người dùng"}`,
+            name: `${type === "guild" ? client.i18n.get(handler.language, "client.commands", "admin.premium_remove_field_guild") : client.i18n.get(handler.language, "client.commands", "admin.premium_remove_field_user")}`,
             value: `\`${userDescription}\``,
             inline: false,
           },
@@ -178,7 +178,7 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setAuthor({
-        name: `${client.user!.username} Nhật ký gỡ Premium!`,
+        name: `${client.user!.username} ${client.i18n.get(language, "client.commands.admin.premium", "premium_remove_log_title")}`,
         iconURL: client.user!.displayAvatarURL(),
         url: `https://discord.com/oauth2/authorize?client_id=${
           client.user!.id
@@ -186,17 +186,17 @@ export default class implements Command {
       })
       .addFields([
         {
-          name: `${type === "guild" ? "Máy chủ" : "Người dùng"}`,
+          name: `${type === "guild" ? client.i18n.get(language, "client.commands.admin.premium", "premium_remove_field_guild") : client.i18n.get(language, "client.commands.admin.premium", "premium_remove_field_user")}`,
           value: `\`${userDescription}\``,
           inline: false,
         },
         {
-          name: `${client.i18n.get(language, "client.commands", "admin.premium_remove_id")}`,
+          name: `${client.i18n.get(language, "client.commands.admin.premium", "premium_remove_id")}`,
           value: `\`${id}\``,
           inline: false,
         },
         {
-          name: `${client.i18n.get(language, "client.commands", "admin.premium_remove_by")}`,
+          name: `${client.i18n.get(language, "client.commands.admin.premium", "premium_remove_by")}`,
           value: `\`${handler.user?.displayName}\``,
           inline: false,
         },

@@ -1,0 +1,4 @@
+title: "Now Playing"
+autoplay: "Autoplay"
+current_duration: "Current Duration"
+requested_by: "Requested by {user}"

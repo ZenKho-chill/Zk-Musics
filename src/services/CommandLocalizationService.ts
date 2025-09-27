@@ -107,7 +107,7 @@ export class CommandLocalizationService {
     
     for (const locale of locales) {
       const lang = new LanguageHelper(this.client, locale);
-      if (lang.hasKey('commands', `${category}.description`)) {
+      if (lang.hasKey('client', 'commands', `${category}.description`)) {
         availableLocales.push(locale);
       }
     }

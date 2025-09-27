@@ -45,7 +45,7 @@ export default class implements Command {
         
       const onsome = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "client.commands", "settings.provide_lang_list")}\n\n${supportedLanguagesList}`
+          `${client.i18n.get(handler.language, "client.commands.settings", "language.provide_lang_list")}\n\n${supportedLanguagesList}`
         )
         .setColor(client.color_main);
       return handler.editReply({ content: " ", embeds: [onsome] });
@@ -57,7 +57,7 @@ export default class implements Command {
       await GuildLanguageManager.updateGuildLanguage(client, handler.guild!.id, input);
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "client.commands", "settings.lang_set", {
+          `${client.i18n.get(handler.language, "client.commands.settings", "language.lang_set", {
             language: getLanguageDisplayName(input),
           })}`
         )
@@ -69,7 +69,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "client.commands", "settings.lang_change", {
+          `${client.i18n.get(handler.language, "client.commands.settings", "language.lang_change", {
             language: getLanguageDisplayName(input),
           })}`
         )

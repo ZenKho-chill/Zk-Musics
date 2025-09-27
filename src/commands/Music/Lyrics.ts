@@ -126,7 +126,7 @@ export default class implements Command {
 
       return handler.editReply({ embeds: [embed] });
     } catch (error) {
-      logError("Lỗi LyricsCommand:", error);
+      logError(client.i18n.get(handler.language, "client.commands.music", "lyrics.log_error"), error);
       return handler.editReply({
         embeds: [
           new EmbedBuilder()

@@ -1,0 +1,34 @@
+play: {}
+playnext: {}
+search:
+  active: "❌ | Tính năng tìm kiếm đang được sử dụng bởi người khác!"
+  no_result: "❌ | Không tìm thấy kết quả nào cho từ khóa: **{query}**!"
+  placeholder: "Chọn bài hát để phát"
+  desc: "**Đã chọn:** {title} `[{duration}]` • {request}"
+  footer: "Yêu cầu bởi {user} | Thời gian hết hạn: {timeout}"
+  play_search_track: "🎵 | Đang phát **{title}** `[{duration}]` • {request}"
+  end_desc1: "⏰ | Đã hết thời gian chọn bài hát!"
+  end_desc2: "✅ | Đã chọn **{title}** thành công!"
+  url_no_allowed: "❌ | Liên kết YouTube không được phép! Vui lòng sử dụng tên bài hát."
+radio:
+  no_voice: "❌ | Bạn phải ở trong kênh thoại để sử dụng lệnh này!"
+  match: "❌ | Không tìm thấy đài radio với số {number}!"
+  play_track: "📻 | Đang phát đài **{name}**!"
+  placeholder: "Chọn đài radio"
+  no_same_voice: "❌ | Bạn phải ở cùng kênh thoại với bot!"
+  content_switched_radio: "✅ | Đã chuyển sang đài **{providerRadio}**!"
+queue: {}
+remove:
+  number_invalid: "❌ | Vị trí không hợp lệ!"
+  already: "❌ | Không thể xóa bài hát đang phát!"
+  notfound: "❌ | Không tìm thấy bài hát ở vị trí đó!"
+  desc: "🗑️ | Đã xóa **{title}** khỏi hàng chờ • {request}"
+seek:
+  invalid: "❌ | Định dạng thời gian không hợp lệ! Ví dụ: 0:10 hoặc 120:10"
+  beyond: "❌ | Không thể tua tới vị trí vượt quá độ dài bài hát!"
+  not_seekable: "❌ | Bài hát này không thể tua!"
+  msg: "⏩ | {user} đã tua tới **{duration}** trong **{title}**!"
+skipto: {}
+volume: {}
+loop: {}
+lyrics: {}

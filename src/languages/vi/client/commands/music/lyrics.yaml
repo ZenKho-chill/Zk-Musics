@@ -1,0 +1,7 @@
+disable: "❌ | Tính năng lời bài hát đã bị tắt!"
+noquery: "❌ | Vui lòng cung cấp tên bài hát hoặc phát một bài hát trước!"
+notfound: "❌ | Không tìm thấy lời bài hát cho bài hát này!"
+title: "📝 Lời bài hát - {song}"
+toolong: "📝 Lời bài hát quá dài! Xem tại: {url}"
+error: "❌ | Đã xảy ra lỗi khi tìm lời bài hát: {error}"
+log_error: "Lỗi LyricsCommand:"

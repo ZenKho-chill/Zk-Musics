@@ -1,31 +1,5 @@
-# Common UI elements
-buttons:
-  play: "▶️"
-  pause: "⏸️"
-  stop: "⏹️"
-  skip: "⏭️"
-  previous: "⏮️"
-  shuffle: "🔀"
-  loop: "🔁"
-  volume_up: "🔊"
-  volume_down: "🔉"
-  queue: "📋"
-  autoplay: "🔁"
-  
-labels:
-  name: "Name"
-  description: "Description"
-  duration: "Duration"
-  artist: "Artist"
-  album: "Album"
-  position: "Position"
-  volume: "Volume"
-  queue_length: "Queue Length"
-  
-states:
-  enabled: "Enabled"
-  disabled: "Disabled"
-  playing: "Playing"
-  paused: "Paused"
-  stopped: "Stopped"
-  loading: "Loading"
+buttons: {}
+labels: {}
+states: {}
+unknown_title: "Unknown"
+no_songs: "No songs"

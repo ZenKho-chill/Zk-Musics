@@ -1,0 +1,11 @@
+forward:
+  msg: "⏩ | Đã tua tiến **{duration}** cho bài **{title}** bởi {user}!"
+  beyond: "❌ | Không thể tua tiến vượt quá thời lượng bài hát!"
+rewind:
+  msg: "⏪ | Đã tua lùi **{duration}** cho bài **{title}** bởi {user}!"
+  beyond: "❌ | Không thể tua lùi về trước thời gian bắt đầu!"
+playnext:
+  notfound: "❌ | Vui lòng cung cấp tên bài hát hoặc URL!"
+  queue_empty: "❌ | Hàng chờ trống! Không thể thêm bài hát tiếp theo."
+  desc: "🎵 | Đã thêm **{name}** vào vị trí tiếp theo • {request}"
+  autocomplete_error: "Lỗi: không có bài hát phù hợp"

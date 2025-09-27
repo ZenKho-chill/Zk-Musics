@@ -40,7 +40,7 @@ export default class implements Command {
     if (isCollectorActive) {
       const responseEmbed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get("vi", "client.commands", "music.spotify_playlist_active")}`
+          `${client.i18n.get("vi", "client.commands.music", "spotify_playlist.active")}`
         )
         .setColor(client.color_main);
 
@@ -66,7 +66,7 @@ export default class implements Command {
     if (!spotifyID) {
       const noSpotifyIDEmbed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get("vi", "client.commands", "music.spotify_playlist_not_connected")}`
+          `${client.i18n.get("vi", "client.commands.music", "spotify_playlist.not_connected")}`
         )
         .setColor(client.color_main);
       await handler.editReply({
@@ -82,7 +82,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get("vi", "client.commands", "music.play_no_in_voice")}`
+              `${client.i18n.get("vi", "client.commands.music", "play.no_in_voice")}`
             )
             .setColor(client.color_main),
         ],
@@ -119,7 +119,7 @@ export default class implements Command {
       if (!playlists || playlists.length === 0) {
         const noPlaylistsEmbed = new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get("vi", "client.commands", "music.spotify_playlist_empty")}`
+            `${client.i18n.get("vi", "client.commands.music", "spotify_playlist.empty")}`
           )
           .setColor(client.color_main);
         await handler.editReply({
@@ -148,7 +148,7 @@ export default class implements Command {
         new StringSelectMenuBuilder()
           .setCustomId("spotify_pl")
           .setPlaceholder(
-            client.i18n.get("vi", "client.commands", "music.spotify_playlist_placeholder")
+            client.i18n.get("vi", "client.commands.music", "spotify_playlist.placeholder")
           )
           .setMinValues(1)
           .setMaxValues(1)
@@ -169,14 +169,14 @@ export default class implements Command {
 
       const EmbedPlaylist = new EmbedBuilder()
         .setTitle(
-          `${client.i18n.get(handler.language, "client.commands", "music.spotify_playlist_title", {
-            SpotifyName: SpotifyName,
+          `${client.i18n.get(handler.language, "client.commands.music", "spotify_playlist.title", {
+            owner: SpotifyName,
           })}`
         )
         .setColor(client.color_second)
         .setDescription(
-          `${client.i18n.get(handler.language, "client.commands", "music.spotify_playlist_desc", {
-            playlists: AllPlaylist,
+          `${client.i18n.get(handler.language, "client.commands.music", "spotify_playlist.desc", {
+            list: AllPlaylist,
           })}`
         )
         .setThumbnail(
@@ -184,7 +184,7 @@ export default class implements Command {
             client.user!.displayAvatarURL({ size: 1024 })
         )
         .setFooter({
-          text: `${client.i18n.get(handler.language, "client.commands", "music.spotify_playlist_footer", {
+          text: `${client.i18n.get(handler.language, "client.commands.music", "spotify_playlist.footer", {
             username: client.user!.username,
             max: "25",
           })}`,
@@ -228,8 +228,8 @@ export default class implements Command {
                 .setDescription(
                   `${client.i18n.get(
                     handler.language,
-                    "commands_music",
-                    "spotify_playlist_notfound"
+                    "client.commands.music",
+                    "spotify_playlist.notfound"
                   )}`
                 )
                 .setColor(client.color_main),
@@ -248,15 +248,13 @@ export default class implements Command {
           if (!player.playing) await player.play();
           const embed = new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands", "music.spotify_play_playlist", {
+              `${client.i18n.get(handler.language, "client.commands.music", "spotify_playlist.play_playlist", {
                 title: this.getTitle(
                   client,
                   searchResults.type,
                   searchResults.tracks,
                   selectedPlaylist
                 ),
-                url: selectedPlaylist,
-                playlistname: selectedPlaylist.name,
               })}`
             )
             .setThumbnail(selectedPlaylist.images[0]?.url)
@@ -296,7 +294,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get("vi", "client.commands", "music.spotify_playlist_error")}`
+              `${client.i18n.get("vi", "client.commands.music", "spotify_playlist.error")}`
             )
             .setColor(client.color_main),
         ],

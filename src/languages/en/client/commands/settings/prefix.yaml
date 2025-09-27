@@ -1,0 +1,4 @@
+arg: "❌ Please provide a new prefix!"
+length: "❌ Prefix cannot exceed 10 characters!"
+set: "✅ Prefix set to **{prefix}**!"
+change: "✅ Prefix changed to **{prefix}**!"

@@ -1,38 +1,7 @@
-# Tin nhắn xử lý nút bấm
-unauthorized_user: "❌ Bạn không thể sử dụng nút này!"
-button_disabled: "❌ Nút này hiện đang bị vô hiệu hóa!"
-
-# Tin nhắn nút điều khiển trình phát
-player_buttons:
-  play_resumed: "▶️ Đã tiếp tục phát"
-  play_paused: "⏸️ Đã tạm dừng"
-  track_skipped: "⏭️ Đã chuyển bài"
-  track_previous: "⏮️ Bài trước"
-  playback_stopped: "⏹️ Đã dừng phát"
-  queue_shuffled: "🔀 Đã xáo trộn hàng đợi"
-  volume_changed: "🔊 Âm lượng: {volume}%"
-  loop_disabled: "🔁 Lặp lại: Tắt"
-  loop_track: "🔂 Lặp lại: Bài hát"
-  loop_queue: "🔁 Lặp lại: Hàng đợi"
-  autoplay_enabled: "🔁 Tự động phát: Bật"
-  autoplay_disabled: "🔁 Tự động phát: Tắt"
-
-# Tin nhắn trình phát mở rộng từ file cũ
-autoplay:
-  on: "Tự phát giờ đã **BẬT** — Thưởng thức âm nhạc nhé!"
-  off: "Tự phát giờ đã **TẮT** — Mình sẽ không tự thêm nhạc nữa."
-  no_song: "Không có bài hát nào đang phát!"
-
-loop:
-  current: |
-    <:loop:1220832757496811570> **Đang lặp lại {title}
-    <:blankers:1220848705289064669><:sparkle:1220846124961890304> Thưởng thức nhé, {user}**
-  all: "<:loop:1220832757496811570> **{user} đã bật chế độ lặp toàn bộ hàng chờ (QUEUE)**"
-  disabled: "<:wrong:1220876213896216686> **Chế độ lặp đã bị {user} TẮT**"
-
-previous:
-  not_found: |
-    <:warnings:1220876158254710936> **Không tìm thấy bài trước trong hàng chờ!
-    <:blankers:1220848705289064669><:pop:1220849334606626946> Hãy dùng /play để thêm bài và giữ không khí sôi động nhé!**
-  message: |
-    <:replay:1220881274378653787>  **Quay lại bài trước do {user}
+player_buttons: {}
+autoplay: {}
+loop: {}
+previous: {}
+error_client_user_unavailable: "Người dùng client không có sẵn"
+user_unknown: "Người dùng không rõ"
+title_unknown: "Không xác định"

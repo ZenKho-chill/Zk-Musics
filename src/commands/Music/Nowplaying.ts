@@ -96,14 +96,14 @@ export default class implements Command {
       {
         name: `**${
           player!.data.get("autoplay")
-            ? `${client.config.TRACKS_EMOJI.Autoplay} Tự phát`
+            ? `${client.config.TRACKS_EMOJI.Autoplay} ${client.i18n.get(handler.language, "client.commands.music", "nowplaying.autoplay")}`
             : `${client.config.TRACKS_EMOJI.Volume} ${player.volume}%`
         }**`,
         value: `**${src}**`,
         inline: true,
       },
       {
-        name: `**Thời lượng hiện tại**`,
+        name: `**${client.i18n.get(handler.language, "client.commands.music", "nowplaying.current_duration")}**`,
         value: `\`${CurrentDuration} / ${new FormatDuration().parse(song!.duration)}\n${bar}\``,
         inline: false,
       },
@@ -124,7 +124,9 @@ export default class implements Command {
     );
     embeded.addFields(fieldDataGlobal);
     embeded.setFooter({
-      text: `Yêu cầu từ ${requesterName.toUpperCase()}`,
+      text: `${client.i18n.get(handler.language, "client.commands.music", "nowplaying.requested_by", {
+        user: requesterName.toUpperCase(),
+      })}`,
       iconURL: requesterAvatarURL,
     });
 

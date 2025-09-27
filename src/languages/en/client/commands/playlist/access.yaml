@@ -1,0 +1,16 @@
+cannot_use_menu: "❌ You cannot use this menu!"
+cannot_use_dropdown: "❌ You cannot use this dropdown!"
+success: "✅ Added song to playlist `{name}`"
+failed: "❌ Could not add song to playlist"
+create:
+  description: "Create new playlist"
+  success: "✅ Created playlist `{name}` successfully"
+  failed: "❌ Could not create playlist"
+delete:
+  description: "Delete playlist"
+  success: "✅ Playlist `{name}` has been **Deleted** successfully"
+  cancelled: "⚠️ **Delete** Playlist cancelled!"
+import:
+  description: "Import playlist from external source"
+  success: "✅ Playlist imported successfully"
+  failed: "❌ Could not import playlist"

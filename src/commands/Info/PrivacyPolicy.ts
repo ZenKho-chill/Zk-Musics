@@ -25,7 +25,7 @@ export default class implements Command {
 
     const privacyembed = new EmbedBuilder()
       .setAuthor({
-        name: `${client.user!.username} — Chính sách quyền riêng tư!`,
+        name: `${client.user!.username} — ${client.i18n.get(handler.language, "client.commands.info", "privacy_policy_embed_author")}`,
         iconURL: client.user!.displayAvatarURL(),
         url: `https://discord.com/oauth2/authorize?client_id=${
           client.user!.id

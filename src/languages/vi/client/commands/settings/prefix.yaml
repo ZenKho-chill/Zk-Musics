@@ -1,0 +1,4 @@
+arg: "❌ Vui lòng cung cấp tiền tố mới!"
+length: "❌ Tiền tố không được vượt quá 10 ký tự!"
+set: "✅ Đã đặt tiền tố thành **{prefix}**!"
+change: "✅ Đã thay đổi tiền tố thành **{prefix}**!"

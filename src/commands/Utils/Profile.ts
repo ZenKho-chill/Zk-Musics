@@ -41,7 +41,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands", "utils.user_arg_error", {
+              `${client.i18n.get(handler.language, "client.commands.utils", "user_arg_error", {
                 text: "**@mention**",
               })}`
             )
@@ -76,7 +76,7 @@ export default class implements Command {
         const joinDate = guildMember.joinedAt.toLocaleDateString();
         ctx.fillText(joinDate, 370, 113);
       } else {
-        ctx.fillText("Không có", 370, 118);
+        ctx.fillText(client.i18n.get(handler.language, "client.commands.utils", "profile.no_data"), 370, 118);
       }
 
       const userJoinDate = user.createdAt.toLocaleDateString();

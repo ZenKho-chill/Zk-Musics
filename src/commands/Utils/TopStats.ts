@@ -41,7 +41,7 @@ export default class implements Command {
           .sort((a, b) => (b.value.Count || 0) - (a.value.Count || 0))
           .slice(0, 5)
           .map((guild, index) => `${index + 1}. ${guild.value.GuildName}`)
-          .join("\n") || "Không có dữ liệu";
+          .join("\n") || client.i18n.get(handler.language, "client.commands.utils", "topstats.no_data");
 
       const topUsers =
         (usersData || [])
@@ -55,7 +55,7 @@ export default class implements Command {
           .sort((a, b) => (b.value.count || 0) - (a.value.count || 0))
           .slice(0, 5)
           .map((vote, index) => `${index + 1}. ${vote.value.username}`)
-          .join("\n") || "Không có dữ liệu";
+          .join("\n") || client.i18n.get(handler.language, "client.commands.utils", "topstats.no_data");
 
       // Tạo canvas với kích thước mong muốn
       const canvas = createCanvas(954, 647);
@@ -123,12 +123,12 @@ export default class implements Command {
         ],
       });
     } catch (error) {
-      logWarn("TopStats", "Lỗi khi tạo ảnh thống kê top");
+      logWarn("TopStats", client.i18n.get(handler.language, "client.commands.utils", "topstats.log_error"));
       await handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands", "utils.topstats_error")}`
+              `${client.i18n.get(handler.language, "client.commands.utils", "topstats.error")}`
             )
             .setColor(client.color_main),
         ],

@@ -1,0 +1,8 @@
+feature_disabled_title: "❌ Last.fm Feature Disabled"
+feature_disabled_desc: "The Last.fm feature is currently unavailable. Please contact an administrator to enable this feature."
+login_title: "Last.fm Login"
+login_desc: "Click the button below to login to your Last.fm account.\n\n🔗 [Login here]({url})"
+login_footer: "Link will expire in {expired}"
+not_login_desc: "❌ You haven't logged in to Last.fm yet! Use `/{name} type:login` to login."
+logout_title: "Last.fm Logout"
+logout_desc: "✅ Successfully logged out from Last.fm account!"

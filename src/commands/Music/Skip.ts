@@ -32,7 +32,7 @@ export default class implements Command {
     if (!currentTrack) {
       const skipped = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "client.commands", "music.no_songs_playing")}`
+          `${client.i18n.get(handler.language, "client.commands.music", "no_songs_playing")}`
         )
         .setColor(client.color_main);
 
@@ -42,7 +42,7 @@ export default class implements Command {
 
     if (player.queue.size == 0 && player.data.get("autoplay") !== true) {
       const skipped = new EmbedBuilder()
-        .setDescription(`${client.i18n.get(handler.language, "client.commands", "music.skip_notfound")}`)
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.music", "skip.notfound")}`)
         .setColor(client.color_main);
 
       handler.editReply({ content: " ", embeds: [skipped] });
@@ -51,7 +51,7 @@ export default class implements Command {
 
       const skipped = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "client.commands", "music.skip_msg", {
+          `${client.i18n.get(handler.language, "client.commands.music", "skip.msg", {
             user: handler.user!.displayName || handler.user!.tag,
             title: this.getTitle(client, currentTrack),
           })}`

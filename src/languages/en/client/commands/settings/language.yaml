@@ -1,0 +1,3 @@
+provide_lang_list: "❌ Please provide a valid language code from the list below:"
+lang_set: "✅ Language set to **{language}**!"
+lang_change: "✅ Language changed to **{language}**!"

@@ -1,0 +1,11 @@
+description: "Loop the queue (all/current)!"
+option_description: "Loop type"
+invalid: "❌ | Invalid loop mode!"
+already: "❌ | The song is already looped in this mode!"
+current: "🔁 | {user} enabled loop for **{title}**!"
+all: "🔁 | {user} enabled loop for the entire queue!"
+unloop_all: "🔄 | Loop disabled!"
+choices:
+  song: "Song"
+  queue: "Queue"
+  none: "None"

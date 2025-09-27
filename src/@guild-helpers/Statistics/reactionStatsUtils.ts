@@ -19,7 +19,7 @@ export class handleReactionStats {
           try {
             await reaction.fetch();
           } catch (error) {
-            logError("handleReactionStats", "Không thể lấy reaction");
+            logError("handleReactionStats", this.client.i18n.get("vi", "server.system.core", "error_fetch_reaction"));
             return;
           }
         }
@@ -28,7 +28,7 @@ export class handleReactionStats {
           try {
             await user.fetch();
           } catch (error) {
-            logError("handleReactionStats", "Không thể lấy user");
+            logError("handleReactionStats", this.client.i18n.get("vi", "server.system.core", "error_fetch_user"));
             return;
           }
         }

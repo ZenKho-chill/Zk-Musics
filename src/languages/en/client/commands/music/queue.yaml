@@ -1,0 +1,8 @@
+clear: {}
+number_invalid: "❌ | Invalid page number!"
+title: "Queue List"
+description: "**Now Playing:** {title} `[{duration}]` • {request}{rest}"
+footer: "Page {page}/{pages} | {queue_lang} songs | Total duration: {duration}"
+notnumber: "❌ | Please enter a number!"
+page_notfound: "❌ | Page not found! Only {page} pages available."
+empty: "  `NOT AVAILABLE`"

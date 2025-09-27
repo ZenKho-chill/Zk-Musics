@@ -1,0 +1,8 @@
+feature_disabled_title: "❌ Tính năng Last.fm đã bị tắt"
+feature_disabled_desc: "Tính năng Last.fm hiện không khả dụng. Vui lòng liên hệ với quản trị viên để bật tính năng này."
+login_title: "Đăng nhập Last.fm"
+login_desc: "Nhấp vào nút bên dưới để đăng nhập tài khoản Last.fm của bạn.\n\n🔗 [Đăng nhập tại đây]({url})"
+login_footer: "Liên kết sẽ hết hạn sau {expired}"
+not_login_desc: "❌ Bạn chưa đăng nhập tài khoản Last.fm! Sử dụng `/{name} type:login` để đăng nhập."
+logout_title: "Đăng xuất Last.fm"
+logout_desc: "✅ Đã đăng xuất thành công khỏi tài khoản Last.fm!"

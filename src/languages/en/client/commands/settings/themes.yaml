@@ -1,0 +1,2 @@
+error_themes: "❌ Please select a valid theme!"
+success_themes: "✅ Theme set to **{themes}**!"

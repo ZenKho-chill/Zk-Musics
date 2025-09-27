@@ -64,14 +64,14 @@ export default class implements Command {
           .sort((a, b) => (b.count || 0) - (a.count || 0))
           .slice(0, 3)
           .map((track, index) => `${index + 1}. ${track.name}`)
-          .join("\n") || "Không có dữ liệu";
+          .join("\n") || client.i18n.get(handler.language, "client.commands.utils", "mystats.no_data");
 
       const topArtists =
         topArtistsArray
           .sort((a, b) => (b.count || 0) - (a.count || 0))
           .slice(0, 3)
           .map((artist, index) => `${index + 1}. ${artist.name}`)
-          .join("\n") || "Không có dữ liệu";
+          .join("\n") || client.i18n.get(handler.language, "client.commands.utils", "mystats.no_data");
 
       // Tạo canvas với kích thước mong muốn
       const canvas = createCanvas(954, 647);
@@ -137,7 +137,7 @@ export default class implements Command {
 
       ctx.font = "24px Courage Road";
       ctx.fillStyle = "#a4815e";
-      ctx.fillText(`SỐ LƯỢT BÌNH CHỌN TRÊN TOP.GG - ${voteCount}`.toUpperCase(), 208, 140);
+      ctx.fillText(client.i18n.get(handler.language, "client.commands.utils", "mystats.vote_text", { count: voteCount.toString() }).toUpperCase(), 208, 140);
 
       // Hàm tiện ích rút ngắn chuỗi tới độ dài tối đa
       function topTrackstruncateText(text: string, maxLength: number): string {
@@ -183,12 +183,12 @@ export default class implements Command {
         ],
       });
     } catch (error) {
-      logWarn("UserStats", "Lỗi khi tạo ảnh thống kê người dùng");
+      logWarn("UserStats", client.i18n.get(handler.language, "client.commands.utils", "mystats.log_error"));
       await handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "client.commands", "utils.mystats_error")}`
+              `${client.i18n.get(handler.language, "client.commands.utils", "mystats.error")}`
             )
             .setColor(client.color_main),
         ],
