@@ -48,7 +48,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "report_failure")}`
+                `${client.i18n.get(handler.language, "client.commands.info", "report_failure")}`
               ),
           ],
         });
@@ -62,7 +62,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "report_failure")}`
+                `${client.i18n.get(handler.language, "client.commands.info", "report_failure")}`
               ),
           ],
         });
@@ -75,7 +75,7 @@ export default class implements Command {
         const errorEmbed = new EmbedBuilder()
           .setColor(client.color_main)
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.info", "report_provide_desc")}`
+            `${client.i18n.get(handler.language, "client.commands.info", "report_provide_desc")}`
           );
         await handler.editReply({
           embeds: [errorEmbed],
@@ -88,21 +88,21 @@ export default class implements Command {
 
       const reportEmbed = new EmbedBuilder()
         .setAuthor({
-          name: `${handler.user?.displayName} | Báo cáo!`,
+          name: `${handler.user?.displayName} | ${client.i18n.get(handler.language, "client.commands.info", "report_embed_author")}`,
           iconURL: handler.user?.displayAvatarURL(),
         })
-        .setDescription(`**Mô tả**\n\`\`\`${truncatedDescription}\`\`\``)
+        .setDescription(`**${client.i18n.get(handler.language, "client.commands.info", "report_description_header")}**\n\`\`\`${truncatedDescription}\`\`\``)
         .addFields(
           {
-            name: `Báo cáo bởi`,
+            name: client.i18n.get(handler.language, "client.commands.info", "report_field_reported_by"),
             value:
               `<@${handler.user?.id ?? ""}>` ||
               handler.user?.displayName ||
-              "Người dùng không xác định",
+              client.i18n.get(handler.language, "client.commands.info", "report_unknown_user"),
             inline: true,
           },
           {
-            name: `Thời gian`,
+            name: client.i18n.get(handler.language, "client.commands.info", "report_field_time"),
             value: `\`${moment(new Date()).format("dddd, Do MMMM YYYY")}\``,
             inline: true,
           }
@@ -118,17 +118,17 @@ export default class implements Command {
 
       const successEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.info", "report_success")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.info", "report_success")}`);
 
       return handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
-      logWarn("Report", "Lỗi khi thực thi lệnh Report");
+      logWarn("Report", client.i18n.get(handler.language, "client.commands.info", "report_log_error"));
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.info", "report_failure")}`
+              `${client.i18n.get(handler.language, "client.commands.info", "report_failure")}`
             ),
         ],
       });

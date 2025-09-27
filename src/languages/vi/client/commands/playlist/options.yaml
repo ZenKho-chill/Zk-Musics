@@ -1,0 +1,13 @@
+action:
+  description: "Hành động thực hiện"
+  choices:
+    add: "Thêm bài hát"
+    all: "Xem tất cả bài hát"
+    create: "Tạo mới"
+    delete: "Xóa"
+    detail: "Chi tiết"
+    editor: "Chế độ"
+    import: "Phát nhạc"
+    info: "Thông tin"
+    remove: "Xóa bài hát"
+    savequeue: "Lưu hàng đợi"

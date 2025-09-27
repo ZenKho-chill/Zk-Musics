@@ -30,7 +30,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
    * @returns string
    */
   public sourceName(): string {
-    return "deezer";
+    return "Deezer";
   }
 
   /**

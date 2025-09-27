@@ -14,7 +14,7 @@ export class AutoFixLavalink {
   }
 
   async execute() {
-    logInfo("AutoFixLavalink", "Bắt đầu tự sửa lavalink");
+    logInfo("AutoFixLavalink", this.client.i18n.get("vi", "server.system.core", "autofix_start"));
     if (this.client.lavalinkList.length == 0) {
       new CheckLavalinkServer(this.client);
       return this.fixLavalink();
@@ -23,20 +23,20 @@ export class AutoFixLavalink {
 
   async fixLavalink() {
     const autofixError = chalk.hex("#e12885");
-    const autofixErrorMess = autofixError("Lỗi: ");
+    const autofixErrorMess = autofixError(this.client.i18n.get("vi", "server.system.core", "error_prefix"));
 
     this.checkLavalink();
     await this.removeCurrentLavalink();
     if (this.client.lavalinkList.filter((i) => i.online).length == 0) {
       logInfo(
         "AutoFixLavalink",
-        autofixErrorMess + "Không có lavalink trực tuyến hoặc khả dụng cho bot này."
+        autofixErrorMess + this.client.i18n.get("vi", "server.system.core", "autofix_no_online")
       );
       logInfo(
         "AutoFixLavalink",
-        autofixErrorMess + "Vui lòng tắt bot, nhập server lavalink hợp lệ (v4) và khởi động lại bot"
+        autofixErrorMess + this.client.i18n.get("vi", "server.system.core", "autofix_please_restart")
       );
-      logInfo("AutoFixLavalink", "Đã kết thúc autofix lavalink");
+      logInfo("AutoFixLavalink", this.client.i18n.get("vi", "server.system.core", "autofix_finished"));
       return;
     }
 
@@ -44,7 +44,7 @@ export class AutoFixLavalink {
 
     logInfo(
       "AutoFixLavalink",
-      "Đã chuyển sang lavalink mới, vui lòng chờ 3 giây để kết nối."
+      this.client.i18n.get("vi", "server.system.core", "autofix_switched")
     );
     logInfo("AutoFixLavalink", "Đã kết thúc autofix lavalink");
   }
@@ -70,7 +70,7 @@ export class AutoFixLavalink {
 
     // Kiểm tra xem lavalinkIndex có hợp lệ không
     if (lavalinkIndex === -1) {
-      logWarn("AutoFixLavalink", "Không tìm thấy node lavalink.");
+      logWarn("AutoFixLavalink", this.client.i18n.get("vi", "server.system.core", "autofix_node_not_found"));
       return;
     }
 
@@ -78,7 +78,7 @@ export class AutoFixLavalink {
 
     // Đảm bảo targetLavalink được định nghĩa trước khi tiếp tục
     if (!targetLavalink) {
-      logWarn("AutoFixLavalink", "Node lavalink mục tiêu không xác định.");
+      logWarn("AutoFixLavalink", this.client.i18n.get("vi", "server.system.core", "autofix_target_undefined"));
       return;
     }
 

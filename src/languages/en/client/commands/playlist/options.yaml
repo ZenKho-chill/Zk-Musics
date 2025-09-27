@@ -1,0 +1,13 @@
+action:
+  description: "Action to perform"
+  choices:
+    add: "Add song"
+    all: "View all songs"
+    create: "Create new"
+    delete: "Delete"
+    detail: "Details"
+    editor: "Edit mode"
+    import: "Play music"
+    info: "Information"
+    remove: "Remove song"
+    savequeue: "Save queue"

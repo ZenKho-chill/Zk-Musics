@@ -39,17 +39,17 @@ export class PlayerUpdateLoader {
       let src = client.config.PLAYER_SOURCENAME.UNKNOWN; // Mặc định là UNKNOWN nếu nguồn không xác định
       if (source === "youtube") {
         src = client.config.PLAYER_SOURCENAME.YOUTUBE;
-      } else if (source === "spotify") {
+      } else if (source === "spotify_name") {
         src = client.config.PLAYER_SOURCENAME.SPOTIFY;
       } else if (source === "tidal") {
         src = client.config.PLAYER_SOURCENAME.TIDAL;
       } else if (source === "soundcloud") {
         src = client.config.PLAYER_SOURCENAME.SOUNDCLOUD;
-      } else if (source === "deezer") {
+      } else if (source === "deezer_name") {
         src = client.config.PLAYER_SOURCENAME.DEEZER;
       } else if (source === "twitch") {
         src = client.config.PLAYER_SOURCENAME.TWITCH;
-      } else if (source === "apple") {
+      } else if (source === "apple_name") {
         src = client.config.PLAYER_SOURCENAME.APPLE_MUSIC;
       } else if (source === "applemusic") {
         src = client.config.PLAYER_SOURCENAME.APPLE_MUSIC;
@@ -196,8 +196,8 @@ export class PlayerUpdateLoader {
 
       let embed = new EmbedBuilder()
         .setAuthor({
-          name: client.i18n.get(language, "button.setup.music", "player_setup_author"),
-          iconURL: client.i18n.get(language, "button.setup.music", "player_setup_icon_author"),
+          name: client.i18n.get(language, "server.setup", "player_setup_author"),
+          iconURL: client.i18n.get(language, "server.setup", "player_setup_icon_author"),
         })
         .setDescription(`**${TrackTitle(client, cSong!)}**`)
         .setThumbnail(
@@ -208,7 +208,7 @@ export class PlayerUpdateLoader {
         .setColor(client.color_second)
         .setImage("attachment://queue.png")
         .setFooter({
-          text: `${client.i18n.get(language, "button.setup.music", "setup_footer", {
+          text: `${client.i18n.get(language, "server.setup", "setup_footer", {
             duration: qDuration,
             totalsong: player.queue.length.toString(),
             autoplay: player!.data.get("autoplay") ? "On" : "Off",
@@ -275,12 +275,12 @@ export class PlayerUpdateLoader {
 
       const language = guildModel;
 
-      const queueMsg = `${client.i18n.get(language, "button.setup.music", "setup_queuemsg")}`;
+      const queueMsg = `${client.i18n.get(language, "server.setup", "setup_queuemsg")}`;
 
       const playEmbed = new EmbedBuilder()
         .setColor(client.color_second)
         .setAuthor({
-          name: `${client.i18n.get(language, "button.setup.music", "setup_playembed_author")}`,
+          name: `${client.i18n.get(language, "server.setup", "setup_playembed_author")}`,
         })
         .setImage(client.config.bot.IMAGES_URL_REQUEST_MUSIC);
 

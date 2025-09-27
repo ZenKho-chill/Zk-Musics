@@ -1,6 +1,12 @@
 /**
- * Cấu hình ngôn ngữ cho bot
+ * Cấu hình ngôn ngữ cho bot với cấu trúc client/server mới
  * File này chứa danh sách các ngôn ngữ được hỗ trợ và tên hiển thị của chúng
+ * 
+ * Cấu trúc mới:
+ * - languages/en/client/ - Giao diện người dùng (commands, errors, messages, ui)
+ * - languages/en/server/ - Hệ thống nội bộ (events, handlers, services, validation)
+ * - languages/vi/client/ - Tương tự cho tiếng Việt
+ * - languages/vi/server/ - Tương tự cho tiếng Việt
  */
 
 import { ConfigData } from "../services/ConfigData.js";
@@ -109,4 +115,39 @@ export function mapDiscordLocaleToSupportedLanguage(discordLocale: string): stri
   
   // Fallback về ngôn ngữ mặc định
   return getDefaultLanguage();
+}
+
+/**
+ * Các context được hỗ trợ trong cấu trúc mới
+ */
+export const SUPPORTED_CONTEXTS = ['client', 'server'] as const;
+
+/**
+ * Các section được hỗ trợ cho từng context
+ */
+export const CONTEXT_SECTIONS = {
+  client: ['commands', 'errors', 'messages', 'ui', 'user-facing'],
+  server: ['events', 'handlers', 'services', 'internal', 'validation']
+} as const;
+
+/**
+ * Kiểm tra context có hợp lệ không
+ */
+export function isValidContext(context: string): context is 'client' | 'server' {
+  return SUPPORTED_CONTEXTS.includes(context as any);
+}
+
+/**
+ * Kiểm tra section có hợp lệ cho context không
+ */
+export function isValidSectionForContext(context: 'client' | 'server', section: string): boolean {
+  const validSections = CONTEXT_SECTIONS[context] as readonly string[];
+  return validSections.includes(section);
+}
+
+/**
+ * Lấy đường dẫn file language đầy đủ
+ */
+export function getLanguageFilePath(locale: string, context: 'client' | 'server', section: string): string {
+  return `languages/${locale}/${context}/${section}`;
 }

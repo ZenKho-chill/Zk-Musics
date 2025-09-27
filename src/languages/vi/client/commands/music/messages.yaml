@@ -1,0 +1,4 @@
+no_songs_playing: "❌ | Không có bài hát nào đang phát!"
+clearqueue_msg: "✅ | Đã xóa tất cả bài hát trong hàng chờ!"
+pause_msg: "⏸️ | {user} đã tạm dừng **{title}**!"
+resume_msg: "▶️ | {user} đã tiếp tục phát **{title}**!"

@@ -15,7 +15,7 @@ export class CheckLavalinkServer {
     if (isLogEnable)
       logInfo(
         "CheckLavalinkServer",
-        "Đang kiểm tra server lavalink cho autofix"
+        this.client.i18n.get("vi", "server.system.core", "autofix_checking_servers")
       );
 
     const getLavalinkServerClass = new GetLavalinkServer();

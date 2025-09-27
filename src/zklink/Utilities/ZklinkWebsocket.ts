@@ -110,7 +110,7 @@ export class ZklinkWebsocket extends EventEmitter {
    */
   public connect() {
     const parsedUrl = new URL(this.url);
-    const isSecure = parsedUrl.protocol === "wss:";
+    const isSecure = parsedUrl.protocol === "https:";
     const agent = isSecure ? https : http;
     const key = crypto.randomBytes(16).toString("base64");
 
@@ -245,7 +245,7 @@ export class ZklinkWebsocket extends EventEmitter {
       case 0x1:
       case 0x2: {
         if (this.continueInfo.type !== -1 && this.continueInfo.type !== headers.opcode) {
-          this.close(1002, "Khung tiếp nối không hợp lệ");
+          this.close(1002, "https:");
           this.cleanup();
 
           return;
@@ -291,7 +291,7 @@ export class ZklinkWebsocket extends EventEmitter {
       }
       // eslint-disable-next-line no-fallthrough
       default: {
-        this.close(1002, "Opcode không hợp lệ");
+        this.close(1002, "https:");
         this.cleanup();
 
         return;
@@ -398,9 +398,9 @@ export class ZklinkWebsocket extends EventEmitter {
    * @returns boolean
    */
   public close(code?: number, reason?: string) {
-    const data = Buffer.allocUnsafe(2 + Buffer.byteLength(reason ?? "Đóng kết nối bình thường"));
+    const data = Buffer.allocUnsafe(2 + Buffer.byteLength(reason ?? "https:"));
     data.writeUInt16BE(code ?? 1000);
-    data.write(reason ?? "Đóng kết nối bình thường", 2);
+    data.write(reason ?? "https:", 2);
 
     this.sendData(data, { len: data.length, fin: true, opcode: 0x8 });
 

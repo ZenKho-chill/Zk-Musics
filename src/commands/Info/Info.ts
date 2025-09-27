@@ -30,43 +30,43 @@ export default class implements Command {
     const globalPlayed = globalPlayedSongData?.SongsPlayed || 0;
 
     const botInfo = stripIndents`
-  • **Tên người dùng :** ${client.user!.username}
-  • **Số máy chủ :** ${client.guilds.cache.size}
-  • **Số người dùng :** ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}
-  • **Số kênh :** ${client.channels.cache.size}
-  • **Lệnh đã sử dụng :** ${globalCommands}
-  • **Bài đã phát :** ${globalPlayed}
-  • **Độ trễ API :** ${client.ws.ping}ms
-  • **Thời gian phản hồi :** ${Date.now() - handler.createdAt}ms
-  • **Tổng shards :** ${client.clusterManager?.totalShards ?? "0"}
-  • **Tổng cluster :** ${client.cluster.id ?? "0"}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_username")}** ${client.user!.username}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_servers")}** ${client.guilds.cache.size}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_users")}** ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_channels")}** ${client.channels.cache.size}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_commands_used")}** ${globalCommands}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_songs_played")}** ${globalPlayed}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_api_latency")}** ${client.ws.ping}ms
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_response_time")}** ${Date.now() - handler.createdAt}ms
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_total_shards")}** ${client.clusterManager?.totalShards ?? "0"}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_total_clusters")}** ${client.cluster.id ?? "0"}
   `;
 
     const Metadata = stripIndents`
-  • **Client ID :** ||${client.user!.id}||
-  • **Tên dự án :** ${client.manifest.metadata.bot.codename}
-  • **Phiên bản :** ${client.manifest.metadata.bot.version}
-  • **Mô tả :** ${client.manifest.metadata.bot.description}
-  • **Phiên bản Autofix :** ${client.manifest.metadata.autofix.version}
-  • **Mã định danh :** ${client.manifest.metadata.autofix.codename}
-  • **Discord.js :** ${client.manifest.package.discordjs}
-  • **Node.js :** ${process.version}
-  • **Typescript :** ${client.manifest.package.typescript}
-  • **Tổng số gói :** ${client.manifest.package.totalAmount}
-  • **Liên hệ hỗ trợ :** ${client.config.bot.SERVER_SUPPORT_URL}
-  • **Nhà phát triển :** [${client.manifest.metadata.bot.developer.name}](${client.manifest.metadata.bot.developer.contact})
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_client_id")}** ||${client.user!.id}||
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_project_name")}** ${client.manifest.metadata.bot.codename}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_version")}** ${client.manifest.metadata.bot.version}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_description")}** ${client.manifest.metadata.bot.description}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_autofix_version")}** ${client.manifest.metadata.autofix.version}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_autofix_codename")}** ${client.manifest.metadata.autofix.codename}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_discordjs")}** ${client.manifest.package.discordjs}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_nodejs")}** ${process.version}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_typescript")}** ${client.manifest.package.typescript}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_total_packages")}** ${client.manifest.package.totalAmount}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_support_contact")}** ${client.config.bot.SERVER_SUPPORT_URL}
+  • **${client.i18n.get(handler.language, "client.commands", "admin.info_developer")}** [${client.manifest.metadata.bot.developer.name}](${client.manifest.metadata.bot.developer.contact})
   `;
 
     const embed = new EmbedBuilder()
       .setColor(client.color_second)
       .setThumbnail(client.user!.displayAvatarURL({ size: 512 }))
       .addFields({ 
-        name: "THÔNG TIN BOT", 
+        name: client.i18n.get(handler.language, "client.commands", "admin.info_bot_info_field"), 
         value: botInfo, 
         inline: false 
       })
       .addFields({
-        name: "THÔNG TIN KỸ THUẬT",
+        name: client.i18n.get(handler.language, "client.commands", "admin.info_technical_info_field"),
         value: Metadata,
         inline: false,
       });

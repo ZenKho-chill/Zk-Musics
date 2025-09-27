@@ -1,0 +1,7 @@
+user_not_found: "❌ Không tìm thấy người dùng {user} trong máy chủ này!"
+user_ownerid: "❌ Không thể kick chủ sở hữu máy chủ {user}!"
+user_higher_role: "❌ Bạn không thể kick người dùng có vai trò cao hơn bạn!"
+bot_higher_role: "❌ Bot không thể kick người dùng có vai trò cao hơn bot!"
+error: "❌ Không thể kick người dùng {user}! Điều này có thể do quyền hạn hoặc vai trò."
+success_dm: "Bạn đã bị kick khỏi **{guild}** bởi {moderator}.\n**Lý do:** {reason}"
+success: "✅ Đã kick thành công {user} khỏi máy chủ!\n**Lý do:** {reason}\n**Người điều hành:** {moderator}"

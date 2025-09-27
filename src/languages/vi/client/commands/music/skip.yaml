@@ -1,0 +1,3 @@
+number_invalid: "❌ | Vị trí không hợp lệ!"
+notfound: "❌ | Không có bài hát nào để bỏ qua!"
+msg: "⏭️ | {user} đã bỏ qua **{title}**!"

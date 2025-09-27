@@ -58,7 +58,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.radio", "radio_no_voice")}`
+              `${client.i18n.get(handler.language, "client.commands.music", "radio_no_voice")}`
             )
             .setColor(client.color_main),
         ],
@@ -90,7 +90,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.radio", "radio_match", {
+              `${client.i18n.get(handler.language, "client.commands.music", "radio_match", {
                 serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
               })}`
             )
@@ -107,7 +107,7 @@ export default class implements Command {
 
     if (!player.playing) player.play();
     const embed = new EmbedBuilder().setColor(client.color_main).setDescription(
-      `${client.i18n.get(handler.language, "commands.radio", "radio_play_track", {
+      `${client.i18n.get(handler.language, "client.commands.music", "radio_play_track", {
         title: radioData.name || handler.guild!.name,
         duration: new ConvertTime().parse(result.tracks[0].duration as number),
         request: String(result.tracks[0].requester),
@@ -147,7 +147,7 @@ export default class implements Command {
       new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
         new StringSelectMenuBuilder()
           .setCustomId("provider")
-          .setPlaceholder(client.i18n.get(handler.language, "commands.radio", "radio_placeholder"))
+          .setPlaceholder(client.i18n.get(handler.language, "client.commands.music", "radio_placeholder"))
           .addOptions(this.getOptionBuilder(radioListKeys))
           .setDisabled(disable)
       );
@@ -174,7 +174,7 @@ export default class implements Command {
         .reply({
           content: `${client.i18n.get(
             handler.language,
-            "commands.radio",
+            "client.commands.music",
             "content_switched_radio",
             {
               providerRadio: providerName,
@@ -229,7 +229,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.radio", "radio_no_same_voice")}`
+              `${client.i18n.get(handler.language, "client.commands.music", "radio_no_same_voice")}`
             )
             .setColor(client.color_main),
         ],

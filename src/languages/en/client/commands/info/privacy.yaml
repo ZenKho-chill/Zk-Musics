@@ -1,0 +1,27 @@
+title: "{bot} Privacy Policy"
+desc: |
+  **{bot} Privacy Policy**
+
+  We are committed to protecting your privacy. This policy explains how we collect, use, and protect your information when using {bot}.
+
+  **Information We Collect:**
+  • **Server Data:** Server ID, server name, member count
+  • **User Data:** User ID, username (only when necessary for functionality)
+  • **Usage Data:** Commands used, songs played (to improve the bot)
+
+  **How We Use Information:**
+  • Provide and improve bot services
+  • Anonymous usage statistics
+  • Prevent abuse and spam
+
+  **Your Rights:**
+  • Request data deletion at any time
+  • Refuse collection of unnecessary data
+  • Contact support for more details
+
+  **Contact:**
+  • **Support:** {serversupport}
+  • **Developer:** {developer}
+
+  *This policy may be updated. We will notify about important changes.*
+embed_author: "Privacy Policy!"

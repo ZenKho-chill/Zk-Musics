@@ -85,7 +85,7 @@ export class PlaylistDeleteHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: "❌ Bạn không thể sử dụng dropdown này!",
+          content: client.i18n.get(handler.language, "client.commands.playlist", "access_cannot_use_dropdown"),
           ephemeral: true,
         });
       }
@@ -98,7 +98,7 @@ export class PlaylistDeleteHandler {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.playlist", "pl_delete_notfound")}`
+                `${client.i18n.get(handler.language, "client.commands.playlist", "pl_delete_notfound")}`
               )
               .setColor(client.color_main),
           ],
@@ -126,7 +126,7 @@ export class PlaylistDeleteHandler {
           .addComponents(selectMenu);
 
         const timeoutEmbed = new EmbedBuilder()
-          .setDescription("⏰ Thời gian chọn playlist đã hết!")
+          .setDescription(client.i18n.get(handler.language, "server.events", "playlist_selection_timeout"))
           .setColor(client.color_main);
 
         await handler.editReply({
@@ -186,9 +186,9 @@ export class PlaylistDeleteHandler {
         
         // Update embed với kết quả xóa thành công
         const successEmbed = new EmbedBuilder()
-          .setTitle("✅ Đã xóa playlist thành công!")
+          .setTitle(client.i18n.get(handler.language, "client.commands.playlist", "success_playlist_deleted"))
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.playlist", "pl_delete_deleted", {
+            `${client.i18n.get(handler.language, "client.commands.playlist", "pl_delete_deleted", {
               name: playlist.name || playlistId,
             })}`
           )
@@ -202,9 +202,9 @@ export class PlaylistDeleteHandler {
       } else if (id == "no") {
         // Update embed với kết quả hủy bỏ
         const cancelEmbed = new EmbedBuilder()
-          .setTitle("❌ Đã hủy xóa playlist")
+          .setTitle(client.i18n.get(handler.language, "client.commands.playlist", "status_cancelled_delete"))
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.playlist", "pl_delete_no")}`
+            `${client.i18n.get(handler.language, "client.commands.playlist", "pl_delete_no")}`
           )
           .setColor(client.color_main);
 

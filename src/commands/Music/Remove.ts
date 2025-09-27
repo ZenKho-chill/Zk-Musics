@@ -43,7 +43,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+              `${client.i18n.get(handler.language, "client.commands.music", "no_songs_playing", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -58,7 +58,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "removetrack_number_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands.music", "removetrack_number_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -68,7 +68,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "removetrack_already")}`
+              `${client.i18n.get(handler.language, "client.commands.music", "removetrack_already")}`
             )
             .setColor(client.color_main),
         ],
@@ -78,7 +78,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "removetrack_notfound", {
+              `${client.i18n.get(handler.language, "client.commands.music", "removetrack_notfound", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -92,7 +92,7 @@ export default class implements Command {
 
     const embed = new EmbedBuilder()
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.music", "removetrack_desc", {
+        `${client.i18n.get(handler.language, "client.commands.music", "removetrack_desc", {
           title: this.getTitle(client, song),
           duration: new ConvertTime().parse(player.position),
           request: String(song.requester),

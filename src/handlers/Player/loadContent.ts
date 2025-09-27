@@ -136,7 +136,7 @@ export class PlayerContentLoader {
       return (message.channel as TextChannel).send({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`${client.i18n.get(language, "button.setup.music", "no_in_voice")}`)
+            .setDescription(`${client.i18n.get(language, "server.setup", "no_in_voice")}`)
             .setColor(client.color_main),
         ],
       });
@@ -149,7 +149,7 @@ export class PlayerContentLoader {
       msg?.reply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`${client.i18n.get(language, "button.setup.music", "play_emoji")}`)
+            .setDescription(`${client.i18n.get(language, "server.setup", "play_emoji")}`)
             .setColor(client.color_main),
         ],
       });
@@ -166,7 +166,7 @@ export class PlayerContentLoader {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(language, "commands.music", "youtube_disabled", {
+              `${client.i18n.get(language, "client.commands.music", "youtube_disabled", {
                 user: message.author!.displayName || message.author!.tag,
                 botname: client.user!.username || client.user!.displayName,
                 serversupport: String(client.config.bot.SERVER_SUPPORT_URL),
@@ -194,7 +194,7 @@ export class PlayerContentLoader {
         msg?.reply({
           embeds: [
             new EmbedBuilder()
-              .setDescription(`${client.i18n.get(language, "button.setup.music", "no_same_voice")}`)
+              .setDescription(`${client.i18n.get(language, "server.setup", "no_same_voice")}`)
               .setColor(client.color_main),
           ],
         });
@@ -213,7 +213,7 @@ export class PlayerContentLoader {
 
     if (!result.tracks.length) {
       msg?.edit({
-        content: `${`${client.i18n.get(language, "button.setup.music", "setup_content")}`}`,
+        content: `${`${client.i18n.get(language, "server.setup", "setup_content")}`}`,
       });
       return;
     }
@@ -230,7 +230,7 @@ export class PlayerContentLoader {
       if (!player.playing) player.play();
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(language, "button.setup.music", "play_playlist", {
+          `${client.i18n.get(language, "server.setup", "play_playlist", {
             title: getTitle(result.tracks),
             duration: new ConvertTime().parse(TotalDuration),
             songs: `${result.tracks.length}`,
@@ -243,7 +243,7 @@ export class PlayerContentLoader {
       if (!player.playing) player.play();
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(language, "button.setup.music", "play_track", {
+          `${client.i18n.get(language, "server.setup", "play_track", {
             title: getTitle(result.tracks),
             duration: new ConvertTime().parse(result.tracks[0].duration as number),
             request: `${result.tracks[0].requester}`,
@@ -254,7 +254,7 @@ export class PlayerContentLoader {
     } else if (result.type === "SEARCH") {
       if (!player.playing) player.play();
       const embed = new EmbedBuilder().setColor(client.color_main).setDescription(
-        `${client.i18n.get(language, "button.setup.music", "play_result", {
+        `${client.i18n.get(language, "server.setup", "play_result", {
           title: getTitle(result.tracks),
           duration: new ConvertTime().parse(result.tracks[0].duration as number),
           request: `${result.tracks[0].requester}`,

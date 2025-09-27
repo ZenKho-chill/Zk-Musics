@@ -1,0 +1,8 @@
+arg_error: "❌ Vui lòng cung cấp **{text}**!"
+enable: "❌ Kênh yêu cầu bài hát đã được thiết lập!"
+topic: "Yêu cầu bài hát tại đây! 🎵"
+queuemsg: "🎵 | **Không có bài hát nào đang phát**"
+playembed_author: "Yêu cầu bài hát"
+msg: "✅ Đã tạo kênh yêu cầu bài hát thành công tại {channel}!"
+null: "❌ Không có kênh yêu cầu bài hát nào được thiết lập!"
+deleted: "✅ Đã xóa kênh yêu cầu bài hát tại {channel}!"

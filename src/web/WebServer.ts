@@ -156,7 +156,7 @@ export class WebServer {
             })
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(language, "events.helper", "vote_desc", {
+              `${client.i18n.get(language, "server.events", "helper.vote_desc", {
                 voteuser: `<@${vote.user}>` || voteUser.displayName,
                 bot: `<@${vote.bot}>`,
                 votebot: client.user!.username,
@@ -165,7 +165,7 @@ export class WebServer {
             )
             .setThumbnail(voteUser.displayAvatarURL({ size: 1024 }))
             .setFooter({
-              text: client.i18n.get(language, "events.helper", "vote_footer", {
+              text: client.i18n.get(language, "server.events", "helper.vote_footer", {
                 count: voteCount,
               }),
             });
@@ -175,10 +175,10 @@ export class WebServer {
             new ButtonBuilder()
               .setCustomId("reminder_vote")
               .setStyle(ButtonStyle.Secondary)
-              .setLabel(client.i18n.get(language, "events.helper", "reminder_label_name"))
+              .setLabel(client.i18n.get(language, "server.events", "helper.reminder_label_name"))
               .setEmoji(
                 EmojiValidator.safeEmoji(
-                  client.i18n.get(language, "events.helper", "reminder_label_emoji")
+                  client.i18n.get(language, "server.events", "helper.reminder_label_emoji")
                 )
               )
           );
@@ -209,8 +209,8 @@ export class WebServer {
           await interaction.reply({
             content: `${this.client.i18n.get(
               language,
-              "events.helper",
-              "reminder_no_vote_warning"
+              "server.events",
+              "helper.reminder_no_vote_warning"
             )}`,
             flags: MessageFlags.Ephemeral,
           });
@@ -224,8 +224,8 @@ export class WebServer {
           await interaction.reply({
             content: `${this.client.i18n.get(
               language,
-              "events.helper",
-              "reminder_cancel_content"
+              "server.events",
+              "helper.reminder_cancel_content"
             )}`,
             flags: MessageFlags.Ephemeral,
           });
@@ -239,7 +239,7 @@ export class WebServer {
           });
 
           await interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "reminder_set_content")}`,
+            content: `${this.client.i18n.get(language, "server.events", "helper.reminder_set_content")}`,
             flags: MessageFlags.Ephemeral,
           });
         }
@@ -274,9 +274,9 @@ export class WebServer {
             .catch(() => undefined);
           if (reminderMessage) {
             const reminderEmbed = new EmbedBuilder()
-              .setTitle(this.client.i18n.get(language, "events.helper", "reminder_title"))
+              .setTitle(this.client.i18n.get(language, "server.events", "helper.reminder_title"))
               .setDescription(
-                this.client.i18n.get(language, "events.helper", "reminder_desc", {
+                this.client.i18n.get(language, "server.events", "helper.reminder_desc", {
                   voteurl: this.client.config.bot.VOTE_URL,
                 })
               )

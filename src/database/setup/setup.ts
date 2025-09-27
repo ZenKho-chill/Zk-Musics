@@ -40,12 +40,12 @@ export class SongRequesterCleanSetup {
 
     const language = guildModel;
 
-    const queueMsg = `${this.client.i18n.get(language, "button.setup.music", "setup_queuemsg")}`;
+    const queueMsg = `${this.client.i18n.get(language, "server.setup", "setup_queuemsg")}`;
 
     const playEmbed = new EmbedBuilder()
       .setColor(this.client.color_main)
       .setAuthor({
-        name: `${this.client.i18n.get(language, "button.setup.music", "setup_playembed_author")}`,
+        name: `${this.client.i18n.get(language, "server.setup", "setup_playembed_author")}`,
       })
       .setImage(this.client.config.bot.IMAGES_URL_REQUEST_MUSIC);
 

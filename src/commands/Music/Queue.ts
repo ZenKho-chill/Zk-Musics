@@ -41,7 +41,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "queue_number_invalid")}`
+              `${client.i18n.get(handler.language, "client.commands.music", "queue.number_invalid")}`
             )
             .setColor(client.color_main),
         ],
@@ -53,17 +53,17 @@ export default class implements Command {
     let src = client.config.PLAYER_SOURCENAME.UNKNOWN; // Mặc định là UNKNOWN nếu nguồn không xác định
     if (source === "youtube") {
       src = client.config.PLAYER_SOURCENAME.YOUTUBE;
-    } else if (source === "spotify") {
+    } else if (source === "spotify_name") {
       src = client.config.PLAYER_SOURCENAME.SPOTIFY;
     } else if (source === "tidal") {
       src = client.config.PLAYER_SOURCENAME.TIDAL;
     } else if (source === "soundcloud") {
       src = client.config.PLAYER_SOURCENAME.SOUNDCLOUD;
-    } else if (source === "deezer") {
+    } else if (source === "deezer_name") {
       src = client.config.PLAYER_SOURCENAME.DEEZER;
     } else if (source === "twitch") {
       src = client.config.PLAYER_SOURCENAME.TWITCH;
-    } else if (source === "apple") {
+    } else if (source === "apple_name") {
       src = client.config.PLAYER_SOURCENAME.APPLE_MUSIC;
     } else if (source === "applemusic") {
       src = client.config.PLAYER_SOURCENAME.APPLE_MUSIC;
@@ -96,7 +96,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `${client.i18n.get(handler.language, "commands.music", "queue_title")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.music", "queue.title")}`,
         })
         .setThumbnail(
           // Dùng avatar bot nếu nguồn là soundcloud, nếu không dùng artworkUrl hoặc thumbnail mặc định
@@ -106,15 +106,15 @@ export default class implements Command {
         )
         .setColor(client.color_second)
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "queue_description", {
+          `${client.i18n.get(handler.language, "client.commands.music", "queue.description", {
             title: this.getTitle(client, song!),
             request: String(song!.requester),
             duration: new FormatDuration().parse(song!.duration),
-            rest: str == "" ? "  `KHÔNG KHẢ DỤNG`" : "\n" + str,
+            rest: str == "" ? client.i18n.get(handler.language, "client.commands.music", "queue.empty") : "\n" + str,
           })}`
         )
         .setFooter({
-          text: `${client.i18n.get(handler.language, "commands.music", "queue_footer", {
+          text: `${client.i18n.get(handler.language, "client.commands.music", "queue.footer", {
             page: String(i + 1),
             pages: String(pagesNum),
             queue_lang: String(player.queue.length),
@@ -150,7 +150,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.music", "queue_notnumber")}`
+                `${client.i18n.get(handler.language, "client.commands.music", "queue.notnumber")}`
               )
               .setColor(client.color_main),
           ],
@@ -160,7 +160,7 @@ export default class implements Command {
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.music", "queue_page_notfound", {
+                `${client.i18n.get(handler.language, "client.commands.music", "queue.page_notfound", {
                   page: String(pagesNum),
                 })}`
               )

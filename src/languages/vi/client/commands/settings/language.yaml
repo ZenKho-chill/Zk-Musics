@@ -1,0 +1,3 @@
+provide_lang_list: "❌ Vui lòng cung cấp mã ngôn ngữ hợp lệ từ danh sách sau:"
+lang_set: "✅ Đã đặt ngôn ngữ thành **{language}**!"
+lang_change: "✅ Đã thay đổi ngôn ngữ thành **{language}**!"

@@ -1,0 +1,7 @@
+player_buttons: {}
+autoplay: {}
+loop: {}
+previous: {}
+error_client_user_unavailable: "Người dùng client không có sẵn"
+user_unknown: "Người dùng không rõ"
+title_unknown: "Không xác định"

@@ -1,0 +1,11 @@
+forward:
+  msg: "⏩ | Fast forwarded **{duration}** for **{title}** by {user}!"
+  beyond: "❌ | Cannot forward beyond the song duration!"
+rewind:
+  msg: "⏪ | Rewinded **{duration}** for **{title}** by {user}!"
+  beyond: "❌ | Cannot rewind before the start time!"
+playnext:
+  notfound: "❌ | Please provide a song name or URL!"
+  queue_empty: "❌ | Queue is empty! Cannot add song to next position."
+  desc: "🎵 | Added **{name}** to next position • {request}"
+  autocomplete_error: "Error: no matching songs"

@@ -31,7 +31,7 @@ export class ZklinkPlugin extends Plugin {
     if (!this.enabled) throw new Error("Plugin này chưa được tải!");
     if (!node.options.driver?.includes("nodelink"))
       throw new Error(
-        "Node này không hỗ trợ voice receiver, vui lòng dùng Nodelink2 để sử dụng tính năng này!"
+        "Kết nối thành công"
       );
     const wsUrl = `${node.options.secure ? "wss" : "ws"}://${
       node.options.host
@@ -47,7 +47,7 @@ export class ZklinkPlugin extends Plugin {
     });
     this.runningWs.set(voiceOptions.guildId, ws);
     ws.on("open", () => {
-      this.debug("Đã kết nối tới server nhận voice của nodelink!");
+      this.debug("Kết nối thành công");
       // @ts-ignore
       this.manager?.emit(ZklinkEvents.VoiceConnect, node);
     });
@@ -72,7 +72,7 @@ export class ZklinkPlugin extends Plugin {
     if (!targetWs) return;
     targetWs.close();
     this.runningWs.delete(guildId);
-    this.debug("Đã huỷ kết nối tới server nhận voice của nodelink!");
+    this.debug("Kết nối thành công");
     // @ts-ignore
     targetWs.removeAllListeners();
     return;

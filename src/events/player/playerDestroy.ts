@@ -17,7 +17,7 @@ export default class {
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
     logInfo(
       "PlayerDestroy",
-      `${chalk.hex("#dc143c")("Player đã bị hủy tại @ ")}${chalk.hex("#dc143c")(
+      `${chalk.hex("#dc143c")(client.i18n.get("vi", "events", "player.player_destroyed"))}${chalk.hex("#dc143c")(
         guild?.name
       )} / ${chalk.hex("#dc143c")(player.guildId)}`
     );
@@ -87,7 +87,7 @@ export default class {
 
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
-      .setDescription(`${client.i18n.get(language, "events.player", "queue_end_desc")}`);
+      .setDescription(`${client.i18n.get(language, "server.events", "player.queue_end_desc")}`);
 
     if (!isSudoDestroy) {
       const setup = await client.db.setup.get(player.guildId);

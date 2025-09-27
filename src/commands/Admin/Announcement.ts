@@ -68,13 +68,13 @@ export default class implements Command {
           } catch (err) {
             logWarn(
               "Announcement",
-              `Lỗi khi gửi tin nhắn trong kênh ${playing_channel.id}`
+              client.i18n.get(handler.language, "client.commands.admin.announcement", "channel_error", { channelId: playing_channel.id })
             );
           }
         } else {
           logWarn(
             "Announcement",
-            `Không tìm thấy kênh có ID ${player.textId} trong ${guild.name}.`
+            client.i18n.get(handler.language, "client.commands.admin.announcement", "channel_not_found", { channelId: player.textId, guildName: guild.name })
           );
         }
       }
@@ -84,14 +84,14 @@ export default class implements Command {
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
-          `Đã gửi thông báo thành công tới ${successfulGuilds} máy chủ.`
+          `${client.i18n.get(handler.language, "client.commands.admin.announcement", "success", { guilds: successfulGuilds.toString() })}`
         );
       await handler.editReply({ embeds: [embed], components: [] });
     } else {
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.admin", "announcement_failure")}`
+          `${client.i18n.get(handler.language, "client.commands.admin.announcement", "send_error")}`
         );
       await handler.editReply({ embeds: [embed], components: [] });
     }
@@ -121,23 +121,23 @@ export default class implements Command {
         // Yêu cầu người dùng chọn
         const choiceEmbed = new EmbedBuilder()
           .setColor(client.color_main)
-          .setTitle("Chọn nguồn hình ảnh")
-          .setDescription("Bạn đã cung cấp cả file và URL hình ảnh. Vui lòng chọn nguồn nào bạn muốn sử dụng:")
+          .setTitle(client.i18n.get(handler.language, "client.commands.admin.announcement", "choice_title"))
+          .setDescription(client.i18n.get(handler.language, "client.commands.admin.announcement", "choice_description"))
           .addFields(
-            { name: "📎 File", value: `${imageAttachment.name || "File đã upload"}`, inline: true },
-            { name: "🔗 URL", value: `${imageUrl}`, inline: true }
+            { name: client.i18n.get(handler.language, "client.commands.admin.announcement", "choice_file_field"), value: `${imageAttachment.name || client.i18n.get(handler.language, "client.commands.admin.announcement", "choice_file_value")}`, inline: true },
+            { name: client.i18n.get(handler.language, "client.commands.admin.announcement", "choice_url_field"), value: `${imageUrl}`, inline: true }
           );
 
         const choiceButtons = new ActionRowBuilder<ButtonBuilder>()
           .addComponents(
             new ButtonBuilder()
               .setCustomId("choose_file")
-              .setLabel("Sử dụng File")
+              .setLabel(client.i18n.get(handler.language, "client.commands.admin.announcement", "choice_file_button"))
               .setEmoji("📎")
               .setStyle(ButtonStyle.Primary),
             new ButtonBuilder()
               .setCustomId("choose_url")
-              .setLabel("Sử dụng URL")
+              .setLabel(client.i18n.get(handler.language, "client.commands.admin.announcement", "choice_url_button"))
               .setEmoji("🔗")
               .setStyle(ButtonStyle.Secondary)
           );
@@ -185,7 +185,7 @@ export default class implements Command {
             if (collected.size === 0) {
               const timeoutEmbed = new EmbedBuilder()
                 .setColor(client.color_main)
-                .setDescription("⏰ Hết thời gian chọn. Vui lòng thử lại lệnh.");
+                .setDescription(client.i18n.get(handler.language, "client.commands.admin.announcement", "timeout_choice"));
               
               await handler.editReply({ 
                 embeds: [timeoutEmbed], 
@@ -219,7 +219,7 @@ export default class implements Command {
         const embed = new EmbedBuilder()
           .setColor(client.color_main)
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.admin", "announcement_desc")}`
+            `${client.i18n.get(handler.language, "client.commands.admin.announcement", "desc")}`
           );
 
         await handler.editReply({ embeds: [embed] });
@@ -237,7 +237,7 @@ export default class implements Command {
             handler.args[0] = collectedInput;
             await this.execute(client, handler);
           } catch (error) {
-            logWarn("Announcement", `Lỗi khi thực thi lệnh`);
+            logWarn("Announcement", client.i18n.get(handler.language, "client.commands.admin.announcement", "execution_error"));
           }
         });
 
@@ -246,7 +246,7 @@ export default class implements Command {
             const embed = new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.admin", "announcement_timeout")}`
+                `${client.i18n.get(handler.language, "client.commands.admin.announcement", "timeout")}`
               );
 
             await handler.editReply({ embeds: [embed] });
@@ -261,7 +261,7 @@ export default class implements Command {
       // Nếu không có cả file và URL, xử lý bình thường
       await this.processAnnouncement(client, handler, input!, finalImageUrl);
     } catch (error) {
-      logWarn("Announcement", `Lỗi khi gửi thông báo`);
+      logWarn("Announcement", client.i18n.get(handler.language, "client.commands.admin.announcement", "send_error"));
     }
   }
 }

@@ -29,7 +29,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.settings", "prefix_arg")}`
+              `${client.i18n.get(handler.language, "client.commands.settings", "prefix_arg")}`
             )
             .setColor(client.color_main),
         ],
@@ -40,7 +40,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.settings", "prefix_length")}`
+              `${client.i18n.get(handler.language, "client.commands.settings", "prefix_length")}`
             )
             .setColor(client.color_main),
         ],
@@ -53,7 +53,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.settings", "prefix_set", {
+          `${client.i18n.get(handler.language, "client.commands.settings", "prefix_set", {
             prefix: handler.args[0],
           })}`
         )
@@ -65,7 +65,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.settings", "prefix_change", {
+          `${client.i18n.get(handler.language, "client.commands.settings", "prefix_change", {
             prefix: handler.args[0],
           })}`
         )

@@ -16,7 +16,7 @@ import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js"
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
-  public name = ["spotify", "manage"];
+  public name = ["spotify_name", "manage"];
   public description = "Quản lý kết nối Spotify của bạn";
   public category = "Settings";
   public accessableby = data.COMMANDS_ACCESS.SETTINGS.Spotify;
@@ -59,15 +59,15 @@ export default class implements Command {
         .setTitle(
           `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "spotify_feature_disabled_title"
+            "client.commands.settings",
+            "spotify.feature_disabled_title"
           )}`
         )
         .setDescription(
           `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "spotify_feature_disabled_desc",
+            "client.commands.settings",
+            "spotify.feature_disabled_desc",
             {
               user: String(handler.user?.displayName || handler.user?.tag),
               botname: client.user!.username || client.user!.displayName,
@@ -88,8 +88,8 @@ export default class implements Command {
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "spotify_connect_provide_id"
+            "client.commands.settings",
+            "spotify.connect_provide_id"
           )}`,
           flags: MessageFlags.Ephemeral,
         });
@@ -111,8 +111,8 @@ export default class implements Command {
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "spotify_connect_success",
+            "client.commands.settings",
+            "spotify.connect_success",
             {
               name: userProfile.display_name,
               id: spotifyID,
@@ -128,8 +128,8 @@ export default class implements Command {
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "spotify_connect_error"
+            "client.commands.settings",
+            "spotify.connect_error"
           )}`,
           flags: MessageFlags.Ephemeral,
         });
@@ -141,8 +141,8 @@ export default class implements Command {
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "spotify_disconnect_not_connected"
+            "client.commands.settings",
+            "spotify.disconnect_not_connected"
           )}`,
           flags: MessageFlags.Ephemeral,
         });
@@ -154,8 +154,8 @@ export default class implements Command {
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "spotify_disconnect_success"
+            "client.commands.settings",
+            "spotify.disconnect_success"
           )}`,
           flags: MessageFlags.Ephemeral,
         });
@@ -164,8 +164,8 @@ export default class implements Command {
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,
-            "commands.settings",
-            "spotify_disconnect_error"
+            "client.commands.settings",
+            "spotify.disconnect_error"
           )}`,
           flags: MessageFlags.Ephemeral,
         });

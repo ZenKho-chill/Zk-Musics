@@ -1,0 +1,10 @@
+# Web service messages
+websocket:
+  guild_connection_exists: "Guild connection already exists"
+api:
+  player_not_found: "Player not found"
+  guild_not_found: "Guild not found"
+  user_not_found: "User not found"
+  player_already_exists: "Player already exists"
+  search_param_missing: "Search parameter missing"
+  current_player_not_found: "Current player not found"

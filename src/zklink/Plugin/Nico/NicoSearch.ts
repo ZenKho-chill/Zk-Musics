@@ -30,7 +30,7 @@ export default async function search<P extends SearchParams>({
 
     const text = await req.text();
     if (!text.trim()) {
-      throw new Error("Niconico API trả về response rỗng");
+      throw new Error("Phản hồi rỗng từ Niconico");
     }
 
     const res = JSON.parse(text) as any;

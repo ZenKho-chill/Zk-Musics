@@ -163,7 +163,7 @@ export class PlaylistCreateHandler {
 
     // Thông báo thành công
     const successEmbed = new EmbedBuilder()
-      .setTitle("✅ Tạo Playlist Thành Công!")
+      .setTitle(client.i18n.get(language, "client.commands.playlist", "success_playlist_created"))
       .setDescription(
         `**Tên playlist:** \`${playlistName}\`\n` +
         `**ID:** ||\`${playlistId}\`||\n` +

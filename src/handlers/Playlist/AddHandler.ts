@@ -42,7 +42,7 @@ export class PlaylistAddHandler {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription("❌ Bạn chưa có playlist nào! Hãy tạo playlist trước bằng lệnh `/pl action:Tạo mới`")
+            .setDescription(client.i18n.get(handler.language, "client.commands.playlist", "handler_errors_no_playlists_create_first"))
             .setColor(client.color_main),
         ],
       });
@@ -83,7 +83,7 @@ export class PlaylistAddHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: "❌ Bạn không thể sử dụng menu này!",
+          content: client.i18n.get(handler.language, "server.handlers", "unauthorized_user"),
           ephemeral: true,
         });
       }
@@ -136,7 +136,7 @@ export class PlaylistAddHandler {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription("❌ Không tìm thấy playlist!")
+            .setDescription(client.i18n.get(handler.language, "client.commands.playlist", "errors_playlist_not_found"))
             .setColor(client.color_main),
         ],
       });
@@ -161,7 +161,7 @@ export class PlaylistAddHandler {
       )
       .setColor(client.color_main)
       .addFields({
-        name: "📋 Playlist đã chọn",
+        name: client.i18n.get(handler.language, "client.commands.playlist", "ui_elements_playlist_selected_header"),
         value: `**Tên:** ${playlist.name}\n**ID:** ||\`${playlistId}\`||`,
         inline: true,
       });
@@ -203,7 +203,7 @@ export class PlaylistAddHandler {
       
       if (buttonInt.user.id !== handler.user?.id) {
         return buttonInt.reply({
-          content: "❌ Bạn không thể sử dụng nút này!",
+          content: client.i18n.get(handler.language, "server.handlers", "unauthorized_user"),
           ephemeral: true,
         });
       }
@@ -348,7 +348,7 @@ export class PlaylistAddHandler {
         await originalHandler.editReply({
           embeds: [
             new EmbedBuilder()
-              .setDescription("❌ Vui lòng nhập tên bài hát hoặc link hợp lệ!")
+              .setDescription(client.i18n.get(language, "client.commands.playlist", "handler_errors_invalid_song_input"))
               .setColor(client.color_main),
           ],
         });
@@ -385,12 +385,12 @@ export class PlaylistAddHandler {
     
     const confirmButton = new ButtonBuilder()
       .setCustomId(`confirm_add_${playlistId}`)
-      .setLabel("✅ Xác nhận thêm")
+      .setLabel(client.i18n.get(language, "client.commands.playlist", "ui_elements_confirm_add_button"))
       .setStyle(ButtonStyle.Success);
 
     const cancelButton = new ButtonBuilder()
       .setCustomId("cancel_add")
-      .setLabel("❌ Hủy")
+      .setLabel(client.i18n.get(language, "client.commands.playlist", "ui_elements_cancel_button"))
       .setStyle(ButtonStyle.Secondary);
 
     const buttonRow = new ActionRowBuilder<ButtonBuilder>()
@@ -422,7 +422,7 @@ export class PlaylistAddHandler {
     buttonCollector.on("collect", async (buttonInt: ButtonInteraction) => {
       if (buttonInt.user.id !== interaction.user.id) {
         return buttonInt.reply({
-          content: "❌ Bạn không thể sử dụng nút này!",
+          content: client.i18n.get(language, "server.handlers", "unauthorized_user"),
           ephemeral: true,
         });
       }
@@ -446,7 +446,7 @@ export class PlaylistAddHandler {
           await interaction.editReply({
             embeds: [
               new EmbedBuilder()
-                .setDescription("❌ Đã hủy thêm bài hát.")
+                .setDescription(client.i18n.get(language, "client.commands.playlist", "status_cancelled_add"))
                 .setColor(client.color_main),
             ],
             components: [],
@@ -525,7 +525,7 @@ export class PlaylistAddHandler {
     selectCollector.on("collect", async (selectInt: StringSelectMenuInteraction) => {
       if (selectInt.user.id !== interaction.user.id) {
         return selectInt.reply({
-          content: "❌ Bạn không thể sử dụng menu này!",
+          content: client.i18n.get(language, "server.handlers", "unauthorized_user"),
           ephemeral: true,
         });
       }
@@ -576,7 +576,7 @@ export class PlaylistAddHandler {
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription("❌ Không tìm thấy playlist!")
+            .setDescription(client.i18n.get(language, "client.commands.playlist", "errors_playlist_not_found"))
             .setColor(client.color_main),
         ],
       });
@@ -587,7 +587,7 @@ export class PlaylistAddHandler {
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription("❌ Bạn không phải là chủ sở hữu của playlist này!")
+            .setDescription(client.i18n.get(language, "client.commands.playlist", "errors_not_owner"))
             .setColor(client.color_main),
         ],
       });
@@ -617,7 +617,7 @@ export class PlaylistAddHandler {
 
     // Thông báo thành công
     const successEmbed = new EmbedBuilder()
-      .setTitle("✅ Đã thêm bài hát")
+      .setTitle(client.i18n.get(language, "client.commands.playlist", "success_song_added"))
       .setDescription(
         `**Bài hát:** ${track.title}\n` +
         `**Tác giả:** ${track.author}\n` +
@@ -657,8 +657,8 @@ export class PlaylistAddHandler {
 
     if (client.lavalinkUsing.length == 0) {
       choice.push({
-        name: `${client.i18n.get(language, "commands.playlist", "pl_error_no_node")}`,
-        value: `${client.i18n.get(language, "commands.playlist", "pl_error_no_node")}`,
+        name: `${client.i18n.get(language, "client.commands.playlist", "pl_error_no_node")}`,
+        value: `${client.i18n.get(language, "client.commands.playlist", "pl_error_no_node")}`,
       });
       return;
     }
@@ -700,7 +700,7 @@ export class PlaylistAddHandler {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription("❌ Không tìm thấy playlist!")
+            .setDescription("Không tìm thấy playlist")
             .setColor(client.color_main),
         ],
       });
@@ -837,7 +837,7 @@ export class PlaylistAddHandler {
     // Thông báo thành công
     const successEmbed = new EmbedBuilder()
       .setAuthor({
-        name: "✅ Đã thêm bài hát vào playlist!",
+        name: "Đã thêm bài hát vào playlist!",
         iconURL: client.user?.displayAvatarURL(),
       })
       .setDescription(

@@ -1,0 +1,8 @@
+feature_disabled_title: "❌ Spotify Feature Disabled"
+feature_disabled_desc: "The Spotify feature is currently unavailable. Please contact an administrator to enable this feature."
+connect_provide_id: "❌ Please provide your Spotify ID!"
+connect_success: "✅ Successfully connected to Spotify account **{name}** (`{id}`)!"
+connect_error: "❌ An error occurred while connecting to Spotify. Please check the ID and try again."
+disconnect_not_connected: "❌ You are not connected to any Spotify account!"
+disconnect_success: "✅ Successfully disconnected from Spotify account!"
+disconnect_error: "❌ An error occurred while disconnecting Spotify."

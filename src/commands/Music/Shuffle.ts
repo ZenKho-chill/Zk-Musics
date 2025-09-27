@@ -35,7 +35,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+              `${client.i18n.get(handler.language, "client.commands", "music.no_songs_playing", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -73,20 +73,20 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setAuthor({
-          name: `${client.i18n.get(handler.language, "commands.music", "shuffle_title")}`,
+          name: `${client.i18n.get(handler.language, "client.commands.music", "shuffle.title")}`,
         })
         .setThumbnail(thumbnail)
         .setColor(client.color_main)
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "queue_description", {
+          `${client.i18n.get(handler.language, "client.commands", "music.queue_description", {
             title: this.getTitle(client, song!),
             request: String(song!.requester),
             duration: new FormatDuration().parse(song!.duration),
-            rest: str == "" ? "  `KHÔNG KHẢ DỤNG`" : "\n" + str,
+            rest: str == "" ? client.i18n.get(handler.language, "client.commands.music", "queue.empty") : "\n" + str,
           })}`
         )
         .setFooter({
-          text: `${client.i18n.get(handler.language, "commands.music", "queue_footer", {
+          text: `${client.i18n.get(handler.language, "client.commands", "music.queue_footer", {
             page: String(i + 1),
             pages: String(pagesNum),
             queue_lang: String(newQueue.length),

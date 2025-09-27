@@ -41,7 +41,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.utils", "user_arg_error", {
+              `${client.i18n.get(handler.language, "client.commands.utils", "user_arg_error", {
                 text: "**@mention**",
               })}`
             )
@@ -54,7 +54,7 @@ export default class implements Command {
 
     if (!handler.guild) {
       return handler.editReply({
-        content: "Lệnh này chỉ có thể sử dụng trong server.",
+        content: client.i18n.get(handler.language, "common", "errors.guild_only"),
       });
     }
 
@@ -76,7 +76,7 @@ export default class implements Command {
         const joinDate = guildMember.joinedAt.toLocaleDateString();
         ctx.fillText(joinDate, 370, 113);
       } else {
-        ctx.fillText("Không có", 370, 118);
+        ctx.fillText(client.i18n.get(handler.language, "client.commands.utils", "profile.no_data"), 370, 118);
       }
 
       const userJoinDate = user.createdAt.toLocaleDateString();
@@ -98,7 +98,7 @@ export default class implements Command {
         ],
       });
     } else {
-      return handler.editReply({ content: "Không tìm thấy người dùng" });
+      return handler.editReply({ content: client.i18n.get("vi", "server.web", "api.user_not_found") });
     }
   }
 }

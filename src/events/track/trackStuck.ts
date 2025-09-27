@@ -38,7 +38,7 @@ export default class {
 
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
-      .setDescription(`${client.i18n.get(language, "events.player", "player_track_stuck")}`);
+      .setDescription(`${client.i18n.get(language, "server.events", "player.player_track_stuck")}`);
 
     if (channel) {
       const setup = await client.db.setup.get(player.guildId);

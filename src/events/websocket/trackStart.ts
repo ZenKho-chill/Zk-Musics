@@ -10,12 +10,19 @@ export default class {
     }
     const requesterQueue = song && song.requester ? (song!.requester as User) : null;
 
+    // Get guild language for localization
+    let guildModel = await client.db.language.get(`${player.guildId}`);
+    if (!guildModel) {
+      guildModel = await client.db.language.set(`${player.guildId}`, client.config.bot.LANGUAGE);
+    }
+    const language = guildModel;
+
     const currentData = {
-      title: song.title ?? "Tiêu đề không xác định",
+      title: song.title ?? client.i18n.get(language, "server.events", "player.track_title_unknown"),
       uri: song!.uri,
       length: song!.duration,
       thumbnail: song!.artworkUrl,
-      author: song.author ?? "Tác giả không xác định",
+      author: song.author ?? client.i18n.get(language, "server.events", "player.track_author_unknown"),
       requester: requesterQueue
         ? {
             id: requesterQueue.id,

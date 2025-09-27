@@ -74,8 +74,8 @@ export default class implements Command {
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,
-            "commands.admin",
-            `blacklist_${entityType}_already`,
+            "client.commands",
+            `admin.blacklist_${entityType}_already`,
             {
               id,
               user: String(handler.user?.displayName || handler.user?.tag),
@@ -91,8 +91,8 @@ export default class implements Command {
       await handler.interaction.reply({
         content: `${client.i18n.get(
           handler.language,
-          "commands.admin",
-          `blacklist_${entityType}_add`,
+          "client.commands",
+          `admin.blacklist_${entityType}_add`,
           {
             id,
             user: String(handler.user?.displayName || handler.user?.tag),
@@ -106,8 +106,8 @@ export default class implements Command {
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,
-            "commands.admin",
-            `blacklist_${entityType}_not_exist`,
+            "client.commands",
+            `admin.blacklist_${entityType}_not_exist`,
             {
               id,
               user: String(handler.user?.displayName || handler.user?.tag),
@@ -123,8 +123,8 @@ export default class implements Command {
       await handler.interaction.reply({
         content: `${client.i18n.get(
           handler.language,
-          "commands.admin",
-          `blacklist_${entityType}_delete`,
+          "client.commands",
+          `admin.blacklist_${entityType}_delete`,
           {
             id,
             user: String(handler.user?.displayName || handler.user?.tag),

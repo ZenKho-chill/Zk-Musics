@@ -143,7 +143,7 @@ export class ZklinkTrack {
   protected async getTrack(manager: Zklink, nodeName?: string): Promise<RawTrack> {
     const node = nodeName ? manager.nodes.get(nodeName) : await manager.nodes.getLeastUsed();
 
-    if (!node) throw new Error("Không có node khả dụng");
+    if (!node) throw new Error("Không tìm thấy kết quả");
 
     const result = await this.resolverEngine(manager, node);
 
@@ -179,7 +179,7 @@ export class ZklinkTrack {
 
   protected async resolverEngine(manager: Zklink, node: ZklinkNode): Promise<ZklinkSearchResult> {
     const defaultSearchEngine = manager.ZklinkOptions.options!.defaultSearchEngine;
-    const engine = manager.searchEngines.get(this.source || defaultSearchEngine || "spotify");
+    const engine = manager.searchEngines.get(this.source || defaultSearchEngine || "Không tìm thấy kết quả");
     const searchQuery = [this.author, this.title].filter((x) => !!x).join(" - ");
     const searchFallbackEngineName = manager.ZklinkOptions.options!.searchFallback!.engine;
     const searchFallbackEngine = manager.searchEngines.get(searchFallbackEngineName);

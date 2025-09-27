@@ -1,0 +1,2 @@
+not_seekable: "❌ | Bài hát này không thể phát lại!"
+msg: "🔄 | {user} đã phát lại **{title}**!"

@@ -35,14 +35,15 @@ export class Helper {
       if (interaction.customId == "role-1") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME1)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME1)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.SELECT_ROLES.ID1)) {
           await member.roles.add(this.client.config.HELPER_SETUP.SELECT_ROLES.ID1);
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_added", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_added", {
               rolename: this.client.config.HELPER_SETUP.SELECT_ROLES.NAME1,
             })}`,
             flags: MessageFlags.Ephemeral,
@@ -53,7 +54,7 @@ export class Helper {
         ) {
           await member.roles.remove(this.client.config.HELPER_SETUP.SELECT_ROLES.ID1);
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_removed", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_removed", {
               rolename: this.client.config.HELPER_SETUP.SELECT_ROLES.NAME1,
             })}`,
             flags: MessageFlags.Ephemeral,
@@ -62,14 +63,15 @@ export class Helper {
       } else if (interaction.customId == "role-2") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME2)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME2)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.SELECT_ROLES.ID2)) {
           await member.roles.add(this.client.config.HELPER_SETUP.SELECT_ROLES.ID2);
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_added", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_added", {
               rolename: this.client.config.HELPER_SETUP.SELECT_ROLES.NAME2,
             })}`,
             flags: MessageFlags.Ephemeral,
@@ -80,7 +82,7 @@ export class Helper {
         ) {
           await member.roles.remove(this.client.config.HELPER_SETUP.SELECT_ROLES.ID2);
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_removed", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_removed", {
               rolename: this.client.config.HELPER_SETUP.SELECT_ROLES.NAME2,
             })}`,
             flags: MessageFlags.Ephemeral,
@@ -89,14 +91,15 @@ export class Helper {
       } else if (interaction.customId == "role-3") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME3)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME3)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.SELECT_ROLES.ID3)) {
           await member.roles.add(this.client.config.HELPER_SETUP.SELECT_ROLES.ID3);
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_added", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_added", {
               rolename: this.client.config.HELPER_SETUP.SELECT_ROLES.NAME3,
             })}`,
             flags: MessageFlags.Ephemeral,
@@ -107,7 +110,7 @@ export class Helper {
         ) {
           await member.roles.remove(this.client.config.HELPER_SETUP.SELECT_ROLES.ID3);
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_removed", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_removed", {
               rolename: this.client.config.HELPER_SETUP.SELECT_ROLES.NAME3,
             })}`,
             flags: MessageFlags.Ephemeral,
@@ -116,14 +119,15 @@ export class Helper {
       } else if (interaction.customId == "role-4") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME4)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.SELECT_ROLES.NAME4)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.SELECT_ROLES.ID4)) {
           await member.roles.add(this.client.config.HELPER_SETUP.SELECT_ROLES.ID4);
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_added", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_added", {
               rolename: this.client.config.HELPER_SETUP.SELECT_ROLES.NAME4,
             })}`,
             flags: MessageFlags.Ephemeral,
@@ -134,7 +138,7 @@ export class Helper {
         ) {
           await member.roles.remove(this.client.config.HELPER_SETUP.SELECT_ROLES.ID4);
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_removed", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_removed", {
               rolename: this.client.config.HELPER_SETUP.SELECT_ROLES.NAME4,
             })}`,
             flags: MessageFlags.Ephemeral,
@@ -143,14 +147,15 @@ export class Helper {
       } else if (interaction.customId == "role-5") {
         logInfo(
           "Helper",
-          `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-            .hex("#00D100")
-            .bold(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_NAME)}`
+          this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+            user: chalk.hex("#00D100").bold(interaction.user.displayName),
+            button: chalk.hex("#00D100").bold(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_NAME)
+          })
         );
         if (member && !member.roles.cache.has(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_ID)) {
           await member.roles.add(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_ID);
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_rules_added", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_rules_added", {
               rolename: this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_NAME,
               user: `${interaction.member}`,
             })}`,
@@ -161,7 +166,7 @@ export class Helper {
           member.roles.cache.has(this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_ID)
         ) {
           interaction.reply({
-            content: `${this.client.i18n.get(language, "events.helper", "role_rules_already", {
+            content: `${this.client.i18n.get(language, "server.events.helper", "role_rules_already", {
               rolename: this.client.config.HELPER_SETUP.VIEW_RULES.ROLE_NAME,
               user: `${interaction.member}`,
             })}`,
@@ -213,9 +218,10 @@ export class Helper {
   ): Promise<void> {
     logInfo(
       "Helper",
-      `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-        .hex("#00D100")
-        .bold("Xem Luật Lệ")}`
+      this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+        user: chalk.hex("#00D100").bold(interaction.user.displayName),
+        button: chalk.hex("#00D100").bold(this.client.i18n.get(language, "server.events.helper", "button_view_rules"))
+      })
     );
 
     const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -254,14 +260,14 @@ export class Helper {
 
     const embed = new EmbedBuilder()
       .setTitle(
-        `${client.i18n.get(language, "events.helper", "rules_title", {
+        `${client.i18n.get(language, "server.events.helper", "rules_title", {
           support: client.config.HELPER_SETUP.SERVER_SUPPORT_URL,
           bot: `<@${client.user!.id}>`,
           guild: interaction.guild!.name,
         })}`
       )
       .setDescription(
-        `${client.i18n.get(language, "events.helper", "rules_desc", {
+        `${client.i18n.get(language, "server.events.helper", "rules_desc", {
           support: client.config.HELPER_SETUP.SERVER_SUPPORT_URL,
         })}`
       )
@@ -282,9 +288,10 @@ export class Helper {
   ): Promise<void> {
     logInfo(
       "Helper",
-      `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-        .hex("#00D100")
-        .bold("Ủng Hộ Chúng Tôi")}`
+      this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+        user: chalk.hex("#00D100").bold(interaction.user.displayName),
+        button: chalk.hex("#00D100").bold(this.client.i18n.get(language, "client.commands.info.about", "support_us"))
+      })
     );
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -306,21 +313,21 @@ export class Helper {
 
     const embed = new EmbedBuilder()
       .setTitle(
-        `${client.i18n.get(language, "events.helper", "support_us_title", {
+        `${client.i18n.get(language, "server.events.helper", "support_us_title", {
           support: client.config.HELPER_SETUP.SERVER_SUPPORT_URL,
           bot: client.user!.username,
           guild: interaction.guild!.name,
         })}`
       )
       .setDescription(
-        `${client.i18n.get(language, "events.helper", "support_us_desc", {
+        `${client.i18n.get(language, "server.events.helper", "support_us_desc", {
           support: client.config.HELPER_SETUP.SERVER_SUPPORT_URL,
           bot: client.user!.username,
           guild: interaction.guild!.name,
         })}`
       )
       .setFooter({
-        text: `${client.i18n.get(language, "events.helper", "support_us_footer", {
+        text: `${client.i18n.get(language, "server.events.helper", "support_us_footer", {
           support: client.config.HELPER_SETUP.SERVER_SUPPORT_URL,
           bot: client.user!.username,
           guild: interaction.guild!.name,
@@ -343,9 +350,10 @@ export class Helper {
   ): Promise<void> {
     logInfo(
       "Helper",
-      `Người dùng ${chalk.hex("#00D100").bold(interaction.user.displayName)} đã bấm nút ${chalk
-        .hex("#00D100")
-        .bold("Chọn Role")}`
+      this.client.i18n.get(language, "server.events.helper", "log_button_press", {
+        user: chalk.hex("#00D100").bold(interaction.user.displayName),
+        button: chalk.hex("#00D100").bold(this.client.i18n.get(language, "server.events.helper", "button_select_role"))
+      })
     );
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
@@ -371,8 +379,8 @@ export class Helper {
     );
 
     const embed = new EmbedBuilder()
-      .setTitle(`${client.i18n.get(language, "events.helper", "role_title")}`)
-      .setDescription(`${client.i18n.get(language, "events.helper", "role_desc")}`)
+      .setTitle(`${client.i18n.get(language, "server.events.helper", "role_title")}`)
+      .setDescription(`${client.i18n.get(language, "server.events.helper", "role_desc")}`)
       .setColor(client.color_main);
 
     interaction.reply({

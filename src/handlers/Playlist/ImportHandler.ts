@@ -27,7 +27,7 @@ export class PlaylistImportHandler {
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription("❌ Bạn chưa có playlist nào!")
+            .setDescription(client.i18n.get(handler.language, "client.commands.playlist", "errors_no_playlists"))
             .setColor(client.color_main),
         ],
       });
@@ -68,7 +68,7 @@ export class PlaylistImportHandler {
     collector.on("collect", async (interaction: StringSelectMenuInteraction) => {
       if (interaction.user.id !== handler.user?.id) {
         return interaction.reply({
-          content: "❌ Bạn không thể sử dụng menu này!",
+          content: client.i18n.get(handler.language, "client.commands.playlist", "access_cannot_use_menu"),
           ephemeral: true,
         });
       }
@@ -118,7 +118,7 @@ export class PlaylistImportHandler {
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription("❌ Không tìm thấy playlist!")
+            .setDescription(client.i18n.get(language, "client.commands.playlist", "errors_playlist_not_found"))
             .setColor(client.color_main),
         ],
       });

@@ -12,8 +12,8 @@ export class RequestManager {
       this.mode = "multi";
       // eslint-disable-next-line no-console
       logWarn(
-        "Spotify",
-        "Bạn đang dùng chế độ multi client, đôi khi vẫn có THỂ BỊ RATE LIMITED. Tôi không chịu trách nhiệm nếu IP bị cấm."
+        "Tất cả yêu cầu đã bị giới hạn tốc độ",
+        "Tất cả yêu cầu đã bị giới hạn tốc độ"
       );
     } else {
       this.requests.push(
@@ -33,7 +33,7 @@ export class RequestManager {
     if (this.mode === "single") return this.requests[0].makeRequest<T>(endpoint, disableBaseUri);
 
     const targetRequest = this.getLeastUsedRequest();
-    if (!targetRequest) throw new Error("Không có request khả dụng [ALL_RATE_LIMITED]");
+    if (!targetRequest) throw new Error("Tất cả yêu cầu đã bị giới hạn tốc độ");
     return targetRequest
       .makeRequest<T>(endpoint, disableBaseUri)
       .catch((e) =>

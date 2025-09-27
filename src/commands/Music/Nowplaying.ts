@@ -35,7 +35,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "no_songs_playing", {
+              `${client.i18n.get(handler.language, "client.commands.music", "no_songs_playing", {
                 user: handler.user!.displayName || handler.user!.tag,
               })}`
             )
@@ -65,17 +65,17 @@ export default class implements Command {
     let src = client.config.PLAYER_SOURCENAME.UNKNOWN; // Mặc định là UNKNOWN nếu nguồn không xác định
     if (source === "youtube") {
       src = client.config.PLAYER_SOURCENAME.YOUTUBE;
-    } else if (source === "spotify") {
+    } else if (source === "spotify_name") {
       src = client.config.PLAYER_SOURCENAME.SPOTIFY;
     } else if (source === "tidal") {
       src = client.config.PLAYER_SOURCENAME.TIDAL;
     } else if (source === "soundcloud") {
       src = client.config.PLAYER_SOURCENAME.SOUNDCLOUD;
-    } else if (source === "deezer") {
+    } else if (source === "deezer_name") {
       src = client.config.PLAYER_SOURCENAME.DEEZER;
     } else if (source === "twitch") {
       src = client.config.PLAYER_SOURCENAME.TWITCH;
-    } else if (source === "apple") {
+    } else if (source === "apple_name") {
       src = client.config.PLAYER_SOURCENAME.APPLE_MUSIC;
     } else if (source === "applemusic") {
       src = client.config.PLAYER_SOURCENAME.APPLE_MUSIC;
@@ -96,14 +96,14 @@ export default class implements Command {
       {
         name: `**${
           player!.data.get("autoplay")
-            ? `${client.config.TRACKS_EMOJI.Autoplay} Tự phát`
+            ? `${client.config.TRACKS_EMOJI.Autoplay} ${client.i18n.get(handler.language, "client.commands.music", "nowplaying.autoplay")}`
             : `${client.config.TRACKS_EMOJI.Volume} ${player.volume}%`
         }**`,
         value: `**${src}**`,
         inline: true,
       },
       {
-        name: `**Thời lượng hiện tại**`,
+        name: `**${client.i18n.get(handler.language, "client.commands.music", "nowplaying.current_duration")}**`,
         value: `\`${CurrentDuration} / ${new FormatDuration().parse(song!.duration)}\n${bar}\``,
         inline: false,
       },
@@ -111,7 +111,7 @@ export default class implements Command {
 
     const embeded = new EmbedBuilder();
     embeded.setAuthor({
-      name: `${client.i18n.get(handler.language, "commands.music", "nowplaying_title")}`,
+      name: `${client.i18n.get("vi", "client.commands.music", "nowplaying_title")}`,
     });
     embeded.setColor(client.color_second);
     if (new FormatDuration().parse(song!.duration) !== "Live Stream") {
@@ -124,7 +124,9 @@ export default class implements Command {
     );
     embeded.addFields(fieldDataGlobal);
     embeded.setFooter({
-      text: `Yêu cầu từ ${requesterName.toUpperCase()}`,
+      text: `${client.i18n.get(handler.language, "client.commands.music", "nowplaying.requested_by", {
+        user: requesterName.toUpperCase(),
+      })}`,
       iconURL: requesterAvatarURL,
     });
 

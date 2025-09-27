@@ -59,7 +59,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
    * @returns string
    */
   public sourceName(): string {
-    return "apple";
+    return "Apple Music";
   }
 
   /**
@@ -176,7 +176,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
       } catch (e) {
         return this.buildSearch(undefined, [], ZklinkSearchResultType.SEARCH);
       }
-    } else if (options?.engine === "apple" && !isUrl) {
+    } else if (options?.engine === "apple_name" && !isUrl) {
       const result = await this.searchTrack(query, options?.requester);
 
       return this.buildSearch(undefined, result.tracks, ZklinkSearchResultType.SEARCH);

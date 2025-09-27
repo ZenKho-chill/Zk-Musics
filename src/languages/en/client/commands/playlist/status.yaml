@@ -1,0 +1,4 @@
+cancelled_add: "❌ Song addition cancelled."
+cancelled_delete: "❌ Playlist deletion cancelled"
+cancelled_remove: "❌ Song removal cancelled"
+error_icon: "❌"

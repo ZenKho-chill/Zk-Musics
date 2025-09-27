@@ -21,7 +21,7 @@ const data: Config = new ConfigData().data;
 let isCollectorActive = false;
 
 export default class implements Command {
-  public name = ["spotify", "playlist"];
+  public name = ["spotify_name", "playlist"];
   public description = "Hiển thị playlist Spotify của bạn & chọn một playlist để phát";
   public category = "Âm nhạc";
   public accessableby = data.COMMANDS_ACCESS.MUSIC.SpotifyPlaylist;
@@ -40,7 +40,7 @@ export default class implements Command {
     if (isCollectorActive) {
       const responseEmbed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_active")}`
+          `${client.i18n.get("vi", "client.commands.music", "spotify_playlist.active")}`
         )
         .setColor(client.color_main);
 
@@ -66,7 +66,7 @@ export default class implements Command {
     if (!spotifyID) {
       const noSpotifyIDEmbed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_not_connected")}`
+          `${client.i18n.get("vi", "client.commands.music", "spotify_playlist.not_connected")}`
         )
         .setColor(client.color_main);
       await handler.editReply({
@@ -82,7 +82,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "play_no_in_voice")}`
+              `${client.i18n.get("vi", "client.commands.music", "play.no_in_voice")}`
             )
             .setColor(client.color_main),
         ],
@@ -119,7 +119,7 @@ export default class implements Command {
       if (!playlists || playlists.length === 0) {
         const noPlaylistsEmbed = new EmbedBuilder()
           .setDescription(
-            `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_empty")}`
+            `${client.i18n.get("vi", "client.commands.music", "spotify_playlist.empty")}`
           )
           .setColor(client.color_main);
         await handler.editReply({
@@ -148,7 +148,7 @@ export default class implements Command {
         new StringSelectMenuBuilder()
           .setCustomId("spotify_pl")
           .setPlaceholder(
-            client.i18n.get(handler.language, "commands.music", "spotify_playlist_placeholder")
+            client.i18n.get("vi", "client.commands.music", "spotify_playlist.placeholder")
           )
           .setMinValues(1)
           .setMaxValues(1)
@@ -169,14 +169,14 @@ export default class implements Command {
 
       const EmbedPlaylist = new EmbedBuilder()
         .setTitle(
-          `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_title", {
-            SpotifyName: SpotifyName,
+          `${client.i18n.get(handler.language, "client.commands.music", "spotify_playlist.title", {
+            owner: SpotifyName,
           })}`
         )
         .setColor(client.color_second)
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_desc", {
-            playlists: AllPlaylist,
+          `${client.i18n.get(handler.language, "client.commands.music", "spotify_playlist.desc", {
+            list: AllPlaylist,
           })}`
         )
         .setThumbnail(
@@ -184,7 +184,7 @@ export default class implements Command {
             client.user!.displayAvatarURL({ size: 1024 })
         )
         .setFooter({
-          text: `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_footer", {
+          text: `${client.i18n.get(handler.language, "client.commands.music", "spotify_playlist.footer", {
             username: client.user!.username,
             max: "25",
           })}`,
@@ -206,7 +206,7 @@ export default class implements Command {
             return true;
           else {
             message.reply({
-              content: `${client.i18n.get(handler.language, "interaction", "no_same_voice")}`,
+              content: `${client.i18n.get("vi", "server.handlers", "no_same_voice")}`,
               flags: MessageFlags.Ephemeral,
             });
             return false;
@@ -228,8 +228,8 @@ export default class implements Command {
                 .setDescription(
                   `${client.i18n.get(
                     handler.language,
-                    "commands_music",
-                    "spotify_playlist_notfound"
+                    "client.commands.music",
+                    "spotify_playlist.notfound"
                   )}`
                 )
                 .setColor(client.color_main),
@@ -248,15 +248,13 @@ export default class implements Command {
           if (!player.playing) await player.play();
           const embed = new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "spotify_play_playlist", {
+              `${client.i18n.get(handler.language, "client.commands.music", "spotify_playlist.play_playlist", {
                 title: this.getTitle(
                   client,
                   searchResults.type,
                   searchResults.tracks,
                   selectedPlaylist
                 ),
-                url: selectedPlaylist,
-                playlistname: selectedPlaylist.name,
               })}`
             )
             .setThumbnail(selectedPlaylist.images[0]?.url)
@@ -271,7 +269,7 @@ export default class implements Command {
           await interaction.update({
             embeds: [
               new EmbedBuilder()
-                .setDescription(`${client.i18n.get(handler.language, "interaction", "no_player")}`)
+                .setDescription(`${client.i18n.get("vi", "server.handlers", "no_player")}`)
                 .setColor(client.color_main),
             ],
             components: [],
@@ -296,7 +294,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.music", "spotify_playlist_error")}`
+              `${client.i18n.get("vi", "client.commands.music", "spotify_playlist.error")}`
             )
             .setColor(client.color_main),
         ],
@@ -310,7 +308,7 @@ export default class implements Command {
       handler.editReply({
         embeds: [
           new EmbedBuilder()
-            .setDescription(`${client.i18n.get(language, "interaction", "no_same_voice")}`)
+            .setDescription(`${client.i18n.get(language, "server.handlers", "no_same_voice")}`)
             .setColor(client.color_main),
         ],
       });

@@ -1,0 +1,4 @@
+invalid_action: "❌ Please select a valid action!"
+execution_error: "❌ An error occurred while executing the command!"
+invalid_action_with_value: "❌ Invalid action: {action}"
+no_playlists: "❌ You don't have any playlists yet!"

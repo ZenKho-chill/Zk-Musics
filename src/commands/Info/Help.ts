@@ -56,9 +56,9 @@ export default class implements Command {
         return handler.editReply({
           embeds: [
             embed
-              .setTitle(`${client.i18n.get(handler.language, "commands.info", "finder_invalid")}`)
+              .setTitle(`${client.i18n.get(handler.language, "client.commands.info", "finder_invalid")}`)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "finder_example", {
+                `${client.i18n.get(handler.language, "client.commands.info", "finder_example", {
                   command: `${handler.prefix}${this.name[0]}`,
                 })}`
               ),
@@ -99,11 +99,11 @@ export default class implements Command {
           client.user!.id
         }&permissions=8&scope=bot`,
       })
-      .setTitle(`${client.i18n.get(handler.language, "commands.info", "homepage_title")}`)
+      .setTitle(`${client.i18n.get(handler.language, "client.commands.info", "homepage_title")}`)
       .setImage(client.config.bot.IMAGES_URL_HELPMENU)
       .setColor(client.color_main)
       .setDescription(
-        `${client.i18n.get(handler.language, "commands.info", "homepage_desc", {
+        `${client.i18n.get(handler.language, "client.commands.info", "homepage_desc", {
           premium: client.config.bot.PREMIUM_URL,
           bot: client.user!.username,
         })}`
@@ -141,7 +141,7 @@ export default class implements Command {
     const selectmenu = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents([
       new StringSelectMenuBuilder()
         .setCustomId("help-category")
-        .setPlaceholder(`${client.i18n.get(handler.language, "commands.info", "select_menu")}`)
+        .setPlaceholder(`${client.i18n.get(handler.language, "client.commands.info", "select_menu")}`)
         .setMaxValues(1)
         .setMinValues(1)
         .setOptions([
@@ -227,7 +227,7 @@ export default class implements Command {
                       }&permissions=8&scope=bot`,
                     })
                     .setTitle(
-                      `${client.i18n.get(handler.language, "commands.info", "homepage_title")}`
+                      `${client.i18n.get(handler.language, "client.commands.info", "homepage_title")}`
                     )
                     .setImage(client.config.bot.IMAGES_URL_COMMAND)
                     .setDescription(`Tiền tố bot: \`${client.prefix} hoặc /\``)
@@ -235,7 +235,7 @@ export default class implements Command {
                     .setFooter({
                       text: `${client.user?.displayName} ${client.i18n.get(
                         handler.language,
-                        "commands.info",
+                        "client.commands.info",
                         "footer"
                       )} | Total Commands: ${client.commands.size}`,
                     });
@@ -280,7 +280,7 @@ export default class implements Command {
                     .setFooter({
                       text: `${client.i18n.get(
                         handler.language,
-                        "commands.info",
+                        "client.commands.info",
                         "footer"
                       )} | Total Commands: ${client.commands.size}`,
                     });
@@ -313,7 +313,7 @@ export default class implements Command {
               if (reason === "time") {
                 const timedMessage = `${client.i18n.get(
                   handler.language,
-                  "commands.info",
+                  "client.commands.info",
                   "help_timeout",
                   {
                     prefix: client.prefix,
@@ -341,22 +341,22 @@ export default class implements Command {
 
   private transalatedFinder(client: Manager, handler: CommandHandler) {
     return {
-      name: `${client.i18n.get(handler.language, "commands.info", "finder_name")}`,
-      des: `${client.i18n.get(handler.language, "commands.info", "finder_des")}`,
-      usage: `${client.i18n.get(handler.language, "commands.info", "finder_usage")}`,
-      access: `${client.i18n.get(handler.language, "commands.info", "finder_access")}`,
-      aliases: `${client.i18n.get(handler.language, "commands.info", "finder_aliases")}`,
-      slash: `${client.i18n.get(handler.language, "commands.info", "finder_slash")}`,
-      desNone: `${client.i18n.get(handler.language, "commands.info", "finder_des_no")}`,
-      usageNone: `${client.i18n.get(handler.language, "commands.info", "finder_usage_no")}`,
+      name: `${client.i18n.get(handler.language, "client.commands.info", "finder_name")}`,
+      des: `${client.i18n.get(handler.language, "client.commands.info", "finder_des")}`,
+      usage: `${client.i18n.get(handler.language, "client.commands.info", "finder_usage")}`,
+      access: `${client.i18n.get(handler.language, "client.commands.info", "finder_access")}`,
+      aliases: `${client.i18n.get(handler.language, "client.commands.info", "finder_aliases")}`,
+      slash: `${client.i18n.get(handler.language, "client.commands.info", "finder_slash")}`,
+      desNone: `${client.i18n.get(handler.language, "client.commands.info", "finder_des_no")}`,
+      usageNone: `${client.i18n.get(handler.language, "client.commands.info", "finder_usage_no")}`,
       aliasesPrefix: `${client.i18n.get(
         handler.language,
-        "commands.info",
+        "client.commands.info",
         "finder_aliases_prefix"
       )}`,
-      aliasesNone: `${client.i18n.get(handler.language, "commands.info", "finder_aliases_no")}`,
-      slashEnable: `${client.i18n.get(handler.language, "commands.info", "finder_slash_enable")}`,
-      slashDisable: `${client.i18n.get(handler.language, "commands.info", "finder_slash_disable")}`,
+      aliasesNone: `${client.i18n.get(handler.language, "client.commands.info", "finder_aliases_no")}`,
+      slashEnable: `${client.i18n.get(handler.language, "client.commands.info", "finder_slash_enable")}`,
+      slashDisable: `${client.i18n.get(handler.language, "client.commands.info", "finder_slash_disable")}`,
     };
   }
 

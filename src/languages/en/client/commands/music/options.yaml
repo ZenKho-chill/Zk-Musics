@@ -1,0 +1,34 @@
+play: {}
+playnext: {}
+search:
+  active: "❌ | Search feature is being used by someone else!"
+  no_result: "❌ | No results found for: **{query}**!"
+  placeholder: "Select a song to play"
+  desc: "**Selected:** {title} `[{duration}]` • {request}"
+  footer: "Requested by {user} | Expires in: {timeout}"
+  play_search_track: "🎵 | Now playing **{title}** `[{duration}]` • {request}"
+  end_desc1: "⏰ | Song selection time expired!"
+  end_desc2: "✅ | Successfully selected **{title}**!"
+  url_no_allowed: "❌ | YouTube links are not allowed! Please use song names."
+radio:
+  no_voice: "❌ | You must be in a voice channel to use this command!"
+  match: "❌ | No radio station found with number {number}!"
+  play_track: "📻 | Now playing radio **{name}**!"
+  placeholder: "Select radio station"
+  no_same_voice: "❌ | You must be in the same voice channel as the bot!"
+  content_switched_radio: "✅ | Switched to **{providerRadio}** radio!"
+queue: {}
+remove:
+  number_invalid: "❌ | Invalid position!"
+  already: "❌ | Cannot remove currently playing song!"
+  notfound: "❌ | Song not found at that position!"
+  desc: "🗑️ | Removed **{title}** from queue • {request}"
+seek:
+  invalid: "❌ | Invalid time format! Example: 0:10 or 120:10"
+  beyond: "❌ | Cannot seek beyond the song duration!"
+  not_seekable: "❌ | This song is not seekable!"
+  msg: "⏩ | {user} seeked to **{duration}** in **{title}**!"
+skipto: {}
+volume: {}
+loop: {}
+lyrics: {}

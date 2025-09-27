@@ -1,0 +1,27 @@
+title: "Chính sách Quyền riêng tư của {bot}"
+desc: |
+  **Chính sách Quyền riêng tư của {bot}**
+
+  Chúng tôi cam kết bảo vệ quyền riêng tư của bạn. Chính sách này giải thích cách chúng tôi thu thập, sử dụng và bảo vệ thông tin của bạn khi sử dụng bot {bot}.
+
+  **Thông tin chúng tôi thu thập:**
+  • **Dữ liệu máy chủ:** ID máy chủ, tên máy chủ, số thành viên
+  • **Dữ liệu người dùng:** ID người dùng, tên người dùng (chỉ khi cần thiết cho chức năng)
+  • **Dữ liệu sử dụng:** Lệnh đã sử dụng, bài hát đã phát (để cải thiện bot)
+
+  **Cách chúng tôi sử dụng thông tin:**
+  • Cung cấp và cải thiện dịch vụ bot
+  • Thống kê sử dụng ẩn danh
+  • Ngăn chặn lạm dụng và spam
+
+  **Quyền của bạn:**
+  • Yêu cầu xóa dữ liệu bất cứ lúc nào
+  • Từ chối thu thập dữ liệu không cần thiết
+  • Liên hệ hỗ trợ để biết thêm chi tiết
+
+  **Liên hệ:**
+  • **Hỗ trợ:** {serversupport}
+  • **Nhà phát triển:** {developer}
+
+  *Chính sách này có thể được cập nhật. Chúng tôi sẽ thông báo về các thay đổi quan trọng.*
+embed_author: "Chính sách quyền riêng tư!"

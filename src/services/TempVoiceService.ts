@@ -24,7 +24,7 @@ export default class TempVoiceService {
 
       if (tempChannel instanceof VoiceChannel) {
         if (tempChannel.members.size === 0) {
-          await tempChannel.delete("Kênh voice tạm thời đã hết hạn");
+          await tempChannel.delete("Kênh thoại tạm đã hết hạn");
           await client.db.TempVoiceChannel.delete(tempVoiceChannel.id);
         } else {
           this.monitorChannel(tempChannel, tempVoiceChannel.id, client);
@@ -44,7 +44,7 @@ export default class TempVoiceService {
         updatedChannel.members.size === 0
       ) {
         try {
-          await updatedChannel.delete("Kênh voice tạm thời đã hết hạn");
+          await updatedChannel.delete("Kênh thoại tạm đã hết hạn");
           await client.db.TempVoiceChannel.delete(channelId);
         } catch (error) {
           if ((error as Error).message !== "Unknown Channel") {
@@ -141,7 +141,7 @@ export default class TempVoiceService {
         tempChannel.members.size === 0
       ) {
         try {
-          await tempChannel.delete("Kênh voice tạm thời đã hết hạn");
+          await tempChannel.delete("Kênh thoại tạm đã hết hạn");
           await client.db.TempVoiceChannel.delete(tempVoiceChannel.id);
         } catch (error) {
           if ((error as Error).message !== "Unknown Channel") {

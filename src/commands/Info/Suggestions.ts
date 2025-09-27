@@ -49,7 +49,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "suggestions_failure")}`
+                `${client.i18n.get(handler.language, "client.commands", "info.suggestions_failure")}`
               ),
           ],
         });
@@ -63,7 +63,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "suggestions_failure")}`
+                `${client.i18n.get(handler.language, "client.commands", "info.suggestions_failure")}`
               ),
           ],
         });
@@ -78,7 +78,7 @@ export default class implements Command {
             new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "suggestions_provide_desc")}`
+                `${client.i18n.get(handler.language, "client.commands", "info.suggestions_provide_desc")}`
               ),
           ],
         });
@@ -117,7 +117,7 @@ export default class implements Command {
       const successEmbed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.info", "suggestions_success")}`
+          `${client.i18n.get(handler.language, "client.commands", "info.suggestions_success")}`
         );
 
       return handler.editReply({ embeds: [successEmbed] });
@@ -128,7 +128,7 @@ export default class implements Command {
           new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.info", "suggestions_failure")}`
+              `${client.i18n.get(handler.language, "client.commands", "info.suggestions_failure")}`
             ),
         ],
       });

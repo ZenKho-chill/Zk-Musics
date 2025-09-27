@@ -17,7 +17,7 @@ export default class {
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
     logInfo(
       "PlayerStop",
-      `${chalk.hex("#ff7f50")("Player đã dừng tại @ ")}${chalk.hex("#ff7f50")(
+      `${chalk.hex("#ff7f50")(client.i18n.get("vi", "events", "player.player_stopped"))}${chalk.hex("#ff7f50")(
         guild?.name
       )} / ${chalk.hex("#ff7f50")(player.guildId)}`
     );
@@ -53,7 +53,7 @@ export default class {
 
     const embed = new EmbedBuilder()
       .setColor(client.color_main)
-      .setDescription(`${client.i18n.get(language, "events.player", "queue_end_desc")}`);
+      .setDescription(`${client.i18n.get(language, "server.events", "player.queue_end_desc")}`);
 
     if (!isSudoDestroy) {
       const setup = await client.db.setup.get(player.guildId);

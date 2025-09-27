@@ -38,7 +38,7 @@ export class SpotifyRequest {
 
     if (request.headers.get("x-ratelimit-remaining") === "0") {
       this.handleRateLimited(Number(request.headers.get("x-ratelimit-reset")) * 1000);
-      throw new Error("Bị giới hạn rate bởi spotify");
+      throw new Error("Spotify API rate limited");
     }
     this.stats.requests++;
 

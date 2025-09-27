@@ -1,0 +1,4 @@
+no_songs_playing: "❌ | No songs are currently playing!"
+clearqueue_msg: "✅ | Cleared all songs in the queue!"
+pause_msg: "⏸️ | {user} paused **{title}**!"
+resume_msg: "▶️ | {user} resumed **{title}**!"

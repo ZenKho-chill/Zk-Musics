@@ -46,7 +46,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "maintenance_arg_error", {
+              `${client.i18n.get(handler.language, "client.commands", "admin.maintenance_arg_error", {
                 text: "**true** hoặc **false**",
               })}`
             )
@@ -62,7 +62,7 @@ export default class implements Command {
         embeds: [
           new EmbedBuilder()
             .setDescription(
-              `${client.i18n.get(handler.language, "commands.admin", "maintenance_true", {
+              `${client.i18n.get(handler.language, "client.commands", "admin.maintenance_true", {
                 type: String(type),
               })}`
             )
@@ -74,7 +74,7 @@ export default class implements Command {
 
       const embed = new EmbedBuilder()
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.admin", "maintenance_false", {
+          `${client.i18n.get(handler.language, "client.commands", "admin.maintenance_false", {
             type: String(type),
           })}`
         )

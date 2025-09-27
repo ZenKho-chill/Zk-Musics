@@ -87,9 +87,9 @@ export enum LavalinkLoadType {
 export const SourceIDs = [
   { name: "youtube_music", id: "ytm" },
   { name: "soundcloud", id: "sc" },
-  { name: "spotify", id: "sp" },
-  { name: "deezer", id: "dz" },
-  { name: "apple", id: "am" },
+  { name: "login", id: "sp" },
+  { name: "login", id: "dz" },
+  { name: "login", id: "am" },
   { name: "youtube", id: "yt" },
   { name: "jiosaavn", id: "js" },
   { name: "bandcamp", id: "bc" },

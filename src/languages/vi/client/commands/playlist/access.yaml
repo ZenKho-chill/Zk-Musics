@@ -1,0 +1,16 @@
+cannot_use_menu: "❌ Bạn không thể sử dụng menu này!"
+cannot_use_dropdown: "❌ Bạn không thể sử dụng dropdown này!"
+success: "✅ Đã thêm bài hát vào playlist `{name}`"
+failed: "❌ Không thể thêm bài hát vào playlist"
+create:
+  description: "Tạo playlist mới"
+  success: "✅ Tạo playlist `{name}` thành công"
+  failed: "❌ Không thể tạo playlist"
+delete:
+  description: "Xóa playlist"
+  success: "<:okee:1220876098456256512> Playlist `{name}` đã được **Xóa** thành công"
+  cancelled: "<:warnings:1220876158254710936> Đã hủy **Xóa** Playlist!"
+import:
+  description: "Nhập playlist từ nguồn bên ngoài"
+  success: "✅ Nhập playlist thành công"
+  failed: "❌ Không thể nhập playlist"

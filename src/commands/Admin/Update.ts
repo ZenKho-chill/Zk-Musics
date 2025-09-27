@@ -31,7 +31,7 @@ export default class implements Command {
       if (!channelToSendId || channelToSendId === "ID KÊNH CẬP NHẬT") {
         const embed = new EmbedBuilder()
           .setColor(client.color_main)
-          .setDescription("❌ **Lỗi:** Channel cập nhật chưa được cấu hình trong config!");
+          .setDescription(client.i18n.get(handler.language, "client.commands", "admin.update_channel_not_configured"));
         return await handler.editReply({ embeds: [embed] });
       }
 
@@ -40,7 +40,9 @@ export default class implements Command {
       if (!channelToSend) {
         const embed = new EmbedBuilder()
           .setColor(client.color_main)
-          .setDescription(`❌ **Lỗi:** Không tìm thấy kênh cập nhật với ID: \`${channelToSendId}\``);
+          .setDescription(client.i18n.get(handler.language, "client.commands", "admin.update_channel_not_found", {
+            channelId: channelToSendId
+          }));
         return await handler.editReply({ embeds: [embed] });
       }
 
@@ -49,14 +51,16 @@ export default class implements Command {
       if (!botMember || !channelToSend.permissionsFor(botMember)?.has(['SendMessages', 'ViewChannel'])) {
         const embed = new EmbedBuilder()
           .setColor(client.color_main)
-          .setDescription(`❌ **Lỗi:** Bot không có quyền gửi tin nhắn trong kênh \`${channelToSend.name}\``);
+          .setDescription(client.i18n.get(handler.language, "client.commands", "admin.update_no_permissions", {
+            channelName: channelToSend.name
+          }));
         return await handler.editReply({ embeds: [embed] });
       }
 
       const filter = (msg: Message) => msg.author.id === handler.user?.id;
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(client.i18n.get(handler.language, "commands.admin", "update_provide_desc")); // Mô tả lấy từ i18n
+        .setDescription(client.i18n.get(handler.language, "client.commands", "admin.update_provide_desc")); // Mô tả lấy từ i18n
 
       await handler.editReply({ embeds: [embed] });
 
@@ -72,7 +76,7 @@ export default class implements Command {
             const embed = new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.admin", "update_cancelled")}`
+                `${client.i18n.get(handler.language, "client.commands", "admin.update_cancelled")}`
               );
             await handler.editReply({ embeds: [embed] });
             return;
@@ -84,7 +88,7 @@ export default class implements Command {
             const embed = new EmbedBuilder()
               .setColor(client.color_main)
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.admin", "update_length_exceeded")}`
+                `${client.i18n.get(handler.language, "client.commands", "admin.update_length_exceeded")}`
               );
             await handler.editReply({ embeds: [embed] });
 
@@ -97,12 +101,15 @@ export default class implements Command {
           const sentMessage = await channelToSend.send(description);
           
           // Log success
-          logInfo("Update Command", `Đã gửi thông báo cập nhật thành công đến kênh ${channelToSend.name} (${channelToSend.id})`);
+          logInfo("Update Command", client.i18n.get(handler.language, "client.commands", "admin.update_log_success", {
+            channelName: channelToSend.name,
+            channelId: channelToSend.id
+          }));
           
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `✅ ${client.i18n.get(handler.language, "commands.admin", "update_success")}\n` +
+              `✅ ${client.i18n.get(handler.language, "client.commands", "admin.update_success")}\n` +
               `📤 **Kênh:** ${channelToSend.name}\n` +
               `🔗 **Link:** [Xem tin nhắn](${sentMessage.url})`
             );
@@ -110,14 +117,16 @@ export default class implements Command {
 
           // Xóa tin nhắn do người dùng gửi
           await msg.delete().catch(() => {
-            logWarn("Update Command", "Không thể xóa tin nhắn của người dùng");
+            logWarn("Update Command", client.i18n.get(handler.language, "client.commands", "admin.update_log_delete_failed"));
           });
         } catch (err) {
-          logError("Update Command", `Lỗi khi gửi tin nhắn cập nhật: ${err}`);
+          logError("Update Command", client.i18n.get(handler.language, "client.commands", "admin.update_log_send_error", {
+            error: err instanceof Error ? err.message : "Unknown error"
+          }));
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              `❌ ${client.i18n.get(handler.language, "commands.admin", "update_failure")}\n` +
+              `❌ ${client.i18n.get(handler.language, "client.commands", "admin.update_failure")}\n` +
               `📝 **Chi tiết:** ${err instanceof Error ? err.message : "Lỗi không xác định"}`
             );
           await handler.editReply({ embeds: [embed] });
@@ -129,7 +138,7 @@ export default class implements Command {
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
-              client.i18n.get(handler.language, "commands.admin", "update_timeout_failure")
+              client.i18n.get(handler.language, "client.commands", "admin.update_timeout_failure")
             );
 
           handler.editReply({ embeds: [embed] });
@@ -138,17 +147,19 @@ export default class implements Command {
         collector?.removeAllListeners();
       });
     } catch (error) {
-      logError("Update Command", `Lỗi chung trong lệnh update: ${error}`);
+      logError("Update Command", client.i18n.get(handler.language, "client.commands", "admin.update_log_general_error", {
+        error: error instanceof Error ? error.message : "Unknown error"
+      }));
 
       const embed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
-          `❌ ${client.i18n.get(handler.language, "commands.admin", "update_failure")}\n` +
+          `❌ ${client.i18n.get(handler.language, "client.commands", "admin.update_failure")}\n` +
           `📝 **Chi tiết:** ${error instanceof Error ? error.message : "Lỗi không xác định"}`
         );
 
       await handler.editReply({ embeds: [embed] }).catch(() => {
-        logError("Update Command", "Không thể gửi tin nhắn lỗi");
+        logError("Update Command", client.i18n.get(handler.language, "client.commands", "admin.update_log_reply_error"));
       });
     }
   }

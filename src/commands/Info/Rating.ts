@@ -68,7 +68,7 @@ export default class implements Command {
       // Tạo Embed cho lỗi
       const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_failure")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.info", "rating_failure")}`);
 
       if (!RatingChannelID || RatingChannelID.length === 0) {
         // Nếu RatingChannelID không được cấu hình
@@ -84,14 +84,14 @@ export default class implements Command {
 
       const rating = handler.args[0];
       const category = handler.args[1];
-      const description = handler.args[2] || "Không có mô tả";
+      const description = handler.args[2] || client.i18n.get(handler.language, "client.commands.info", "rating_no_description");
 
       if (!rating || !category || !description) {
         return handler.editReply({
           embeds: [
             new EmbedBuilder()
               .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "rating_failure", {
+                `${client.i18n.get(handler.language, "client.commands.info", "rating_failure", {
                   prefix: client.prefix,
                 })}`
               )
@@ -102,11 +102,11 @@ export default class implements Command {
 
       const RatingEmbed = new EmbedBuilder()
         .setAuthor({
-          name: `${handler.user?.displayName} | Đánh giá!`,
+          name: `${handler.user?.displayName} | ${client.i18n.get(handler.language, "client.commands.info", "rating_embed_author")}`,
           iconURL: handler.user?.displayAvatarURL(),
         })
         .setDescription(
-          `${client.i18n.get(handler.language, "commands.info", "rating_desc", {
+          `${client.i18n.get(handler.language, "client.commands.info", "rating_desc", {
             rating: rating,
             user:
               `<@${handler.user?.id ?? ""}>` ||
@@ -116,22 +116,22 @@ export default class implements Command {
         )
         .addFields(
           {
-            name: `Đánh giá`,
+            name: client.i18n.get(handler.language, "client.commands.info", "rating_field_rating"),
             value: rating,
             inline: true,
           },
           {
-            name: `Danh mục`,
+            name: client.i18n.get(handler.language, "client.commands.info", "rating_field_category"),
             value: category,
             inline: true,
           },
           {
-            name: `Thời gian`,
+            name: client.i18n.get(handler.language, "client.commands.info", "rating_field_time"),
             value: `\`${moment(new Date()).format("dddd, Do MMMM YYYY")}\``,
             inline: true,
           },
           {
-            name: `Mô tả`,
+            name: client.i18n.get(handler.language, "client.commands.info", "rating_field_description"),
             value: `\`\`\`${description}\`\`\``,
             inline: false,
           }
@@ -143,13 +143,13 @@ export default class implements Command {
 
       const successEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_succes")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.info", "rating_succes")}`);
       handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
-      logWarn("Rating", "Lỗi khi thực thi lệnh Rating");
+      logWarn("Rating", client.i18n.get(handler.language, "client.commands.info", "rating_log_error"));
       const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
-        .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_failure")}`);
+        .setDescription(`${client.i18n.get(handler.language, "client.commands.info", "rating_failure")}`);
 
       handler.editReply({ embeds: [errorEmbed] });
     }
