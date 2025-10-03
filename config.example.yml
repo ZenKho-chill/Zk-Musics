@@ -147,15 +147,6 @@ features:
       TopGgAuth: "YOUR AUTH/PASSWORD"
       LogVoteChannelID: "YOUR CHANNEL ID"
       TopGgToken: "YOUR TOKEN TOP.GG"
-    LAST_FM_SCROBBLED: # Lấy API key từ https://www.last.fm/api/account/create
-      Enable: false
-      ApiKey: "YOUR API KEY LAST FM"
-      Secret: "YOUR SECRET KEY LAST FM"
-      Callback: "https://ws.zenkho.top/lastfm" # Dùng địa chỉ nọi bot chạy, endpoint /callback (vd: http://localhost:2444/lastfm)
-      scheduleScrobble: 60000 # Lịch cập nhật để đẩy scrobble mỗi 1 phút khi phát bài
-      ExpiredLink: 30000 # Thời gian hết hạn của link đăng nhập nút
-      RedirectOnSuccess: "https://zkmusic.zenkho.top/lastfm"
-      RedirectOnError: "https://zkmusic.zenkho.top/lastfm-error"
 
 HELPER_SETUP:
   Enable: false
@@ -216,8 +207,8 @@ MENU_HELP_EMOJI:
 PLAYER_SOURCENAME:
   UNKNOWN: "<:sam:1253960817519493150> Lofi/Radio"
   HTTP: "<:seek:1220881026302345355> Phát trực tiếp"
-  YOUTUBE: "<:syt:1253961019383087145> Nhạc YouTube"
-  YOUTUBE_MUSIC: "<:syt:1253961019383087145> Nhạc YouTube"
+  YOUTUBE: "<:syt:1253961019383087145> Youtube Music"
+  YOUTUBE_MUSIC: "<:syt:1253961019383087145> Youtube Music"
   SOUNDCLOUD: "<:scs:1253961119064789022> Soundcloud"
   SPOTIFY: "<:sps:1253960964718727202> Spotify"
   DEEZER: "<:sdz:1253961079437135902> Deezer"
@@ -369,9 +360,6 @@ COMMANDS_ACCESS:
 
   MUSIC:
     Autoplay: ["Member"]
-    ClearQueue: ["Member"]
-    Forward: ["Member"]
-    Loop: ["Member"]
     Lyrics: ["Member"]
     NowPlaying: ["Member"]
     Pause: ["Member"]
@@ -383,9 +371,7 @@ COMMANDS_ACCESS:
     Remove: ["Member"]
     Replay: ["Member"]
     Resume: ["Member"]
-    Rewind: ["Member"]
     Search: ["Member"]
-    Seek: ["Member"]
     Shuffle: ["Member"]
     Skip: ["Member"]
     SkipTo: ["Member"]
@@ -407,7 +393,6 @@ COMMANDS_ACCESS:
 
   SETTINGS:
     Language: ["Manager"]
-    LastFm: ["Member"]
     Prefix: ["Manager"]
     ResetData: ["Member"]
     Setup: ["Manager"]
@@ -416,7 +401,6 @@ COMMANDS_ACCESS:
     TempVoiceChannel: ["Manager"]
 
   UTILS:
-    Kick: ["Manager"]
     TopStats: ["Member"]
     MyStats: ["Member"]
     Profile: ["Member"]

@@ -55,7 +55,6 @@ export default class implements Command {
         { name: "Bài hàng đầu (Người dùng)", value: "toptrack" },
         { name: "Nghệ sĩ hàng đầu (Người dùng)", value: "topartist" },
         { name: "Spotify (Người dùng)", value: "spotify" },
-        { name: "Last Fm (Người dùng)", value: "lastfm" },
         { name: "Bình chọn (Người dùng)", value: "votes" },
         { name: "Nhắc nhớ bình chọn (Người dùng)", value: "votereminder" },
         { name: "Playlist (Người dùng)", value: "playlist" },
@@ -132,7 +131,6 @@ export default class implements Command {
               client.db.TopArtist.delete(userId!),
               client.db.TopTrack.delete(userId!),
               client.db.SpotifyId.delete(userId!),
-              client.db.LastFm.delete(userId!),
               client.db.votes.delete(userId!),
               client.db.VoteReminders.delete(userId!),
               client.db.UserStatistics.delete(`${userId!}`),
@@ -163,10 +161,6 @@ export default class implements Command {
           case "spotify":
             await client.db.SpotifyId.delete(userId!);
             resultMessage = "Đã xóa thành công cơ sở dữ liệu Spotify.";
-            break;
-          case "lastfm":
-            await client.db.LastFm.delete(userId!);
-            resultMessage = "Đã xóa thành công cơ sở dữ liệu Last.fm.";
             break;
           case "votes":
             await client.db.votes.delete(userId!);

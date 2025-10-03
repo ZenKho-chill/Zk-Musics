@@ -12,13 +12,6 @@ url_no_allowed: "<:wrong:1220876213896216686> Vui lòng dùng tên bài/ca sĩ (
 
 ### Lệnh Tự phát (Autoplay)!
 
-### Lệnh Xóa hàng chờ!
-clearqueue_msg: "<:bin:1220831964890927235> Hàng chờ đã **được xóa**"
-
-### Lệnh tua (Forward)!
-forward_msg: "<:next:1220832036101820508> **%{user} đã tua %{title} đến** `%{duration}`"
-forward_beyond: "<:warnings:1220876158254710936> Bài hát sắp kết thúc. Không thể tua quá thời lượng!"
-
 ### Lệnh Phát tiếp theo!
 playnext_desc: "### %{name} sẽ phát tiếp theo ♪"
 playnext_queue_empty: "<:wrong:1220876213896216686> Hàng chờ đang rỗng. Vui lòng thêm vài bài trước"
@@ -26,16 +19,6 @@ playnext_notfound: "<:wrong:1220876213896216686> Không tìm thấy bài!"
 
 # Thực thi khi không hợp lệ
 no_node: "<:warnings:1220876158254710936> **Không tìm thấy server Lavalink. Vui lòng thử lại sau 5 phút**"
-
-### Lệnh Lặp (Loop)!
-loop_current: |
-  <:loop:1220832757496811570> **Đang lặp %{title}
-  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Thưởng thức nhé, %{user}**
-
-loop_all: "<:loop:1220832757496811570> **Đã bật chế độ lặp toàn bộ hàng chờ**"
-unloop_all: "<:wrong:1220876213896216686> **Chế độ lặp đã bị TẮT**"
-loop_invalid: "<:warnings:1220876158254710936> Chế độ lặp không hợp lệ. Vui lòng dùng **%{mode}**"
-loop_already: "<:warnings:1220876158254710936> Chế độ lặp hiện đã là **%{mode}**"
 
 ### Lệnh Lyrics!
 lyrics_title: "Lời bài hát cho **%{song}**"
@@ -104,16 +87,6 @@ replay_not_seekable: "<:warnings:1220876158254710936> Bài **%{title}** không t
 resume_msg: |
   <:play:1220839345938763978> **Đã tiếp tục phát %{title},
   <:blankers:1220848705289064669><:pop:1220849334606626946> Thưởng thức nào %{user}**
-
-### Lệnh Tua lùi (Rewind)!
-rewind_msg: "<:back:1220832007303594086> **%{user} đã tua lùi %{title} đến** `%{duration}`"
-rewind_beyond: "<:warnings:1220876158254710936> Bài vừa mới bắt đầu. Không thể tua lùi quá thời điểm này!"
-
-### Lệnh Seek!
-seek_msg: "<:seek:1220881026302345355> **%{user} đã tua %{title} tới** `%{duration}`"
-seek_beyond: "<:warnings:1220876158254710936> Xin lỗi %{user}, bạn không thể tua quá thời lượng bài!"
-seek_invalid: "<:warnings:1220876158254710936> Thời lượng tua không hợp lệ. Vui lòng dùng định dạng thời gian hợp lệ. Ví dụ: **1:30**"
-seek_not_seekable: "<:seek:1220881026302345355> Bài **%{title}** không thể tua lùi hoặc tua tới."
 
 ### Lệnh Xáo trộn!
 shuffle_title: "Xáo trộn hàng chờ"

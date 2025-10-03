@@ -22,9 +22,6 @@ queue_end_desc: |
 leave_pause: "Considering that you all left me alone :( The player has been paused."
 leave_resume: "Considering that someone has joined me, the player has been resumed."
 
-### Last FM Scrobble ###
-expired_login_session: "Hey %{user}, Your Last.fm session has expired or is invalid.\nPlease re-authenticate to continue using the scrobble feature."
-
 ### Milestone Track ###
 milestone_track_footer: "%{user} • Those who wish to sing always find a song ♪"
 milestone_track_desc: |

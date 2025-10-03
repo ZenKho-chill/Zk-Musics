@@ -34,9 +34,6 @@ export class WebServer {
     this.startCronJobs();
     this.alive();
     this.setupVoteWebhook();
-    if (this.client.config.features.WebServer.LAST_FM_SCROBBLED.Enable) {
-      this.setupLastfmCallback();
-    }
 
     this.expose();
     this.handleInteractions();
@@ -46,66 +43,6 @@ export class WebServer {
     this.app.get("/", (req, res) => {
       res.send("Server còn sống nè! Bot Discord đang chạy.");
     });
-  }
-
-  setupLastfmCallback() {
-    this.app.get("/lastfm", async (req, res) => {
-      const token = req.query.token as string;
-      const userId = req.query.user as string;
-
-      if (!token || !userId) {
-        return res.status(400).send("Yêu cầu không hợp lệ.");
-      }
-
-      try {
-        const response = await axios.get("http://ws.audioscrobbler.com/2.0/", {
-          params: {
-            method: "auth.getSession",
-            api_key: this.client.config.features.WebServer.LAST_FM_SCROBBLED.ApiKey,
-            token: token,
-            api_sig: this.generateApiSignature({
-              api_key: this.client.config.features.WebServer.LAST_FM_SCROBBLED.ApiKey,
-              method: "auth.getSession",
-              token: token,
-            }),
-            format: "json",
-          },
-        });
-
-        const sessionKey = response.data.session.key;
-        const lastfmUsername = response.data.session.name;
-
-        const new_data = {
-          userId: userId,
-          sessionKey: sessionKey,
-          lastfmUsername: lastfmUsername,
-          token: token,
-        };
-
-        await this.client.db.LastFm.set(`${userId}`, new_data);
-        const redirectUrl = `${
-          this.client.config.features.WebServer.LAST_FM_SCROBBLED.RedirectOnSuccess
-        }?user=${encodeURIComponent(userId)}&token=${encodeURIComponent(token)}`;
-        res.redirect(redirectUrl);
-      } catch (error) {
-        logError("WebServer", "Error processing Last.fm authentication", { error });
-        const redirectUrl = `${
-          this.client.config.features.WebServer.LAST_FM_SCROBBLED.RedirectOnError
-        }?user=${encodeURIComponent(userId)}&token=${encodeURIComponent(token)}`;
-        res.redirect(redirectUrl);
-      }
-    });
-  }
-
-  generateApiSignature(params: { [key: string]: string }) {
-    const sortedParams = Object.keys(params)
-      .sort()
-      .map((key) => `${key}${params[key]}`)
-      .join("");
-
-    const stringToHash =
-      sortedParams + this.client.config.features.WebServer.LAST_FM_SCROBBLED.Secret;
-    return md5(stringToHash);
   }
 
   setupVoteWebhook() {

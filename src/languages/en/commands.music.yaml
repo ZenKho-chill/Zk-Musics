@@ -12,13 +12,6 @@ url_no_allowed: "<:wrong:1220876213896216686> Please use the song name/artist na
 
 ### Autoplay command!
 
-### ClearQueue command!
-clearqueue_msg: "<:bin:1220831964890927235> Queue has been **Cleared**"
-
-### Forward command!
-forward_msg: "<:next:1220832036101820508> **%{user} Forwarded %{title} to** `%{duration}`"
-forward_beyond: "<:warnings:1220876158254710936> Song is about to end. You can not Forward beyond it!"
-
 ### PlayNext command!
 playnext_desc: "### %{name} Next To Play ♪"
 playnext_queue_empty: "<:wrong:1220876213896216686> The queue is empty. Please add some songs first"
@@ -26,16 +19,6 @@ playnext_notfound: "<:wrong:1220876213896216686> Song not found!"
 
 # Execute when invalid
 no_node: "<:warnings:1220876158254710936> **No Lavalink server was found. Please try again after 5 Minutes**"
-
-### Loop command!
-loop_current: |
-  <:loop:1220832757496811570> **Now Looping %{title}
-  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Enjoy it, %{user}**
-
-loop_all: "<:loop:1220832757496811570> **Has been looping QUEUE mode**"
-unloop_all: "<:wrong:1220876213896216686> **Looping mode has been DISABLED**"
-loop_invalid: "<:warnings:1220876158254710936> Invalid Loop mode. Please use **%{mode}**"
-loop_already: "<:warnings:1220876158254710936> Loop mode is already **%{mode}**"
 
 ### Lyrics command!
 lyrics_title: "Lyrics for **%{song}**"
@@ -104,16 +87,6 @@ replay_not_seekable: "<:warnings:1220876158254710936> The track **%{title}** can
 resume_msg: |
   <:play:1220839345938763978> **Playback Resumed %{title},
   <:blankers:1220848705289064669><:pop:1220849334606626946> Enjoy %{user}**
-
-### Rewind command!
-rewind_msg: "<:back:1220832007303594086> **%{user} Rewinded %{title} to** `%{duration}`"
-rewind_beyond: "<:warnings:1220876158254710936> Song just started. You can not Rewind beyond it!"
-
-### Seek command!
-seek_msg: "<:seek:1220881026302345355> **%{user} Seeked %{title} to** `%{duration}`"
-seek_beyond: "<:warnings:1220876158254710936> Sorry %{user}, You can not Seek beyond the song duration!"
-seek_invalid: "<:warnings:1220876158254710936> Invalid Seek duration. Please use a valid timestamp. Example: **1:30**"
-seek_not_seekable: "<:seek:1220881026302345355> The track **%{title}** cannot be rewound or fast-forwarded."
 
 ### Shuffle command!
 shuffle_title: "Shuffles the Queue"

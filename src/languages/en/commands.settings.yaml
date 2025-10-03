@@ -24,18 +24,6 @@ setup_deleted: "*`Successfully delete setup channel!`*"
 error_themes: "<:wrong:1220876213896216686> Invalid... Please try again."
 succes_themes: "**Succesfully changed theme to %{themes}**"
 
-### Last FM Login command!
-lastfm_login_footer: "Notes: This link will expire in %{expired}."
-lastfm_login_title: "Last.fm Login"
-lastfm_login_desc: "Would you like to grant authorization to your [Last.fm](https://www.last.fm/user/romanromannya) account?\nIf yes, please click the button below to start the authorization process."
-lastfm_not_login_desc: "<:wrong:1220876213896216686> You are not logged in to Last.fm"
-
-### Last FM Logout command!
-lastfm_logout_title: "Last.fm Logout"
-lastfm_logout_desc: "<:okee:1220876098456256512> You have successfully logout from Last.fm"
-
-### Last FM Feature Disable!
-
 ### Spotify Connect command!
 ### Spotify Disconnect command!
 

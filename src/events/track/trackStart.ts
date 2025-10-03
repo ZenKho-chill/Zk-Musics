@@ -12,7 +12,6 @@ import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js"
 
 import Axios from "axios";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
-import { ScrobbleToLastFM } from "../../utilities/ScrobbleToLastFM.js";
 import { MilestoneTrack } from "../../utilities/MilestoneTrack.js";
 import { TopArtist } from "../../utilities/TopArtist.js";
 import { TopTrack } from "../../utilities/TopTrack.js";
@@ -25,18 +24,7 @@ import { ControlButtonEnum } from "../../database/schema/ControlButton.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import chalk from "chalk";
 import { cli } from "winston/lib/winston/config/index.js";
-export function scheduleScrobble(client: Manager, player: ZklinkPlayer) {
-  const lastfmConfig = client.config.features.WebServer.LAST_FM_SCROBBLED;
 
-  if (!lastfmConfig || !lastfmConfig.scheduleScrobble) {
-    logWarn("TrackStart", "Last.fm scrobble config không được cấu hình đúng cách");
-    return;
-  }
-
-  setTimeout(() => {
-    ScrobbleToLastFM(client, player);
-  }, lastfmConfig.scheduleScrobble);
-}
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, track: ZklinkTrack) {
     if (!client.isDatabaseConnected)
@@ -70,12 +58,6 @@ export default class {
     /////////// Cập nhật kênh trạng thái nhạc //////////
     await UpdateMusicStatusChannel(client, player);
     /////////// Cập nhật kênh trạng thái nhạc //////////
-
-    /////////// Cập nhật lịch scrobble //////////
-    if (client.config.features.WebServer.LAST_FM_SCROBBLED?.Enable) {
-      scheduleScrobble(client, player);
-    }
-    /////////// Cập nhật lịch scrobble //////////
 
     const channel = (await client.channels
       .fetch(player.textId)

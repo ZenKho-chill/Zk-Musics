@@ -18,7 +18,6 @@ import { CommandUserUsage } from "./schema/CommandUserUsage.js";
 import { PlayedSongUser } from "./schema/PlayedSongUser.js";
 import { PlayedSongGuild } from "./schema/PlayedSongGuild.js";
 import { PlayedSongGlobal } from "./schema/PlayedSongGlobal.js";
-import { LastFm } from "./schema/LastFm.js";
 import { SpotifyId } from "./schema/SpotifyId.js";
 import { VoteReminders } from "./schema/VoteReminders.js";
 import { TopTrack } from "./schema/TopTrack.js";
@@ -47,7 +46,6 @@ export interface DatabaseTable {
   PlayedSongUser: QuickDatabasePlus<PlayedSongUser>;
   PlayedSongGuild: QuickDatabasePlus<PlayedSongGuild>;
   PlayedSongGlobal: QuickDatabasePlus<PlayedSongGlobal>;
-  LastFm: QuickDatabasePlus<LastFm>;
   SpotifyId: QuickDatabasePlus<SpotifyId>;
   VoteReminders: QuickDatabasePlus<VoteReminders>;
   TopTrack: QuickDatabasePlus<TopTrack>;

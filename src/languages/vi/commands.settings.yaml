@@ -24,18 +24,6 @@ setup_deleted: "*`Đã xóa kênh thiết lập thành công!`*"
 error_themes: "<:wrong:1220876213896216686> Không hợp lệ... Vui lòng thử lại."
 succes_themes: "**Đã đổi chủ đề thành %{themes} thành công**"
 
-### Đăng nhập Last.fm!
-lastfm_login_footer: "Lưu ý: Liên kết này sẽ hết hạn sau %{expired}."
-lastfm_login_title: "Đăng nhập Last.fm"
-lastfm_login_desc: "Bạn có muốn cấp quyền cho tài khoản [Last.fm](https://www.last.fm/user/romanromannya) của bạn không?\nNếu có, bấm nút bên dưới để bắt đầu quá trình xác thực."
-lastfm_not_login_desc: "<:wrong:1220876213896216686> Bạn chưa đăng nhập Last.fm"
-
-### Đăng xuất Last.fm!
-lastfm_logout_title: "Đăng xuất Last.fm"
-lastfm_logout_desc: "<:okee:1220876098456256512> Bạn đã đăng xuất khỏi Last.fm thành công"
-
-### Tính năng Last.fm đang bị tắt!
-
 ### Kết nối Spotify!
 ### Ngắt kết nối Spotify!
 

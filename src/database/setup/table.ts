@@ -21,7 +21,6 @@ import { CommandUserUsage } from "../schema/CommandUserUsage.js";
 import { PlayedSongUser } from "../schema/PlayedSongUser.js";
 import { PlayedSongGuild } from "../schema/PlayedSongGuild.js";
 import { PlayedSongGlobal } from "../schema/PlayedSongGlobal.js";
-import { LastFm } from "../schema/LastFm.js";
 import { SpotifyId } from "../schema/SpotifyId.js";
 import { VoteReminders } from "../schema/VoteReminders.js";
 import { TopTrack } from "../schema/TopTrack.js";
@@ -75,7 +74,6 @@ export class TableSetup {
       PlayedSongUser: await baseDB.table<PlayedSongUser>("PlayedSongUser"),
       PlayedSongGuild: await baseDB.table<PlayedSongGuild>("PlayedSongGuild"),
       PlayedSongGlobal: await baseDB.table<PlayedSongGlobal>("PlayedSongGlobal"),
-      LastFm: await baseDB.table<LastFm>("LastFm"),
       SpotifyId: await baseDB.table<SpotifyId>("SpotifyId"),
       VoteReminders: await baseDB.table<VoteReminders>("VoteReminders"),
       TopTrack: await baseDB.table<TopTrack>("TopTrack"),

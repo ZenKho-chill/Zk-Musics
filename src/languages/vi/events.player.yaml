@@ -22,9 +22,6 @@ queue_end_desc: |
 leave_pause: "Vì mọi người rời hết nên mình tạm dừng phát :("
 leave_resume: "Có người quay lại nên mình đã tiếp tục phát nha."
 
-### Last FM Scrobble ###
-expired_login_session: "Này %{user}, phiên Last.fm của bạn đã hết hạn hoặc không hợp lệ.\nVui lòng xác thực lại để tiếp tục dùng tính năng scrobble."
-
 ### Milestone Track ###
 milestone_track_footer: "%{user} • Nơi những ai muốn hát luôn tìm thấy giai điệu ♪"
 milestone_track_desc: |

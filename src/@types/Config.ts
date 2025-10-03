@@ -314,7 +314,6 @@ export interface WebServer {
   enable: boolean;
   Port: number;
   TOPGG_VOTELOGS: TOPGG_VOTELOGS;
-  LAST_FM_SCROBBLED: LAST_FM_SCROBBLED;
 }
 
 export interface TOPGG_VOTELOGS {
@@ -322,17 +321,6 @@ export interface TOPGG_VOTELOGS {
   LogVoteChannelID: string;
   TopGgAuth: string;
   TopGgToken: string;
-}
-
-export interface LAST_FM_SCROBBLED {
-  Enable: boolean;
-  ApiKey: string;
-  Secret: string;
-  Callback: string;
-  scheduleScrobble: number;
-  ExpiredLink: number;
-  RedirectOnSuccess: string;
-  RedirectOnError: string;
 }
 
 export interface Lavalink {
@@ -450,8 +438,6 @@ export interface INFO {
 export interface MUSIC {
   AppleSource: string[];
   Autoplay: string[];
-  ClearQueue: string[];
-  Forward: string[];
   Loop: string[];
   Lyrics: string[];
   NowPlaying: string[];
@@ -464,9 +450,7 @@ export interface MUSIC {
   Remove: string[];
   Replay: string[];
   Resume: string[];
-  Rewind: string[];
   Search: string[];
-  Seek: string[];
   Shuffle: string[];
   Skip: string[];
   SkipTo: string[];
@@ -492,7 +476,6 @@ export interface PLAYLIST {
 
 export interface SETTINGS {
   Language: string[];
-  LastFm: string[];
   McSetup: string[];
   Prefix: string[];
   ResetData: string[];
@@ -504,7 +487,6 @@ export interface SETTINGS {
 
 export interface UTILS {
   Ban: string[];
-  Kick: string[];
   McStatus: string[];
   Profile: string[];
   MyStats: string[];
