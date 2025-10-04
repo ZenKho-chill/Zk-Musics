@@ -1,21 +1,8 @@
-﻿### Search command!
-search_desc: "### HEY! Found results for your request"
-search_end_desc2: "### OMG! %{user}, you didn't select a song in time\n**Give it another go!**"
-search_footer: "%{countSong} tracks found"
-search_end_desc1: "## [`%{title}`](%{url}) `%{author}` enjoy it ♥"
-search_placeholder: "Add to queue and play for you ♥"
-search_no_result: "No results found for your search :("
-search_active: "Oops! A search is active. Please wait 30s"
-play_search_track: "## [`%{title}`](%{url}) `%{author}` enjoy it ♥"
+﻿play_search_track: "## [`%{title}`](%{url}) `%{author}` enjoy it ♥"
 no_songs_playing: "<:wrong:1220876213896216686> No song is currently playing!"
 url_no_allowed: "<:wrong:1220876213896216686> Please use the song name/artist name (url no allowed)"
 
 ### Autoplay command!
-
-### PlayNext command!
-playnext_desc: "### %{name} Next To Play ♪"
-playnext_queue_empty: "<:wrong:1220876213896216686> The queue is empty. Please add some songs first"
-playnext_notfound: "<:wrong:1220876213896216686> Song not found!"
 
 # Execute when invalid
 no_node: "<:warnings:1220876158254710936> **No Lavalink server was found. Please try again after 5 Minutes**"
@@ -30,11 +17,6 @@ lyrics_error: "**Error: %{error}**"
 
 ### Nowplaying command!
 nowplaying_title: "Now playing..."
-
-### Pause command!
-pause_msg: |
-  <:pause:1220831927595175949> **The track %{title} is currently paused! 
-  <:blankers:1220848705289064669><:sparkle:1220846124961890304> It was paused by %{user}.**
 
 ### Play command!
 play_no_same_voice: "<:wrong:1220876213896216686> You are not in the same voice channel as me!"
@@ -57,37 +39,6 @@ play_playlist_max: |
   <:wrong:1220876213896216686> OMG!>,.,< The playlist is too long. Max %{limitqueue} songs.
   <:blankers:1220848705289064669><:pop:1220849334606626946> Upgrade to [**premium**](%{premium}) for unlimited playlist access!
 
-### Previous command!
-previous_notfound: |
-  <:warnings:1220876158254710936> **No Previous song found in the queue! 
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Why not /play more tracks and keep the music going?**
-previous_msg: |
-  <:replay:1220881274378653787>  **Back to the previous song! 
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Now playing %{title}**
-
-### Queue command!
-queue_number_invalid: "<:warnings:1220876158254710936> Please provide a valid number!"
-queue_title: "Queue playing..."
-queue_description: "**%{title}**\n\n**Rest of Queue %{rest}**"
-queue_footer: "Page • %{page}/%{pages} | Songs • %{queue_lang} | Total Duration • %{duration}"
-queue_notnumber: "<:warnings:1220876158254710936> Please provide a valid page number!"
-queue_page_notfound: "<:warnings:1220876158254710936> There are only **%{page} Pages**"
-
-### RemoveTrack command!
-removetrack_number_invalid: "<:warnings:1220876158254710936> Please provide a valid number!"
-removetrack_already: "<:wrong:1220876213896216686> **I cannot Remove a song that is already playing**"
-removetrack_notfound: "<:warnings:1220876158254710936> **Sorry %{user}, Song not found!**"
-removetrack_desc: "<:bin:1220831964890927235> **Removed %{title} from the Queue!**"
-
-### Replay command!
-replay_msg: "<:replay:1220881274378653787> **%{user} Hits Replay on %{title}**"
-replay_not_seekable: "<:warnings:1220876158254710936> The track **%{title}** cannot be replayed."
-
-### Resume command!
-resume_msg: |
-  <:play:1220839345938763978> **Playback Resumed %{title},
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Enjoy %{user}**
-
 ### Shuffle command!
 shuffle_title: "Shuffles the Queue"
 
@@ -100,11 +51,6 @@ skip_number_invalid: "<:warnings:1220876158254710936> Please provide a valid num
 
 ### Stop command!
 stop_msg: <:stop:1220831796430897272> **%{title} Has been stopped**
-
-### Volume command!
-volume_number_invalid: "<:warnings:1220876158254710936> Please provide a valid number!"
-volume_invalid: "<:warnings:1220876158254710936> Invalid Volume. Please use a number between **1** and **100**"
-volume_msg: "<:voldown:1220831827825135637> **Volume set to %{volume}%, Enjoy %{user}**"
 
 ### Spotify Playlist command!
 spotify_playlist_placeholder: "Add to queue and play for you ♥"

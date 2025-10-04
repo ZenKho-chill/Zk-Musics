@@ -9,6 +9,3 @@ mystats_error: "There was an error generating your statistics. Please try again 
 
 ### TopStats command ####
 topstats_error: "There was an error generating your statistics. Please try again later."
-
-### profile command ###
-user_arg_error: "<:m_wrong:1193112008124530738> Invalid argument. Please use %{text}"

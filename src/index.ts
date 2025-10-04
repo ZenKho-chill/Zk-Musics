@@ -14,6 +14,13 @@ process
   )
   .on("SIGINT", () => {
     logInfo("ClientManager", `Đang tắt Zk Music's...`);
+    // Dừng tất cả nowplaying tracking
+    try {
+      const { NowPlayingUpdateService } = require("./services/NowPlayingUpdateService.js");
+      NowPlayingUpdateService.getInstance().stopAllTracking();
+    } catch (error) {
+      // Ignore errors during shutdown
+    }
     process.exit(0);
   });
 zk.start();

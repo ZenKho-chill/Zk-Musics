@@ -1,21 +1,8 @@
-﻿### Lệnh Tìm kiếm!
-search_desc: "### HEY! Đã tìm thấy kết quả cho yêu cầu của bạn"
-search_end_desc2: "### Ôi! %{user}, bạn đã không chọn bài kịp\n**Thử lại nhé!**"
-search_footer: "%{countSong} bài được tìm thấy"
-search_end_desc1: "## [`%{title}`](%{url}) `%{author}` thưởng thức nhé ♥"
-search_placeholder: "Thêm vào hàng chờ và phát cho bạn ♥"
-search_no_result: "Không tìm thấy kết quả cho tìm kiếm của bạn :("
-search_active: "Ồ! Đang có tìm kiếm đang chạy. Vui lòng đợi 30s"
-play_search_track: "## [`%{title}`](%{url}) `%{author}` thưởng thức nhé ♥"
+﻿play_search_track: "## [`%{title}`](%{url}) `%{author}` thưởng thức nhé ♥"
 no_songs_playing: "<:wrong:1220876213896216686> Hiện không có bài nào đang phát!"
 url_no_allowed: "<:wrong:1220876213896216686> Vui lòng dùng tên bài/ca sĩ (không dùng URL)"
 
 ### Lệnh Tự phát (Autoplay)!
-
-### Lệnh Phát tiếp theo!
-playnext_desc: "### %{name} sẽ phát tiếp theo ♪"
-playnext_queue_empty: "<:wrong:1220876213896216686> Hàng chờ đang rỗng. Vui lòng thêm vài bài trước"
-playnext_notfound: "<:wrong:1220876213896216686> Không tìm thấy bài!"
 
 # Thực thi khi không hợp lệ
 no_node: "<:warnings:1220876158254710936> **Không tìm thấy server Lavalink. Vui lòng thử lại sau 5 phút**"
@@ -30,11 +17,6 @@ lyrics_error: "**Lỗi: %{error}**"
 
 ### Lệnh Đang phát (Nowplaying)!
 nowplaying_title: "Đang phát..."
-
-### Lệnh Tạm dừng (Pause)!
-pause_msg: |
-  <:pause:1220831927595175949> **Bài hát %{title} đã tạm dừng! 
-  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Đã bị %{user} tạm dừng.**
 
 ### Lệnh Phát (Play)!
 play_no_same_voice: "<:wrong:1220876213896216686> Bạn không ở cùng kênh thoại với mình!"
@@ -57,37 +39,6 @@ play_playlist_max: |
   <:wrong:1220876213896216686> Ôi không! Playlist quá dài. Tối đa %{limitqueue} bài.
   <:blankers:1220848705289064669><:pop:1220849334606626946> Nâng cấp lên [**premium**](%{premium}) để được playlist không giới hạn!
 
-### Lệnh Trước đó!
-previous_notfound: |
-  <:warnings:1220876158254710936> **Không tìm thấy bài trước trong hàng chờ! 
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Hãy /play thêm bài để tiếp tục không khí nhé!**
-previous_msg: |
-  <:replay:1220881274378653787>  **Quay lại bài trước! 
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Đang phát: %{title}**
-
-### Lệnh Hàng chờ (Queue)!
-queue_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
-queue_title: "Đang phát hàng chờ..."
-queue_description: "**%{title}**\n\n**Các bài còn lại trong hàng chờ %{rest}**"
-queue_footer: "Trang • %{page}/%{pages} | Bài • %{queue_lang} | Tổng thời lượng • %{duration}"
-queue_notnumber: "<:warnings:1220876158254710936> Vui lòng nhập số trang hợp lệ!"
-queue_page_notfound: "<:warnings:1220876158254710936> Chỉ có **%{page} trang**"
-
-### Lệnh Xóa bài!
-removetrack_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
-removetrack_already: "<:wrong:1220876213896216686> **Mình không thể xóa bài đang phát**"
-removetrack_notfound: "<:warnings:1220876158254710936> **Xin lỗi %{user}, không tìm thấy bài!**"
-removetrack_desc: "<:bin:1220831964890927235> **Đã xóa %{title} khỏi hàng chờ!**"
-
-### Lệnh Phát lại (Replay)!
-replay_msg: "<:replay:1220881274378653787> **%{user} đã phát lại %{title}**"
-replay_not_seekable: "<:warnings:1220876158254710936> Bài **%{title}** không thể phát lại."
-
-### Lệnh Tiếp tục (Resume)!
-resume_msg: |
-  <:play:1220839345938763978> **Đã tiếp tục phát %{title},
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Thưởng thức nào %{user}**
-
 ### Lệnh Xáo trộn!
 shuffle_title: "Xáo trộn hàng chờ"
 
@@ -100,11 +51,6 @@ skip_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một s�
 
 ### Lệnh Dừng!
 stop_msg: "<:stop:1220831796430897272> **%{title} đã bị dừng**"
-
-### Lệnh Âm lượng!
-volume_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
-volume_invalid: "<:warnings:1220876158254710936> Giá trị âm lượng không hợp lệ. Vui lòng dùng số từ **1** đến **100**"
-volume_msg: "<:voldown:1220831827825135637> **Đã đặt âm lượng %{volume}%, thưởng thức nào %{user}**"
 
 ### Lệnh Spotify Playlist!
 spotify_playlist_placeholder: "Thêm vào hàng chờ và phát cho bạn ♥"

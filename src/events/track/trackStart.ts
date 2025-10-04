@@ -9,6 +9,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
 
 import Axios from "axios";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
@@ -27,6 +28,8 @@ import { cli } from "winston/lib/winston/config/index.js";
 
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, track: ZklinkTrack) {
+    logDebug("TrackStart", `Event trackStart được trigger cho guild ${player.guildId}, track: ${track.title}`);
+    
     if (!client.isDatabaseConnected)
       return logWarn(
         "DatabaseService",
@@ -41,6 +44,10 @@ export default class {
         guild?.name
       )} / ${chalk.hex("#53ec53")(player.guildId)}`
     );
+
+    /////////// Clear nowplaying cache cho bài hát mới //////////
+    NowPlayingUpdateService.getInstance().clearCache(player.guildId);
+    /////////// Clear nowplaying cache cho bài hát mới //////////
 
     let ControlButton = await client.db.ControlButton.get(`${player.guildId}`);
     if (!ControlButton)

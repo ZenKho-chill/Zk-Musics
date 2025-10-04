@@ -4,6 +4,7 @@ import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel, ClearMusicStatusChannelWithDelay } from "../../utilities/UpdateStatusChannel.js";
+import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
 import chalk from "chalk";
 import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
@@ -25,6 +26,10 @@ export default class {
     /////////// Cập nhật thiết lập nhạc ///////////
     await client.UpdateMusic(player);
     /////////// Cập nhật thiết lập nhạc ///////////
+
+    /////////// Dừng tracking và xóa nowplaying message //////////
+    await NowPlayingUpdateService.getInstance().deleteNowPlaying(client, player.guildId);
+    /////////// Dừng tracking và xóa nowplaying message //////////
 
     /////////// Cập nhật kênh trạng thái nhạc //////////
     const isSudoDestroy = player.data.get("sudo-destroy");

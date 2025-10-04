@@ -362,22 +362,14 @@ COMMANDS_ACCESS:
     Autoplay: ["Member"]
     Lyrics: ["Member"]
     NowPlaying: ["Member"]
-    Pause: ["Member"]
     Play: ["Member"]
-    PlayNext: ["Member"]
-    Previous: ["Member"]
-    Queue: ["Member"]
     Radio: ["Member"]
-    Remove: ["Member"]
-    Replay: ["Member"]
-    Resume: ["Member"]
     Search: ["Member"]
     Shuffle: ["Member"]
     Skip: ["Member"]
     SkipTo: ["Member"]
     SpotifyPlaylist: ["Member"]
     Stop: ["Member"]
-    Volume: ["Member"]
 
   PLAYLIST:
     Add: ["Member"]
@@ -403,4 +395,3 @@ COMMANDS_ACCESS:
   UTILS:
     TopStats: ["Member"]
     MyStats: ["Member"]
-    Profile: ["Member"]

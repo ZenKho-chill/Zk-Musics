@@ -7,6 +7,7 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
 const data: Config = new ConfigData().data;
 // Mã chính
 export default class implements Command {
@@ -128,11 +129,23 @@ export default class implements Command {
       iconURL: requesterAvatarURL,
     });
 
-    await handler.editReply({
+    const reply = await handler.editReply({
       content: " ",
       embeds: [embeded],
       files: [],
     });
+
+    // Bắt đầu tracking cập nhật nowplaying
+    if (reply && reply.id && currentTrack.identifier) {
+      NowPlayingUpdateService.getInstance().startTracking(
+        client,
+        handler.guild!.id,
+        handler.channel!.id,
+        reply.id,
+        currentTrack.identifier,
+        handler.language
+      );
+    }
   }
 
   getTitle(client: Manager, tracks: ZklinkTrack): string {

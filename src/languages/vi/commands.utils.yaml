@@ -9,6 +9,3 @@ mystats_error: "Đã xảy ra lỗi khi tạo thống kê. Vui lòng thử lại
 
 ### Lệnh TopStats ####
 topstats_error: "Đã xảy ra lỗi khi tạo thống kê. Vui lòng thử lại sau."
-
-### Lệnh hồ sơ (profile) ###
-user_arg_error: "<:m_wrong:1193112008124530738> Tham số không hợp lệ. Vui lòng dùng %{text}"

@@ -3,11 +3,14 @@ import { Manager } from "../../manager.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
 import chalk from "chalk";
 import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
+    logDebug("QueueEmpty", `Event queueEmpty được trigger cho guild ${player.guildId}`);
+    
     if (!client.isDatabaseConnected)
       return logWarn(
         "DatabaseService",
@@ -21,6 +24,10 @@ export default class {
     /////////// Cập nhật kênh trạng thái nhạc //////////
     await UpdateMusicStatusChannel(client, player);
     /////////// Cập nhật kênh trạng thái nhạc //////////
+
+    /////////// Xóa nowplaying message nếu có //////////
+    await NowPlayingUpdateService.getInstance().deleteNowPlaying(client, player.guildId);
+    /////////// Xóa nowplaying message nếu có //////////
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
@@ -83,6 +90,15 @@ export default class {
         guild?.name
       )} / ${chalk.hex("#00ffff")(player.guildId)}`
     );
+
+    /////////// Xóa current track khỏi database khi queue rỗng //////////
+    if (client.config.features.AUTO_RESUME) {
+      logDebug("QueueEmpty", `Guild ${player.guildId} - Queue rỗng, đang xóa current track...`);
+      await client.db.autoreconnect.set(`${player.guildId}.current`, "");
+      logInfo("QueueEmpty", `Đã xóa current track khỏi database cho guild ${player.guildId} - queue rỗng`);
+    }
+    /////////// Xóa current track khỏi database khi queue rỗng //////////
+
     const channel = (await client.channels
       .fetch(player.textId)
       .catch(() => undefined)) as TextChannel;

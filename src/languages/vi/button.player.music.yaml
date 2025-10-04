@@ -12,7 +12,15 @@ loop_all: "<:loop:1220832757496811570> **%{user} đã bật chế độ lặp to
 unloop_all: "<:wrong:1220876213896216686> **Chế độ lặp đã bị %{user} TẮT**"
 
 ### Lệnh Tạm dừng (Pause)!
+pause_msg: |
+  <:pause:1220831927595175949> **Bài hát %{title} đã tạm dừng! 
+  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Đã bị %{user} tạm dừng.**
+
 ### Lệnh Tiếp tục (Resume)!
+resume_msg: |
+  <:resume:1220831948973764648> **Bài hát %{title} tiếp tục! 
+  <:blankers:1220848705289064669><:sparkle:1220846124961890304> Đã được %{user} tiếp tục.**
+
 previous_notfound: |
   <:warnings:1220876158254710936> **Không tìm thấy bài trước trong hàng chờ!
   <:blankers:1220848705289064669><:pop:1220849334606626946> Hãy dùng /play để thêm bài và giữ không khí sôi động nhé!**
