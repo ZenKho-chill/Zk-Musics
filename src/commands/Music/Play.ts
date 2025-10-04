@@ -149,6 +149,9 @@ export default class implements Command {
     }
 
     player.textId = handler.channel!.id;
+    
+    // Clear radio mode khi phát nhạc thường
+    player.data.delete("radio_mode");
 
     const engines = client.config.features.PLAY_COMMAND_ENGINE;
     const randomEngine = engines[Math.floor(Math.random() * engines.length)];

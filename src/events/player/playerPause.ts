@@ -2,6 +2,8 @@ import {
   playerRowOneEdited,
   playerRowTwo,
   filterSelect,
+  radioRowOneEdited,
+  radioRowTwo,
 } from "../../utilities/PlayerControlButton.js";
 import { Manager } from "../../manager.js";
 import { TextChannel } from "discord.js";
@@ -13,12 +15,17 @@ export default class {
 
     const nowPlaying = client.nplayingMsg.get(`${player.guildId}`);
     if (nowPlaying) {
+      // Chọn button layout dựa trên radio mode
+      const isRadioMode = player.data.get("radio_mode") === true;
+      const rowOneEdited = isRadioMode ? radioRowOneEdited(client) : playerRowOneEdited(client);
+      const rowTwo = isRadioMode ? radioRowTwo(client) : playerRowTwo(client);
+      
       nowPlaying.msg
         .edit({
           components: [
-            ...((client.config.features.FilterMenu ?? false) ? [filterSelect(client)] : []),
-            playerRowOneEdited(client),
-            playerRowTwo(client),
+            ...(((client.config.features.FilterMenu ?? false) && !isRadioMode) ? [filterSelect(client)] : []),
+            rowOneEdited,
+            rowTwo,
           ],
         })
         .catch(() => null);

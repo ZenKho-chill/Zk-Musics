@@ -15,7 +15,11 @@ export default class {
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
-    logWarn("TrackResolveError", message);
+    // Log chi tiết hơn cho debugging
+    const isRadioMode = player.data.get("radio_mode");
+    const trackInfo = track ? `Track: ${track.title} (${track.uri})` : "Track: unknown";
+    
+    logWarn("TrackResolveError", `${message || "Lỗi không xác định"} | ${trackInfo} | Radio Mode: ${isRadioMode}`);
 
     /////////// Cập nhật thiết lập nhạc //////////
     await client.UpdateMusic(player);
@@ -36,9 +40,18 @@ export default class {
 
     const language = guildModel;
 
+    // Tạo message khác nhau cho radio vs nhạc bình thường
+    let embedDescription: string;
+
+    if (isRadioMode) {
+      embedDescription = `❌ **Không thể phát đài radio**\n\nĐài radio hiện tại không khả dụng. Vui lòng thử đài khác bằng lệnh \`/radio\`.`;
+    } else {
+      embedDescription = `${client.i18n.get(language, "events.player", "player_track_error")}`;
+    }
+
     const embed = new EmbedBuilder()
-      .setColor(client.color_main)
-      .setDescription(`${client.i18n.get(language, "events.player", "player_track_error")}`);
+      .setColor(isRadioMode ? "#ff6b6b" : client.color_main)
+      .setDescription(embedDescription);
 
     if (channel) {
       const setup = await client.db.setup.get(player.guildId);

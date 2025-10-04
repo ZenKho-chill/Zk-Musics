@@ -24,6 +24,8 @@ lavalink:
         - dependency: net.esmbot:lava-xm-plugin:0.2.5
           repository: https://repo.projectlounge.pw/maven/releases
           snapshot: false
+        - dependency: com.github.ZenKho-chill:zk.icy.stream.lavalink:v1.0.9
+          repository: https://jitpack.io
     pluginsDir: ./plugins
     server:
         bufferDurationMs: 400
@@ -58,8 +60,8 @@ lavalink:
         trackStuckThresholdMs: 10000
         useSeekGhosting: true
         youtubeConfig:
-            email:
-            password:
+            email: petitsorbetbot@gmail.com
+            password: dX*%2!C7tWHUj%
         youtubePlaylistLoadLimit: 6
         youtubeSearchEnabled: true
 logging:
@@ -68,6 +70,7 @@ logging:
     level:
         lavalink: INFO
         root: INFO
+        com.zenkho.icy: TRACE
     logback:
         rollingpolicy:
             max-file-size: 1GB
@@ -84,6 +87,14 @@ metrics:
         enabled: false
         endpoint: /metrics
 plugins:
+    icy:
+        autoReconnect: true
+        enableMetadata: true
+        connectionTimeout: 10000
+        readTimeout: 30000
+        maxRetries: 3
+        retryDelay: 2000
+        followRedirects: true
     dunctebot:
         sources:
             clypit: true
@@ -100,10 +111,10 @@ plugins:
         applemusic:
             albumLoadLimit: 6
             countryCode: US
-            mediaAPIToken:
+            mediaAPIToken: eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IldlYlBsYXlLaWQifQ.eyJpc3MiOiJBTVBXZWJQbGF5IiwiaWF0IjoxNzQxMTQxNzIzLCJleHAiOjE3NDgzOTkzMjMsInJvb3RfaHR0cHNfb3JpZ2luIjpbImFwcGxlLmNvbSJdfQ.XT0lXVrn9piwZqDhN9mb5z0bT7Bj1IGsGhbkA_UCqH6EBCJfhOTvYfheTAM3-EBqEIDo7xaPce_ZytzEOT4DyA
             playlistLoadLimit: 6
         deezer:
-            arl:
+            arl: 2a54fa175023d763fbc0439b242fe05ce972ca9bff44a8e6aff633fe15dcf789c13ac5b960b2e684a7e89a91074aeccf0e3ace765ee964237da3390eba4cad4f18df38c0602bba12ac8c05ab142a55e9cc21a5cc153f580d697a505bad5613a9
             formats:
                 - FLAC
                 - MP3_320
@@ -141,8 +152,8 @@ plugins:
             youtube: true
         spotify:
             albumLoadLimit: 6
-            clientId:
-            clientSecret:
+            clientId: d4c8c0fb4792413594e8ba463eedfc52
+            clientSecret: d29fa7d2ea234f858aabf68af3803b85
             countryCode: US
             localFiles: false
             playlistLoadLimit: 6
@@ -175,11 +186,11 @@ plugins:
         enabled: true
         oauth:
             enabled: true
-            refreshToken:
+            refreshToken: 1//04_onXJojd-hRCgYIARAAGAQSNwF-L9Irjg5Hb1NK6TGj58ZBSldIobgzd6aGaG1Trq2wsU2Ze5SMv4D7DqDlkKet99XKyRR7zFs
             skipInitialization: true
         pot:
-            token:
-            visitorData:
+            token: MngIt-aAnc1pIAiLkoAA6fbtcz9JwjBgnA0UqkPbiJI8sg8l34z_V4ndFkSogvvwBdP-jqONyoCX3cHFEZwVlHoE1ZGNuv9LvJLqaBEp5uP5qAI_tw9-gI60GrI1dVW95249cFkCLx8eAmsj3KBSpJZU5ZF3acrHc2U=
+            visitorData: Cgt4V0NlNFgxLXMyMCjgsLS6BjIKCgJJRBIEGgAgWg%3D%3D
 sentry:
     dsn: ""
     environment: ""

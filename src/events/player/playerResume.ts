@@ -1,4 +1,10 @@
-import { playerRowOne, playerRowTwo, filterSelect } from "../../utilities/PlayerControlButton.js";
+import { 
+  playerRowOne, 
+  playerRowTwo, 
+  filterSelect, 
+  radioRowOne, 
+  radioRowTwo 
+} from "../../utilities/PlayerControlButton.js";
 import { Manager } from "../../manager.js";
 import { TextChannel } from "discord.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
@@ -9,12 +15,17 @@ export default class {
 
     const nowPlaying = client.nplayingMsg.get(`${player.guildId}`);
     if (nowPlaying) {
+      // Chọn button layout dựa trên radio mode
+      const isRadioMode = player.data.get("radio_mode") === true;
+      const rowOne = isRadioMode ? radioRowOne(client) : playerRowOne(client);
+      const rowTwo = isRadioMode ? radioRowTwo(client) : playerRowTwo(client);
+      
       nowPlaying.msg
         .edit({
           components: [
-            ...((client.config.features.FilterMenu ?? false) ? [filterSelect(client)] : []),
-            playerRowOne(client),
-            playerRowTwo(client),
+            ...(((client.config.features.FilterMenu ?? false) && !isRadioMode) ? [filterSelect(client)] : []),
+            rowOne,
+            rowTwo,
           ],
         })
         .catch(() => null);

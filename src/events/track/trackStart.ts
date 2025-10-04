@@ -19,7 +19,13 @@ import { TopTrack } from "../../utilities/TopTrack.js";
 import { TrackTitle } from "../../utilities/TrackTitle.js";
 import { zkcard } from "zkcard";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
-import { filterSelect, playerRowOne, playerRowTwo } from "../../utilities/PlayerControlButton.js";
+import { 
+  filterSelect, 
+  playerRowOne, 
+  playerRowTwo, 
+  radioRowOne, 
+  radioRowTwo 
+} from "../../utilities/PlayerControlButton.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ControlButtonEnum } from "../../database/schema/ControlButton.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
@@ -261,14 +267,19 @@ export default class {
       .fetch(player.textId)
       .catch(() => undefined)) as TextChannel;
 
+    // Chọn button layout dựa trên radio mode
+    const isRadioMode = player.data.get("radio_mode") === true;
+    const rowOne = isRadioMode ? radioRowOne(client) : playerRowOne(client);
+    const rowTwo = isRadioMode ? radioRowTwo(client) : playerRowTwo(client);
+    
     const nplaying = playing_channel
       ? await playing_channel.send({
           flags: MessageFlags.SuppressNotifications,
           embeds: [embedToSend],
           components: [
-            ...((client.config.features.FilterMenu ?? false) ? [filterSelect(client)] : []),
-            playerRowOne(client),
-            playerRowTwo(client),
+            ...(((client.config.features.FilterMenu ?? false) && !isRadioMode) ? [filterSelect(client)] : []),
+            rowOne,
+            rowTwo,
           ],
           files: client.config.features.MusicCard.Enable === true ? [attachment] : [],
         })

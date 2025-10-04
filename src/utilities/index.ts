@@ -7,6 +7,9 @@ export { Logger, LoggerOptions, logger, logInfo, logDebug, logWarn, logError, lo
 // Re-export LogManager cho compatibility
 export { LogManager } from "../services/LogManager.js";
 
+// Export LavalinkHeaderHelper cho tự động hóa User-Id
+export { LavalinkHeaderHelper } from "./LavalinkHeaderHelper.js";
+
 // Convenience function để tạo logger với source cố định
 export function createSourceLogger(source: string) {
   return {
@@ -18,4 +21,4 @@ export function createSourceLogger(source: string) {
   };
 }
 
-// Import utilities
+// Import utilities

@@ -1,9 +1,10 @@
-import { ApplicationCommandOptionType, MessageFlags } from "discord.js";
+import { ApplicationCommandOptionType, MessageFlags, AutocompleteInteraction } from "discord.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { getAvailableThemes } from "zkcard";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -21,74 +22,47 @@ export default class implements Command {
   public options = [
     {
       name: "themes",
-      description: "Các theme khả dụng: Classic, Dynamic và nhiều hơn...",
+      description: "Chọn theme cho thẻ nhạc từ danh sách có sẵn",
       required: true,
       type: ApplicationCommandOptionType.String,
-      choices: [
-        {
-          name: "Mặc định",
-          value: data.features.MusicCard.Themes,
-        },
-        {
-          name: "Cổ điển",
-          value: "themes8",
-        },
-        {
-          name: "Động",
-          value: "themes11",
-        },
-        {
-          name: "Kobo Kanaeru",
-          value: "kobokanaeru",
-        },
-        {
-          name: "Vestia Zeta",
-          value: "vestiazeta",
-        },
-        {
-          name: "Yui",
-          value: "yui",
-        },
-        {
-          name: "Miko Radio",
-          value: "miko",
-        },
-        {
-          name: "Dark Silent",
-          value: "themes19",
-        },
-        {
-          name: "Dark Sky",
-          value: "themes10",
-        },
-        {
-          name: "Hồng",
-          value: "themes17",
-        },
-        {
-          name: "Nhịp xanh",
-          value: "themes16",
-        },
-        {
-          name: "Dễ thương",
-          value: "cute",
-        },
-      ],
+      autocomplete: true,
     },
   ];
 
+
+
+  public async autocomplete(client: Manager, interaction: AutocompleteInteraction) {
+    const focusedValue = interaction.options.getFocused().toLowerCase();
+    const availableThemes = getAvailableThemes();
+    
+    // Tạo danh sách choices từ available themes - sử dụng trực tiếp tên theme
+    const choices = availableThemes
+      .filter(theme => theme.toLowerCase().includes(focusedValue))
+      .map(theme => ({
+        name: theme,
+        value: theme
+      }))
+      .slice(0, 25); // Discord giới hạn 25 choices
+
+    await interaction.respond(choices);
+  }
+  
   public async execute(client: Manager, handler: CommandHandler) {
     if (!handler.interaction) return;
     let name = handler.args[0];
-    const ChoicesName = this.options[0].choices.find((choice) => choice.value === name);
-
-    if (!ChoicesName) {
+    
+    // Kiểm tra theme có hợp lệ không
+    const availableThemes = getAvailableThemes();
+    if (!availableThemes.includes(name)) {
       await handler.interaction.reply({
         content: `${client.i18n.get(handler.language, "commands.settings", "error_themes")}`,
         flags: MessageFlags.Ephemeral,
       });
       return;
     }
+
+    // Sử dụng trực tiếp tên theme từ package
+    const themeName = name;
 
     const new_data = {
       userId: handler.user!.id,
@@ -99,7 +73,7 @@ export default class implements Command {
     await client.db.Themes.set(`${handler.user!.id}`, new_data);
     await handler.interaction.reply({
       content: `${client.i18n.get(handler.language, "commands.settings", "succes_themes", {
-        themes: ChoicesName.name,
+        themes: themeName,
       })}`,
       flags: MessageFlags.Ephemeral,
     });

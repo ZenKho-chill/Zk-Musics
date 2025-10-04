@@ -2,7 +2,8 @@ import { Manager } from "../manager.js";
 import { Headers, LavalinkDataType } from "../@types/Lavalink.js";
 import { GetLavalinkServer } from "./GetLavalinkServer.js";
 import { ZklinkWebsocket } from "../Zklink/main.js";
-import { logInfo } from "../utilities/Logger.js";
+import { logInfo, logDebug } from "../utilities/Logger.js";
+import { LavalinkHeaderHelper } from "../utilities/LavalinkHeaderHelper.js";
 
 export class CheckLavalinkServer {
   client: Manager;
@@ -25,13 +26,16 @@ export class CheckLavalinkServer {
     if (this.client.lavalinkList.length !== 0) this.client.lavalinkList.length = 0;
 
     lavalink_data.forEach((config) => {
-      let headers = {
-        "Client-Name": "zkmusics/1.0.0 (https://github.com/ZenKho-chill/Zk-Musics)",
-        "User-Agent": "zkmusic/1.0.0 (https://github.com/ZenKho-chill/Zk-Musics)",
-        Authorization: config.pass,
-        "User-Id": "1370307244444487680",
-        "Resume-Key": "zkmusic@1.0.0(https://github.com/ZenKho-chill/Zk-Musics)",
-      };
+      // Sử dụng LavalinkHeaderHelper để tự động tạo headers với User-Id
+      const { headers, debug } = LavalinkHeaderHelper.createHeadersWithDebug(config.pass);
+      
+      // Log thông tin debug về nguồn User-Id
+      if (isLogEnable) {
+        logDebug(
+          "CheckLavalinkServer",
+          `Tự động lấy User-Id: ${debug.userId} (nguồn: ${debug.source}, ready: ${debug.isReady})`
+        );
+      }
 
       const url = `ws://${config.host}:${config.port}/v4/websocket`;
 

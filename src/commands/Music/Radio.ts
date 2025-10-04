@@ -1,17 +1,14 @@
 import {
-  ActionRowBuilder,
   ApplicationCommandOptionType,
-  ComponentType,
   EmbedBuilder,
-  StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
-  MessageFlags,
+  AutocompleteInteraction,
 } from "discord.js";
 import { Manager } from "../../manager.js";
 import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
-import { RadioStationNewInterface, RadioStationArray } from "../../utilities/RadioStations.js";
+import { RadioStationArray } from "../../utilities/RadioStations.js";
 import { ConvertTime } from "../../utilities/ConvertTime.js";
+import { ZklinkLoopMode } from "../../Zklink/Interface/Constants.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 const data: Config = new ConfigData().data;
@@ -31,26 +28,55 @@ export default class implements Command {
   public permissions = [];
   public options = [
     {
-      name: "number",
-      description: "Số của radio để chọn đài phát",
-      type: ApplicationCommandOptionType.Number,
+      name: "station",
+      description: "Chọn đài radio từ danh sách có sẵn",
+      type: ApplicationCommandOptionType.String,
       required: false,
+      autocomplete: true,
     },
   ];
 
+  public async autocomplete(client: Manager, interaction: AutocompleteInteraction) {
+    const focusedValue = interaction.options.getFocused().toLowerCase();
+    const radioArrayList = RadioStationArray();
+    
+    // Tạo choices với format "category | name"
+    const choices = radioArrayList
+      .map(radio => ({
+        name: `${radio.category} | ${radio.name}`,
+        value: `${radio.category}|${radio.name}`
+      }))
+      .filter(choice => 
+        choice.name.toLowerCase().includes(focusedValue)
+      )
+      .slice(0, 25); // Discord giới hạn 25 choices
+
+    await interaction.respond(choices);
+  }
+
   public async execute(client: Manager, handler: CommandHandler) {
     let player = client.Zklink.players.get(handler.guild!.id);
-    const radioList = RadioStationNewInterface();
     const radioArrayList = RadioStationArray();
-    const radioListKeys = Object.keys(radioList);
 
     await handler.deferReply();
 
-    const getNum = handler.args[0] ? Number(handler.args[0]) : undefined;
-    if (!getNum) return this.sendHelp(client, handler, radioList, radioListKeys);
+    const stationArg = handler.args[0];
+    if (!stationArg) return this.sendHelp(client, handler);
 
-    const radioData = radioArrayList[getNum - 1];
-    if (!radioData) return this.sendHelp(client, handler, radioList, radioListKeys);
+    // Tìm radio station theo format "category|name"
+    let radioData;
+    if (stationArg.includes("|")) {
+      const [category, name] = stationArg.split("|");
+      radioData = radioArrayList.find(r => r.category === category && r.name === name);
+    } else {
+      // Fallback: tìm theo số cũ nếu user nhập số
+      const getNum = Number(stationArg);
+      if (getNum && getNum > 0) {
+        radioData = radioArrayList[getNum - 1];
+      }
+    }
+    
+    if (!radioData) return this.sendHelp(client, handler);
 
     const { channel } = handler.member!.voice;
     if (!channel)
@@ -81,6 +107,7 @@ export default class implements Command {
 
     player.textId = handler.channel!.id;
 
+    // Thử tìm kiếm với URL radio
     const result = await player.search(radioData.link, {
       requester: handler.user,
     });
@@ -97,15 +124,39 @@ export default class implements Command {
             .setColor(client.color_main),
         ],
       });
-    if (result.type === "PLAYLIST") for (let track of result.tracks) player.queue.add(track);
-    else if (player.playing && result.type === "SEARCH") player.queue.add(result.tracks[0]);
-    else if (player.playing && result.type !== "SEARCH")
-      for (let track of result.tracks) player.queue.add(track);
-    else player.queue.add(result.tracks[0]);
+    // Logic đặc biệt cho radio: luôn thay thế thay vì add vào queue
+    if (player.playing) {
+      // Nếu đang phát, clear queue và set track mới làm current
+      player.queue.clear();
+      player.queue.add(result.tracks[0]);
+      player.skip(); // Skip bài hiện tại để chuyển sang đài mới
+    } else {
+      // Nếu không phát, add bình thường
+      if (result.type === "PLAYLIST") {
+        for (let track of result.tracks) player.queue.add(track);
+      } else {
+        player.queue.add(result.tracks[0]);
+      }
+      player.play();
+    }
+
+    // Tắt các tính năng không phù hợp với radio stream
+    player.data.set("autoplay", false);  // Tắt autoplay
+    player.setLoop(ZklinkLoopMode.NONE);  // Tắt loop
+    player.data.set("radio_mode", true);  // Đánh dấu đang ở radio mode
+    // Note: Shuffle không cần tắt vì radio chỉ có 1 track
+    
+    // Clear queue để chỉ có radio stream, nhưng không xóa track hiện tại
+    setTimeout(() => {
+      // Chỉ clear queue nếu có nhiều hơn 1 track
+      if (player.queue.length > 1) {
+        const currentTrack = player.queue.current;
+        player.queue.clear();
+        // Track hiện tại sẽ tự động tiếp tục phát
+      }
+    }, 100);
 
     if (handler.message) await handler.message.delete().catch(() => null);
-
-    if (!player.playing) player.play();
     const embed = new EmbedBuilder().setColor(client.color_main).setDescription(
       `${client.i18n.get(handler.language, "commands.radio", "radio_play_track", {
         title: radioData.name || handler.guild!.name,
@@ -120,108 +171,41 @@ export default class implements Command {
     handler.editReply({ content: " ", embeds: [embed] });
   }
 
-  protected async sendHelp(
-    client: Manager,
-    handler: CommandHandler,
-    radioList: Record<string, { no: number; name: string; link: string }[]>,
-    radioListKeys: string[]
-  ) {
-    const pages: EmbedBuilder[] = [];
-    for (let i = 0; i < radioListKeys.length; i++) {
-      const radioListKey = radioListKeys[i];
-      const stringArray = radioList[radioListKey];
-      const converted = this.stringConverter(stringArray);
-
-      const embed = new EmbedBuilder()
-        .setAuthor({
-          name: `Các đài phát từ ${radioListKey}`,
-          iconURL: handler.user?.displayAvatarURL(),
-        })
-        .setColor(client.color_main)
-        .addFields(converted);
-
-      pages.push(embed);
-    }
-
-    const providerSelector = (disable: boolean) =>
-      new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
-        new StringSelectMenuBuilder()
-          .setCustomId("provider")
-          .setPlaceholder(client.i18n.get(handler.language, "commands.radio", "radio_placeholder"))
-          .addOptions(this.getOptionBuilder(radioListKeys))
-          .setDisabled(disable)
-      );
-
-    const msg = await handler.editReply({
-      embeds: [pages[0]],
-      components: [providerSelector(false)],
+  protected async sendHelp(client: Manager, handler: CommandHandler) {
+    const radioArrayList = RadioStationArray();
+    
+    // Nhóm theo category
+    const categories = {};
+    radioArrayList.forEach(radio => {
+      if (!categories[radio.category]) {
+        categories[radio.category] = [];
+      }
+      categories[radio.category].push(radio);
     });
 
-    if (!msg) return;
+    const embed = new EmbedBuilder()
+      .setAuthor({
+        name: "Danh sách đài radio",
+        iconURL: handler.user?.displayAvatarURL(),
+      })
+      .setColor(client.color_main)
+      .setDescription("Sử dụng autocomplete để tìm và chọn đài radio bạn muốn nghe!");
 
-    const collector = msg.createMessageComponentCollector({
-      componentType: ComponentType.StringSelect,
-      time: 60000,
-    });
-
-    collector.on("collect", async (message): Promise<void> => {
-      const providerId = Number(message.values[0]);
-      const providerName = radioListKeys[providerId];
-      const getEmbed = pages[providerId];
-      await msg.edit({ embeds: [getEmbed] });
-
-      const msgReply = await message
-        .reply({
-          content: `${client.i18n.get(
-            handler.language,
-            "commands.radio",
-            "content_switched_radio",
-            {
-              providerRadio: providerName,
-            }
-          )}`,
-          embeds: [],
-          flags: MessageFlags.Ephemeral,
-        })
-        .catch(() => {});
-      if (msgReply)
-        setTimeout(
-          () => msgReply.delete().catch(() => {}),
-          client.config.features.DELETE_MSG_TIMEOUT
-        );
-    });
-
-    collector.on("end", async () => {
-      // @ts-ignore
-      collector.removeAllListeners();
-      await msg.edit({
-        components: [providerSelector(true)],
+    // Thêm fields cho mỗi category
+    Object.keys(categories).forEach(category => {
+      const stations = categories[category];
+      const stationList = stations.map(s => `• ${s.name}`).join('\n');
+      embed.addFields({
+        name: `📻 ${category}`,
+        value: stationList,
+        inline: true
       });
     });
+
+    await handler.editReply({ embeds: [embed] });
   }
 
-  protected getOptionBuilder(radioListKeys: string[]) {
-    const data: Config = new ConfigData().data;
-    const result: StringSelectMenuOptionBuilder[] = [];
-    for (let i = 0; i < radioListKeys.length; i++) {
-      const key = radioListKeys[i];
-      result.push(new StringSelectMenuOptionBuilder().setLabel(key).setValue(String(i)));
-    }
-    return result;
-  }
 
-  protected stringConverter(array: { no: number; name: string; link: string }[]) {
-    const radioStrings: { name: string; value: string; inline: boolean }[] = [];
-    for (let i = 0; i < array.length; i++) {
-      const radio = array[i];
-      radioStrings.push({
-        name: `\`${String(radio.no)}.\` ${radio.name}`,
-        value: " ",
-        inline: true,
-      });
-    }
-    return radioStrings;
-  }
 
   checkSameVoice(client: Manager, handler: CommandHandler, language: string) {
     if (handler.member!.voice.channel !== handler.guild!.members.me!.voice.channel) {

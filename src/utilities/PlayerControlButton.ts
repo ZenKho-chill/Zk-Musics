@@ -258,4 +258,64 @@ const filterSelect = (client: Manager) =>
       )
   );
 
-export { playerRowOne, playerRowOneEdited, playerRowTwo, filterSelect };
+// Radio-specific button layouts (chỉ các nút cần thiết cho radio)
+const radioRowOne = (client: Manager) =>
+  new ActionRowBuilder<ButtonBuilder>().addComponents([
+    createButton(
+      client,
+      "replay", 
+      client.config.emojis.PLAYER.PREVIOUS,
+      "Trước",
+      ButtonStyle.Secondary
+    ),
+    createButton(
+      client,
+      "pause",
+      client.config.emojis.PLAYER.PAUSE,
+      "Tạm dừng", 
+      ButtonStyle.Secondary
+    ),
+    createButton(client, "skip", client.config.emojis.PLAYER.SKIP, "Bỏ qua", ButtonStyle.Secondary),
+  ]);
+
+const radioRowOneEdited = (client: Manager) =>
+  new ActionRowBuilder<ButtonBuilder>().addComponents([
+    createButton(
+      client,
+      "replay",
+      client.config.emojis.PLAYER.PREVIOUS,
+      "Trước",
+      ButtonStyle.Secondary
+    ),
+    createButton(client, "pause", client.config.emojis.PLAYER.PLAY, "Phát", ButtonStyle.Secondary),
+    createButton(client, "skip", client.config.emojis.PLAYER.SKIP, "Bỏ qua", ButtonStyle.Secondary),
+  ]);
+
+const radioRowTwo = (client: Manager) =>
+  new ActionRowBuilder<ButtonBuilder>().addComponents([
+    createButton(
+      client,
+      "voldown",
+      client.config.emojis.PLAYER.VOLDOWN,
+      "Giảm âm",
+      ButtonStyle.Secondary
+    ),
+    createButton(client, "stop", client.config.emojis.PLAYER.STOP, "Dừng", ButtonStyle.Secondary),
+    createButton(
+      client,
+      "volup",
+      client.config.emojis.PLAYER.VOLUP,
+      "Tăng âm",
+      ButtonStyle.Secondary
+    ),
+  ]);
+
+export { 
+  playerRowOne, 
+  playerRowOneEdited, 
+  playerRowTwo, 
+  filterSelect,
+  radioRowOne,
+  radioRowOneEdited, 
+  radioRowTwo 
+};

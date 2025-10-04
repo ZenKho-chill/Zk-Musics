@@ -33,6 +33,7 @@ import { ZklinkPlayer } from "./Zklink/Player/ZklinkPlayer.js";
 import { TopggService } from "./services/TopggService.js";
 import FilterMenuService from "./services/FilterMenu.js";
 import MysqlBackupService from "./services/MysqlBackup.js";
+import { LavalinkHeaderService } from "./services/LavalinkHeaderService.js";
 import { Localization } from "./structures/Localization.js";
 import { ClusterManager } from "./shard/ClusterManager.js";
 import cluster, { Cluster } from "node:cluster";
@@ -201,6 +202,10 @@ export class Manager extends Client {
 
     // Khởi tạo Zklink
     this.Zklink = new ZklinkInit(this).init;
+
+    // Khởi tạo LavalinkHeaderService để tự động hóa User-Id
+    const headerService = LavalinkHeaderService.getInstance();
+    headerService.initialize(this);
 
     // Khởi tạo trình quản lý voice tạm thời
     const tempVoiceService = new TempVoiceService();
