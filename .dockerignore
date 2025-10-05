@@ -4,6 +4,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+docs
+.github
+lavalink
+init
+config.example.yml
+.vscode
+
 # Build outputs
 dist
 build

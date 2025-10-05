@@ -5,8 +5,8 @@ import { join, dirname } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { KeyCheckerEnum } from "../../@types/KeyChecker.js";
 import { Command } from "../../structures/Command.js";
+import { log } from "../../utilities/LoggerHelper.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-// Log đã bị xóa
 
 export class CommandLoader {
   client: Manager;
@@ -25,13 +25,32 @@ export class CommandLoader {
 
     if (this.client.commands.size) {
       const commandColl = this.client.commands;
-      const array1 = commandColl.filter((command) => command.name.length === 1).size;
-      const array2 = commandColl.filter((command) => command.name.length === 2).size;
-      const array3 = commandColl.filter((command) => command.name.length === 3).size;
+      const totalCommands = this.client.commands.size;
+      
+      // Thống kê interaction commands
       const haveInteraction = commandColl.filter((command) => command.usingInteraction).size;
-      // Log đã bị xóa - kết quả tải lệnh
+      const noInteraction = totalCommands - haveInteraction;
+      
+      // Thống kê theo category
+      const categories = new Map<string, number>();
+      commandColl.forEach((command) => {
+        const category = command.category || "Unknown";
+        categories.set(category, (categories.get(category) || 0) + 1);
+      });
+      
+      const categoryStats = Array.from(categories.entries())
+        .map(([cat, count]) => `${cat}: ${count}`)
+        .join(" | ");
+      
+      log.completed(
+        "lệnh", 
+        totalCommands,
+        `Tổng số: ${totalCommands} | Slash: ${haveInteraction} | Prefix: ${noInteraction}`
+      );
+      
+      log.info("Phân loại commands", categoryStats);
     } else {
-      // Log đã bị xóa - không có lệnh
+      log.warn("Không tìm thấy lệnh nào", "Command collection is empty");
     }
   }
 
@@ -40,19 +59,19 @@ export class CommandLoader {
     const command = new (await import(pathToFileURL(commandFile).toString())).default();
 
     if (!command.name?.length) {
-      // Log đã bị xóa - file không có tên
+      log.warn("File không có tên lệnh", `File: ${rltPath}`);
       return;
     }
 
     if (this.client.commands.has(command.name)) {
-      // Log đã bị xóa - lệnh đã tồn tại
+      log.warn("Lệnh đã tồn tại", `Lệnh: ${command.name} | File: ${rltPath}`);
       return;
     }
 
     const checkRes = this.keyChecker(command);
 
     if (checkRes !== KeyCheckerEnum.Pass) {
-      // Log đã bị xóa - lệnh không đúng format
+      log.error("Lệnh không đúng format", `Lệnh: ${command.name} | Lỗi: ${checkRes} | File: ${rltPath}`);
       return;
     }
 

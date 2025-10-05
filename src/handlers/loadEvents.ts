@@ -3,6 +3,7 @@ import { resolve } from "path";
 import { join, dirname } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { Manager } from "../manager.js";
+import { log } from "../utilities/LoggerHelper.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class ClientEventsLoader {
@@ -18,7 +19,7 @@ export class ClientEventsLoader {
       let eventsFile = await readdirRecursive(eventsPath);
       await this.registerPath(eventsFile);
     }
-    // Log đã bị xóa - Sự kiện đã được tải
+    log.completed("events", this.counter, "Đã tải tất cả các sự kiện");
   }
 
   async registerPath(eventsPath: string[]) {
@@ -37,5 +38,6 @@ export class ClientEventsLoader {
     const eName = splitPath(path);
 
     this.client.on(eName!, events.execute.bind(null, this.client));
+    this.counter++;
   }
 }

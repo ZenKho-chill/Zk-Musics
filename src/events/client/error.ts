@@ -1,8 +1,8 @@
 import { Manager } from "../../manager.js";
-// Log đã bị xóa
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager, error: Error) {
-    // Log đã bị xóa
+    log.error("Lỗi Discord client", "Discord client error occurred", error);
   }
 }

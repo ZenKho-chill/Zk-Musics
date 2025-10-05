@@ -8,3 +8,5 @@ lavalink/logs
 tsconfig.tsbuildinfo
 lavalink/application.yml
 *.md
+docs/
+.vscode/

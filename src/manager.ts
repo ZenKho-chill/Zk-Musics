@@ -13,7 +13,8 @@ import {
 import { WebServer } from "./web/WebServer.js";
 import { DatabaseService } from "./database/index.js";
 import { resolve } from "path";
-// Hệ thống logging đã bị xóa hoàn toàn
+import { Logger } from "./structures/Logger.js";
+import { LoggerHelper, log } from "./utilities/LoggerHelper.js";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { RestAPI } from "./web/RestAPI.js";
@@ -42,7 +43,7 @@ import chalk from "chalk";
 import TempVoiceService from "./services/TempVoiceService.js";
 import { AssistanceHandler } from "./@guild-helpers/AssistanceHandler.js";
 import { StatisticsHandler } from "./@guild-helpers/StatisticsHandler.js";
-// Hệ thống log đã bị xóa
+import { LoggerService } from "./services/LoggerService.js";
 config();
 
 function getShard(clusterManager: ClusterManager) {
@@ -56,7 +57,7 @@ function getShard(clusterManager: ClusterManager) {
 export class Manager extends Client {
   public cluster: { id: number | 0; data: Cluster | null };
   public manifest: ManifestInterface;
-  // Logger đã bị xóa
+  public logger: Logger;
   public db!: DatabaseTable;
   public owner: string;
   public color_main: ColorResolvable;
@@ -148,7 +149,10 @@ export class Manager extends Client {
       data: clusterManager ? cluster : null,
       id: clusterManager ? cluster.worker.id : 0,
     };
-    // Logger đã bị xóa
+    this.logger = Logger.getInstance();
+    
+    // Thiết lập client reference cho LoggerHelper để kiểm tra debug mode
+    LoggerHelper.setClient(this);
     
     this.manifest = new ManifestLoader().data;
     this.owner = this.config.bot.OWNER_ID;
@@ -242,13 +246,15 @@ export class Manager extends Client {
   }
 
   public start() {
-    // Khởi động đã bị xóa - client Zk Music's
-    // Phiên bản đã bị xóa
-    // Tên mã đã bị xóa 
-    // Phiên bản Autofix đã bị xóa
+    // Hiển thị banner đẹp mắt khi khởi động
+    log.banner("Zk Music's", this.manifest.metadata.bot.version);
+    
+    log.startup("Khởi động client Zk Music's", `Phiên bản: ${this.manifest.metadata.bot.version}`);
+    log.info("Tên mã phiên bản", `Codename: ${this.manifest.metadata.bot.codename}`);
+    log.info("Phiên bản Autofix", `Version: ${this.manifest.metadata.autofix.version}`);
     
     if (this.config.features.HIDE_LINK && this.config.features.REPLACE_LINK) {
-      // Log đã bị xóa - Cảnh báo conflict giữa HIDE_LINK và REPLACE_LINK
+      log.warn("Cảnh báo cấu hình", "HIDE_LINK và REPLACE_LINK đều được bật, có thể xung đột");
       return;
     }
     if (this.config.features.FilterMenu ?? false) {
@@ -273,6 +279,11 @@ export class Manager extends Client {
     new CommandDeployer(this);
     new initHandler(this);
     new DatabaseService(this);
+    
+    // Khởi tạo Logger Service
+    const loggerService = LoggerService.getInstance(this);
+    loggerService.logSystemInfo();
+    
     super.login(this.config.bot.TOKEN);
   }
 }

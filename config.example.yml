@@ -9,7 +9,7 @@ bot:
   ADMIN: ["ID NGƯỜI TIN CẬY 1", "ID NGƯỜI TIN CẬY 2", "ID NGƯỜI TIN CẬY 3"]
   DEFAULT_VOLUME: 50 # Không được vượt quá 100, nếu vượt quá bot sẽ tự đặt về 100
   LANGUAGE: "en" # Bạn có thể đặt 'en' hoặc thêm ngôn ngữ tuỳ chỉnh
-  DEBUG_MODE: true
+  DEBUG_MODE: true # Bật/tắt debug logs (true = hiển thị debug, false = ẩn debug)
   SHARDING_SYSTEM:
     shardsPerClusters: 1
     totalClusters: 1
