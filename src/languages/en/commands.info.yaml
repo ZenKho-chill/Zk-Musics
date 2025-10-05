@@ -26,8 +26,11 @@ finder_usage_no: "No Usage"
 finder_aliases_no: "No Aliases"
 finder_slash_enable: "Enabled"
 finder_slash_disable: "Disabled"
+finder_aliases_prefix: "**Aliases with prefix:**"
 ### Homepage menu / help commands and All commands
 select_menu: "Enjoy music with me!"
+footer: "Page %{page}/%{pages} • %{total} commands"
+help_timeout: "Interaction timed out! Please run the command again."
 homepage_title: "Where those who wish to sing always find a song ♪\nJoin the melody in your Discord server today!"
 #homepage_title: "The Discord music bot that's 100% free with no payment or votes required to access all its amazing functionalities."
 homepage_desc: |
@@ -69,5 +72,15 @@ premium_check_user_profile_desc: |
   **User:** %{user}
   **Plan:** %{plan}
   **Expire:** %{expires}
+premium_check_user_profile_author: "User Premium Profile"
+premium_check_guild_profile_author: "Guild Premium Profile"
+premium_check_guild_profile_desc: |
+  **Guild:** %{guild}
+  **Plan:** %{plan}
+  **Expire:** %{expires}
+premium_check_owner_profile_author: "Owner Premium Profile"
+premium_check_admin_profile_author: "Admin Premium Profile"
+premium_check_user_profile_error_desc: "This user doesn't have any premium plan"
+premium_check_guild_profile_error_desc: "This guild doesn't have any premium plan"
 
 ### Premium Check Guild command!

@@ -4,8 +4,16 @@ announcement_timeout: "*Không nhận được dữ liệu trong thời gian cho
 announcement_failure: "*Không gửi được thông báo đến bất kỳ máy chủ nào.*`Không tìm thấy máy chủ.`"
 
 ### Danh sách đen (Guild)
+blacklist_guild_already: "<:warnings:1220876158254710936> **Máy chủ này đã có trong danh sách đen**"
+blacklist_guild_add: "<:okee:1220876098456256512> **Đã thêm máy chủ vào danh sách đen**"
+blacklist_guild_not_exist: "<:wrong:1220876213896216686> **Máy chủ này không có trong danh sách đen**"
+blacklist_guild_delete: "<:okee:1220876098456256512> **Đã xóa máy chủ khỏi danh sách đen**"
 
 ### Danh sách đen (User)
+blacklist_user_already: "<:warnings:1220876158254710936> **Người dùng này đã có trong danh sách đen**"
+blacklist_user_add: "<:okee:1220876098456256512> **Đã thêm người dùng vào danh sách đen**"
+blacklist_user_not_exist: "<:wrong:1220876213896216686> **Người dùng này không có trong danh sách đen**"
+blacklist_user_delete: "<:okee:1220876098456256512> **Đã xóa người dùng khỏi danh sách đen**"
 
 ### Lệnh Premium / Tạo mã!
 premium_code_arg_error: "<:wrong:1220876213896216686> Tham số không hợp lệ. Vui lòng dùng %{text}"
@@ -24,6 +32,8 @@ premium_remove_404: "<:wrong:1220876213896216686> **Không tìm thấy %{id} tro
 premium_remove_footer: "Đã xóa thành công %{user}"
 premium_remove_id: "Id"
 premium_remove_by: "Xóa bởi"
+premium_remove_invalid_params: "<:wrong:1220876213896216686> **Tham số không hợp lệ. Vui lòng cung cấp ID và loại hợp lệ**"
+premium_remove_invalid_type: "<:wrong:1220876213896216686> **Loại không hợp lệ. Sử dụng 'user' hoặc 'guild'**"
 
 ### Lệnh Cập nhật!
 update_provide_desc: "*Nhập mô tả cho bản cập nhật này*"
@@ -41,6 +51,9 @@ maintenance_false: "<:okee:1220876098456256512> Chế độ bảo trì đã đư
 ### Lệnh danh sách Premium!
 premiumlist_page_not_found: "<:warning:1291142143993446412> Chỉ có **%{page} trang** khả dụng!"
 premiumlist_invalid_type: "<:warning:1291142143993446412> Oops! Đó không phải loại hợp lệ?\nVí dụ: %{example}"
+premiumlist_invalid_page_number: "<:wrong:1220876213896216686> **Số trang không hợp lệ. Vui lòng nhập số trang hợp lệ**"
+premiumlist_guild_list_title: "Danh sách Premium Guild"
+premiumlist_user_list_title: "Danh sách Premium User"
 
 ### Lệnh đổi mã Premium! ###
 redeem_title: "Đổi mã Premium!"

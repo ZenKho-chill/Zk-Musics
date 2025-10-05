@@ -228,7 +228,7 @@ export default class implements Command {
                 .setDescription(
                   `${client.i18n.get(
                     handler.language,
-                    "commands_music",
+                    "commands.music",
                     "spotify_playlist_notfound"
                   )}`
                 )

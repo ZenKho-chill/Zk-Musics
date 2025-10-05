@@ -16,6 +16,8 @@ setup_topic: "♪ Those who wish to sing always find a song. ♪"
 setup_msg: "*`Succesfully Setup Music System in`* %{channel}\n```Note: Do not delete any message(s) I've created in order for me to work properly.```"
 setup_null: "*`Successfully delete setup channel!`*"
 setup_deleted: "*`Successfully delete setup channel!`*"
+setup_queuemsg: "**Queue is empty**\n`Add songs to start listening`"
+setup_playembed_author: "Now Playing"
 
 ### Reset Guild command! ###
 ### Reset User data command! ###
@@ -25,7 +27,18 @@ error_themes: "<:wrong:1220876213896216686> Invalid... Please try again."
 succes_themes: "**Succesfully changed theme to %{themes}**"
 
 ### Spotify Connect command!
+spotify_connect_provide_id: "<:wrong:1220876213896216686> **Please provide a valid Spotify User ID**"
+spotify_connect_success: "<:okee:1220876098456256512> **Successfully connected Spotify account!**"
+spotify_connect_error: "<:wrong:1220876213896216686> **Error connecting Spotify account. Please try again later.**"
+
 ### Spotify Disconnect command!
+spotify_disconnect_not_connected: "<:warnings:1220876158254710936> **You haven't connected any Spotify account**"
+spotify_disconnect_success: "<:okee:1220876098456256512> **Successfully disconnected Spotify account!**"
+spotify_disconnect_error: "<:wrong:1220876213896216686> **Error disconnecting Spotify account**"
+
+### Spotify Feature Disabled!
+spotify_feature_disabled_title: "Spotify Feature Disabled"
+spotify_feature_disabled_desc: "Spotify feature is currently unavailable. Please try again later."
 
 ### Last FM Feature Disable!
 

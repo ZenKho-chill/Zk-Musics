@@ -16,6 +16,8 @@ setup_topic: "♪ Những ai muốn hát luôn tìm thấy bài ca. ♪"
 setup_msg: "*`Thiết lập Hệ thống Nhạc thành công tại`* %{channel}\n```Lưu ý: Đừng xóa bất kỳ tin nhắn nào mình đã tạo để bot hoạt động đúng.```"
 setup_null: "*`Đã xóa kênh thiết lập thành công!`*"
 setup_deleted: "*`Đã xóa kênh thiết lập thành công!`*"
+setup_queuemsg: "**Hàng chờ trống**\n`Thêm bài để bắt đầu nghe nhạc`"
+setup_playembed_author: "Đang phát ngay"
 
 ### Đặt lại dữ liệu máy chủ! ###
 ### Đặt lại dữ liệu người dùng! ###
@@ -25,9 +27,18 @@ error_themes: "<:wrong:1220876213896216686> Không hợp lệ... Vui lòng thử
 succes_themes: "**Đã đổi chủ đề thành %{themes} thành công**"
 
 ### Kết nối Spotify!
+spotify_connect_provide_id: "<:wrong:1220876213896216686> **Vui lòng cung cấp Spotify User ID hợp lệ**"
+spotify_connect_success: "<:okee:1220876098456256512> **Đã kết nối tài khoản Spotify thành công!**"
+spotify_connect_error: "<:wrong:1220876213896216686> **Lỗi khi kết nối tài khoản Spotify. Vui lòng thử lại sau.**"
+
 ### Ngắt kết nối Spotify!
+spotify_disconnect_not_connected: "<:warnings:1220876158254710936> **Bạn chưa kết nối tài khoản Spotify nào**"
+spotify_disconnect_success: "<:okee:1220876098456256512> **Đã ngắt kết nối tài khoản Spotify thành công!**"
+spotify_disconnect_error: "<:wrong:1220876213896216686> **Lỗi khi ngắt kết nối tài khoản Spotify**"
 
 ### Tính năng Spotify Connect bị tắt!
+spotify_feature_disabled_title: "Tính năng Spotify đã bị tắt"
+spotify_feature_disabled_desc: "Tính năng Spotify hiện tại không khả dụng. Vui lòng thử lại sau."
 
 ### Thông báo YouTube!
 ### Thông báo Twitch!

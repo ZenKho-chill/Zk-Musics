@@ -4,8 +4,16 @@ announcement_timeout: "*No input received within the given time. Command cancell
 announcement_failure: "*Failed to send the announcement in any guild.*`No guilds were found.`"
 
 ### Blacklist Guild
+blacklist_guild_already: "<:warnings:1220876158254710936> **This guild is already blacklisted**"
+blacklist_guild_add: "<:okee:1220876098456256512> **Guild has been added to blacklist**"
+blacklist_guild_not_exist: "<:wrong:1220876213896216686> **This guild is not in the blacklist**"
+blacklist_guild_delete: "<:okee:1220876098456256512> **Guild has been removed from blacklist**"
 
 ### Blacklist User
+blacklist_user_already: "<:warnings:1220876158254710936> **This user is already blacklisted**"
+blacklist_user_add: "<:okee:1220876098456256512> **User has been added to blacklist**"
+blacklist_user_not_exist: "<:wrong:1220876213896216686> **This user is not in the blacklist**"
+blacklist_user_delete: "<:okee:1220876098456256512> **User has been removed from blacklist**"
 
 ### Premium / Generate command!
 premium_code_arg_error: "<:wrong:1220876213896216686> Invalid argument. Please use %{text}"
@@ -24,6 +32,8 @@ premium_remove_404: "<:wrong:1220876213896216686> **Not found %{id} in type %{ty
 premium_remove_footer: "Successfully removed %{user}"
 premium_remove_id: "Id"
 premium_remove_by: "Remove by"
+premium_remove_invalid_params: "<:wrong:1220876213896216686> **Invalid parameters. Please provide valid ID and type**"
+premium_remove_invalid_type: "<:wrong:1220876213896216686> **Invalid type. Use 'user' or 'guild'**"
 
 ### Update command!
 update_provide_desc: "*Enter a description for this update*"
@@ -41,6 +51,9 @@ maintenance_false: "<:okee:1220876098456256512> Maintenance Mode has been **Fals
 ### Premium List command!
 premiumlist_page_not_found: "<:warning:1291142143993446412> Only **%{page} pages** are available!"
 premiumlist_invalid_type: "<:warning:1291142143993446412> Oopss! That's not a valid type?\nExample: %{example}"
+premiumlist_invalid_page_number: "<:wrong:1220876213896216686> **Invalid page number. Please provide a valid page number**"
+premiumlist_guild_list_title: "Premium Guild List"
+premiumlist_user_list_title: "Premium User List"
 
 ### Redeem Premium Code command! ###
 redeem_title: "Redeem Premium!"

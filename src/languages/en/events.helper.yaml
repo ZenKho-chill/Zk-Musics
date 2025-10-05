@@ -56,5 +56,7 @@ reminder_label_emoji: "⏰"
 reminder_title: "Vote Reminder"
 reminder_desc: "It's time! You can now vote again on **[Top.gg](%{voteurl})**."
 reminder_set_content: "Reminder set! I will remind you to vote again in 12 hours"
+reminder_no_vote_warning: "<:warnings:1220876158254710936> **You haven't voted for the bot today!**\nVote to support the bot and get additional features!"
+reminder_cancel_content: "Vote reminder has been cancelled."
 
 ### Welcomer events!

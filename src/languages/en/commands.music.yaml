@@ -51,6 +51,10 @@ spotify_playlist_empty: "You have no playlists on Spotify."
 spotify_playlist_not_connected: "Please connect your Spotify account first!>"
 spotify_playlist_error: "There was an error fetching your playlists. Please try again later."
 spotify_playlist_active: "Please wait 30s before making a new request.\nIf you've already selected, you can make a new request."
+spotify_playlist_notfound: "<:wrong:1220876213896216686> **Spotify playlist not found**"
+
+### Queue system
+queue_footer: "Page %{page}/%{pages} • %{queue_lang} songs • %{duration}"
 
 ## Temporarily disabled commands
 youtube_disabled: "YouTube support is temporarily unavailable"

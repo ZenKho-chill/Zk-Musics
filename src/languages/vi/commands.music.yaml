@@ -51,6 +51,10 @@ spotify_playlist_empty: "Bạn không có danh sách phát trên Spotify."
 spotify_playlist_not_connected: "Vui lòng kết nối tài khoản Spotify trước!"
 spotify_playlist_error: "Lỗi khi lấy danh sách phát. Vui lòng thử lại sau."
 spotify_playlist_active: "Vui lòng đợi 30s trước khi gửi yêu cầu mới.\nNếu bạn đã chọn rồi, bạn có thể gửi yêu cầu mới."
+spotify_playlist_notfound: "<:wrong:1220876213896216686> **Không tìm thấy danh sách phát Spotify**"
+
+### Queue system
+queue_footer: "Trang %{page}/%{pages} • %{queue_lang} bài • %{duration}"
 
 ## Lệnh tạm thời bị vô hiệu
 youtube_disabled: "Hỗ trợ YouTube tạm thời không khả dụng"

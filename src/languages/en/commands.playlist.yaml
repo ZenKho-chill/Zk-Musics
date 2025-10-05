@@ -47,4 +47,7 @@ pl_savequeue_no_new_saved: "<:wrong:1220876213896216686> All songs already exist
 pl_savequeue_saved: "<:okee:1220876098456256512> Saved **%{tracks} new songs** to `%{name}`"
 pl_savequeue_error: "<:wrong:1220876213896216686> An error occurred while saving tracks to playlist!"
 
+pl_timeout: "Interaction timed out! Please run the command again."
+pl_all_view_embed_footer: "Page %{page}/%{pages} • %{total} playlists"
+
 pl_error_no_node: "No Lavalink server was found. Please try again after **5 Minutes**"

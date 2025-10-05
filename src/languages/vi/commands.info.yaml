@@ -26,8 +26,11 @@ finder_usage_no: "Chưa có hướng dẫn"
 finder_aliases_no: "Không có bí danh"
 finder_slash_enable: "Đã bật"
 finder_slash_disable: "Đã tắt"
+finder_aliases_prefix: "**Bí danh với prefix:**"
 ### Menu trang chủ / lệnh trợ giúp và Tất cả lệnh
 select_menu: "Thưởng thức âm nhạc cùng mình nào!"
+footer: "Trang %{page}/%{pages} • %{total} lệnh"
+help_timeout: "Hết thời gian tương tác! Vui lòng chạy lại lệnh."
 homepage_title: "Nơi những ai muốn hát luôn tìm thấy bài ca ♪\nTham gia giai điệu trên máy chủ Discord của bạn ngay hôm nay!"
 homepage_desc: |
   <:blankers:1220848705289064669><:music:1220842323760648443> **Nhạc 24/7**
@@ -68,5 +71,15 @@ premium_check_user_profile_desc: |
   **Người dùng:** %{user}
   **Gói:** %{plan}
   **Hết hạn:** %{expires}
+premium_check_user_profile_author: "Hồ sơ Premium Người dùng"
+premium_check_guild_profile_author: "Hồ sơ Premium Máy chủ"
+premium_check_guild_profile_desc: |
+  **Máy chủ:** %{guild}
+  **Gói:** %{plan}
+  **Hết hạn:** %{expires}
+premium_check_owner_profile_author: "Hồ sơ Premium Chủ sở hữu"
+premium_check_admin_profile_author: "Hồ sơ Premium Quản trị viên"
+premium_check_user_profile_error_desc: "Người dùng này không có gói Premium nào"
+premium_check_guild_profile_error_desc: "Máy chủ này không có gói Premium nào"
 
 ### Kiểm tra Premium cho máy chủ!

@@ -54,5 +54,7 @@ reminder_label_emoji: "⏰"
 reminder_title: "Nhắc bạn đi vote nè"
 reminder_desc: "Tới giờ rồi! Bạn có thể vote lại trên **[Top.gg](%{voteurl})**."
 reminder_set_content: "Đã đặt nhắc nhở! Tôi sẽ nhắc bạn vote lại sau 12 giờ"
+reminder_no_vote_warning: "<:warnings:1220876158254710936> **Bạn chưa vote cho bot hôm nay!**\nVote để hỗ trợ bot và nhận thêm tính năng!"
+reminder_cancel_content: "Đã hủy nhắc nhở vote."
 
 ### Welcomer events! ###

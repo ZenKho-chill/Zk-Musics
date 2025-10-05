@@ -47,4 +47,7 @@ pl_savequeue_no_new_saved: "<:wrong:1220876213896216686> Tất cả bài đã t�
 pl_savequeue_saved: "<:okee:1220876098456256512> Đã lưu **%{tracks} bài mới** vào `%{name}`"
 pl_savequeue_error: "<:wrong:1220876213896216686> Có lỗi xảy ra khi lưu tracks vào playlist!"
 
+pl_timeout: "Hết thời gian tương tác! Vui lòng chạy lại lệnh."
+pl_all_view_embed_footer: "Trang %{page}/%{pages} • %{total} playlist"
+
 pl_error_no_node: "Không tìm thấy server Lavalink. Vui lòng thử lại sau **5 phút**"
