@@ -219,7 +219,7 @@ export class ZklinkPlayer extends EventEmitter {
     this.node.rest.destroyPlayer(this.guildId);
     this.manager.players.delete(this.guildId);
     this.state = ZklinkPlayerState.DESTROYED;
-    this.debug("Player đã bị huỷ tại " + this.guildId);
+    // Debug đã bị xóa - Player đã bị huỷ
     this.voiceId = "";
     // @ts-ignore
     this.manager.emit(ZklinkEvents.PlayerDestroy, this);
@@ -263,7 +263,7 @@ export class ZklinkPlayer extends EventEmitter {
     if (!resolveResult || (resolveResult && !resolveResult.isPlayable)) {
       // @ts-ignore
       this.manager.emit(ZklinkEvents.TrackResolveError, this, current, errorMessage);
-      this.debug(`Player ${this.guildId} lỗi khi resolve: ${errorMessage}`);
+      // Debug đã bị xóa - Player lỗi khi resolve
       this.queue.current = null;
       // @ts-ignore
       this.queue.size ? await this.play() : this.manager.emit(ZklinkEvents.QueueEmpty, this);
@@ -562,7 +562,7 @@ export class ZklinkPlayer extends EventEmitter {
     this.voiceState = VoiceConnectState.DISCONNECTED;
     this.pause();
     this.state = ZklinkPlayerState.DISCONNECTED;
-    this.debug(`Player đã ngắt kết nối; Guild id: ${this.guildId}`);
+    // Debug đã bị xóa - Player đã ngắt kết nối
     return this;
   }
 
@@ -579,7 +579,7 @@ export class ZklinkPlayer extends EventEmitter {
       return this;
     this.voiceState = VoiceConnectState.CONNECTING;
     this.sendVoiceUpdate();
-    this.debugDiscord(`Yêu cầu kết nối | Guild: ${this.guildId}`);
+    // Debug đã bị xóa - Yêu cầu kết nối
     const controller = new AbortController();
     const timeout = setTimeout(
       () => controller.abort(),
@@ -600,7 +600,7 @@ export class ZklinkPlayer extends EventEmitter {
       }
       this.voiceState = VoiceConnectState.CONNECTED;
     } catch (error: any) {
-      this.debugDiscord(`Yêu cầu kết nối thất bại | Guild: ${this.guildId}`);
+      // Debug đã bị xóa - Yêu cầu kết nối thất bại
       if (error.name === "AbortError")
         throw new Error(
           `Kết nối voice không thành công sau ${
@@ -611,7 +611,7 @@ export class ZklinkPlayer extends EventEmitter {
     } finally {
       clearTimeout(timeout);
       this.state = ZklinkPlayerState.CONNECTED;
-      this.debug(`Player ${this.guildId} đã kết nối`);
+      // Debug đã bị xóa - Player đã kết nối
     }
     return this;
   }
@@ -637,7 +637,7 @@ export class ZklinkPlayer extends EventEmitter {
     this.disconnect();
     this.voiceId = voiceId;
     this.connect();
-    this.debugDiscord(`Player ${this.guildId} đã chuyển tới voice channel ${voiceId}`);
+    // Debug đã bị xóa - Player đã chuyển tới voice channel
     return this;
   }
 
@@ -675,16 +675,11 @@ export class ZklinkPlayer extends EventEmitter {
   }
 
   protected debug(logs: string): void {
-    // @ts-ignore
-    this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Người phát @ ${this.guildId}] | ${logs}`);
+    // Debug đã bị xóa
   }
 
   protected debugDiscord(logs: string): void {
-    // @ts-ignore
-    this.manager.emit(
-      ZklinkEvents.Debug,
-      `[Zklink] / [Người phát @ ${this.guildId}] / [Giọng] | ${logs}`
-    );
+    // Debug đã bị xóa
   }
 
   protected checkDestroyed(): void {
@@ -733,15 +728,13 @@ export class ZklinkPlayer extends EventEmitter {
     this.region = data.endpoint.split(".").shift()?.replace(/[0-9]/g, "") || null;
 
     if (this.region && this.lastRegion !== this.region) {
-      this.debugDiscord(
-        `Khu vực Voice đã thay đổi | Khu vực cũ: ${this.lastRegion} Khu vực mới: ${this.region} Guild: ${this.guildId}`
-      );
+      // Debug đã bị xóa - Khu vực Voice đã thay đổi
     }
 
     this.serverUpdate = data;
     // @ts-ignore
     this.emit("connectionUpdate", VoiceState.SESSION_READY);
-    this.debugDiscord(`Đã nhận Server Update | Server: ${this.region} Guild: ${this.guildId}`);
+    // Debug đã bị xóa - Đã nhận Server Update
   }
 
   /**
@@ -758,19 +751,17 @@ export class ZklinkPlayer extends EventEmitter {
     this.voiceId = channel_id || null;
 
     if (this.voiceId && this.lastvoiceId !== this.voiceId) {
-      this.debugDiscord(`Channel đã thay đổi | Kênh cũ: ${this.voiceId} Guild: ${this.guildId}`);
+      // Debug đã bị xóa - Channel đã thay đổi
     }
 
     if (!this.voiceId) {
       this.voiceState = VoiceConnectState.DISCONNECTED;
-      this.debugDiscord(`Kênh đã ngắt kết nối | Guild: ${this.guildId}`);
+      // Debug đã bị xóa - Kênh đã ngắt kết nối
     }
 
     this.deaf = self_deaf;
     this.mute = self_mute;
     this.sessionId = session_id || null;
-    this.debugDiscord(
-      `Đã nhận State Update | Kênh: ${this.voiceId} Session ID: ${session_id} Guild: ${this.guildId}`
-    );
+    // Debug đã bị xóa - Đã nhận State Update
   }
 }

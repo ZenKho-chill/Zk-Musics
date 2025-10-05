@@ -13,7 +13,7 @@ import {
 import { WebServer } from "./web/WebServer.js";
 import { DatabaseService } from "./database/index.js";
 import { resolve } from "path";
-import { LogManager } from "./services/LogManager.js";
+// Hệ thống logging đã bị xóa hoàn toàn
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { RestAPI } from "./web/RestAPI.js";
@@ -42,7 +42,7 @@ import chalk from "chalk";
 import TempVoiceService from "./services/TempVoiceService.js";
 import { AssistanceHandler } from "./@guild-helpers/AssistanceHandler.js";
 import { StatisticsHandler } from "./@guild-helpers/StatisticsHandler.js";
-import { logger, logInfo, logWarn } from "./utilities/Logger.js";
+// Hệ thống log đã bị xóa
 config();
 
 function getShard(clusterManager: ClusterManager) {
@@ -56,7 +56,7 @@ function getShard(clusterManager: ClusterManager) {
 export class Manager extends Client {
   public cluster: { id: number | 0; data: Cluster | null };
   public manifest: ManifestInterface;
-  public logger: LogManager;
+  // Logger đã bị xóa
   public db!: DatabaseTable;
   public owner: string;
   public color_main: ColorResolvable;
@@ -148,10 +148,7 @@ export class Manager extends Client {
       data: clusterManager ? cluster : null,
       id: clusterManager ? cluster.worker.id : 0,
     };
-    this.logger = new LogManager(this, this.cluster.id);
-    
-    // Khởi tạo logger utility với manager
-    logger.setManager(this);
+    // Logger đã bị xóa
     
     this.manifest = new ManifestLoader().data;
     this.owner = this.config.bot.OWNER_ID;
@@ -245,20 +242,13 @@ export class Manager extends Client {
   }
 
   public start() {
-    logInfo("ClientManager", "Đang khởi động client Zk Music's...");
-    logInfo("ClientManager", `Phiên bản: ${this.manifest.metadata.bot.version}`);
-    logInfo("ClientManager", `Tên mã: ${this.manifest.metadata.bot.codename}`);
-    logInfo(
-      "ClientManager",
-      `Phiên bản Autofix: ${this.manifest.metadata.autofix.version}`
-    );
+    // Khởi động đã bị xóa - client Zk Music's
+    // Phiên bản đã bị xóa
+    // Tên mã đã bị xóa 
+    // Phiên bản Autofix đã bị xóa
+    
     if (this.config.features.HIDE_LINK && this.config.features.REPLACE_LINK) {
-      logWarn(
-        "ClientManager",
-        chalk.bold.red(
-          "Bạn chỉ có thể bật một tính năng: HIDE_LINK hoặc REPLACE_LINK. Vui lòng tắt một trong hai để tiếp tục."
-        )
-      );
+      // Log đã bị xóa - Cảnh báo conflict giữa HIDE_LINK và REPLACE_LINK
       return;
     }
     if (this.config.features.FilterMenu ?? false) {

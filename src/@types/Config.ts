@@ -6,7 +6,6 @@ export interface Config {
   features: Features;
   utilities: Utilities;
   PremiumRole: PremiumRole;
-  logchannel: LogChannel;
   emojis: Emojis;
   HELPER_SETUP: HELPER_SETUP;
   MENU_HELP_EMOJI: MENU_HELP_EMOJI;
@@ -24,20 +23,7 @@ export interface PremiumRole {
   RoleID: string;
 }
 
-export interface LogChannel {
-  UpdateChannelId: string;
-  GuildJoinChannelID: string;
-  GuildLeaveChannelID: string;
-  RedeemChannelID: string;
-  RemoveChannelID: string;
-  GenerateCodeChannelID: string;
-  RatingChannelID: string;
-  BugReportChannelID: string;
-  SuggestionChannelID: string;
-  ErrorChannelID: string;
-  DatabaseLogsChannelID: string;
-  PremiumExpireChannelID: string;
-}
+
 
 export interface Utilities {
   LyricsGenius: LyricsGenius;
@@ -318,7 +304,7 @@ export interface WebServer {
 
 export interface TOPGG_VOTELOGS {
   Enable: boolean;
-  LogVoteChannelID: string;
+  VoteChannelID: string;
   TopGgAuth: string;
   TopGgToken: string;
 }

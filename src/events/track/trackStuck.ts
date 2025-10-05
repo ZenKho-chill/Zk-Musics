@@ -5,14 +5,12 @@ import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import chalk from "chalk";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, data: Record<string, any>) {
-    if (!client.isDatabaseConnected)
-      return logWarn(
-        "DatabaseService",
-        "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
-      );
+    if (!client.isDatabaseConnected) {
+      // Log đã bị xóa - Cơ sở dữ liệu chưa kết nối
+      return;
+    }
 
     /////////// Cập nhật thiết lập nhạc //////////
     await client.UpdateMusic(player);
@@ -55,12 +53,7 @@ export default class {
       );
     }
 
-    logError(
-      "TrackStuck",
-      `${chalk.hex("#fc2c03")("Bài bị kẹt tại @ ")}${chalk.hex("#fc2c03")(
-        guild!.name
-      )} / ${chalk.hex("#fc2c03")(player.guildId)}`
-    );
+    // Log đã bị xóa - Bài bị kẹt
 
     const data247 = await new Mode247Builder(client, player).get(player.guildId);
     if (data247 !== null && data247 && data247.twentyfourseven && channel)

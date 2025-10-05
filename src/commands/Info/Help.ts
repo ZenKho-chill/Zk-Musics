@@ -16,7 +16,7 @@ import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import { EmojiValidator } from "../../utilities/EmojiValidator.js";
 import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -328,7 +328,7 @@ export default class implements Command {
                 });
               }
             } catch (error) {
-              logError("Help Command", `Collector error: ${error}`);
+              // Log đã bị xóa - Ghi lại lỗi collector
             } finally {
               // Đảm bảo collector được cleanup
               collector.removeAllListeners();

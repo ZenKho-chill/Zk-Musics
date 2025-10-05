@@ -1,8 +1,8 @@
 import { Manager } from "../../manager.js";
-import { logError } from "../../utilities/Logger.js";
+// Log đã bị xóa
 
 export default class {
   async execute(client: Manager, error: Error) {
-    logError("ClientError", error);
+    // Log đã bị xóa
   }
 }

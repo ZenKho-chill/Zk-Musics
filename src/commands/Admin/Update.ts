@@ -4,7 +4,6 @@ import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -25,22 +24,13 @@ export default class implements Command {
     try {
       await handler.deferReply();
 
-      const channelToSendId = client.config.logchannel.UpdateChannelId;
-      
-      // Kiểm tra xem channel ID có được cấu hình không
-      if (!channelToSendId || channelToSendId === "ID KÊNH CẬP NHẬT") {
-        const embed = new EmbedBuilder()
-          .setColor(client.color_main)
-          .setDescription("❌ **Lỗi:** Channel cập nhật chưa được cấu hình trong config!");
-        return await handler.editReply({ embeds: [embed] });
-      }
-
-      const channelToSend = client.channels.cache.get(channelToSendId) as TextChannel | undefined;
+      // Sử dụng kênh hiện tại thay vì log channel đã bị xóa
+      const channelToSend = handler.channel as TextChannel;
 
       if (!channelToSend) {
         const embed = new EmbedBuilder()
           .setColor(client.color_main)
-          .setDescription(`❌ **Lỗi:** Không tìm thấy kênh cập nhật với ID: \`${channelToSendId}\``);
+          .setDescription(`❌ **Lỗi:** Không tìm thấy kênh để gửi thông báo cập nhật.`);
         return await handler.editReply({ embeds: [embed] });
       }
 
@@ -96,8 +86,7 @@ export default class implements Command {
 
           const sentMessage = await channelToSend.send(description);
           
-          // Log success
-          logInfo("Update Command", `Đã gửi thông báo cập nhật thành công đến kênh ${channelToSend.name} (${channelToSend.id})`);
+          // Log đã bị xóa - Ghi lại thành công gửi thông báo cập nhật
           
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
@@ -110,10 +99,10 @@ export default class implements Command {
 
           // Xóa tin nhắn do người dùng gửi
           await msg.delete().catch(() => {
-            logWarn("Update Command", "Không thể xóa tin nhắn của người dùng");
+            // Log đã bị xóa - Cảnh báo không thể xóa tin nhắn của người dùng
           });
         } catch (err) {
-          logError("Update Command", `Lỗi khi gửi tin nhắn cập nhật: ${err}`);
+          // Log đã bị xóa - Ghi lại lỗi khi gửi tin nhắn cập nhật
           const embed = new EmbedBuilder()
             .setColor(client.color_main)
             .setDescription(
@@ -138,17 +127,16 @@ export default class implements Command {
         collector?.removeAllListeners();
       });
     } catch (error) {
-      logError("Update Command", `Lỗi chung trong lệnh update: ${error}`);
-
-      const embed = new EmbedBuilder()
+      // Log đã bị xóa - Ghi lại lỗi chung trong lệnh update
+      const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(
           `❌ ${client.i18n.get(handler.language, "commands.admin", "update_failure")}\n` +
           `📝 **Chi tiết:** ${error instanceof Error ? error.message : "Lỗi không xác định"}`
         );
 
-      await handler.editReply({ embeds: [embed] }).catch(() => {
-        logError("Update Command", "Không thể gửi tin nhắn lỗi");
+      await handler.editReply({ embeds: [errorEmbed] }).catch(() => {
+        // Log đã bị xóa - Ghi lại lỗi không thể gửi tin nhắn lỗi
       });
     }
   }

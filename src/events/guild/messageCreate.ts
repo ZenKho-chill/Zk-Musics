@@ -20,18 +20,16 @@ import { RateLimitResponder } from "../../services/RateLimitResponder.js";
 import { RateLimitManager } from "@sapphire/ratelimits";
 import { TopggServiceEnum } from "../../services/TopggService.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
-import { logWarn, logInfo, logError } from "../../utilities/Logger.js";
 const commandRateLimitManager = new RateLimitManager(1000);
 
 export default class {
   async execute(client: Manager, message: Message) {
     if (message.author.bot || message.channel.type == ChannelType.DM) return;
 
-    if (!client.isDatabaseConnected)
-      return logWarn(
-        "DatabaseService",
-        "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
-      );
+    if (!client.isDatabaseConnected) {
+      // Log đã bị xóa - Cơ sở dữ liệu chưa kết nối
+      return;
+    }
 
     let guildModel = await client.db.language.get(`${message.guild!.id}`);
     if (!guildModel) {
@@ -490,7 +488,7 @@ export default class {
               try {
                 await sentMessage.delete();
               } catch (error) {
-                logError("TopggService", `Top gg service error`);
+                // Log đã bị xóa - Top gg service error
               }
             }, client.config.features.DELETE_MSG_TIMEOUT);
           }
@@ -580,14 +578,7 @@ export default class {
 
       if (message.attachments.size !== 0) handler.addAttachment(message.attachments);
 
-      logInfo(
-        "Prefix Commands",
-        `${chalk.hex("#00FFC3")(command.name.join("-"))} được sử dụng bởi ${chalk.hex("#00FFC3")(
-          message.author.displayName
-        )} (${chalk.hex("#00FFC3")(message.author.id)}) từ ${chalk.hex("#00FFC3")(
-          message.guild?.name
-        )} (${chalk.hex("#00FFC3")(message.guild?.id)})`
-      );
+      // Log đã bị xóa - Prefix command được sử dụng
 
       ////////// Thống kê Sử dụng Lệnh Người Dùng //////////
       let commandUsage = await client.db.CommandUserUsage.get(`${message.author.id}`);
@@ -617,7 +608,7 @@ export default class {
 
       command.execute(client, handler);
     } catch (error) {
-      logError("CommandManager", error);
+      // Log đã bị xóa - Lỗi CommandManager
       message.reply({
         content: `${client.i18n.get(language, "interaction", "unexpected_error")}\n ${error}`,
       });

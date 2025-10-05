@@ -5,24 +5,17 @@ import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
 import chalk from "chalk";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
-    logDebug("TrackEnd", `Event trackEnd được trigger cho guild ${player.guildId}`);
+    // Log đã bị xóa - Event trackEnd được trigger
     
-    if (!client.isDatabaseConnected)
-      return logWarn(
-        "DatabaseService",
-        "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
-      );
+    if (!client.isDatabaseConnected) {
+      // Log đã bị xóa - Cơ sở dữ liệu chưa kết nối
+      return;
+    }
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
-    logInfo(
-      "TrackEnd",
-      `${chalk.hex("#f08080")("Bài hát kết thúc tại @ ")}${chalk.hex("#f08080")(
-        guild!.name
-      )} / ${chalk.hex("#f08080")(player.guildId)}`
-    );
+    // Log đã bị xóa - Bài hát kết thúc
 
     /////////// Cập nhật thiết lập nhạc //////////
     await client.UpdateMusic(player);
@@ -47,18 +40,18 @@ export default class {
 
     /////////// Xóa current track khỏi database nếu không còn bài nào để phát //////////
     if (client.config.features.AUTO_RESUME) {
-      logDebug("TrackEnd", `Guild ${player.guildId} - Queue length: ${player.queue.length}, Current: ${!!player.queue.current}, Loop: ${player.loop}`);
+      // Log đã bị xóa - Guild queue info
       
       // Chỉ xóa current khi thực sự không còn bài nào để phát và không loop
       if (!player.queue.length && !player.queue.current && player.loop === "none") {
-        logDebug("TrackEnd", `Điều kiện xóa current đã thỏa mãn cho guild ${player.guildId}, đang xóa...`);
+        // Log đã bị xóa - Điều kiện xóa current đã thỏa mãn
         await client.db.autoreconnect.set(`${player.guildId}.current`, "");
-        logInfo("TrackEnd", `✅ Đã xóa current track khỏi database cho guild ${player.guildId} - không còn bài để phát`);
+        // Log đã bị xóa - Đã xóa current track khỏi database
       } else {
-        logDebug("TrackEnd", `Không xóa current track cho guild ${player.guildId} - vẫn còn bài hoặc đang loop`);
+        // Log đã bị xóa - Không xóa current track
       }
     } else {
-      logDebug("TrackEnd", `AUTO_RESUME bị tắt, không xử lý current track cho guild ${player.guildId}`);
+      // Log đã bị xóa - AUTO_RESUME bị tắt
     }
     /////////// Xóa current track khỏi database nếu không còn bài nào để phát //////////
 

@@ -25,7 +25,7 @@ export class ZklinkNodeManager extends ZklinkDatabase<ZklinkNode> {
     const newNode = new ZklinkNode(this.manager, node);
     newNode.connect();
     this.set(node.name, newNode);
-    this.debug(`Đã thêm node ${node.name} vào manager!`);
+    // Debug đã bị xóa - Đã thêm node vào manager
     return newNode;
   }
 
@@ -71,13 +71,12 @@ export class ZklinkNodeManager extends ZklinkDatabase<ZklinkNode> {
     if (node) {
       node.disconnect();
       this.delete(name);
-      this.debug(`Đã xóa node ${name} khỏi manager!`);
+      // Debug đã bị xóa - Đã xóa node khỏi manager
     }
     return;
   }
 
   protected debug(logs: string) {
-    // @ts-ignore
-    this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Quản lý Node] | ${logs}`);
+    // Debug đã bị xóa
   }
 }

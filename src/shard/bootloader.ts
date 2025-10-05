@@ -8,12 +8,12 @@ export function bootBot(clusterManager?: ClusterManager) {
 
   // Xử lý chống crash
   process
-    .on("unhandledRejection", (error) => zk.logger.unhandled("AntiCrash", error))
-    .on("uncaughtException", (error) => zk.logger.unhandled("AntiCrash", error))
-    .on("uncaughtExceptionMonitor", (error) => zk.logger.unhandled("AntiCrash", error))
-    .on("exit", () => zk.logger.info("ClientManager", `Zk Music's đã tắt. Hẹn gặp lại lần sau!`))
+    .on("unhandledRejection", (error) => {/* Log đã bị xóa - Unhandled rejection */})
+    .on("uncaughtException", (error) => {/* Log đã bị xóa - Uncaught exception */})
+    .on("uncaughtExceptionMonitor", (error) => {/* Log đã bị xóa - Exception monitor */})
+    .on("exit", () => {/* Log đã bị xóa - Zk Music's đã tắt */})
     .on("SIGINT", () => {
-      zk.logger.info("ClientManager", `Đang tắt Zk Music's...`);
+      // Log đã bị xóa - Đang tắt Zk Music's
       process.exit(0);
     });
 

@@ -1,19 +1,19 @@
 import { Manager } from "./manager.js";
 import { ConfigData } from "./services/ConfigData.js";
-import { logInfo, logUnhandled } from "./utilities/Logger.js";
+// Logging đã bị xóa
 
 const configData = new ConfigData().data;
 const zk = new Manager(configData, configData.features.MESSAGE_CONTENT.enable);
 // Anti crash handling
 process
-  .on("unhandledRejection", (error) => logUnhandled("AntiCrash", error))
-  .on("uncaughtException", (error) => logUnhandled("AntiCrash", error))
-  .on("uncaughtExceptionMonitor", (error) => logUnhandled("AntiCrash", error))
-  .on("exit", () =>
-    logInfo("ClientManager", `Zk Music's đã tắt thành công. Hẹn gặp lại lần sau!`)
-  )
+  .on("unhandledRejection", (error) => {/* Log đã bị xóa - Unhandled rejection */})
+  .on("uncaughtException", (error) => {/* Log đã bị xóa - Uncaught exception */})
+  .on("uncaughtExceptionMonitor", (error) => {/* Log đã bị xóa - Exception monitor */})
+  .on("exit", () => {
+    // Log đã bị xóa - Zk Music's đã tắt thành công
+  })
   .on("SIGINT", () => {
-    logInfo("ClientManager", `Đang tắt Zk Music's...`);
+    // Log đã bị xóa - Đang tắt Zk Music's
     // Dừng tất cả nowplaying tracking
     try {
       const { NowPlayingUpdateService } = require("./services/NowPlayingUpdateService.js");

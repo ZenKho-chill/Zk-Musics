@@ -9,7 +9,7 @@ import { resolve } from "path";
 import { join, dirname } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { ClusterCommand, WorkerResponse } from "../@types/Cluster.js";
-import { logInfo, logDebug, logWarn, logError } from "../utilities/Logger.js";
+
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 config();
@@ -41,20 +41,17 @@ export class ClusterManager {
       }
     );
 
-    logInfo("ClusterManager", `Tổng cluster: ${this.options.totalClusters}, Tổng shard: ${this.totalShards}`);
+    // Log đã bị xóa - Tổng cluster và shard
   }
 
   public async start() {
     if (cluster.isPrimary) {
-      this.log("INFO", `Process chính ${process.pid} đang chạy`);
+      // Log đã bị xóa - Process chính đang chạy
 
       await this.commandLoader();
 
       cluster.on("exit", (worker) => {
-        this.log(
-          "WARN",
-          `Worker ${worker.process.pid} / ${worker.id} đã chết, đang khởi động lại...`
-        );
+        // Log đã bị xóa - Worker đã chết đang khởi động lại
         const newWorker = cluster.fork();
         this.workerPID.set(String(newWorker.id), newWorker);
       });
@@ -84,7 +81,7 @@ export class ClusterManager {
           const getRes = await command.execute(this, worker, jsonMsg.args);
           worker.send(JSON.stringify(getRes));
         } catch (err) {
-          this.log("ERROR", `Xử lý message thất bại: ${err}`);
+          // Log đã bị xóa - Xử lý message thất bại
         }
       });
 
@@ -94,7 +91,7 @@ export class ClusterManager {
       }
     } else {
       bootBot(this);
-      this.log("INFO", `Worker ${process.pid} / ${cluster.worker.id} đã khởi động`);
+      // Log đã bị xóa - Worker đã khởi động
     }
   }
 
@@ -161,26 +158,7 @@ export class ClusterManager {
   }
 
   public log(level: string, msg: string, pad: number = 9) {
-    const date = new Date().toISOString();
-    const prettyLevel = level.toUpperCase().padEnd(pad);
-    const prettyClass = "ClusterManager".padEnd(28);
-    // Sử dụng logger mới thay vì console.log
-    switch (level.toLowerCase()) {
-      case "info":
-        logInfo("ClusterManager", msg);
-        break;
-      case "debug":
-        logDebug("ClusterManager", msg);
-        break;
-      case "warn":
-        logWarn("ClusterManager", msg);
-        break;
-      case "error":
-        logError("ClusterManager", msg);
-        break;
-      default:
-        logInfo("ClusterManager", msg);
-    }
+    // Log đã bị xóa
   }
 
   protected async commandLoader() {
@@ -191,14 +169,15 @@ export class ClusterManager {
       await this.registerCommand(path);
     }
 
-    this.log("INFO", `Đã nạp lệnh cluster thành công`);
+    // Log đã bị xóa - Đã nạp lệnh cluster thành công
   }
 
   protected async registerCommand(path: string) {
     const command = new (await import(pathToFileURL(path).toString())).default() as ClusterCommand;
 
     if (!command.execute) {
-      return this.log("WARN", `Lệnh cluster [${command.name}] thiếu hàm execute, bỏ qua...`);
+      // Log đã bị xóa - Lệnh cluster thiếu hàm execute
+      return;
     }
 
     this.commands.set(command.name, command);

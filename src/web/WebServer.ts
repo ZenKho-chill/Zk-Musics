@@ -18,7 +18,7 @@ import {
 } from "discord.js";
 import { EmojiValidator } from "../utilities/EmojiValidator.js";
 const __filename = fileURLToPath(import.meta.url);
-import { logInfo, logWarn, logError } from "../utilities/Logger.js";
+// Logging system đã bị xóa
 const __dirname = path.dirname(__filename);
 
 export class WebServer {
@@ -77,7 +77,7 @@ export class WebServer {
 
         const voteCount = (await client.db.votes.get(vote.user))?.count || "1";
 
-        const channelId = client.config.features.WebServer.TOPGG_VOTELOGS.LogVoteChannelID;
+        const channelId = client.config.features.WebServer.TOPGG_VOTELOGS.VoteChannelID;
         if (!channelId || channelId.length == 0) return;
 
         try {
@@ -125,9 +125,9 @@ export class WebServer {
             components: [ButtonVote],
           });
 
-          logInfo("WebServer", `${voteUser.tag} vừa vote trên Top.gg`);
+          // Log đã bị xóa
         } catch (error) {
-          logWarn("WebServer", "Error processing vote", { error: error as string });
+          // Log đã bị xóa
         }
       })
     );
@@ -233,6 +233,6 @@ export class WebServer {
 
   expose() {
     this.app.listen(this.port);
-    logInfo("WebServer", `WebServer đang chạy ở cổng: ${this.port}`);
+    // Log đã bị xóa
   }
 }

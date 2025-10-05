@@ -9,7 +9,7 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -189,7 +189,7 @@ export default class implements Command {
         flags: MessageFlags.Ephemeral,
       });
     } catch (error) {
-      logInfo("Đặt lại dữ liệu", `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
+      // Log đã bị xóa - Ghi lại lỗi khi xóa cơ sở dữ liệu
       await handler.interaction.reply({
         content: `Đã xảy ra lỗi khi xóa cơ sở dữ liệu\n\`${error.message}\``,
         flags: MessageFlags.Ephemeral,

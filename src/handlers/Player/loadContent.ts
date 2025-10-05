@@ -10,7 +10,6 @@ import { ButtonLoop } from "./ButtonCommands/Loop.js";
 import { ButtonPause } from "./ButtonCommands/Pause.js";
 import { RateLimitManager } from "@sapphire/ratelimits";
 import { ZklinkTrack } from "../../Zklink/main.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 const rateLimitManager = new RateLimitManager(2000);
 
 /**
@@ -29,7 +28,7 @@ export class PlayerContentLoader {
       this.client.on("interactionCreate", this.interaction.bind(null, this.client));
       this.client.on("messageCreate", this.message.bind(null, this.client));
     } catch (err) {
-      logError(PlayerContentLoader.name, err);
+      // Log đã bị xóa - PlayerContentLoader error
     }
   }
 

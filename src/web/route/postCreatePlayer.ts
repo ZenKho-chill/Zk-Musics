@@ -2,7 +2,7 @@ import util from "node:util";
 import { Guild, GuildMember } from "discord.js";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
-import { logInfo } from "../../utilities/Logger.js";
+// Log đã bị xóa - import logInfo
 
 export class PostCreatePlayer {
   guild: Guild | null = null;
@@ -10,10 +10,7 @@ export class PostCreatePlayer {
   constructor(protected client: Manager) {}
 
   async main(req: Fastify.FastifyRequest, res: Fastify.FastifyReply) {
-    logInfo(
-      "PostCreatePlayer",
-      `${req.method} ${req.routeOptions.url} dữ_liệu=${req.body ? util.inspect(req.body) : "{}"}`
-    );
+    // Log đã bị xóa - PostCreatePlayer request info
     const data = req.body as Record<string, string>;
     const validBody = await this.checker(data, req, res);
     if (!validBody) return;

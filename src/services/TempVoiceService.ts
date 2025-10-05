@@ -7,7 +7,7 @@ import {
   PermissionsBitField,
 } from "discord.js";
 import { TempVoiceChannel } from "../database/schema/TempVoiceChannel.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
+
 
 export default class TempVoiceService {
   private static readonly MAX_CHANNELS_PER_USER = 1;
@@ -48,7 +48,7 @@ export default class TempVoiceService {
           await client.db.TempVoiceChannel.delete(channelId);
         } catch (error) {
           if ((error as Error).message !== "Unknown Channel") {
-            logError(TempVoiceService.name, `Lỗi khi xóa kênh voice tạm thời`);
+            // Log đã bị xóa - Error lỗi khi xóa kênh voice tạm thời
           }
         }
       }
@@ -145,7 +145,7 @@ export default class TempVoiceService {
           await client.db.TempVoiceChannel.delete(tempVoiceChannel.id);
         } catch (error) {
           if ((error as Error).message !== "Unknown Channel") {
-            logError(TempVoiceService.name, `Lỗi khi xóa kênh tạm`);
+            // Log đã bị xóa - Error lỗi khi xóa kênh tạm
           }
         }
       }

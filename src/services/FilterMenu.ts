@@ -12,7 +12,7 @@ import { GuildMember, Interaction } from "discord.js";
 import { TopggServiceEnum } from "../services/TopggService.js";
 import axios from "axios";
 import { EmojiValidator } from "../utilities/EmojiValidator.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
+
 export default class FilterMenu {
   async execute(client: Manager) {
     const filterInfo: { [key: string]: string } = {
@@ -877,14 +877,7 @@ export default class FilterMenu {
           })}`,
           flags: MessageFlags.Ephemeral,
         });
-        logInfo(
-          "FilterMenu",
-          `${chalk.hex("#00D100").bold(selectedFilter)} được sử dụng bởi ${chalk
-            .hex("#00D100")
-            .bold(`${interaction.user.displayName} (${interaction.user.id})`)} từ ${chalk
-            .hex("#00D100")
-            .bold(`${interaction.guild!.name} (${interaction.guild!.id})`)}`
-        );
+        // Log đã bị xóa - FilterMenu được sử dụng bởi user từ guild
       }
     });
   }

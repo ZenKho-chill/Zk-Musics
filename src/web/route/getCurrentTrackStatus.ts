@@ -2,17 +2,14 @@ import util from "node:util";
 import { User } from "discord.js";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
-import { logInfo } from "../../utilities/Logger.js";
+// Log đã bị xóa - import logInfo
 
 export async function getCurrentTrackStatus(
   client: Manager,
   req: Fastify.FastifyRequest,
   res: Fastify.FastifyReply
 ) {
-  logInfo(
-    "StatusRouterService",
-    `${req.method} ${req.routeOptions.url} params=${req.params ? util.inspect(req.params) : "{}"}`
-  );
+  // Log đã bị xóa - getCurrentTrackStatus request info
   const guildId = (req.params as Record<string, string>)["guildId"];
   const player = client.Zklink.players.get(guildId);
   if (!player) {

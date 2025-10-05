@@ -179,7 +179,7 @@ export default class implements Command {
     plan: string,
     expiresAt: number | string
   ): Promise<void> {
-    if (!client.config.logchannel.GenerateCodeChannelID) return;
+    // Log channel đã bị xóa - không gửi log
     const language = client.config.bot.LANGUAGE;
 
     const embed = new EmbedBuilder()
@@ -225,13 +225,7 @@ export default class implements Command {
       .setColor(client.color_main)
       .setTimestamp();
 
-    try {
-      const channel = await client.channels
-        .fetch(client.config.logchannel.GenerateCodeChannelID)
-        .catch(() => undefined);
-      if (!channel || !channel.isTextBased()) return;
-      await (channel as any).send({ embeds: [embed] });
-    } catch {}
+    // Log channel đã bị xóa - không gửi embed
 
     return;
   }

@@ -1,11 +1,8 @@
 import { Manager } from "../../manager.js";
-import { logInfo } from "../../utilities/Logger.js";
+// Log đã bị xóa
 
 export default class {
   async execute(client: Manager) {
-    logInfo(
-      "ClientReconnect",
-      `Đã kết nối lại ${client.user!.tag} (${client.user!.id})`
-    );
+    // Log đã bị xóa - client reconnect
   }
 }

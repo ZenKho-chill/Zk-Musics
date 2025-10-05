@@ -125,23 +125,12 @@ export class Nodelink2 extends AbstractDriver {
     const res = await fetch(url, options);
 
     if (res.status == 204) {
-      this.debug(
-        `${options.method ?? "GET"} ${url.pathname + url.search} dữ liệu=${
-          options.body ? String(options.body) : "{}"
-        }`
-      );
+      // Debug đã bị xóa - Request method và endpoint data (status 204)
       return undefined;
     }
     if (res.status !== 200) {
-      this.debug(
-        `${options.method ?? "GET"} ${url.pathname + url.search} dữ liệu=${
-          options.body ? String(options.body) : "{}"
-        }`
-      );
-      this.debug(
-        "Lỗi từ server nodelink. " +
-          `Mã trạng thái: ${res.status}\n Headers: ${util.inspect(options.headers)}`
-      );
+      // Debug đã bị xóa - Request method và endpoint data
+      // Debug đã bị xóa - Lỗi từ server nodelink
       return undefined;
     }
 
@@ -152,11 +141,7 @@ export class Nodelink2 extends AbstractDriver {
       finalData = this.convertV4trackResponse(finalData) as D;
     }
 
-    this.debug(
-      `${options.method ?? "GET"} ${url.pathname + url.search} dữ liệu=${
-        options.body ? String(options.body) : "{}"
-      }`
-    );
+    // Debug đã bị xóa - Request method và endpoint data (cuối function)
 
     return finalData;
   }
@@ -168,12 +153,7 @@ export class Nodelink2 extends AbstractDriver {
   }
 
   protected debug(logs: string) {
-    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
-    // @ts-ignore
-    this.manager!.emit(
-      ZklinkEvents.Debug,
-      `[Zklink] / [Node @ ${this.node?.options.name}] / [Trình điều khiển] / [Nodelink2] | ${logs}`
-    );
+    // Debug đã bị xóa
   }
 
   public wsClose(): void {
@@ -216,7 +196,7 @@ export class Nodelink2 extends AbstractDriver {
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async updateSession(sessionId: string, mode: boolean, timeout: number): Promise<void> {
-    this.debug("CẢNH BÁO: Nodelink không hỗ trợ resume, đặt resume=true sẽ không có tác dụng");
+    // Debug đã bị xóa - CẢNH BÁO: Nodelink không hỗ trợ resume
     return;
   }
 

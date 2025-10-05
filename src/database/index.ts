@@ -3,7 +3,7 @@ import { JSONConnectDriver } from "./driver/json.js";
 import { MySQLConnectDriver } from "./driver/mysql.js";
 import { Manager } from "../manager.js";
 import { PostgresConnectDriver } from "./driver/postgres.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
+// Log đã bị xóa - import Logger functions
 
 export class DatabaseService {
   client: Manager;
@@ -34,7 +34,8 @@ export class DatabaseService {
           break;
       }
     } catch (error) {
-      return logError("DatabaseService", String(error));
+      // Log đã bị xóa - DatabaseService error
+      return;
     }
   }
 }

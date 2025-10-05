@@ -40,10 +40,10 @@ export class ZklinkNode {
     this.options = options;
     const getDriver = this.manager.drivers.filter((driver) => driver.id === options.driver);
     if (!getDriver || getDriver.length == 0) {
-      this.debug("Không tìm thấy driver, sử dụng lavalink v4 thay thế");
+      // Debug đã bị xóa - Không tìm thấy driver, sử dụng lavalink v4 thay thế
       this.driver = new Lavalink4();
     } else {
-      this.debug(`Đang sử dụng driver: ${getDriver[0].id}`);
+      // Debug đã bị xóa - Đang sử dụng driver
       this.driver = getDriver[0];
     }
     this.driver.initial(manager, this);
@@ -86,7 +86,7 @@ export class ZklinkNode {
   public wsOpenEvent() {
     this.clean(true);
     this.state = ZklinkConnectState.Connected;
-    this.debug(`Node đã kết nối! URL: ${this.driver.wsUrl}`);
+    // Debug đã bị xóa - Node đã kết nối
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeConnect, this);
   }
@@ -126,7 +126,7 @@ export class ZklinkNode {
 
   /** @ignore */
   public wsErrorEvent(logs: Error) {
-    this.debug(`Node gặp lỗi! URL: ${this.driver.wsUrl}`);
+    // Debug đã bị xóa - Node gặp lỗi
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeError, this, logs);
   }
@@ -135,7 +135,7 @@ export class ZklinkNode {
   public async wsCloseEvent(code: number, reason: Buffer) {
     this.online = false;
     this.state = ZklinkConnectState.Disconnected;
-    this.debug(`Node đã ngắt kết nối! URL: ${this.driver.wsUrl}`);
+    // Debug đã bị xóa - Node đã ngắt kết nối
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeDisconnect, this, code, reason);
     if (
@@ -154,7 +154,7 @@ export class ZklinkNode {
   protected nodeClosed() {
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeClosed, this);
-    this.debug(`Node đã đóng! URL: ${this.driver.wsUrl}`);
+    // Debug đã bị xóa - Node đã đóng
     this.clean();
   }
 
@@ -190,7 +190,6 @@ export class ZklinkNode {
   }
 
   protected debug(logs: string) {
-    // @ts-ignore
-    this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Nút @ ${this.options.name}] | ${logs}`);
+    // Debug đã bị xóa
   }
 }

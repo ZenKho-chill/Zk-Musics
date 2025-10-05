@@ -11,7 +11,6 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import humanizeDuration from "humanize-duration";
-import { logInfo, logDebug, logWarn, logError } from "../../utilities/Logger.js";
 
 const data: Config = new ConfigData().data;
 
@@ -125,7 +124,7 @@ export class PlaylistDetailHandler {
 
       // Kiểm tra xem interaction đã được acknowledge chưa
       if (interaction.replied || interaction.deferred) {
-        logInfo("DetailHandler", "Playlist detail selection interaction already acknowledged, skipping...");
+        // Log đã bị xóa - Playlist detail selection interaction already acknowledged
         return;
       }
 
@@ -133,7 +132,7 @@ export class PlaylistDetailHandler {
         // Defer update để edit tin nhắn gốc
         await interaction.deferUpdate();
       } catch (error) {
-        logError("PlaylistDetailHandler", "Error deferring playlist detail selection update", { error });
+        // Log đã bị xóa - Error deferring playlist detail selection update
         return;
       }
 
@@ -230,7 +229,7 @@ export class PlaylistDetailHandler {
     // Kiểm tra độ dài content để đảm bảo không vượt 1024 characters
     let finalTrackList = trackList;
     if (trackList.length > 1020) { // Để lại một chút buffer
-      logWarn("DetailHandler", "Track list too long, truncating...");
+      // Log đã bị xóa - Track list too long, truncating
       finalTrackList = trackList.substring(0, 1020) + "...";
     }
 
@@ -304,7 +303,7 @@ export class PlaylistDetailHandler {
         try {
           await pageInteraction.deferUpdate();
         } catch (error) {
-          logError("PlaylistDetailHandler", "Error deferring page selection update", { error });
+          // Log đã bị xóa - Error deferring page selection update
           return;
         }
 
@@ -328,7 +327,7 @@ export class PlaylistDetailHandler {
               components: disabledComponents,
             });
           } catch (error) {
-            logError("DetailHandler", "Error updating timeout message", { error });
+            // Log đã bị xóa - Error updating timeout message
           }
         }
       });

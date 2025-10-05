@@ -16,7 +16,7 @@ import { SpotifygetAccessToken } from "../../utilities/SpotifygetAccessToken.js"
 import axios from "axios";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+
 const data: Config = new ConfigData().data;
 let isCollectorActive = false;
 
@@ -290,7 +290,7 @@ export default class implements Command {
         }
       });
     } catch (error) {
-      logWarn("SpotifyPlaylist", `Lấy playlists từ Spotify thất bại: ${error}`);
+      // Log đã bị xóa - Cảnh báo lấy playlists từ Spotify thất bại
       await handler.editReply({
         content: " ",
         embeds: [

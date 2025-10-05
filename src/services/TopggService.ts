@@ -3,7 +3,6 @@ import { Snowflake } from "discord.js";
 import { Manager } from "../manager.js";
 import { request } from "undici";
 import chalk from "chalk";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 export enum TopggServiceEnum {
   ERROR,
   VOTED,
@@ -25,28 +24,21 @@ export class TopggService {
     if (res.status == 200) {
       this.isTokenAvalible = true;
       this.botId = userId;
-      logInfo(
-        TopggService.name,
-        chalk.italic(`Dịch vụ TopGG đã được cài đặt thành công!`)
-      );
+      // Log đã bị xóa - Dịch vụ TopGG đã được cài đặt thành công
       return true;
     }
-    logWarn(TopggService.name, "Có sự cố khi cài đặt dịch vụ TopGG");
-    logWarn(TopggService.name, await res.text());
+    // Log đã bị xóa - Có sự cố khi cài đặt dịch vụ TopGG
     return false;
   }
 
   public async checkVote(userId: string): Promise<TopggServiceEnum> {
     if (!this.botId || !this.isTokenAvalible) {
-      logError(
-        TopggService.name,
-        "Dịch vụ TopGG chưa được cấu hình! check vote sẽ luôn trả về lỗi"
-      );
+      // Log đã bị xóa - Dịch vụ TopGG chưa được cấu hình
       return TopggServiceEnum.ERROR;
     }
     const res = await this.fetch(`/bots/${this.botId}/check?userId=${userId}`);
     if (res.status !== 200) {
-      logError(TopggService.name, "Có lỗi khi lấy dữ liệu từ top.gg");
+      // Log đã bị xóa - Có lỗi khi lấy dữ liệu từ top.gg
       return TopggServiceEnum.ERROR;
     }
     const jsonRes = (await res.json()) as { voted: number };
@@ -68,10 +60,7 @@ export class TopggService {
     cron.schedule("0 */1 * * * *", () =>
       this.updateStatisticCount(this.client.guilds.cache.size, this.shardCount)
     );
-    logInfo(
-      TopggService.name,
-      chalk.italic(`Thống kê TopGG đã được bật thành công!`)
-    );
+    // Log đã bị xóa - Thống kê TopGG đã được bật thành công
   }
 
   public async updateStatisticCount(serverCount: number, shardCount: number) {

@@ -113,19 +113,11 @@ export class Lavalink3 extends AbstractDriver {
     const res = await fetch(url, options);
 
     if (res.status == 204) {
-      this.debug("Player đã bị hủy");
+      // Debug đã bị xóa - Player đã bị hủy
       return undefined;
     }
     if (res.status !== 200) {
-      this.debug(
-        `${options.method ?? "GET"} ${url.pathname + url.search} dữ liệu=${
-          options.body ? String(options.body) : "{}"
-        }`
-      );
-      this.debug(
-        "Lỗi từ server lavalink. " +
-          `Mã trạng thái: ${res.status}\n Headers: ${util.inspect(options.headers)}`
-      );
+      // Debug đã bị xóa - Lỗi từ server lavalink
       return undefined;
     }
 
@@ -137,11 +129,7 @@ export class Lavalink3 extends AbstractDriver {
       finalData = this.convertV4trackResponse(finalData) as D;
     }
 
-    this.debug(
-      `${options.method ?? "GET"} ${url.pathname + url.search} dữ liệu=${
-        options.body ? String(options.body) : "{}"
-      }`
-    );
+    // Debug đã bị xóa - Request method và endpoint data
 
     return finalData;
   }
@@ -268,7 +256,7 @@ export class Lavalink3 extends AbstractDriver {
         key: "Zklink/lavalink/v3/koto/legacy",
         timeout: 60,
       });
-      this.debug(`Phiên đã được cập nhật! resume: ${mode}, timeout: ${timeout}`);
+      // Debug đã bị xóa - Phiên đã được cập nhật
       return;
     }
     const options: ZklinkRequesterOptions = {
@@ -282,17 +270,12 @@ export class Lavalink3 extends AbstractDriver {
     };
 
     await this.requester<{ resuming: boolean; timeout: number }>(options);
-    this.debug(`Phiên đã được cập nhật! resume: ${mode}, timeout: ${timeout}`);
+    // Debug đã bị xóa - Phiên đã được cập nhật
     return;
   }
 
   protected debug(logs: string) {
-    if (!this.isRegistered) throw new Error(`Driver ${this.id} chưa được đăng ký — gọi initial()`);
-    // @ts-ignore
-    this.manager!.emit(
-      ZklinkEvents.Debug,
-      `[Zklink] / [Node @ ${this.node?.options.name}] / [Trình điều khiển] / [Lavalink3] | ${logs}`
-    );
+    // Debug đã bị xóa
   }
 
   public wsClose(): void {

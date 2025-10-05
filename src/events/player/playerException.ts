@@ -5,10 +5,9 @@ import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, message: string, data: Record<string, any>) {
-    logInfo("PlayerException", `Player gặp ngoại lệ ${util.inspect(message)}`);
+    // Log đã bị xóa - Player gặp ngoại lệ
 
     /////////// Cập nhật thiết lập nhạc ///////////
     await client.UpdateMusic(player);
@@ -40,10 +39,7 @@ export default class {
         try {
           await msg.delete();
         } catch (error) {
-          logInfo(
-            "PlayerException",
-            `Đã xóa tin nhắn trước đó tại @ ${msg.guild!.name} / ${player.guildId}`
-          );
+          // Log đã bị xóa - Đã xóa tin nhắn trước đó
         }
       }, client.config.features.DELETE_MSG_TIMEOUT);
     }

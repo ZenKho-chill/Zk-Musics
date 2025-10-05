@@ -1,7 +1,7 @@
 import { Manager } from "../manager.js";
 import { Guild } from "discord.js";
 import { mapDiscordLocaleToSupportedLanguage, getLanguageDisplayName, getDefaultLanguage } from "../languages/languageConfig.js";
-import { logInfo, logError } from "./Logger.js";
+
 
 /**
  * Utility class để quản lý ngôn ngữ guild
@@ -24,10 +24,7 @@ export class GuildLanguageManager {
       // Kiểm tra xem guild đã có ngôn ngữ được set chưa
       const existingLanguage = await client.db.language.get(guild.id);
       if (existingLanguage && !forceUpdate) {
-        logInfo(
-          "GuildLanguageManager", 
-          `Guild ${guild.name} đã có ngôn ngữ: ${existingLanguage}`
-        );
+        // Log đã bị xóa - Guild đã có ngôn ngữ
         return existingLanguage;
       }
 
@@ -39,19 +36,12 @@ export class GuildLanguageManager {
       await client.db.language.set(guild.id, detectedLanguage);
       
       const action = existingLanguage ? "cập nhật" : "thiết lập";
-      logInfo(
-        "GuildLanguageManager",
-        `Đã ${action} ngôn ngữ cho guild ${guild.name}: Discord locale "${guildLocale}" → "${detectedLanguage}" (${getLanguageDisplayName(detectedLanguage)})`
-      );
+      // Log đã bị xóa - Đã thiết lập/cập nhật ngôn ngữ cho guild
       
       return detectedLanguage;
       
     } catch (error) {
-      logError(
-        "GuildLanguageManager",
-        `Lỗi khi thiết lập ngôn ngữ cho guild ${guild.name}: ${error}`,
-        { error }
-      );
+      // Log đã bị xóa - Lỗi khi thiết lập ngôn ngữ cho guild
       
       // Fallback về ngôn ngữ mặc định từ config
       const fallbackLanguage = getDefaultLanguage();
@@ -71,11 +61,7 @@ export class GuildLanguageManager {
       const language = await client.db.language.get(guildId);
       return language || getDefaultLanguage();
     } catch (error) {
-      logError(
-        "GuildLanguageManager",
-        `Lỗi khi lấy ngôn ngữ guild ${guildId}: ${error}`,
-        { error }
-      );
+      // Log đã bị xóa - Lỗi khi lấy ngôn ngữ guild
       return getDefaultLanguage();
     }
   }
@@ -94,17 +80,10 @@ export class GuildLanguageManager {
   ): Promise<boolean> {
     try {
       await client.db.language.set(guildId, languageCode);
-      logInfo(
-        "GuildLanguageManager",
-        `Đã cập nhật ngôn ngữ guild ${guildId} thành: ${languageCode} (${getLanguageDisplayName(languageCode)})`
-      );
+      // Log đã bị xóa - Đã cập nhật ngôn ngữ guild
       return true;
     } catch (error) {
-      logError(
-        "GuildLanguageManager",
-        `Lỗi khi cập nhật ngôn ngữ guild ${guildId}: ${error}`,
-        { error }
-      );
+      // Log đã bị xóa - Lỗi khi cập nhật ngôn ngữ guild
       return false;
     }
   }

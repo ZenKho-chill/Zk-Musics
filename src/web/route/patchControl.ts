@@ -3,7 +3,7 @@ import { Manager } from "../../manager.js";
 import Fastify from "fastify";
 import { ZklinkLoopMode } from "../../Zklink/Interface/Constants.js";
 import { ZklinkPlayer } from "../../Zklink/Player/ZklinkPlayer.js";
-import { logInfo } from "../../utilities/Logger.js";
+// Log đã bị xóa - import logInfo
 
 export type TrackRes = {
   title: string;
@@ -21,10 +21,7 @@ export class PatchControl {
   constructor(protected client: Manager) {}
 
   async main(req: Fastify.FastifyRequest, res: Fastify.FastifyReply) {
-    logInfo(
-      "PatchControl",
-      `${req.method} ${req.routeOptions.url} dữ_liệu=${req.body ? util.inspect(req.body) : "{}"}`
-    );
+    // Log đã bị xóa - PatchControl request info
     const isValid = await this.checker(req, res);
     if (!isValid) return;
     const guildId = (req.params as Record<string, string>)["guildId"];

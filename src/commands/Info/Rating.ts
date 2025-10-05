@@ -5,7 +5,7 @@ import { ApplicationCommandOptionType, EmbedBuilder, WebhookClient } from "disco
 import moment from "moment";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+// Log đã bị xóa - import Logger đã bị loại bỏ
 const data: Config = new ConfigData().data;
 
 export default class implements Command {
@@ -63,19 +63,15 @@ export default class implements Command {
       if (!handler.interaction) return;
       await handler.deferReply();
 
-      const RatingChannelID = client.config.logchannel.RatingChannelID;
+      // Sử dụng kênh hiện tại thay vì RatingChannelID đã bị xóa
+      const channel = handler.channel;
 
       // Tạo Embed cho lỗi
       const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_failure")}`);
 
-      if (!RatingChannelID || RatingChannelID.length === 0) {
-        // Nếu RatingChannelID không được cấu hình
-        return handler.editReply({ embeds: [errorEmbed] });
-      }
-
-      const channel = await client.channels.fetch(RatingChannelID).catch(() => undefined);
+      // Log channel đã bị xóa - sử dụng kênh hiện tại để gửi đánh giá
 
       if (!channel || (channel && !channel.isTextBased())) {
         // Nếu kênh không tồn tại hoặc không phải kênh văn bản
@@ -146,7 +142,7 @@ export default class implements Command {
         .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_succes")}`);
       handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
-      logWarn("Rating", "Lỗi khi thực thi lệnh Rating");
+      // Log đã bị xóa - Cảnh báo lỗi khi thực thi lệnh Rating
       const errorEmbed = new EmbedBuilder()
         .setColor(client.color_main)
         .setDescription(`${client.i18n.get(handler.language, "commands.info", "rating_failure")}`);

@@ -1,6 +1,6 @@
 import { Manager } from "../manager.js";
 import { KeyCheckerEnum } from "../@types/KeyChecker.js";
-import { LogManager } from "../services/LogManager.js";
+// LogManager đã bị xóa
 import utils from "node:util";
 
 export class keyChecker {
@@ -20,20 +20,12 @@ export class keyChecker {
   }
 
   execute() {
-    const logger = new LogManager(this.client, this.client.cluster.id);
     const objReqKey = Object.keys(this.sampleConfig);
     const res = this.checkEngine();
 
     if (res == KeyCheckerEnum.Pass) return true;
 
-    logger.error(
-      import.meta.url,
-      `
-      Cấu hình không hợp lệ [${res}], vui lòng chỉ đặt [${objReqKey.join(", ")}]. Ví dụ:
-      DATABASE:
-        driver: "${this.dbName}"
-        config: ${utils.inspect(this.sampleConfig)}`
-    );
+    // Log đã bị xóa - Database config không hợp lệ
     process.exit();
   }
 

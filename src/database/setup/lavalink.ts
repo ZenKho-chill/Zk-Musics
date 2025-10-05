@@ -2,7 +2,7 @@ import { Manager } from "../../manager.js";
 import { AutoReconnect } from "../schema/AutoReconnect.js";
 import { VoiceChannel } from "discord.js";
 import { ZklinkLoopMode, ZklinkPlayer } from "../../Zklink/main.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+// Log đã bị xóa - import Logger functions
 
 export class AutoReconnectLavalinkService {
   client: Manager;
@@ -12,61 +12,34 @@ export class AutoReconnectLavalinkService {
   }
 
   async execute() {
-    logInfo(
-      AutoReconnectLavalinkService.name,
-      `Đang thiết lập dữ liệu cho lavalink...`
-    );
-    logInfo(
-      AutoReconnectLavalinkService.name,
-      `Auto ReConnect đang thu thập dữ liệu player 24/7`
-    );
+    // Log đã bị xóa - Đang thiết lập dữ liệu cho lavalink
+    // Log đã bị xóa - Auto ReConnect đang thu thập dữ liệu player 24/7
     const maindata = await this.client.db.autoreconnect.all();
 
     if (!maindata || maindata.length == 0) {
-      logInfo(
-        AutoReconnectLavalinkService.name,
-        `Auto ReConnect tìm thấy trong 0 server!`
-      );
-      logInfo(
-        AutoReconnectLavalinkService.name,
-        `Hoàn tất thiết lập dữ liệu cho lavalink!`
-      );
+      // Log đã bị xóa - Auto ReConnect tìm thấy trong 0 server
+      // Log đã bị xóa - Hoàn tất thiết lập dữ liệu cho lavalink
       return;
     }
 
-    logInfo(
-      AutoReconnectLavalinkService.name,
-      `Auto ReConnect tìm thấy trong ${Object.keys(maindata).length} server!`
-    );
+    // Log đã bị xóa - Auto ReConnect tìm thấy trong server
     if (Object.keys(maindata).length === 0) return;
 
     let retry_interval = setInterval(async () => {
       if (this.client.lavalinkUsing.length == 0 || this.client.Zklink.nodes.size == 0)
-        return logInfo(
-          AutoReconnectLavalinkService.name,
-          `Không có lavalink khả dụng, thử lại sau 3 giây!`
-        );
+        // Log đã bị xóa - Không có lavalink khả dụng
+        return;
 
       clearInterval(retry_interval);
 
-      logInfo(
-        AutoReconnectLavalinkService.name,
-        `Lavalink khả dụng, xóa interval và tiếp tục thiết lập!`
-      );
+      // Log đã bị xóa - Lavalink khả dụng, xóa interval và tiếp tục thiết lập
 
       for await (const data of maindata) {
         setTimeout(async () => this.connectChannel(data));
       }
 
-      logInfo(
-        AutoReconnectLavalinkService.name,
-        `Đã kết nối lại với tất cả ${Object.keys(maindata).length} server!`
-      );
-
-      logInfo(
-        AutoReconnectLavalinkService.name,
-        `Hoàn tất thiết lập dữ liệu cho lavalink!`
-      );
+      // Log đã bị xóa - Đã kết nối lại với tất cả server
+      // Log đã bị xóa - Hoàn tất thiết lập dữ liệu cho lavalink
     }, 3000);
   }
 
@@ -77,18 +50,12 @@ export class AutoReconnectLavalinkService {
       .fetch(data.value.voice)
       .catch(() => undefined)) as VoiceChannel;
     if (!channel || !voice) {
-      logInfo(
-        AutoReconnectLavalinkService.name,
-        `Kênh voice/text cuối cùng mà bot đã tham gia ở guild [${data.value.guild}] không tìm thấy, bỏ qua...`
-      );
+      // Log đã bị xóa - Kênh voice/text cuối cùng không tìm thấy
       return this.client.db.autoreconnect.delete(data.value.guild);
     }
 
     if (!data.value.twentyfourseven && voice.members.filter((m) => !m.user.bot).size == 0) {
-      logInfo(
-        AutoReconnectLavalinkService.name,
-        `Guild [${data.value.guild}] có 0 thành viên trong kênh voice cuối cùng bot tham gia, bỏ qua...`
-      );
+      // Log đã bị xóa - Guild có 0 thành viên trong kênh voice
       return this.client.db.autoreconnect.delete(data.value.guild);
     }
 
@@ -104,11 +71,10 @@ export class AutoReconnectLavalinkService {
       volume: this.client.config.bot.DEFAULT_VOLUME,
     });
 
-    if (!this.client.config.features.AUTO_RESUME)
-      return logInfo(
-        AutoReconnectLavalinkService.name,
-        `Tự động resume bị tắt, bỏ qua tất cả.`
-      );
+    if (!this.client.config.features.AUTO_RESUME) {
+      // Log đã bị xóa - Tự động resume bị tắt
+      return;
+    }
 
     if (data.value.current && data.value.current.length !== 0) {
       const search = await player.search(data.value.current, {

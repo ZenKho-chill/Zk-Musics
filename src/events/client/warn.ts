@@ -1,8 +1,8 @@
 import { Manager } from "../../manager.js";
-import { logWarn } from "../../utilities/Logger.js";
+// Log đã bị xóa
 
 export default class {
   async execute(client: Manager) {
-    logWarn("ClientWarning", `Có cảnh báo ${client.user!.tag} (${client.user!.id})`);
+    // Log đã bị xóa - client warning
   }
 }

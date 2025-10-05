@@ -3,7 +3,7 @@ import { PlayerContentLoader } from "./Player/loadContent.js";
 import { PlayerEventLoader } from "./Player/loadEvent.js";
 import { PlayerSetupLoader } from "./Player/loadSetup.js";
 import { PlayerUpdateLoader } from "./Player/loadUpdate.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
+// Log đã bị xóa
 
 export class PlayerLoader {
   constructor(client: Manager) {
@@ -11,6 +11,6 @@ export class PlayerLoader {
     new PlayerContentLoader(client);
     new PlayerUpdateLoader(client);
     new PlayerSetupLoader(client);
-    logInfo(PlayerLoader.name, "Sự kiện Zklink đã được tải!");
+    // Log đã bị xóa - Zklink loaded
   }
 }

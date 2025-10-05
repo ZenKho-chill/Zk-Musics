@@ -1,7 +1,7 @@
 import { Manager } from "../../manager.js";
 import { MessageReaction, PartialMessageReaction, User, PartialUser } from "discord.js";
 import { updateReactionStats } from "./StatisticsUtils.js";
-import { logError } from "../../utilities/Logger.js";
+
 
 export class handleReactionStats {
   private client: Manager;
@@ -19,7 +19,7 @@ export class handleReactionStats {
           try {
             await reaction.fetch();
           } catch (error) {
-            logError("handleReactionStats", "Không thể lấy reaction");
+            // Log đã bị xóa - Error không thể lấy reaction
             return;
           }
         }
@@ -28,7 +28,7 @@ export class handleReactionStats {
           try {
             await user.fetch();
           } catch (error) {
-            logError("handleReactionStats", "Không thể lấy user");
+            // Log đã bị xóa - Error không thể lấy user
             return;
           }
         }

@@ -3,7 +3,7 @@ import { EmbedBuilder, Message, User } from "discord.js";
 import { FormatDuration } from "../utilities/FormatDuration.js";
 import { ProgressBar } from "../utilities/ProgressBar.js";
 import { ZklinkPlayer, ZklinkTrack } from "../Zklink/main.js";
-import { logDebug, logWarn } from "../utilities/Logger.js";
+
 
 interface NowPlayingUpdate {
   guildId: string;
@@ -67,7 +67,7 @@ export class NowPlayingUpdateService {
       isUpdating: false,
     });
 
-    logDebug("NowPlayingUpdateService", `Bắt đầu tracking nowplaying cho guild ${guildId}`);
+    // Log đã bị xóa - Debug bắt đầu tracking nowplaying
   }
 
   /**
@@ -78,7 +78,7 @@ export class NowPlayingUpdateService {
     if (update) {
       clearInterval(update.interval);
       this.updates.delete(guildId);
-      logDebug("NowPlayingUpdateService", `Dừng tracking nowplaying cho guild ${guildId}`);
+      // Log đã bị xóa - Debug dừng tracking nowplaying
     }
   }
 
@@ -88,7 +88,7 @@ export class NowPlayingUpdateService {
   public async deleteNowPlaying(client: Manager, guildId: string): Promise<void> {
     const update = this.updates.get(guildId);
     if (!update) {
-      logDebug("NowPlayingUpdateService", `Không có nowplaying tracking cho guild ${guildId}, bỏ qua việc xóa`);
+      // Log đã bị xóa - Debug không có nowplaying tracking, bỏ qua việc xóa
       return;
     }
 
@@ -97,14 +97,14 @@ export class NowPlayingUpdateService {
       if (channel?.isTextBased()) {
         const message = await channel.messages.fetch(update.messageId);
         await message.delete();
-        logDebug("NowPlayingUpdateService", `✅ Đã xóa nowplaying message cho guild ${guildId}`);
+        // Log đã bị xóa - Debug đã xóa nowplaying message
       }
     } catch (error: any) {
       // Không log warning nếu message đã bị xóa (lỗi 10008: Unknown Message)
       if (error.code !== 10008) {
-        logWarn("NowPlayingUpdateService", `Lỗi khi xóa nowplaying message: ${error.message || error}`);
+        // Log đã bị xóa - Cảnh báo lỗi khi xóa nowplaying message
       } else {
-        logDebug("NowPlayingUpdateService", `Nowplaying message đã được xóa trước đó cho guild ${guildId}`);
+        // Log đã bị xóa - Debug nowplaying message đã được xóa trước đó
       }
     }
 
@@ -165,16 +165,16 @@ export class NowPlayingUpdateService {
               await message.edit({ embeds: [embed] });
               update.lastProgressPercent = progressPercent;
               update.lastUpdate = now;
-              logDebug("NowPlayingUpdateService", `Cập nhật nowplaying ${progressPercent}% cho guild ${guildId}`);
+              // Log đã bị xóa - Debug cập nhật nowplaying progress
             } catch (error) {
-              logWarn("NowPlayingUpdateService", `Lỗi khi edit message: ${error}`);
+              // Log đã bị xóa - Cảnh báo lỗi khi edit message
             } finally {
               update.isUpdating = false;
             }
           }, 0);
         }
       } catch (error) {
-        logWarn("NowPlayingUpdateService", `Lỗi khi cập nhật nowplaying: ${error}`);
+        // Log đã bị xóa - Cảnh báo lỗi khi cập nhật nowplaying
         update.isUpdating = false;
         // Nếu lỗi, dừng tracking
         this.stopTracking(guildId);
@@ -354,7 +354,7 @@ export class NowPlayingUpdateService {
     const update = this.updates.get(guildId);
     if (update && update.cachedTrackInfo) {
       delete update.cachedTrackInfo;
-      logDebug("NowPlayingUpdateService", `Đã clear cache nowplaying cho guild ${guildId}`);
+      // Log đã bị xóa - Debug đã clear cache nowplaying
     }
   }
 
@@ -365,6 +365,6 @@ export class NowPlayingUpdateService {
     for (const [guildId] of this.updates) {
       this.stopTracking(guildId);
     }
-    logDebug("NowPlayingUpdateService", "Đã dừng tất cả nowplaying tracking");
+    // Log đã bị xóa - Debug đã dừng tất cả nowplaying tracking
   }
 }

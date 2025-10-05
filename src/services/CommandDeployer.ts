@@ -6,7 +6,6 @@ import { ApplicationCommandOptionType, REST, Routes } from "discord.js";
 import { CommandInterface, UploadCommandInterface } from "../@types/Interaction.js";
 import { join, dirname } from "path";
 import { BotInfoType } from "../@types/User.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -40,41 +39,29 @@ export class CommandDeployer {
   async execute() {
     const command = [];
 
-    logInfo(CommandDeployer.name, "Đang đọc file interaction...");
+    // Log đã bị xóa - đọc interaction
 
     const store = await this.combineDir();
 
     command.push(...this.parseEngine(store));
 
-    logInfo(
-      CommandDeployer.name,
-      "Đã đọc xong file interaction, đang thiết lập REST..."
-    );
+    // Log đã bị xóa - Đã đọc xong file interaction
 
     const rest = new REST({ version: "10" }).setToken(this.client.config.bot.TOKEN);
     const client = await rest.get(Routes.user());
 
-    logInfo(
-      CommandDeployer.name,
-      `Đã thiết lập REST cho ${(client as BotInfoType).username}#${
-        (client as BotInfoType).discriminator
-      } (${(client as BotInfoType).id})`
-    );
+    // Log đã bị xóa - Đã thiết lập REST
 
-    if (command.length === 0)
-      return logInfo(
-        CommandDeployer.name,
-        "Không có interaction nào được load. Kết thúc auto deploy..."
-      );
+    if (command.length === 0) {
+      // Log đã bị xóa - Không có interaction nào được load
+      return;
+    }
 
     await rest.put(Routes.applicationCommands((client as BotInfoType).id), {
       body: command,
     });
 
-    logInfo(
-      CommandDeployer.name,
-      `Đã triển khai interaction! Kết thúc auto deploy...`
-    );
+    // Log đã bị xóa - Đã triển khai interaction
   }
 
   protected parseEngine(store: CommandInterface[]) {

@@ -1,8 +1,8 @@
 import { Manager } from "../../manager.js";
-import { logError } from "../../utilities/Logger.js";
+// Log đã bị xóa
 
 export default class {
   async execute(client: Manager) {
-    logError("ClientRateLimited", `Bị giới hạn tốc độ, đang ngủ trong ${0} giây`);
+    // Log đã bị xóa - rate limit
   }
 }

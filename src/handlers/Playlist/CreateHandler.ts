@@ -11,7 +11,6 @@ import { Manager } from "../../manager.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logInfo, logDebug, logWarn, logError } from "../../utilities/Logger.js";
 
 const data: Config = new ConfigData().data;
 
@@ -69,7 +68,7 @@ export class PlaylistCreateHandler {
       
     } catch (error) {
       // Timeout hoặc lỗi khác
-      logError("CreateHandler", "Modal submit error", { error });
+      // Log đã bị xóa - Modal submit error
       // Không cần handle vì user đã đóng modal hoặc timeout
     }
   }

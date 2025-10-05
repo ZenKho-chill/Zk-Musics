@@ -6,22 +6,15 @@ import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel, ClearMusicStatusChannelWithDelay } from "../../utilities/UpdateStatusChannel.js";
 import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
 import chalk from "chalk";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
-    if (!client.isDatabaseConnected)
-      return logWarn(
-        "DatabaseService",
-        "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
-      );
+    if (!client.isDatabaseConnected) {
+      // Log đã bị xóa - Cơ sở dữ liệu chưa kết nối
+      return;
+    }
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
-    logInfo(
-      "PlayerDestroy",
-      `${chalk.hex("#dc143c")("Player đã bị hủy tại @ ")}${chalk.hex("#dc143c")(
-        guild?.name
-      )} / ${chalk.hex("#dc143c")(player.guildId)}`
-    );
+    // Log đã bị xóa - Player đã bị hủy
 
     /////////// Cập nhật thiết lập nhạc ///////////
     await client.UpdateMusic(player);
@@ -51,10 +44,7 @@ export default class {
         await UpdateMusicStatusChannel(client, player);
       }
     } else {
-      logDebug(
-        "PlayerDestroy",
-        `Voice status đã được xóa trong voiceStateUpdate, bỏ qua xử lý tại PlayerDestroy cho Guild ${player.guildId}`
-      );
+      // Log đã bị xóa - Voice status đã được xóa trong voiceStateUpdate
     }
     /////////// Cập nhật kênh trạng thái nhạc //////////
 

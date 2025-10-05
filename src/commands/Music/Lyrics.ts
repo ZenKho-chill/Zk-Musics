@@ -5,7 +5,7 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import Genius from "genius-lyrics";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+
 const data: Config = new ConfigData().data;
 
 // Mã chính
@@ -126,7 +126,7 @@ export default class implements Command {
 
       return handler.editReply({ embeds: [embed] });
     } catch (error) {
-      logError("Lỗi LyricsCommand:", error);
+      // Log đã bị xóa - Ghi lại lỗi LyricsCommand
       return handler.editReply({
         embeds: [
           new EmbedBuilder()
