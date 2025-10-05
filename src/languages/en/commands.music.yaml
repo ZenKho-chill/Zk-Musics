@@ -39,19 +39,6 @@ play_playlist_max: |
   <:wrong:1220876213896216686> OMG!>,.,< The playlist is too long. Max %{limitqueue} songs.
   <:blankers:1220848705289064669><:pop:1220849334606626946> Upgrade to [**premium**](%{premium}) for unlimited playlist access!
 
-### Shuffle command!
-shuffle_title: "Shuffles the Queue"
-
-### Skip command!
-skip_notfound: |
-  <:warnings:1220876158254710936> **No song was found to Skip to! Seems like there's nothing to skip to. 
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Let's /play keep the music going by adding more tracks!**
-skip_msg: "<:next:1220832036101820508> **%{title} Has been Skipped**"
-skip_number_invalid: "<:warnings:1220876158254710936> Please provide a valid number!"
-
-### Stop command!
-stop_msg: <:stop:1220831796430897272> **%{title} Has been stopped**
-
 ### Spotify Playlist command!
 spotify_playlist_placeholder: "Add to queue and play for you ♥"
 spotify_playlist_title: "Spotify playlist for %{SpotifyName}"

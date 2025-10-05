@@ -39,19 +39,6 @@ play_playlist_max: |
   <:wrong:1220876213896216686> Ôi không! Playlist quá dài. Tối đa %{limitqueue} bài.
   <:blankers:1220848705289064669><:pop:1220849334606626946> Nâng cấp lên [**premium**](%{premium}) để được playlist không giới hạn!
 
-### Lệnh Xáo trộn!
-shuffle_title: "Xáo trộn hàng chờ"
-
-### Lệnh Bỏ qua!
-skip_notfound: |
-  <:warnings:1220876158254710936> **Không tìm thấy bài để bỏ qua! Có vẻ không còn gì để bỏ qua. 
-  <:blankers:1220848705289064669><:pop:1220849334606626946> Hãy /play thêm bài để tiếp tục nghe nhé!**
-skip_msg: "<:next:1220832036101820508> **%{title} đã bị bỏ qua**"
-skip_number_invalid: "<:warnings:1220876158254710936> Vui lòng nhập một số hợp lệ!"
-
-### Lệnh Dừng!
-stop_msg: "<:stop:1220831796430897272> **%{title} đã bị dừng**"
-
 ### Lệnh Spotify Playlist!
 spotify_playlist_placeholder: "Thêm vào hàng chờ và phát cho bạn ♥"
 spotify_playlist_title: "Danh sách phát Spotify của %{SpotifyName}"
