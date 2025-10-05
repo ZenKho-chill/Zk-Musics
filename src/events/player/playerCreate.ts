@@ -1,6 +1,7 @@
 import { Manager } from "../../manager.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { log } from "../../utilities/LoggerHelper.js";
 import chalk from "chalk";
 
 export default class {

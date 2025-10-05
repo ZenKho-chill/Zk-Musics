@@ -1,22 +1,22 @@
 import Fastify from "fastify";
 import { Manager } from "../manager.js";
 import { WebSocket } from "@fastify/websocket";
-// Log đã bị xóa - import logInfo
+import { log } from "../utilities/LoggerHelper.js";
 
 export class WebsocketRoute {
   constructor(protected client: Manager) {}
 
   main(fastify: Fastify.FastifyInstance) {
     fastify.get("/websocket", { websocket: true }, (socket, req) => {
-      // Log đã bị xóa - WebsocketRoute request info
+      log.info("WebsocketRoute request nhận được", `IP: ${req.ip}`);
       socket.on("close", (code, reason) => {
-        // Log đã bị xóa - Đóng kết nối websocket
+        log.info("Đóng kết nối websocket", `Code: ${code}, Reason: ${reason}`);
       });
       if (!this.checker(socket, req)) return;
       this.client.wsl.set(String(req.headers["guild-id"]), {
         send: (data) => socket.send(JSON.stringify(data)),
       });
-      // Log đã bị xóa - Websocket đã mở cho guildId
+      log.info("Websocket đã mở cho guildId", `Guild: ${req.headers["guild-id"]}`);
     });
   }
 

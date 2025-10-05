@@ -16,6 +16,7 @@ import {
 import chalk from "chalk";
 import { Manager } from "../../manager.js";
 import { GlobalInteraction, NoAutoInteraction } from "../../@types/Interaction.js";
+import { log } from "../../utilities/LoggerHelper.js";
 import {
   CheckPermissionResultInterface,
   CheckPermServices,

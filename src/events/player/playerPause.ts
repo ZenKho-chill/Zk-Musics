@@ -8,6 +8,7 @@ import {
 import { Manager } from "../../manager.js";
 import { TextChannel } from "discord.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {

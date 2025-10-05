@@ -9,7 +9,7 @@ import { SourceZklinkPlugin } from "../SourceZklinkPlugin.js";
 import { ZklinkEvents, ZklinkPluginType } from "../../Interface/Constants.js";
 import { Config } from "../../../@types/Config.js";
 import { ConfigData } from "../../../services/ConfigData.js";
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 import { fetch } from "undici";
 const REGEX =
   /(?:https:\/\/music\.apple\.com\/)(?:.+)?(artist|album|music-video|playlist)\/([\w\-\.]+(\/)+[\w\-\.]+|[^&]+)\/([\w\-\.]+(\/)+[\w\-\.]+|[^&]+)/;

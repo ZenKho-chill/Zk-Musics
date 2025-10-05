@@ -7,7 +7,7 @@ import { LoggerService } from "../../services/LoggerService.js";
 
 export default class {
   async execute(client: Manager) {
-    log.success("Client đã sẵn sàng", `Đăng nhập thành công với tên: ${client.user?.tag}`);
+    log.info("Client đã sẵn sàng", `Đăng nhập thành công với tên: ${client.user?.tag}`);
     
     // Log thông tin client qua LoggerService
     const loggerService = LoggerService.getInstance();

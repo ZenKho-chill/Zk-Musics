@@ -12,6 +12,7 @@ import { GuildMember, Interaction } from "discord.js";
 import { TopggServiceEnum } from "../services/TopggService.js";
 import axios from "axios";
 import { EmojiValidator } from "../utilities/EmojiValidator.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 export default class FilterMenu {
   async execute(client: Manager) {
@@ -877,7 +878,12 @@ export default class FilterMenu {
           })}`,
           flags: MessageFlags.Ephemeral,
         });
-        // Log đã bị xóa - FilterMenu được sử dụng bởi user từ guild
+        log.info(
+          interaction.user.id, 
+          `FilterMenu used: ${selectedFilter}`, 
+          interaction.guild?.id,
+          `Filter applied to player`
+        );
       }
     });
   }

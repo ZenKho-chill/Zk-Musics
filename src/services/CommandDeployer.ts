@@ -6,6 +6,7 @@ import { ApplicationCommandOptionType, REST, Routes } from "discord.js";
 import { CommandInterface, UploadCommandInterface } from "../@types/Interaction.js";
 import { join, dirname } from "path";
 import { BotInfoType } from "../@types/User.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -39,21 +40,23 @@ export class CommandDeployer {
   async execute() {
     const command = [];
 
-    // Log đã bị xóa - đọc interaction
+    log.info(0, 100, "commands", "Bắt đầu đọc interaction files");
 
     const store = await this.combineDir();
 
     command.push(...this.parseEngine(store));
 
-    // Log đã bị xóa - Đã đọc xong file interaction
+    log.info("Đã đọc xong file interaction", `Loaded ${store.length} commands`);
 
     const rest = new REST({ version: "10" }).setToken(this.client.config.bot.TOKEN);
+    
+    log.info("Đã thiết lập REST client", "Ready to deploy commands");
     const client = await rest.get(Routes.user());
 
-    // Log đã bị xóa - Đã thiết lập REST
+    log.info("Đã thiết lập REST", `Connected as ${(client as BotInfoType).username}`);
 
     if (command.length === 0) {
-      // Log đã bị xóa - Không có interaction nào được load
+      log.warn("Không có interaction nào được load", "No commands to deploy");
       return;
     }
 
@@ -61,7 +64,7 @@ export class CommandDeployer {
       body: command,
     });
 
-    // Log đã bị xóa - Đã triển khai interaction
+    log.info("Đã triển khai interaction", `Deployed ${command.length} slash commands`);
   }
 
   protected parseEngine(store: CommandInterface[]) {

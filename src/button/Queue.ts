@@ -17,7 +17,8 @@ import { ZklinkPlayer, ZklinkTrack } from "../Zklink/main.js";
 import { Config } from "../@types/Config.js";
 import { ConfigData } from "../services/ConfigData.js";
 import { TopggServiceEnum } from "../services/TopggService.js";
-const data: Config = new ConfigData().data;
+import { log } from "../utilities/LoggerHelper.js";
+const data: Config = ConfigData.getInstance().data;
 import axios from "axios";
 export default class implements PlayerButton {
   name = "queue";
@@ -30,6 +31,8 @@ export default class implements PlayerButton {
     nplaying: Message<boolean>,
     collector: InteractionCollector<ButtonInteraction<"cached">>
   ): Promise<any> {
+    log.info(message.user.id, "Queue button pressed", message.guild?.id, `Player: ${player.guildId}`);
+    
     if (!client.user) {
       throw new Error("Người dùng client không có sẵn");
     }

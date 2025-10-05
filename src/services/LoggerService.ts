@@ -55,7 +55,7 @@ export class LoggerService {
       // Lấy thống kê sau khi cleanup
       const stats = await this.logger.getLogStats();
       
-      log.cleanup(
+      log.info(
         "log files", 
         stats.totalFiles || 0,
         `Tổng dung lượng: ${this.formatBytes(stats.totalSize || 0)}`

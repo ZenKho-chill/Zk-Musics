@@ -10,6 +10,7 @@ import { AbstractDriver } from "../Drivers/AbstractDriver.js";
 // Trình điều khiển
 import { Lavalink4 } from "../Drivers/Lavalink4.js";
 import { ZklinkWebsocket } from "../Utilities/ZklinkWebsocket.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export class ZklinkNode {
   /** Quản lý Zklink */
@@ -79,6 +80,7 @@ export class ZklinkNode {
 
   /** Kết nối tới server lavalink này */
   public connect(): ZklinkWebsocket {
+    log.info("Connecting to Lavalink node", `Node: ${this.options.name} | Host: ${this.options.host}:${this.options.port}`);
     return this.driver.connect();
   }
 
@@ -86,7 +88,7 @@ export class ZklinkNode {
   public wsOpenEvent() {
     this.clean(true);
     this.state = ZklinkConnectState.Connected;
-    // Debug đã bị xóa - Node đã kết nối
+    log.info("Lavalink node connected", `Node: ${this.options.name} | Successfully connected to Lavalink`);
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeConnect, this);
   }
@@ -135,7 +137,7 @@ export class ZklinkNode {
   public async wsCloseEvent(code: number, reason: Buffer) {
     this.online = false;
     this.state = ZklinkConnectState.Disconnected;
-    // Debug đã bị xóa - Node đã ngắt kết nối
+    log.warn("Lavalink node disconnected", `Node: ${this.options.name} | Code: ${code} | Reason: ${reason.toString()}`);
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeDisconnect, this, code, reason);
     if (
@@ -154,7 +156,7 @@ export class ZklinkNode {
   protected nodeClosed() {
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeClosed, this);
-    // Debug đã bị xóa - Node đã đóng
+    log.info("Lavalink node closed", `Node: ${this.options.name} | Cleaning up resources`);
     this.clean();
   }
 

@@ -2,6 +2,7 @@ import cron from "node-cron";
 import { Snowflake } from "discord.js";
 import { Manager } from "../manager.js";
 import { request } from "undici";
+import { log } from "../utilities/LoggerHelper.js";
 import chalk from "chalk";
 export enum TopggServiceEnum {
   ERROR,
@@ -24,21 +25,21 @@ export class TopggService {
     if (res.status == 200) {
       this.isTokenAvalible = true;
       this.botId = userId;
-      // Log đã bị xóa - Dịch vụ TopGG đã được cài đặt thành công
+      log.info("Dịch vụ TopGG đã được cài đặt thành công", `Bot ID: ${userId}`);
       return true;
     }
-    // Log đã bị xóa - Có sự cố khi cài đặt dịch vụ TopGG
+    log.error("Có sự cố khi cài đặt dịch vụ TopGG", `HTTP Status: ${res.status}`);
     return false;
   }
 
   public async checkVote(userId: string): Promise<TopggServiceEnum> {
     if (!this.botId || !this.isTokenAvalible) {
-      // Log đã bị xóa - Dịch vụ TopGG chưa được cấu hình
+      log.warn("Dịch vụ TopGG chưa được cấu hình", "Token hoặc Bot ID không hợp lệ");
       return TopggServiceEnum.ERROR;
     }
     const res = await this.fetch(`/bots/${this.botId}/check?userId=${userId}`);
     if (res.status !== 200) {
-      // Log đã bị xóa - Có lỗi khi lấy dữ liệu từ top.gg
+      log.error("Có lỗi khi lấy dữ liệu từ top.gg", `HTTP Status: ${res.status} | User: ${userId}`);
       return TopggServiceEnum.ERROR;
     }
     const jsonRes = (await res.json()) as { voted: number };
@@ -60,7 +61,7 @@ export class TopggService {
     cron.schedule("0 */1 * * * *", () =>
       this.updateStatisticCount(this.client.guilds.cache.size, this.shardCount)
     );
-    // Log đã bị xóa - Thống kê TopGG đã được bật thành công
+    log.info("Thống kê TopGG đã được bật thành công", `Update every hour for ${this.client.guilds.cache.size} guilds`);
   }
 
   public async updateStatisticCount(serverCount: number, shardCount: number) {

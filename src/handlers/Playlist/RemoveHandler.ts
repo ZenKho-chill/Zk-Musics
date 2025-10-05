@@ -16,7 +16,7 @@ import { ConfigData } from "../../services/ConfigData.js";
 import humanizeDuration from "humanize-duration";
 import { FormatDuration } from "../../utilities/FormatDuration.js";
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export class PlaylistRemoveHandler {
   public async execute(client: Manager, handler: CommandHandler) {

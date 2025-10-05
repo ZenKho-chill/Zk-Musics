@@ -1,6 +1,7 @@
 import { Manager } from "../manager.js";
 import mysqldumpModule from "mysqldump";
 import cron from "node-cron";
+import { log } from "../utilities/LoggerHelper.js";
 
 
 const mysqldump = mysqldumpModule.default;
@@ -33,7 +34,7 @@ export default class MysqlBackupService {
         });
 
         if (!dump || !dump.dump) {
-          // Log đã bị xóa - Cảnh báo dump rỗng hoặc không hợp lệ
+          log.warn("Cảnh báo dump rỗng hoặc không hợp lệ", `Database: ${database}`);
           return;
         }
 
@@ -51,9 +52,9 @@ export default class MysqlBackupService {
               },
             ],
           });
-          // Log đã bị xóa - File sao lưu đã được gửi tới kênh Discord
+          log.info("File sao lưu đã được gửi tới kênh Discord", `DB: ${database} | File: ${backupFileName}`);
         } else {
-          // Log đã bị xóa - Cảnh báo ID kênh không hợp lệ
+          log.warn("Cảnh báo ID kênh không hợp lệ", `Channel ID: ${client.config.features.DATABASE.MYSQLBACKUP.ChannelId}`);
         }
       },
       {

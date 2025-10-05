@@ -4,6 +4,7 @@ import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
+import { log } from "../../utilities/LoggerHelper.js";
 import chalk from "chalk";
 
 export default class {

@@ -1,8 +1,8 @@
 import { Manager } from "../../manager.js";
-// Log đã bị xóa
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager) {
-    // Log đã bị xóa
+    log.warn("Discord client disconnected", "Connection lost to Discord");
   }
 }

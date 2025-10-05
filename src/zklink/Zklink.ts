@@ -18,6 +18,7 @@ import {
   SourceIDs,
 } from "./Interface/Constants.js";
 import { ZklinkTrack } from "./Player/ZklinkTrack.js";
+import { log } from "../utilities/LoggerHelper.js";
 import { RawTrack } from "./Interface/Rest.js";
 import { ZklinkPlayer } from "./Player/ZklinkPlayer.js";
 import { SourceZklinkPlugin } from "./Plugin/SourceZklinkPlugin.js";

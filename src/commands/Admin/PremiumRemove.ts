@@ -4,7 +4,7 @@ import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["premium", "remove"];

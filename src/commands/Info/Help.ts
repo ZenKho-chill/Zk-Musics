@@ -16,8 +16,9 @@ import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import { EmojiValidator } from "../../utilities/EmojiValidator.js";
 import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["help"];
@@ -43,6 +44,8 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.SilentDeferReply();
+    
+    log.info("Help command executed", `User: ${handler.user?.tag} | Guild: ${handler.guild?.name}`);
 
     if (handler.args[0]) {
       const embed = new EmbedBuilder()

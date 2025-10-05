@@ -1,5 +1,6 @@
 import { Manager } from "../manager.js";
 import axios from "axios";
+import { log } from "../utilities/LoggerHelper.js";
 
 
 export async function SpotifygetAccessToken(client: Manager): Promise<string | null> {
@@ -22,7 +23,7 @@ export async function SpotifygetAccessToken(client: Manager): Promise<string | n
 
     return response.data.access_token;
   } catch (error) {
-    // Log đã bị xóa - Cảnh báo lỗi khi lấy access token từ Spotify
+    log.warn("Cảnh báo lỗi khi lấy access token từ Spotify", "Spotify API authentication failed", error as Error);
     return null;
   }
 }

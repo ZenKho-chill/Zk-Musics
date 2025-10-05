@@ -20,7 +20,7 @@ import { Manager } from "../../manager.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { GlobalInteraction } from "../../@types/Interaction.js";
 
-const data = new ConfigData().data;
+const data = ConfigData.getInstance().data;
 
 export class PlaylistAddHandler {
   public async execute(client: Manager, handler: CommandHandler) {

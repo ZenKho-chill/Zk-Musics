@@ -2,7 +2,7 @@ import { Manager } from "./manager.js";
 import { ConfigData } from "./services/ConfigData.js";
 import { LoggerHelper, log } from "./utilities/LoggerHelper.js";
 
-const configData = new ConfigData().data;
+const configData = ConfigData.getInstance().data;
 const zk = new Manager(configData, configData.features.MESSAGE_CONTENT.enable);
 
 // Anti crash handling với logging

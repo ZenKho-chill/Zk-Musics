@@ -13,7 +13,7 @@ import axios from "axios";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["spotify", "manage"];

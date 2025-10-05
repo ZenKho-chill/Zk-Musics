@@ -9,6 +9,7 @@ import { resolve } from "path";
 import { join, dirname } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { ClusterCommand, WorkerResponse } from "../@types/Cluster.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -41,17 +42,17 @@ export class ClusterManager {
       }
     );
 
-    // Log đã bị xóa - Tổng cluster và shard
+    log.info("Tổng cluster và shard", `Clusters: ${this.options.totalClusters} | Shards per cluster: ${this.options.shardsPerClusters}`);
   }
 
   public async start() {
     if (cluster.isPrimary) {
-      // Log đã bị xóa - Process chính đang chạy
+      log.info("Process chính đang chạy", "Master process started");
 
       await this.commandLoader();
 
       cluster.on("exit", (worker) => {
-        // Log đã bị xóa - Worker đã chết đang khởi động lại
+        log.warn("Worker đã chết đang khởi động lại", `Worker ID: ${worker.id}`);
         const newWorker = cluster.fork();
         this.workerPID.set(String(newWorker.id), newWorker);
       });
@@ -81,7 +82,7 @@ export class ClusterManager {
           const getRes = await command.execute(this, worker, jsonMsg.args);
           worker.send(JSON.stringify(getRes));
         } catch (err) {
-          // Log đã bị xóa - Xử lý message thất bại
+          log.error("Xử lý message thất bại", `Worker: ${worker.id}`, err as Error);
         }
       });
 
@@ -91,7 +92,7 @@ export class ClusterManager {
       }
     } else {
       bootBot(this);
-      // Log đã bị xóa - Worker đã khởi động
+      log.info("Worker đã khởi động", `Worker ID: ${cluster.worker?.id}`);
     }
   }
 
@@ -158,7 +159,7 @@ export class ClusterManager {
   }
 
   public log(level: string, msg: string, pad: number = 9) {
-    // Log đã bị xóa
+    log.info("Cluster log", `${level}: ${msg}`, { pad });
   }
 
   protected async commandLoader() {
@@ -169,14 +170,14 @@ export class ClusterManager {
       await this.registerCommand(path);
     }
 
-    // Log đã bị xóa - Đã nạp lệnh cluster thành công
+    log.info("Đã nạp lệnh cluster thành công", `Loaded ${eventsFile.length} cluster commands`);
   }
 
   protected async registerCommand(path: string) {
     const command = new (await import(pathToFileURL(path).toString())).default() as ClusterCommand;
 
     if (!command.execute) {
-      // Log đã bị xóa - Lệnh cluster thiếu hàm execute
+      log.warn("Lệnh cluster thiếu hàm execute", `Command: ${command.name} | Path: ${path}`);
       return;
     }
 

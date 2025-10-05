@@ -2,8 +2,8 @@ import { Manager } from "../manager.js";
 import { Headers, LavalinkDataType } from "../@types/Lavalink.js";
 import { GetLavalinkServer } from "./GetLavalinkServer.js";
 import { ZklinkWebsocket } from "../Zklink/main.js";
-
 import { LavalinkHeaderHelper } from "../utilities/LavalinkHeaderHelper.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 export class CheckLavalinkServer {
   client: Manager;
@@ -13,7 +13,7 @@ export class CheckLavalinkServer {
   }
 
   async execute() {
-    // Log đã bị xóa - Đang kiểm tra server lavalink cho autofix
+    log.info("Đang kiểm tra server lavalink cho autofix", "AutoFix process started");
 
     const getLavalinkServerClass = new GetLavalinkServer();
 
@@ -25,8 +25,8 @@ export class CheckLavalinkServer {
       // Sử dụng LavalinkHeaderHelper để tự động tạo headers với User-Id
       const { headers, debug } = LavalinkHeaderHelper.createHeadersWithDebug(config.pass);
       
-      // Log đã bị xóa - Debug thông tin về nguồn User-Id
-      // Log đã bị xóa - Debug tự động lấy User-Id
+      log.debug("Debug thông tin về nguồn User-Id", debug.source);
+      log.debug("Debug tự động lấy User-Id", `User-Id: ${debug.userId}`);
 
       const url = `ws://${config.host}:${config.port}/v4/websocket`;
 

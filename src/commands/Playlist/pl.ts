@@ -11,9 +11,10 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export default class PlaylistCommand implements Command {
   public name = ["pl", "playlist"];

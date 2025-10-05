@@ -5,6 +5,7 @@ import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
+import { log } from "../../utilities/LoggerHelper.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, message: string, data: Record<string, any>) {
     // Log đã bị xóa - Player gặp ngoại lệ

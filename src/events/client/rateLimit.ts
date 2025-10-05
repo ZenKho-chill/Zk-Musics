@@ -1,8 +1,8 @@
 import { Manager } from "../../manager.js";
-// Log đã bị xóa
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager) {
-    // Log đã bị xóa - rate limit
+    log.warn("Discord rate limit hit", "API rate limit encountered");
   }
 }

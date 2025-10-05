@@ -11,7 +11,7 @@ import {
   MessageFlags,
 } from "discord.js";
 import { GuildLanguageManager } from "../../utilities/GuildLanguageManager.js";
-// Log đã bị xóa
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager, guild: Guild) {

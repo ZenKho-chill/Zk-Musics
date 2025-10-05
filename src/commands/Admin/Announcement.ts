@@ -5,8 +5,9 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["announcement"];
@@ -94,6 +95,8 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     try {
       await handler.deferReply();
+      
+      log.info("Announcement command executed", `User: ${handler.user?.tag} | Guild: ${handler.guild?.name}`);
 
       const inputProvided = handler.args[0] ? handler.args[0] : null;
       const input = inputProvided ? handler.args[0] : null;

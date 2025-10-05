@@ -10,3 +10,4 @@ lavalink/application.yml
 *.md
 docs/
 .vscode/
+logs/

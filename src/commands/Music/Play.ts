@@ -12,13 +12,13 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { ZklinkSearchResultType, ZklinkTrack } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-const data: Config = new ConfigData().data;
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class implements Command {
   public name = ["play"];
   public description = "Phát bài hát từ bất kỳ nguồn nào";
   public category = "Music";
-  public accessableby = data.COMMANDS_ACCESS.MUSIC.Play;
+  public accessableby = ConfigData.getInstance().data.COMMANDS_ACCESS.MUSIC.Play;
   public usage = "<tên_hoặc_url>";
   public aliases = ["p", "pl", "pp"];
   public lavalink = true;
@@ -38,6 +38,8 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
+    
+    log.info("Play command executed", `User: ${handler.user?.tag} | Guild: ${handler.guild?.name}`);
 
     /////////////////////////////// Kiểm tra vai trò Premium bắt đầu ////////////////////////////////
     const PremiumGuildID = client.config.PremiumRole.GuildID;

@@ -15,6 +15,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { Manager } from "../manager.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 
 export type CommandHandlerOptions = {
@@ -167,7 +168,7 @@ export class CommandHandler {
 
   public async editReply(data: BaseMessageOptions): Promise<GlobalMsg> {
     if (!this.msg) {
-      // Log đã bị xóa - Error bạn chưa gọi deferReply()
+      log.error("Error bạn chưa gọi deferReply()", "editReply called before deferReply");
       return;
     }
     if (this.interaction) {

@@ -1,6 +1,7 @@
 import { Manager } from "../manager.js";
 import { Guild } from "discord.js";
 import { mapDiscordLocaleToSupportedLanguage, getLanguageDisplayName, getDefaultLanguage } from "../languages/languageConfig.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 
 /**
@@ -24,7 +25,7 @@ export class GuildLanguageManager {
       // Kiểm tra xem guild đã có ngôn ngữ được set chưa
       const existingLanguage = await client.db.language.get(guild.id);
       if (existingLanguage && !forceUpdate) {
-        // Log đã bị xóa - Guild đã có ngôn ngữ
+        log.debug("Guild đã có ngôn ngữ", `Guild: ${guild.name} | Language: ${existingLanguage}`);
         return existingLanguage;
       }
 
@@ -36,12 +37,12 @@ export class GuildLanguageManager {
       await client.db.language.set(guild.id, detectedLanguage);
       
       const action = existingLanguage ? "cập nhật" : "thiết lập";
-      // Log đã bị xóa - Đã thiết lập/cập nhật ngôn ngữ cho guild
+      log.info(`Đã ${action} ngôn ngữ cho guild`, `Guild: ${guild.name} | Language: ${detectedLanguage} | Locale: ${guildLocale}`);
       
       return detectedLanguage;
       
     } catch (error) {
-      // Log đã bị xóa - Lỗi khi thiết lập ngôn ngữ cho guild
+      log.error("Lỗi khi thiết lập ngôn ngữ cho guild", `Guild: ${guild.name}`, error as Error);
       
       // Fallback về ngôn ngữ mặc định từ config
       const fallbackLanguage = getDefaultLanguage();
@@ -61,7 +62,7 @@ export class GuildLanguageManager {
       const language = await client.db.language.get(guildId);
       return language || getDefaultLanguage();
     } catch (error) {
-      // Log đã bị xóa - Lỗi khi lấy ngôn ngữ guild
+      log.error("Lỗi khi lấy ngôn ngữ guild", `Guild ID: ${guildId}`, error as Error);
       return getDefaultLanguage();
     }
   }
@@ -80,10 +81,10 @@ export class GuildLanguageManager {
   ): Promise<boolean> {
     try {
       await client.db.language.set(guildId, languageCode);
-      // Log đã bị xóa - Đã cập nhật ngôn ngữ guild
+      log.info("Đã cập nhật ngôn ngữ guild", `Guild ID: ${guildId} | Language: ${languageCode}`);
       return true;
     } catch (error) {
-      // Log đã bị xóa - Lỗi khi cập nhật ngôn ngữ guild
+      log.error("Lỗi khi cập nhật ngôn ngữ guild", `Guild ID: ${guildId} | Language: ${languageCode}`, error as Error);
       return false;
     }
   }

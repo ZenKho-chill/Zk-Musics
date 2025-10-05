@@ -5,8 +5,9 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import Genius from "genius-lyrics";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 // Mã chính
 export default class implements Command {
@@ -32,6 +33,8 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.deferReply();
+    
+    log.info("Lyrics command executed", `User: ${handler.user?.tag} | Guild: ${handler.guild?.name}`);
 
     const geniusClient = new Genius.Client(client.config.utilities.LyricsGenius.ApiKey);
 

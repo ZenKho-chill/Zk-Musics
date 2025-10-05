@@ -42,7 +42,7 @@ export class CommandLoader {
         .map(([cat, count]) => `${cat}: ${count}`)
         .join(" | ");
       
-      log.completed(
+      log.info(
         "lệnh", 
         totalCommands,
         `Tổng số: ${totalCommands} | Slash: ${haveInteraction} | Prefix: ${noInteraction}`

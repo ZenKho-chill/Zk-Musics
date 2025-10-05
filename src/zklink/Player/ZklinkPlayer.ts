@@ -18,6 +18,7 @@ import { ServerUpdate, StateUpdatePartial } from "../Interface/Connection.js";
 import { EventEmitter } from "node:events";
 import { ZklinkDatabase } from "../Utilities/ZklinkDatabase.js";
 import { ZklinkFilter } from "./ZklinkFilter.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export class ZklinkPlayer extends EventEmitter {
   /**
@@ -414,6 +415,7 @@ export class ZklinkPlayer extends EventEmitter {
    */
   public async skip(): Promise<ZklinkPlayer> {
     this.checkDestroyed();
+    log.info("Track skipped", `Guild: ${this.guildId} | Track: ${this.queue.current?.title || 'Unknown'}`);
     this.node.rest.updatePlayer({
       guildId: this.guildId,
       playerOptions: {
@@ -490,6 +492,8 @@ export class ZklinkPlayer extends EventEmitter {
    */
   public async stop(destroy: boolean): Promise<ZklinkPlayer> {
     this.checkDestroyed();
+    
+    log.info("Player stopped", `Guild: ${this.guildId} | Destroy: ${destroy}`);
 
     if (destroy) {
       await this.destroy();

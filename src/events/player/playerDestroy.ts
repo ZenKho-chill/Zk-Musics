@@ -5,6 +5,7 @@ import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel, ClearMusicStatusChannelWithDelay } from "../../utilities/UpdateStatusChannel.js";
 import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
+import { log } from "../../utilities/LoggerHelper.js";
 import chalk from "chalk";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {

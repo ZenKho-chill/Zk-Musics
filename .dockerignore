@@ -10,6 +10,7 @@ lavalink
 init
 config.example.yml
 .vscode
+logs
 
 # Build outputs
 dist

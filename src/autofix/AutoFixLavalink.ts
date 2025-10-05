@@ -1,6 +1,7 @@
 import { Manager } from "../manager.js";
 import { LavalinkDataType } from "../@types/Lavalink.js";
 import { CheckLavalinkServer } from "./CheckLavalinkServer.js";
+import { log } from "../utilities/LoggerHelper.js";
 import chalk from "chalk";
 
 
@@ -14,7 +15,7 @@ export class AutoFixLavalink {
   }
 
   async execute() {
-    // Log đã bị xóa - Bắt đầu tự sửa lavalink
+    log.info("Bắt đầu tự sửa lavalink", `Target: ${this.lavalinkName}`);
     if (this.client.lavalinkList.length == 0) {
       new CheckLavalinkServer(this.client);
       return this.fixLavalink();
@@ -28,16 +29,16 @@ export class AutoFixLavalink {
     this.checkLavalink();
     await this.removeCurrentLavalink();
     if (this.client.lavalinkList.filter((i) => i.online).length == 0) {
-      // Log đã bị xóa - Error không có lavalink trực tuyến
-      // Log đã bị xóa - Error vui lòng tắt bot và nhập server lavalink hợp lệ
-      // Log đã bị xóa - Đã kết thúc autofix lavalink
+      log.error("Không có lavalink server trực tuyến", "AutoFix thất bại - cần kiểm tra cấu hình");
+      log.warn("Vui lòng tắt bot và nhập server lavalink hợp lệ", "Không thể tiếp tục hoạt động");
+      log.warn("Đã kết thúc autofix lavalink", "AutoFix terminated");
       return;
     }
 
     await this.applyNewLavalink();
 
-    // Log đã bị xóa - Đã chuyển sang lavalink mới, vui lòng chờ 3 giây
-    // Log đã bị xóa - Đã kết thúc autofix lavalink
+    log.info("Đã chuyển sang lavalink mới, vui lòng chờ 3 giây", "AutoFix completed successfully");
+    log.info("Đã kết thúc autofix lavalink", "AutoFix process finished");
   }
 
   checkLavalink() {
@@ -61,7 +62,7 @@ export class AutoFixLavalink {
 
     // Kiểm tra xem lavalinkIndex có hợp lệ không
     if (lavalinkIndex === -1) {
-      // Log đã bị xóa - Cảnh báo không tìm thấy node lavalink
+      log.warn("Cảnh báo không tìm thấy node lavalink", `Target: ${this.lavalinkName}`);
       return;
     }
 
@@ -69,7 +70,7 @@ export class AutoFixLavalink {
 
     // Đảm bảo targetLavalink được định nghĩa trước khi tiếp tục
     if (!targetLavalink) {
-      // Log đã bị xóa - Cảnh báo node lavalink mục tiêu không xác định
+      log.warn("Cảnh báo node lavalink mục tiêu không xác định", `Index: ${lavalinkIndex}`);
       return;
     }
 

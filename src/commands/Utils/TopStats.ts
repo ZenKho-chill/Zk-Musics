@@ -5,9 +5,10 @@ import { EmbedBuilder } from "discord.js";
 import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 // Đăng ký font để sử dụng trong canvas
 GlobalFonts.registerFromPath("./script/Courage-Road.ttf", "Courage Road");

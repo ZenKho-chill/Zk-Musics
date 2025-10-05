@@ -5,7 +5,7 @@ import { WebsocketRoute } from "./websocket.js";
 import { PlayerRoute } from "./player.js";
 import { getSearch } from "./route/getSearch.js";
 import { getCommands } from "./route/getCommands.js";
-// Log đã bị xóa - import logInfo, logError
+import { log } from "../utilities/LoggerHelper.js";
 
 export class RestAPI {
   app: Fastify.FastifyInstance;
@@ -68,7 +68,7 @@ export class RestAPI {
         "Ở đây không có Zk Music's, nhưng bạn vẫn có thể mỉm cười 😊",
         "Đừng lo, Zk Music's không phải là tất cả đâu 😎",
       ];
-      // Log đã bị xóa - HealthRouterService request info
+      log.info("HealthRouterService request nhận được", `IP: ${request.ip}`);
       reply.send({ zk: response[Math.floor(Math.random() * response.length)] });
     });
 
@@ -77,7 +77,7 @@ export class RestAPI {
     this.app
       .listen({ port, host: "0.0.0.0" })
       .then(() => {
-        // Log đã bị xóa - Server đang chạy ở cổng
+        log.info("Server đang chạy ở cổng", `Port: ${port}`);
       })
       .catch((err) => {
         if (this.client.config.bot.TOKEN.length > 1) {
@@ -86,13 +86,13 @@ export class RestAPI {
           return this.app
             .listen({ port: newPort, host: "0.0.0.0" })
             .then(() => {
-              // Log đã bị xóa - Server đang chạy ở cổng mới
+              log.info("Server đang chạy ở cổng mới", `New Port: ${newPort}`);
             })
             .catch((err) => {
-              // Log đã bị xóa - Failed to start server on new port
+              log.error("Failed to start server on new port", `New Port: ${newPort}`, err);
             });
         } else {
-          // Log đã bị xóa - Failed to start server
+          log.error("Failed to start server", `Port: ${port}`, err);
         }
       });
   }

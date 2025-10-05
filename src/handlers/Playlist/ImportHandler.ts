@@ -12,7 +12,7 @@ import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import { ZklinkSearchResultType, ZklinkTrack } from "../../Zklink/main.js";
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export class PlaylistImportHandler {
   public async execute(client: Manager, handler: CommandHandler) {

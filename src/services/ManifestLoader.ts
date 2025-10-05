@@ -2,10 +2,12 @@ import fs from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { ManifestInterface } from "../@types/Manifest.js";
+import { log } from "../utilities/LoggerHelper.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class ManifestLoader {
   get data(): ManifestInterface {
+    log.debug("Loading manifest data", "Reading package.json");
     const data = fs.readFileSync(join(__dirname, "..", "..", "package.json"), "utf-8");
     const jsonData = JSON.parse(data);
     const countPackage = Object.keys(jsonData.dependencies).length;

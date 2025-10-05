@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import md5 from "md5";
 import axios from "axios";
 import cron from "node-cron";
+import { log } from "../utilities/LoggerHelper.js";
 import {
   ButtonBuilder,
   EmbedBuilder,
@@ -125,9 +126,9 @@ export class WebServer {
             components: [ButtonVote],
           });
 
-          // Log đã bị xóa
+          log.info("Đã gửi tin nhắn vote notification", `Channel: ${channel.name} | User: ${vote.user}`);
         } catch (error) {
-          // Log đã bị xóa
+          log.error("Lỗi khi gửi vote notification", `Channel: ${channelId}`, error as Error);
         }
       })
     );
@@ -233,6 +234,6 @@ export class WebServer {
 
   expose() {
     this.app.listen(this.port);
-    // Log đã bị xóa
+    log.info("WebServer đã khởi động", `Port: ${this.port}`);
   }
 }

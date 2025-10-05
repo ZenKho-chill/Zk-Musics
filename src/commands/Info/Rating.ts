@@ -6,7 +6,7 @@ import moment from "moment";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 // Log đã bị xóa - import Logger đã bị loại bỏ
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["rating"];

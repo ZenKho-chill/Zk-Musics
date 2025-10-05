@@ -247,9 +247,9 @@ export class Manager extends Client {
 
   public start() {
     // Hiển thị banner đẹp mắt khi khởi động
-    log.banner("Zk Music's", this.manifest.metadata.bot.version);
+    log.info("Zk Music's", this.manifest.metadata.bot.version);
     
-    log.startup("Khởi động client Zk Music's", `Phiên bản: ${this.manifest.metadata.bot.version}`);
+    log.info("Khởi động client Zk Music's", `Phiên bản: ${this.manifest.metadata.bot.version}`);
     log.info("Tên mã phiên bản", `Codename: ${this.manifest.metadata.bot.codename}`);
     log.info("Phiên bản Autofix", `Version: ${this.manifest.metadata.autofix.version}`);
     

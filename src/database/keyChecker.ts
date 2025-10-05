@@ -1,6 +1,6 @@
 import { Manager } from "../manager.js";
+import { log } from "../utilities/LoggerHelper.js";
 import { KeyCheckerEnum } from "../@types/KeyChecker.js";
-// LogManager đã bị xóa
 import utils from "node:util";
 
 export class keyChecker {
@@ -25,7 +25,7 @@ export class keyChecker {
 
     if (res == KeyCheckerEnum.Pass) return true;
 
-    // Log đã bị xóa - Database config không hợp lệ
+    log.error("Database config không hợp lệ", `DB: ${this.dbName} - Config validation failed`);
     process.exit();
   }
 

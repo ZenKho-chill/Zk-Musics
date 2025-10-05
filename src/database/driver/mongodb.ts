@@ -3,6 +3,7 @@ import { Database } from "../../@types/Config.js";
 import { MongoDriver } from "zk.quick.db/MongoDriver";
 import { TableSetup } from "../setup/table.js";
 import { keyChecker } from "../keyChecker.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export class MongoConnectDriver {
   client: Manager;
@@ -20,8 +21,12 @@ export class MongoConnectDriver {
 
     new keyChecker(this.client, this.dbConfig.config, sampleConfig, "mongodb");
 
+    log.info("Initializing MongoDB database driver", `URI: ${this.dbConfig.config.uri.split('@')[0]}@***`);
+    
     const mongoDriver = new MongoDriver(this.dbConfig.config.uri);
 
     new TableSetup(this.client, mongoDriver, "MongoDB");
+    
+    log.info("MongoDB database driver connected", "MongoDB Driver ready");
   }
 }

@@ -5,7 +5,7 @@ import { Manager } from "../../manager.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import { getAvailableThemes } from "zkcard";
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["themes"];

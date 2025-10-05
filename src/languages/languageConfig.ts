@@ -66,8 +66,8 @@ export function isLanguageSupported(code: string): boolean {
  * Lấy ngôn ngữ mặc định của bot từ config
  */
 export function getDefaultLanguage(): string {
-  const config = new ConfigData().data;
-  return config.bot.LANGUAGE || "en"; // Fallback về "vi" nếu config không có
+  const config = ConfigData.getInstance().data;
+  return config.bot.LANGUAGE || "en";
 }
 
 /**

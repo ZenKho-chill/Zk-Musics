@@ -12,7 +12,7 @@ import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import humanizeDuration from "humanize-duration";
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export class PlaylistDetailHandler {
   // Helper function để truncate text về 1 dòng
