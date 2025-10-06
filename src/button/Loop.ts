@@ -30,7 +30,7 @@ export default class implements PlayerButton {
     nplaying: Message<boolean>,
     collector: InteractionCollector<ButtonInteraction<"cached">>
   ): Promise<any> {
-    log.userAction(message.user.id, "Loop button pressed", message.guild?.id, `Player: ${player.guildId}`);
+    log.info("Nút Loop đã được nhấn", `User: ${message.user.username} (${message.user.id}) | Guild: ${message.guild?.name} (${message.guild?.id}) | Player: ${player.guildId}`);
     
     if (!client.user) {
       throw new Error("Người dùng client không có sẵn");

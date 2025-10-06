@@ -586,7 +586,29 @@ export default class {
 
       if (attachments) handler.attactments.push(attachments);
 
-      // Log đã bị xóa - Slash command được sử dụng
+      // Log lệnh được thực thi
+      log.info(
+        `Lệnh được thực thi: /${commandNameArray.join(" ")}`,
+        `User: ${interaction.user.username} (${interaction.user.id}) | Guild: ${interaction.guild.name} (${interaction.guild.id})`,
+        {
+          command: commandNameArray.join("-"),
+          user: {
+            id: interaction.user.id,
+            username: interaction.user.username,
+            discriminator: interaction.user.discriminator
+          },
+          guild: {
+            id: interaction.guild.id,
+            name: interaction.guild.name
+          },
+          channel: {
+            id: interaction.channel?.id,
+            name: (interaction.channel as any)?.name || 'DM'
+          },
+          args: args.length > 0 ? args : undefined,
+          timestamp: new Date().toISOString()
+        }
+      );
 
       ////////// Thống kê Sử dụng Lệnh Người Dùng //////////
       let commandUsage = await client.db.CommandUserUsage.get(`${interaction.user.id}`);
@@ -616,7 +638,24 @@ export default class {
 
       command.execute(client, handler);
     } catch (error) {
-      // Log đã bị xóa - Lỗi CommandManager
+      // Log lỗi khi thực thi lệnh
+      log.error(
+        `Lỗi khi thực thi lệnh: /${commandNameArray.join(" ")}`,
+        `User: ${interaction.user.username} (${interaction.user.id}) | Guild: ${interaction.guild.name} (${interaction.guild.id})`,
+        error as Error,
+        {
+          command: commandNameArray.join("-"),
+          user: {
+            id: interaction.user.id,
+            username: interaction.user.username
+          },
+          guild: {
+            id: interaction.guild.id,
+            name: interaction.guild.name
+          }
+        }
+      );
+      
       interaction.reply({
         content: `${client.i18n.get(language, "interaction", "unexpected_error")}\n ${error}`,
       });

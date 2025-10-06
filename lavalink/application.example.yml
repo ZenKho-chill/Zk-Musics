@@ -24,7 +24,7 @@ lavalink:
         - dependency: net.esmbot:lava-xm-plugin:0.2.5
           repository: https://repo.projectlounge.pw/maven/releases
           snapshot: false
-        - dependency: com.github.ZenKho-chill:zk.icy.stream.lavalink:v1.0.9
+        - dependency: com.github.ZenKho-chill:zk.icy.stream.lavalink:v1.1.1
           repository: https://jitpack.io
     pluginsDir: ./plugins
     server:
