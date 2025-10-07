@@ -19,7 +19,7 @@ export class ClientEventsLoader {
       let eventsFile = await readdirRecursive(eventsPath);
       await this.registerPath(eventsFile);
     }
-    log.info("events", this.counter, "Đã tải tất cả các sự kiện");
+    log.info("Events", "Đã tải tất cả các sự kiện");
   }
 
   async registerPath(eventsPath: string[]) {

@@ -16,7 +16,7 @@ export class DatabaseService {
     try {
       const databaseConfig = this.client.config.features.DATABASE;
       
-      log.info("Khởi tạo database service", `Driver: ${databaseConfig.driver}`);
+      log.info("Database", `Driver: ${databaseConfig.driver}`);
 
       switch (databaseConfig.driver) {
         case "json":
@@ -32,14 +32,14 @@ export class DatabaseService {
           new PostgresConnectDriver(this.client, databaseConfig);
           break;
         default:
-          log.warn("Database driver không xác định, sử dụng JSON", `Driver: ${databaseConfig.driver}`);
+          log.warn("Database", `Không xác định, sử dụng json`);
           new JSONConnectDriver(this.client, databaseConfig);
           break;
       }
       
-      log.info("DatabaseService khởi tạo thành công", `Using ${databaseConfig.driver} driver`);
+      log.info("Database", `Sử dụng ${databaseConfig.driver}`);
     } catch (error) {
-      log.error("Lỗi khởi tạo DatabaseService", "Database initialization failed", error as Error);
+      log.error("Database", `Khởi tạo hệ thống database thất bại | ${error as Error}`);
       return;
     }
   }

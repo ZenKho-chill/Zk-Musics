@@ -32,10 +32,14 @@ export class LoggerHelper {
     
     if (!stack || stack.length < 5) return "system";
 
-    // Tìm stack frame của caller (không phải LoggerHelper)
+    // Tìm stack frame của caller (không phải LoggerHelper hoặc Logger)
     for (let i = 3; i < stack.length; i++) {
       const line = stack[i];
-      if (line.includes("file://") && !line.includes("LoggerHelper") && !line.includes("Logger")) {
+      if (line.includes("file://") && 
+          !line.includes("LoggerHelper") && 
+          !line.includes("Logger.") &&
+          !line.includes("structures/Logger") &&
+          !line.includes("utilities/LoggerHelper")) {
         try {
           let match = line.match(/file:\/\/\/(.+?):\d+:\d+/) || line.match(/at .+ \((.+?):\d+:\d+\)/);
           if (match) {
@@ -71,6 +75,7 @@ export class LoggerHelper {
 
   /**
    * INFO - Thông tin quan trọng cần tracking
+   * Có thể gọi với: info(message) hoặc info(message, description) hoặc info(message, description, metadata)
    */
   public static info(message: string, description?: string, metadata?: Record<string, any>): void {
     this.logWithAutoPath(LogLevel.INFO, message, description, metadata);
@@ -78,6 +83,7 @@ export class LoggerHelper {
 
   /**
    * DEBUG - Chỉ hiển thị khi DEBUG_MODE = true
+   * Có thể gọi với: debug(message) hoặc debug(message, description) hoặc debug(message, description, metadata)
    */
   public static debug(message: string, description?: string, metadata?: Record<string, any>): void {
     if (this.isDebugEnabled()) {
@@ -87,6 +93,7 @@ export class LoggerHelper {
 
   /**
    * WARN - Cảnh báo quan trọng
+   * Có thể gọi với: warn(message) hoặc warn(message, description) hoặc warn(message, description, metadata)
    */
   public static warn(message: string, description?: string, metadata?: Record<string, any>): void {
     this.logWithAutoPath(LogLevel.WARN, message, description, metadata);
@@ -94,6 +101,7 @@ export class LoggerHelper {
 
   /**
    * ERROR - Lỗi với stack trace
+   * Có thể gọi với: error(message) hoặc error(message, description) hoặc error(message, description, error, metadata)
    */
   public static error(message: string, description?: string, error?: Error, metadata?: Record<string, any>): void {
     const errorData = error ? {
@@ -108,6 +116,7 @@ export class LoggerHelper {
 
   /**
    * UNHANDLED - Lỗi không xử lý được (crash prevention)
+   * Có thể gọi với: unhandled(message) hoặc unhandled(message, description) hoặc unhandled(message, description, error, metadata)
    */
   public static unhandled(message: string, description?: string, error?: Error, metadata?: Record<string, any>): void {
     const errorData = error ? {

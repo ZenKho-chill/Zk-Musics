@@ -43,9 +43,7 @@ export class CommandLoader {
         .join(" | ");
       
       log.info(
-        "lệnh", 
-        totalCommands,
-        `Tổng số: ${totalCommands} | Slash: ${haveInteraction} | Prefix: ${noInteraction}`
+        "Commands", `Tổng: ${totalCommands} | Slash: ${haveInteraction} | Prefix: ${noInteraction}`
       );
       
       log.info("Phân loại commands", categoryStats);

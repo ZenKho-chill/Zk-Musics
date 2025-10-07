@@ -247,14 +247,13 @@ export class Manager extends Client {
 
   public start() {
     // Hiển thị banner đẹp mắt khi khởi động
-    log.info("Zk Music's", this.manifest.metadata.bot.version);
+    log.info(this.manifest.metadata.bot.codename, `Phiên bản: ${this.manifest.metadata.bot.version}`);
     
-    log.info("Khởi động client Zk Music's", `Phiên bản: ${this.manifest.metadata.bot.version}`);
-    log.info("Tên mã phiên bản", `Codename: ${this.manifest.metadata.bot.codename}`);
-    log.info("Phiên bản Autofix", `Version: ${this.manifest.metadata.autofix.version}`);
+    log.info(this.manifest.metadata.bot.codename, `Codename: ${this.manifest.metadata.bot.codename}`);
+    log.info(this.manifest.metadata.bot.codename, `Autofix version: ${this.manifest.metadata.autofix.version}`);
     
     if (this.config.features.HIDE_LINK && this.config.features.REPLACE_LINK) {
-      log.warn("Cảnh báo cấu hình", "HIDE_LINK và REPLACE_LINK đều được bật, có thể xung đột");
+      log.warn("Config", "HIDE_LINK và REPLACE_LINK đều được bật, chỉ nên bật 1 trong 2 tính năng này");
       return;
     }
     if (this.config.features.FilterMenu ?? false) {
@@ -282,7 +281,6 @@ export class Manager extends Client {
     
     // Khởi tạo Logger Service
     const loggerService = LoggerService.getInstance(this);
-    loggerService.logSystemInfo();
     
     super.login(this.config.bot.TOKEN);
   }

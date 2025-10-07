@@ -82,10 +82,10 @@ export class Logger {
 
       const levelUpper = level.toUpperCase();
       const file = filePath || "system";
-      const desc = description || "";
-      const meta = metadata ? ` ${JSON.stringify(metadata)}` : "";
+      const desc = description ? ` | ${description}` : "";
+      const meta = metadata ? ` | ${JSON.stringify(metadata)}` : "";
       
-      return `${formattedTimestamp} | ${levelUpper} | ${file} | ${message} | ${desc}${meta}`;
+      return `${formattedTimestamp} | ${levelUpper} | ${file} | ${message}${desc}${meta}`;
     });
 
     // Console format với màu sắc đẹp mắt
@@ -93,7 +93,7 @@ export class Logger {
       const formattedTimestamp = new Date(timestamp as string).toLocaleString("vi-VN", {
         day: "2-digit",
         month: "2-digit",
-        year: "numeric", 
+        year: "2-digit", 
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit"
@@ -106,8 +106,8 @@ export class Logger {
       // Màu sắc đẹp cho từng component
       const coloredTimestamp = chalk.cyan.bold(formattedTimestamp);
       const coloredFile = chalk.magenta.italic(file);
-      const coloredDesc = chalk.gray(desc);
-      const coloredMeta = chalk.dim(meta);
+      const coloredDesc = desc ? chalk.gray(` | ${desc}`) : "";
+      const coloredMeta = meta ? chalk.dim(` | ${meta.substring(3)}`) : "";
 
       // Màu sắc theo level với icon
       let coloredLevel: string;
@@ -139,7 +139,7 @@ export class Logger {
       // Format đẹp với separator
       const separator = chalk.gray(" | ");
       
-      return `${coloredTimestamp}${separator}${coloredLevel}${separator}${coloredFile}${separator}${coloredMessage}${separator}${coloredDesc}${coloredMeta}`;
+      return `${coloredTimestamp}${separator}${coloredLevel}${separator}${coloredFile}${separator}${coloredMessage}${coloredDesc}${coloredMeta}`;
     });
 
     // Transports
@@ -208,10 +208,14 @@ export class Logger {
     
     if (!stack || stack.length < 4) return "system";
 
-    // Tìm stack frame đầu tiên không phải từ Logger
+    // Tìm stack frame đầu tiên không phải từ Logger hoặc LoggerHelper
     for (let i = 2; i < stack.length; i++) {
       const line = stack[i];
-      if (line.includes("file://") && !line.includes("Logger") && !line.includes("LoggerHelper")) {
+      if (line.includes("file://") && 
+          !line.includes("Logger") && 
+          !line.includes("LoggerHelper") &&
+          !line.includes("structures/Logger") &&
+          !line.includes("utilities/LoggerHelper")) {
         try {
           // Extract file path từ stack trace - pattern khác cho Windows/Linux
           let match = line.match(/file:\/\/\/(.+?):\d+:\d+/) || line.match(/at .+ \((.+?):\d+:\d+\)/);

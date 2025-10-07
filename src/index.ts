@@ -7,26 +7,26 @@ const zk = new Manager(configData, configData.features.MESSAGE_CONTENT.enable);
 
 // Anti crash handling với logging
 process
-  .on("unhandledRejection", (error) => {
-    log.unhandled("UnhandledRejection", error as Error);
+  .on("unhandledRejection", (error, promise) => {
+    log.unhandled("UnhandledRejection", `Promise: ${promise}`, error as Error);
   })
   .on("uncaughtException", (error) => {
-    log.unhandled("UncaughtException", error as Error);
+    log.unhandled("UncaughtException", undefined, error as Error);
   })
   .on("uncaughtExceptionMonitor", (error) => {
-    log.unhandled("UncaughtExceptionMonitor", error as Error);
+    log.unhandled("UncaughtExceptionMonitor", undefined, error as Error);
   })
   .on("exit", () => {
-    log.info("Zk Music's đã tắt thành công", "Process exit");
+    log.info("Tắt Zk Music's");
   })
   .on("SIGINT", () => {
-    log.info("Đang tắt Zk Music's", "SIGINT received");
+    log.info("Đang tắt Zk Music's");
     // Dừng tất cả nowplaying tracking
     try {
       const { NowPlayingUpdateService } = require("./services/NowPlayingUpdateService.js");
       NowPlayingUpdateService.getInstance().stopAllTracking();
     } catch (error) {
-      // Ignore errors during shutdown
+      log.error("Đang tắt Zk Music's", `Dừng nowplaying tracking thất bại | ${error as Error}`);
     }
     process.exit(0);
   });

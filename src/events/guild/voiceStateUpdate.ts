@@ -10,6 +10,7 @@ import { Manager } from "../../manager.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ZklinkPlayerState } from "../../Zklink/main.js";
 import { ClearMusicStatusChannel, ClearMusicStatusChannelWithDelay } from "../../utilities/UpdateStatusChannel.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager, oldState: VoiceState, newState: VoiceState) {
@@ -31,7 +32,14 @@ export default class {
       player.data.set("sudo-destroy", true);
       player.data.set("voice-status-cleared", true);
       
-      player.state !== ZklinkPlayerState.DESTROYED ? player.destroy() : true;
+      // Safely destroy player
+      if (player.state !== ZklinkPlayerState.DESTROYED) {
+        try {
+          await player.destroy();
+        } catch (error) {
+          log.error("Lỗi khi destroy player khi bot bị kick", `Guild: ${newState.guild.id}`, error as Error);
+        }
+      }
 
       // Xóa voice status channel khi bot bị kick/disconnect
       if (lastVoiceChannel) {
@@ -69,7 +77,14 @@ export default class {
 
     if (!isInVoice || !isInVoice.voice.channelId) {
       player.data.set("sudo-destroy", true);
-      player.state !== ZklinkPlayerState.DESTROYED ? player.destroy() : true;
+      // Safely destroy player
+      if (player.state !== ZklinkPlayerState.DESTROYED) {
+        try {
+          await player.destroy();
+        } catch (error) {
+          log.error("Lỗi khi destroy player khi bot bị kick", `Guild: ${newState.guild.id}`, error as Error);
+        }
+      }
     }
 
     if (

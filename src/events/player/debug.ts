@@ -3,6 +3,6 @@ import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager, logs: string) {
-    log.debug("Player debug info", logs);
+    log.debug(logs);
   }
 }

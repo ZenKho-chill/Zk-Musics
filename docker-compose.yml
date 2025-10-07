@@ -46,7 +46,7 @@ services:
         exec java -jar Lavalink.jar
       "
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:2333/version"]
+      test: ["CMD", "curl", "-f", "-H", "Authorization: youshallnotpass", "http://localhost:2333/version"]
       interval: 30s
       timeout: 10s
       retries: 3

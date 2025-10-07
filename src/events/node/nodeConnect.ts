@@ -11,7 +11,5 @@ export default class {
       secure: node.options.secure,
       name: node.options.name,
     });
-
-    // Log đã bị xóa - Lavalink node đã kết nối
   }
 }

@@ -9,10 +9,6 @@ export default class {
   async execute(client: Manager) {
     log.info("Client đã sẵn sàng", `Đăng nhập thành công với tên: ${client.user?.tag}`);
     
-    // Log thông tin client qua LoggerService
-    const loggerService = LoggerService.getInstance();
-    loggerService.logClientInfo();
-
     let guilds = client.guilds.cache.size;
     let members = client.guilds.cache.reduce((a, b) => a + b.memberCount, 0);
     let channels = client.channels.cache.size;

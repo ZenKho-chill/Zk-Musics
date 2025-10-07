@@ -13,7 +13,7 @@ export class CheckLavalinkServer {
   }
 
   async execute() {
-    log.info("Đang kiểm tra server lavalink cho autofix", "AutoFix process started");
+    log.info("Autofix check", "Đang kiểm tra server lavalink...");
 
     const getLavalinkServerClass = new GetLavalinkServer();
 
@@ -25,8 +25,7 @@ export class CheckLavalinkServer {
       // Sử dụng LavalinkHeaderHelper để tự động tạo headers với User-Id
       const { headers, debug } = LavalinkHeaderHelper.createHeadersWithDebug(config.pass);
       
-      log.debug("Debug thông tin về nguồn User-Id", debug.source);
-      log.debug("Debug tự động lấy User-Id", `User-Id: ${debug.userId}`);
+      log.debug("Lavalink User-Id", debug.source);
 
       const url = `ws://${config.host}:${config.port}/v4/websocket`;
 

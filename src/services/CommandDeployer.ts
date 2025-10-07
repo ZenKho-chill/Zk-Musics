@@ -40,20 +40,20 @@ export class CommandDeployer {
   async execute() {
     const command = [];
 
-    log.info(0, 100, "commands", "Bắt đầu đọc interaction files");
+    log.info("Commands", "Đang đọc file interaction");
 
     const store = await this.combineDir();
 
     command.push(...this.parseEngine(store));
 
-    log.info("Đã đọc xong file interaction", `Loaded ${store.length} commands`);
+    log.info("Commands", `Đọc ${store.length} lệnh`);
 
     const rest = new REST({ version: "10" }).setToken(this.client.config.bot.TOKEN);
     
-    log.info("Đã thiết lập REST client", "Ready to deploy commands");
+    log.info("REST Client", "Sẵn sàng thiết lập REST");
     const client = await rest.get(Routes.user());
 
-    log.info("Đã thiết lập REST", `Connected as ${(client as BotInfoType).username}`);
+    log.info("Đã thiết lập REST", `Chạy với tên ${(client as BotInfoType).username}`);
 
     if (command.length === 0) {
       log.warn("Không có interaction nào được load", "No commands to deploy");
@@ -64,7 +64,7 @@ export class CommandDeployer {
       body: command,
     });
 
-    log.info("Đã triển khai interaction", `Deployed ${command.length} slash commands`);
+    log.info("Triển khai interaction", `Khai báo ${command.length} lệnh`);
   }
 
   protected parseEngine(store: CommandInterface[]) {

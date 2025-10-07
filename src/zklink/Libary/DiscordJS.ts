@@ -19,7 +19,7 @@ export class DiscordJS extends AbstractLibrary {
 
   // Listen: gắn listener vào thư viện (client)
   public listen(nodes: ZklinkNodeOptions[]): void {
-    this.client.once("ready", () => this.ready(nodes));
+    this.client.once("ready", async () => await this.ready(nodes));
     this.client.on("raw", (packet: any) => this.raw(packet));
   }
 }

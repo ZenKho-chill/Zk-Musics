@@ -1,7 +1,7 @@
 import util from "node:util";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
-// Log đã bị xóa - import logInfo
+import { log } from "../../utilities/LoggerHelper.js";
 
 export async function deletePlayer(
   client: Manager,
@@ -16,6 +16,11 @@ export async function deletePlayer(
     res.send({ error: "Không tìm thấy player hiện tại!" });
     return;
   }
-  await player.destroy();
+  try {
+    await player.destroy();
+  } catch (error) {
+    log.error("Lỗi khi destroy player qua API", `Guild: ${guildId}`, error as Error);
+    return res.code(500).send({ error: "Failed to destroy player" });
+  }
   res.code(204);
 }

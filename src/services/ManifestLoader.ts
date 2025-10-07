@@ -7,7 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class ManifestLoader {
   get data(): ManifestInterface {
-    log.debug("Loading manifest data", "Reading package.json");
+    log.debug("Manifest", "Đọc package.json");
     const data = fs.readFileSync(join(__dirname, "..", "..", "package.json"), "utf-8");
     const jsonData = JSON.parse(data);
     const countPackage = Object.keys(jsonData.dependencies).length;
