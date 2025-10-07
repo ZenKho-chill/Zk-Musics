@@ -590,24 +590,6 @@ export default class {
       log.info(
         `Lệnh được thực thi: /${commandNameArray.join(" ")}`,
         `User: ${interaction.user.username} (${interaction.user.id}) | Guild: ${interaction.guild.name} (${interaction.guild.id})`,
-        {
-          command: commandNameArray.join("-"),
-          user: {
-            id: interaction.user.id,
-            username: interaction.user.username,
-            discriminator: interaction.user.discriminator
-          },
-          guild: {
-            id: interaction.guild.id,
-            name: interaction.guild.name
-          },
-          channel: {
-            id: interaction.channel?.id,
-            name: (interaction.channel as any)?.name || 'DM'
-          },
-          args: args.length > 0 ? args : undefined,
-          timestamp: new Date().toISOString()
-        }
       );
 
       ////////// Thống kê Sử dụng Lệnh Người Dùng //////////
