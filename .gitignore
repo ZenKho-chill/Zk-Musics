@@ -8,3 +8,4 @@ lavalink/logs
 tsconfig.tsbuildinfo
 lavalink/application.yml
 *.md
+logs/
