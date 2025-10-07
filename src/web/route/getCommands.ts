@@ -1,13 +1,13 @@
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
-import { logInfo } from "../../utilities/Logger.js";
+// Log đã bị xóa - import logInfo
 
 export async function getCommands(
   client: Manager,
   req: Fastify.FastifyRequest,
   res: Fastify.FastifyReply
 ) {
-  logInfo("CommandRouterService", `${req.method} ${req.routeOptions.url} payload={}`);
+  // Log đã bị xóa - getCommands request info
   res.send({
     data: client.commands.map((command) => ({
       name: command.name.join("-"),

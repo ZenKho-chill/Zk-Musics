@@ -20,6 +20,7 @@ export class MongoConnectDriver {
 
     new keyChecker(this.client, this.dbConfig.config, sampleConfig, "mongodb");
 
+    
     const mongoDriver = new MongoDriver(this.dbConfig.config.uri);
 
     new TableSetup(this.client, mongoDriver, "MongoDB");

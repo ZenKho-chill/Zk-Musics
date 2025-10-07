@@ -7,7 +7,7 @@ import {
 import { Manager } from "../../manager.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { ZklinkTrack } from "../../Zklink/main.js";
-import { logInfo, logDebug, logWarn, logError } from "../../utilities/Logger.js";
+
 
 export class PlaylistSaveQueueHandler {
   public async execute(client: Manager, handler: CommandHandler) {
@@ -139,7 +139,7 @@ export class PlaylistSaveQueueHandler {
             components: [disabledRow],
           });
         } catch (error) {
-          logError("PlaylistSaveQueueHandler", "Error updating timeout message", { error });
+          // Log đã bị xóa - Ghi lại lỗi cập nhật timeout message
         }
       }
     });
@@ -211,7 +211,7 @@ export class PlaylistSaveQueueHandler {
       await interaction.editReply({ embeds: [embed] });
 
     } catch (error) {
-      logError("PlaylistSaveQueueHandler", "Error saving tracks to playlist", { error });
+      // Log đã bị xóa - Ghi lại lỗi khi lưu tracks vào playlist
       
       await interaction.editReply({
         embeds: [

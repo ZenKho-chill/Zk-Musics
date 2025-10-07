@@ -10,6 +10,7 @@ import { AbstractDriver } from "../Drivers/AbstractDriver.js";
 // Trình điều khiển
 import { Lavalink4 } from "../Drivers/Lavalink4.js";
 import { ZklinkWebsocket } from "../Utilities/ZklinkWebsocket.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export class ZklinkNode {
   /** Quản lý Zklink */
@@ -29,6 +30,7 @@ export class ZklinkNode {
   protected wsEvent: ZklinkPlayerEvents;
   /** Driver để kết nối tới phiên bản hiện tại của Nodelink/Lavalink */
   public driver: AbstractDriver;
+  private connectionStartTime: number = 0; // Track connection start time
 
   /**
    * Lớp xử lý server lavalink
@@ -40,10 +42,10 @@ export class ZklinkNode {
     this.options = options;
     const getDriver = this.manager.drivers.filter((driver) => driver.id === options.driver);
     if (!getDriver || getDriver.length == 0) {
-      this.debug("Không tìm thấy driver, sử dụng lavalink v4 thay thế");
+      // Debug đã bị xóa - Không tìm thấy driver, sử dụng lavalink v4 thay thế
       this.driver = new Lavalink4();
     } else {
-      this.debug(`Đang sử dụng driver: ${getDriver[0].id}`);
+      // Debug đã bị xóa - Đang sử dụng driver
       this.driver = getDriver[0];
     }
     this.driver.initial(manager, this);
@@ -79,14 +81,46 @@ export class ZklinkNode {
 
   /** Kết nối tới server lavalink này */
   public connect(): ZklinkWebsocket {
-    return this.driver.connect();
+    this.connectionStartTime = Date.now(); // Lưu thời gian bắt đầu
+    log.info("Lavalink", `Bắt đầu kết nối lavalink: ${this.options.name}(${this.options.host}:${this.options.port})`);
+    log.debug("Node connect debug", `Node: ${this.options.name} | Host: ${this.options.host} | Port: ${this.options.port} | Auth: ${this.options.auth?.substring(0, 10)}... | Driver: ${this.options.driver}`);
+    
+    const ws = this.driver.connect();
+    
+    // Add timeout để debug connection issues với detailed timing
+    const timeoutId = global.setTimeout(() => {
+      const elapsed = Date.now() - this.connectionStartTime;
+      if (this.state !== ZklinkConnectState.Connected) {
+        log.warn("Lavalink connection timeout", `Node: ${this.options.name} | State: ${this.state} | Elapsed: ${elapsed}ms | Still not connected after 10s`);
+      }
+    }, 10000);
+    
+    return ws;
   }
 
   /** @ignore */
   public wsOpenEvent() {
+    const wasReconnecting = this.retryCounter > 0;
+    const attemptCount = this.retryCounter; // Lưu trước khi clean
+    const connectionTime = Date.now() - this.connectionStartTime; // Tính thời gian kết nối
+    
+    // Prevent duplicate connection events
+    if (this.online) {
+      log.warn("Duplicate wsOpenEvent", `Node: ${this.options.name} | Host: ${this.options.host}:${this.options.port} | Already online, ignoring duplicate connection`);
+      return;
+    }
+    
+    log.debug("wsOpenEvent triggered", `Node: ${this.options.name} | Host: ${this.options.host}:${this.options.port} | WasReconnecting: ${wasReconnecting} | AttemptCount: ${attemptCount} | State: ${this.state} | ConnectionTime: ${connectionTime}ms`);
+    
     this.clean(true);
     this.state = ZklinkConnectState.Connected;
-    this.debug(`Node đã kết nối! URL: ${this.driver.wsUrl}`);
+    
+    if (wasReconnecting) {
+      log.info("Lavalink", `Đã khôi phục kết nối: ${this.options.name}(${this.options.host}:${this.options.port}) sau ${attemptCount} lần thử (${connectionTime}ms)`);
+    } else {
+      log.info("Lavalink", `Kết nối thành công: ${this.options.name}(${this.options.host}:${this.options.port}) (${connectionTime}ms)`);
+    }
+    
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeConnect, this);
   }
@@ -126,7 +160,7 @@ export class ZklinkNode {
 
   /** @ignore */
   public wsErrorEvent(logs: Error) {
-    this.debug(`Node gặp lỗi! URL: ${this.driver.wsUrl}`);
+    log.error("Lavalink node error", `Node: ${this.options.name} | Error: ${logs.message}`);
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeError, this, logs);
   }
@@ -135,18 +169,33 @@ export class ZklinkNode {
   public async wsCloseEvent(code: number, reason: Buffer) {
     this.online = false;
     this.state = ZklinkConnectState.Disconnected;
-    this.debug(`Node đã ngắt kết nối! URL: ${this.driver.wsUrl}`);
-    // @ts-ignore
-    this.manager.emit(ZklinkEvents.NodeDisconnect, this, code, reason);
-    if (
-      !this.sudoDisconnect &&
-      this.retryCounter !== this.manager.ZklinkOptions.options!.retryCount
-    ) {
-      await setTimeout(this.manager.ZklinkOptions.options!.retryTimeout);
-      this.retryCounter = this.retryCounter + 1;
-      this.reconnect(true);
+    const reasonText = reason?.toString() || "Không có lý do";
+    
+    // Chỉ log disconnect và emit event lần đầu tiên
+    if (this.retryCounter === 0) {
+      log.warn("Lavalink node disconnected", `Node: ${this.options.name} | Host: ${this.options.host}:${this.options.port} | Code: ${code} | Reason: ${reasonText}`);
+      // @ts-ignore - Chỉ emit event lần đầu
+      this.manager.emit(ZklinkEvents.NodeDisconnect, this, code, reason);
+    }
+    
+    if (!this.sudoDisconnect) {
+      try {
+        // Exponential backoff: 3s, 6s, 12s, 24s, 30s (max)
+        const backoffDelay = Math.min(
+          this.manager.ZklinkOptions.options!.retryTimeout! * Math.pow(2, this.retryCounter),
+          30000 // Max 30 seconds
+        );
+        
+        await setTimeout(backoffDelay);
+        this.retryCounter = this.retryCounter + 1;
+        this.reconnect(true);
+      } catch (error) {
+        log.error("Lỗi khi reconnect node", `Node: ${this.options.name}`, error as Error);
+        this.nodeClosed();
+      }
       return;
     }
+    
     this.nodeClosed();
     return;
   }
@@ -154,7 +203,7 @@ export class ZklinkNode {
   protected nodeClosed() {
     // @ts-ignore
     this.manager.emit(ZklinkEvents.NodeClosed, this);
-    this.debug(`Node đã đóng! URL: ${this.driver.wsUrl}`);
+    log.info("Lavalink", `Node: ${this.options.name} | Đang dọn dẹp tài nguyên...`);
     this.clean();
   }
 
@@ -190,7 +239,6 @@ export class ZklinkNode {
   }
 
   protected debug(logs: string) {
-    // @ts-ignore
-    this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Nút @ ${this.options.name}] | ${logs}`);
+    // Debug đã bị xóa
   }
 }

@@ -8,7 +8,6 @@ import {
   MessageFlagsBitField,
   MessageFlags,
 } from "discord.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
 
 import Axios from "axios";
@@ -34,22 +33,16 @@ import { cli } from "winston/lib/winston/config/index.js";
 
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, track: ZklinkTrack) {
-    logDebug("TrackStart", `Event trackStart được trigger cho guild ${player.guildId}, track: ${track.title}`);
+    // Log đã bị xóa - Event trackStart được trigger
     
-    if (!client.isDatabaseConnected)
-      return logWarn(
-        "DatabaseService",
-        "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
-      );
+    if (!client.isDatabaseConnected) {
+      // Log đã bị xóa - Cơ sở dữ liệu chưa kết nối
+      return;
+    }
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
-    logInfo(
-      "TrackStart",
-      `${chalk.hex("#53ec53")("Player đã bắt đầu tại @ ")}${chalk.hex("#53ec53")(
-        guild?.name
-      )} / ${chalk.hex("#53ec53")(player.guildId)}`
-    );
+    // Log đã bị xóa - Player đã bắt đầu
 
     /////////// Clear nowplaying cache cho bài hát mới //////////
     NowPlayingUpdateService.getInstance().clearCache(player.guildId);
@@ -357,7 +350,7 @@ export default class {
         try {
           return button.run(client, message, String(language), player, nplaying, collector);
         } catch (err) {
-          logWarn("ButtonError", err as string);
+          // Log đã bị xóa - ButtonError
         }
       }
     });

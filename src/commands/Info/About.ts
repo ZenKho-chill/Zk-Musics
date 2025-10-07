@@ -6,13 +6,13 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import { EmojiValidator } from "../../utilities/EmojiValidator.js";
-const data: Config = new ConfigData().data;
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class implements Command {
   public name = ["about"];
   public description = "Hiển thị thông tin của bot";
   public category = "Info";
-  public accessableby = data.COMMANDS_ACCESS.INFO.About;
+  public accessableby = ConfigData.getInstance().data.COMMANDS_ACCESS.INFO.About;
   public usage = "";
   public aliases = [];
   public lavalink = false;
@@ -24,6 +24,8 @@ export default class implements Command {
 
   public async execute(client: Manager, handler: CommandHandler) {
     await handler.SilentDeferReply();
+    
+    log.info("About command executed", `User: ${handler.user?.tag} | Guild: ${handler.guild?.name}`);
 
     const AboutEmbed = new EmbedBuilder()
       .setAuthor({

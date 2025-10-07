@@ -47,18 +47,18 @@ export class ZklinkPlugin extends Plugin {
     });
     this.runningWs.set(voiceOptions.guildId, ws);
     ws.on("open", () => {
-      this.debug("Đã kết nối tới server nhận voice của nodelink!");
+      // Debug đã bị xóa - Đã kết nối tới server nhận voice của nodelink
       // @ts-ignore
       this.manager?.emit(ZklinkEvents.VoiceConnect, node);
     });
     ws.on("message", (data: RawData) => this.wsMessageEvent(node, data));
     ws.on("error", (err) => {
-      this.debug("Lỗi tại server nhận voice của nodelink!");
+      // Debug đã bị xóa - Lỗi tại server nhận voice của nodelink
       // @ts-ignore
       this.manager?.emit(ZklinkEvents.VoiceError, node, err);
     });
     ws.on("close", (code: number, reason: Buffer) => {
-      this.debug(`Ngắt kết nối tới server nhận voice của nodelink! Code: ${code} Lý do: ${reason}`);
+      // Debug đã bị xóa - Ngắt kết nối tới server nhận voice của nodelink
       // @ts-ignore
       this.manager?.emit(ZklinkEvents.VoiceDisconnect, node, code, reason);
       // @ts-ignore
@@ -72,7 +72,7 @@ export class ZklinkPlugin extends Plugin {
     if (!targetWs) return;
     targetWs.close();
     this.runningWs.delete(guildId);
-    this.debug("Đã huỷ kết nối tới server nhận voice của nodelink!");
+    // Debug đã bị xóa - Đã huỷ kết nối tới server nhận voice của nodelink
     // @ts-ignore
     targetWs.removeAllListeners();
     return;
@@ -80,7 +80,7 @@ export class ZklinkPlugin extends Plugin {
 
   protected wsMessageEvent(node: ZklinkNode, data: RawData) {
     const wsData = JSON.parse(data.toString());
-    this.debug(String(data));
+    // Debug đã bị xóa - Log data nhận được
     switch (wsData.type) {
       case "startSpeakingEvent": {
         // @ts-ignore
@@ -120,9 +120,6 @@ export class ZklinkPlugin extends Plugin {
   }
 
   private debug(logs: string) {
-    this.manager
-      ? // @ts-ignore
-        this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Plugin] / [Voice Receiver] | ${logs}`)
-      : true;
+    // Debug đã bị xóa
   }
 }

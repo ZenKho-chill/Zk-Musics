@@ -6,7 +6,6 @@ import { ZklinkTrack } from "../../Zklink/Player/ZklinkTrack.js";
 import { TrackTitle } from "../../utilities/TrackTitle.js";
 import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
 import { zkcard } from "zkcard";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export class PlayerUpdateLoader {
   client: Manager;
   constructor(client: Manager) {
@@ -244,10 +243,7 @@ export class PlayerUpdateLoader {
           files: attachment ? [attachment] : [], // Thêm tập tin đính kèm nếu tồn tại
         })
         .catch((error) => {
-          logInfo(
-            "loadUpdate",
-            `Lỗi khi chỉnh sửa tin nhắn tại @ ${playMsg.guild!.name} / ${playMsg.guildId}`
-          );
+          // Log đã bị xóa - Lỗi khi chỉnh sửa tin nhắn
         });
     };
 
@@ -292,10 +288,7 @@ export class PlayerUpdateLoader {
           files: [], // Thêm tập tin đính kèm ở đây
         })
         .catch((error) => {
-          logInfo(
-            "LoadUpdate",
-            `Không thể chỉnh sửa tin nhắn tại @ ${playMsg.guild!.name} / ${playMsg.guildId}`
-          );
+          // Log đã bị xóa - Không thể chỉnh sửa tin nhắn
         });
     };
   }

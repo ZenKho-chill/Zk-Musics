@@ -4,18 +4,17 @@ import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
 import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
+import { log } from "../../utilities/LoggerHelper.js";
 import chalk from "chalk";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
-    logDebug("QueueEmpty", `Event queueEmpty được trigger cho guild ${player.guildId}`);
+    // Log đã bị xóa - Event queueEmpty được trigger
     
-    if (!client.isDatabaseConnected)
-      return logWarn(
-        "DatabaseService",
-        "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
-      );
+    if (!client.isDatabaseConnected) {
+      // Log đã bị xóa - Cơ sở dữ liệu chưa kết nối
+      return;
+    }
 
     /////////// Cập nhật thiết lập nhạc //////////
     await client.UpdateMusic(player);
@@ -84,18 +83,13 @@ export default class {
       }
     }
 
-    logInfo(
-      "QueueEmpty",
-      `${chalk.hex("#00ffff")("Hàng chờ (queue) đã rỗng tại @ ")}${chalk.hex("#00ffff")(
-        guild?.name
-      )} / ${chalk.hex("#00ffff")(player.guildId)}`
-    );
+    // Log đã bị xóa - Hàng chờ (queue) đã rỗng
 
     /////////// Xóa current track khỏi database khi queue rỗng //////////
     if (client.config.features.AUTO_RESUME) {
-      logDebug("QueueEmpty", `Guild ${player.guildId} - Queue rỗng, đang xóa current track...`);
+      // Log đã bị xóa - Queue rỗng, đang xóa current track
       await client.db.autoreconnect.set(`${player.guildId}.current`, "");
-      logInfo("QueueEmpty", `Đã xóa current track khỏi database cho guild ${player.guildId} - queue rỗng`);
+      // Log đã bị xóa - Đã xóa current track khỏi database
     }
     /////////// Xóa current track khỏi database khi queue rỗng //////////
 

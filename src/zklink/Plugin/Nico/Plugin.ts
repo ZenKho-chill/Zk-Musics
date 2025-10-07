@@ -115,7 +115,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     const isUrl = /^https?:\/\//.test(query);
 
     if (id) {
-      this.debug(`Bắt đầu tìm kiếm từ plugin ${this.sourceName()}`);
+      // Debug đã bị xóa - Bắt đầu tìm kiếm từ plugin
       const _function = this.methods.track;
       const result: Result = await _function(id, options?.requester);
 
@@ -210,10 +210,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   }
 
   private debug(logs: string) {
-    this.Zklink
-      ? // @ts-ignore
-        this.Zklink.emit(ZklinkEvents.Debug, `[Zklink] / [Plugin] / [Nico] | ${logs}`)
-      : true;
+    // Debug đã bị xóa
   }
 }
 

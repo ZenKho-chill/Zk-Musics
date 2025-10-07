@@ -50,7 +50,7 @@ export class ZklinkPlayerManager extends ZklinkDatabase<ZklinkPlayer> {
     // @ts-ignore
     player.on("connectionUpdate", onUpdate);
     player.state = ZklinkPlayerState.CONNECTED;
-    this.debug("Đã tạo Player tại " + options.guildId);
+    // Debug đã bị xóa - Đã tạo Player
     // @ts-ignore
     this.manager.emit(ZklinkEvents.PlayerCreate, player);
     const voiceReceiver = this.manager.plugins.get("Zklink-voiceReceiver") as ZklinkPlugin;
@@ -69,7 +69,6 @@ export class ZklinkPlayerManager extends ZklinkDatabase<ZklinkPlayer> {
   }
 
   protected debug(logs: string) {
-    // @ts-ignore
-    this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Quản lý Player] | ${logs}`);
+    // Debug đã bị xóa
   }
 }

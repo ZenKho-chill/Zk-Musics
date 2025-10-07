@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import md5 from "md5";
 import axios from "axios";
 import cron from "node-cron";
+import { log } from "../utilities/LoggerHelper.js";
 import {
   ButtonBuilder,
   EmbedBuilder,
@@ -18,7 +19,7 @@ import {
 } from "discord.js";
 import { EmojiValidator } from "../utilities/EmojiValidator.js";
 const __filename = fileURLToPath(import.meta.url);
-import { logInfo, logWarn, logError } from "../utilities/Logger.js";
+// Logging system đã bị xóa
 const __dirname = path.dirname(__filename);
 
 export class WebServer {
@@ -77,7 +78,7 @@ export class WebServer {
 
         const voteCount = (await client.db.votes.get(vote.user))?.count || "1";
 
-        const channelId = client.config.features.WebServer.TOPGG_VOTELOGS.LogVoteChannelID;
+        const channelId = client.config.features.WebServer.TOPGG_VOTELOGS.VoteChannelID;
         if (!channelId || channelId.length == 0) return;
 
         try {
@@ -125,9 +126,9 @@ export class WebServer {
             components: [ButtonVote],
           });
 
-          logInfo("WebServer", `${voteUser.tag} vừa vote trên Top.gg`);
+          log.info("Đã gửi tin nhắn vote notification", `Channel: ${channel.name} | User: ${vote.user}`);
         } catch (error) {
-          logWarn("WebServer", "Error processing vote", { error: error as string });
+          log.error("Lỗi khi gửi vote notification", `Channel: ${channelId}`, error as Error);
         }
       })
     );
@@ -233,6 +234,6 @@ export class WebServer {
 
   expose() {
     this.app.listen(this.port);
-    logInfo("WebServer", `WebServer đang chạy ở cổng: ${this.port}`);
+    log.info("WebServer đã khởi động", `Port: ${this.port}`);
   }
 }

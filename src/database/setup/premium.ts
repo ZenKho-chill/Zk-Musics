@@ -3,7 +3,7 @@ import cron from "node-cron";
 import { Premium } from "../schema/Premium.js";
 import { GuildPremium } from "../schema/GuildPremium.js";
 import { EmbedBuilder } from "discord.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+// Log đã bị xóa - import Logger functions
 
 export class PremiumScheduleSetup {
   client: Manager;
@@ -15,10 +15,7 @@ export class PremiumScheduleSetup {
   async execute() {
     this.setupChecker();
     cron.schedule("0 * * * *", () => {
-      logInfo(
-        PremiumScheduleSetup.name,
-        "Đang chạy tác vụ theo lịch cho người dùng và guild Premium"
-      );
+      // Log đã bị xóa - Đang chạy tác vụ theo lịch cho người dùng và guild Premium
       this.setupChecker();
     });
   }
@@ -29,20 +26,14 @@ export class PremiumScheduleSetup {
       (data) => data.value.isPremium == true && data.value.expiresAt !== "lifetime"
     );
     if (users && users.length !== 0) this.checkUser(users.map((data) => data.value));
-    logInfo(
-      PremiumScheduleSetup.name,
-      `Đang kiểm tra ${users.length} người dùng Premium`
-    );
+    // Log đã bị xóa - Đang kiểm tra người dùng Premium
 
     const premiumGuild = Array.from(await this.client.db.preGuild.all());
     const guilds = premiumGuild.filter(
       (data) => data.value.isPremium == true && data.value.expiresAt !== "lifetime"
     );
     if (guilds && guilds.length !== 0) this.checkGuild(guilds.map((data) => data.value));
-    logInfo(
-      PremiumScheduleSetup.name,
-      `Đang kiểm tra ${guilds.length} guild Premium`
-    );
+    // Log đã bị xóa - Đang kiểm tra guild Premium
   }
 
   async checkUser(users: Premium[]) {
@@ -50,10 +41,7 @@ export class PremiumScheduleSetup {
       try {
         if (data.expiresAt !== "lifetime" && Date.now() >= data.expiresAt) {
           await this.client.db.premium.delete(data.id);
-          logInfo(
-            PremiumScheduleSetup.name,
-            `Đã xóa Premium của người dùng ${data.redeemedBy.username}`
-          );
+          // Log đã bị xóa - Đã xóa Premium của người dùng
 
           const thumbnailURL = data.redeemedBy.avatarURL;
           // Send logs to a channel
@@ -68,7 +56,7 @@ export class PremiumScheduleSetup {
           );
         }
       } catch (error) {
-        logError(PremiumScheduleSetup.name, `Không thể xóa người dùng ${data.id}`);
+        // Log đã bị xóa - Không thể xóa người dùng
       }
     }
   }
@@ -78,10 +66,7 @@ export class PremiumScheduleSetup {
       try {
         if (data.expiresAt !== "lifetime" && Date.now() >= data.expiresAt) {
           await this.client.db.preGuild.delete(data.id);
-          logInfo(
-            PremiumScheduleSetup.name,
-            `Đã xóa Premium của guild ${data.redeemedBy.name}`
-          );
+          // Log đã bị xóa - Đã xóa Premium của guild
           const thumbnailURL = data.redeemedBy.GuildiconURL;
           // Send logs to a channel
           await this.sendLog(
@@ -97,31 +82,14 @@ export class PremiumScheduleSetup {
           );
         }
       } catch (error) {
-        logError(PremiumScheduleSetup.name, `Không thể xóa guild ${data.id}`);
+        // Log đã bị xóa - Không thể xóa guild
       }
     }
   }
 
   async sendLog(title: string, description: string, thumbnailURL: string) {
-    try {
-      if (!this.client.config.logchannel.PremiumExpireChannelID) return;
-
-      const embed = new EmbedBuilder()
-        .setTitle(title)
-        .setDescription(description)
-        .setThumbnail(thumbnailURL ?? this.client.user?.displayAvatarURL())
-        .setTimestamp()
-        .setColor(this.client.color_main);
-
-      const channel = await this.client.channels
-        .fetch(this.client.config.logchannel.PremiumExpireChannelID)
-        .catch(() => undefined);
-
-      if (!channel || (channel && !channel.isTextBased())) return;
-
-      channel.send({ embeds: [embed] });
-    } catch (error) {
-      logError(PremiumScheduleSetup.name, "Gửi log tới kênh thất bại: " + error);
-    }
+    // Log channel đã bị xóa - Chức năng gửi log premium expire đã bị vô hiệu hóa
+    // Vẫn giữ method này để tránh lỗi nhưng không thực thi gì
+    return;
   }
 }

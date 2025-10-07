@@ -10,17 +10,25 @@ export abstract class AbstractLibrary {
     this.manager = null;
   }
 
-  protected ready(nodes: ZklinkNodeOptions[]): void {
+  protected async ready(nodes: ZklinkNodeOptions[]): Promise<void> {
     this.manager!.id = this.getId();
     this.manager!.shardCount = this.getShardCount();
     // @ts-ignore
     this.manager!.emit(
       "debug",
-      `[Zklink] | Hoàn tất khởi tạo | Đã đăng ký ${
-        this.manager!.plugins.size
-      } plugin | Bắt đầu kết nối các node hiện có`
+      `Đã đăng ký ${this.manager!.plugins.size} plugin | Bắt đầu kết nối các node hiện có`
     );
-    for (const node of nodes) this.manager?.nodes.add(node);
+    
+    // Kết nối tuần tự để tránh race condition
+    for (let i = 0; i < nodes.length; i++) {
+      const node = nodes[i];
+      this.manager?.nodes.add(node);
+      
+      // Thêm delay giữa các kết nối để tránh race condition
+      if (i < nodes.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay
+      }
+    }
   }
 
   public set(manager: Zklink): AbstractLibrary {

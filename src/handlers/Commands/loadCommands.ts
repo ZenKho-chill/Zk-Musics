@@ -5,8 +5,8 @@ import { join, dirname } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { KeyCheckerEnum } from "../../@types/KeyChecker.js";
 import { Command } from "../../structures/Command.js";
+import { log } from "../../utilities/LoggerHelper.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export class CommandLoader {
   client: Manager;
@@ -25,28 +25,30 @@ export class CommandLoader {
 
     if (this.client.commands.size) {
       const commandColl = this.client.commands;
-      const array1 = commandColl.filter((command) => command.name.length === 1).size;
-      const array2 = commandColl.filter((command) => command.name.length === 2).size;
-      const array3 = commandColl.filter((command) => command.name.length === 3).size;
+      const totalCommands = this.client.commands.size;
+      
+      // Thống kê interaction commands
       const haveInteraction = commandColl.filter((command) => command.usingInteraction).size;
-      logInfo(CommandLoader.name, `Kết quả tải lệnh:`);
-      logInfo(CommandLoader.name, `${array1} lệnh không có tiền tố`);
-      logInfo(CommandLoader.name, `${array2} lệnh có 1 tiền tố`);
-      logInfo(CommandLoader.name, `${array3} lệnh có 2 tiền tố`);
-      logInfo(
-        CommandLoader.name,
-        `${haveInteraction} lệnh hỗ trợ Interaction/Prefix`
+      const noInteraction = totalCommands - haveInteraction;
+      
+      // Thống kê theo category
+      const categories = new Map<string, number>();
+      commandColl.forEach((command) => {
+        const category = command.category || "Unknown";
+        categories.set(category, (categories.get(category) || 0) + 1);
+      });
+      
+      const categoryStats = Array.from(categories.entries())
+        .map(([cat, count]) => `${cat}: ${count}`)
+        .join(" | ");
+      
+      log.info(
+        "Commands", `Tổng: ${totalCommands} | Slash: ${haveInteraction} | Prefix: ${noInteraction}`
       );
-      logInfo(
-        CommandLoader.name,
-        `${commandColl.size - haveInteraction} lệnh chỉ hỗ trợ Prefix`
-      );
-      logInfo(
-        CommandLoader.name,
-        `Tổng cộng ${commandColl.size} lệnh đã được tải!`
-      );
+      
+      log.info("Phân loại commands", categoryStats);
     } else {
-      logWarn(CommandLoader.name, `Không có lệnh nào được tải, mọi thứ ổn chứ?`);
+      log.warn("Không tìm thấy lệnh nào", "Command collection is empty");
     }
   }
 
@@ -55,25 +57,19 @@ export class CommandLoader {
     const command = new (await import(pathToFileURL(commandFile).toString())).default();
 
     if (!command.name?.length) {
-      logWarn(CommandLoader.name, `"${rltPath}" File lệnh không có tên. Bỏ qua...`);
+      log.warn("File không có tên lệnh", `File: ${rltPath}`);
       return;
     }
 
     if (this.client.commands.has(command.name)) {
-      logWarn(
-        CommandLoader.name,
-        `"${command.name}" lệnh đã được cài đặt. Bỏ qua...`
-      );
+      log.warn("Lệnh đã tồn tại", `Lệnh: ${command.name} | File: ${rltPath}`);
       return;
     }
 
     const checkRes = this.keyChecker(command);
 
     if (checkRes !== KeyCheckerEnum.Pass) {
-      logWarn(
-        CommandLoader.name,
-        `"${command.name}" lệnh không được triển khai đúng [${checkRes}]. Bỏ qua...`
-      );
+      log.error("Lệnh không đúng format", `Lệnh: ${command.name} | Lỗi: ${checkRes} | File: ${rltPath}`);
       return;
     }
 

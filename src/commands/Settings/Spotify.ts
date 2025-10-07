@@ -12,8 +12,8 @@ import { SpotifygetAccessToken } from "../../utilities/SpotifygetAccessToken.js"
 import axios from "axios";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
-const data: Config = new ConfigData().data;
+
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["spotify", "manage"];
@@ -121,10 +121,7 @@ export default class implements Command {
           flags: MessageFlags.Ephemeral,
         });
       } catch (error) {
-        logWarn(
-          "Spotify",
-          `Lưu ID Spotify hoặc lấy profile người dùng thất bại: ${error}`
-        );
+        // Log đã bị xóa - Cảnh báo lưu ID Spotify hoặc lấy profile người dùng thất bại
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,
@@ -160,7 +157,7 @@ export default class implements Command {
           flags: MessageFlags.Ephemeral,
         });
       } catch (error) {
-        logWarn("Spotify", `Ngắt kết nối ID Spotify thất bại: ${error}`);
+        // Log đã bị xóa - Cảnh báo ngắt kết nối ID Spotify thất bại
         await handler.interaction.reply({
           content: `${client.i18n.get(
             handler.language,

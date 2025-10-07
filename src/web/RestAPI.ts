@@ -5,7 +5,7 @@ import { WebsocketRoute } from "./websocket.js";
 import { PlayerRoute } from "./player.js";
 import { getSearch } from "./route/getSearch.js";
 import { getCommands } from "./route/getCommands.js";
-import { logInfo, logError } from "../utilities/Logger.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 export class RestAPI {
   app: Fastify.FastifyInstance;
@@ -68,7 +68,7 @@ export class RestAPI {
         "Ở đây không có Zk Music's, nhưng bạn vẫn có thể mỉm cười 😊",
         "Đừng lo, Zk Music's không phải là tất cả đâu 😎",
       ];
-      logInfo("HealthRouterService", `${request.method} ${request.routeOptions.url}`);
+      log.info("HealthRouterService request nhận được", `IP: ${request.ip}`);
       reply.send({ zk: response[Math.floor(Math.random() * response.length)] });
     });
 
@@ -76,17 +76,23 @@ export class RestAPI {
 
     this.app
       .listen({ port, host: "0.0.0.0" })
-      .then(() => logInfo("RestAPI", `Server đang chạy ở cổng ${port}`))
+      .then(() => {
+        log.info("Server đang chạy ở cổng", `Port: ${port}`);
+      })
       .catch((err) => {
         if (this.client.config.bot.TOKEN.length > 1) {
           this.client.config.features.RestAPI.port = this.client.config.features.RestAPI.port + 1;
           const newPort = this.client.config.features.RestAPI.port;
           return this.app
             .listen({ port: newPort, host: "0.0.0.0" })
-            .then(() => logInfo("RestAPI", `Server đang chạy ở cổng ${newPort}`))
-            .catch((err) => logError("RestAPI", "Failed to start server on new port", { error: err }));
+            .then(() => {
+              log.info("Server đang chạy ở cổng mới", `New Port: ${newPort}`);
+            })
+            .catch((err) => {
+              log.error("Failed to start server on new port", `New Port: ${newPort}`, err);
+            });
         } else {
-          logError("RestAPI", "Failed to start server", { error: err });
+          log.error("Failed to start server", `Port: ${port}`, err);
         }
       });
   }

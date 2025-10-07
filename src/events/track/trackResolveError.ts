@@ -4,14 +4,12 @@ import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { CleanUpMessage } from "../../services/CleanUpMessage.js";
 import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer, track: ZklinkTrack, message: string) {
-    if (!client.isDatabaseConnected)
-      return logWarn(
-        "DatabaseService",
-        "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
-      );
+    if (!client.isDatabaseConnected) {
+      // Log đã bị xóa - Cơ sở dữ liệu chưa kết nối
+      return;
+    }
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
 
@@ -19,7 +17,7 @@ export default class {
     const isRadioMode = player.data.get("radio_mode");
     const trackInfo = track ? `Track: ${track.title} (${track.uri})` : "Track: unknown";
     
-    logWarn("TrackResolveError", `${message || "Lỗi không xác định"} | ${trackInfo} | Radio Mode: ${isRadioMode}`);
+    // Log đã bị xóa - Track resolve error
 
     /////////// Cập nhật thiết lập nhạc //////////
     await client.UpdateMusic(player);
@@ -68,7 +66,7 @@ export default class {
       );
     }
 
-    logError("TrackResolveError", `Lỗi track tại ${guild!.name} / ${player.guildId}.`);
+    // Log đã bị xóa - Lỗi track
 
     const data247 = await new Mode247Builder(client, player).get(player.guildId);
     if (data247 !== null && data247 && data247.twentyfourseven && channel)

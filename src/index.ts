@@ -1,26 +1,34 @@
 import { Manager } from "./manager.js";
 import { ConfigData } from "./services/ConfigData.js";
-import { logInfo, logUnhandled } from "./utilities/Logger.js";
+import { LoggerHelper, log } from "./utilities/LoggerHelper.js";
 
-const configData = new ConfigData().data;
+const configData = ConfigData.getInstance().data;
 const zk = new Manager(configData, configData.features.MESSAGE_CONTENT.enable);
-// Anti crash handling
+
+// Anti crash handling với logging
 process
-  .on("unhandledRejection", (error) => logUnhandled("AntiCrash", error))
-  .on("uncaughtException", (error) => logUnhandled("AntiCrash", error))
-  .on("uncaughtExceptionMonitor", (error) => logUnhandled("AntiCrash", error))
-  .on("exit", () =>
-    logInfo("ClientManager", `Zk Music's đã tắt thành công. Hẹn gặp lại lần sau!`)
-  )
+  .on("unhandledRejection", (error, promise) => {
+    log.unhandled("UnhandledRejection", `Promise: ${promise}`, error as Error);
+  })
+  .on("uncaughtException", (error) => {
+    log.unhandled("UncaughtException", undefined, error as Error);
+  })
+  .on("uncaughtExceptionMonitor", (error) => {
+    log.unhandled("UncaughtExceptionMonitor", undefined, error as Error);
+  })
+  .on("exit", () => {
+    log.info("Tắt Zk Music's");
+  })
   .on("SIGINT", () => {
-    logInfo("ClientManager", `Đang tắt Zk Music's...`);
+    log.info("Đang tắt Zk Music's");
     // Dừng tất cả nowplaying tracking
     try {
       const { NowPlayingUpdateService } = require("./services/NowPlayingUpdateService.js");
       NowPlayingUpdateService.getInstance().stopAllTracking();
     } catch (error) {
-      // Ignore errors during shutdown
+      log.error("Đang tắt Zk Music's", `Dừng nowplaying tracking thất bại | ${error as Error}`);
     }
     process.exit(0);
   });
+
 zk.start();

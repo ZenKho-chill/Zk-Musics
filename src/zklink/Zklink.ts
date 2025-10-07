@@ -18,6 +18,7 @@ import {
   SourceIDs,
 } from "./Interface/Constants.js";
 import { ZklinkTrack } from "./Player/ZklinkTrack.js";
+import { log } from "../utilities/LoggerHelper.js";
 import { RawTrack } from "./Interface/Rest.js";
 import { ZklinkPlayer } from "./Player/ZklinkPlayer.js";
 import { SourceZklinkPlugin } from "./Plugin/SourceZklinkPlugin.js";
@@ -33,11 +34,7 @@ import { ZklinkDatabase } from "./Utilities/ZklinkDatabase.js";
 export declare interface Zklink {
   /* tslint:disable:unified-signatures */
   // ------------------------- SỰ KIỆN (ON) ------------------------- //
-  /**
-   * Phát ra khi Zklink có log debug.
-   * @event Zklink#debug
-   */
-  on(event: "debug", listener: (logs: string) => void): this;
+
 
   ////// ------------------------- SỰ KIỆN NODE ------------------------- /////
   /**
@@ -227,8 +224,6 @@ export declare interface Zklink {
   // ------------------------- SỰ KIỆN (ON) ------------------------- //
 
   // ------------------------- SỰ KIỆN (ONCE) ------------------------- //
-  /** @ignore */
-  once(event: "debug", listener: (logs: string) => void): this;
   ////// ------------------------- Node Event ------------------------- /////
   /** @ignore */
   once(event: "nodeConnect", listener: (node: ZklinkNode) => void): this;
@@ -336,8 +331,6 @@ export declare interface Zklink {
   // ------------------------- ONCE EVENT ------------------------- //
 
   // ------------------------- SỰ KIỆN (OFF) ------------------------- //
-  /** @ignore */
-  off(event: "debug", listener: (logs: string) => void): this;
   ////// ------------------------- Node Event ------------------------- /////
   /** @ignore */
   off(event: "nodeConnect", listener: (node: ZklinkNode) => void): this;

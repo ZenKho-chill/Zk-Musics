@@ -4,7 +4,7 @@ import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["premium", "remove"];
@@ -173,7 +173,7 @@ export default class implements Command {
     userDescription: string,
     id: string
   ): Promise<void> {
-    if (!client.config.logchannel.RemoveChannelID) return;
+    // Log channel đã bị xóa - không gửi log
     const language = client.config.bot.LANGUAGE;
 
     const embed = new EmbedBuilder()
@@ -204,13 +204,7 @@ export default class implements Command {
       .setColor(client.color_main)
       .setTimestamp();
 
-    try {
-      const channel = await client.channels
-        .fetch(client.config.logchannel.RemoveChannelID)
-        .catch(() => undefined);
-      if (!channel || !channel.isTextBased()) return;
-      await (channel as any).send({ embeds: [embed] });
-    } catch {}
+    // Log channel đã bị xóa - không gửi embed
     return;
   }
 }

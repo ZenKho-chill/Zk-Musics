@@ -7,7 +7,8 @@ import { ConfigData } from "../../services/ConfigData.js";
 import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
 import { SUPPORTED_LANGUAGES, getLanguageDisplayName, isLanguageSupported } from "../../languages/languageConfig.js";
 import { GuildLanguageManager } from "../../utilities/GuildLanguageManager.js";
-const data: Config = new ConfigData().data;
+import { log } from "../../utilities/LoggerHelper.js";
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["language"];

@@ -2,10 +2,28 @@ import { load } from "js-yaml";
 import { YAMLConfigParse } from "./YAMLConfigParse.js";
 import { config } from "dotenv";
 import { Config } from "../@types/Config.js";
+import { log } from "../utilities/LoggerHelper.js";
 config();
 
 export class ConfigData {
-  get data() {
+  private static _instance: ConfigData;
+  private static _data: Config | null = null;
+
+  private constructor() {}
+
+  static getInstance(): ConfigData {
+    if (!ConfigData._instance) {
+      ConfigData._instance = new ConfigData();
+    }
+    return ConfigData._instance;
+  }
+
+  get data(): Config {
+    if (ConfigData._data) {
+      return ConfigData._data;
+    }
+
+    log.debug("Loading configuration data", "Reading config.yml");
     const yaml_files = load(new YAMLConfigParse("./config.yml").execute()) as Config;
     const old_data = load(new YAMLConfigParse("./config.yml").execute()) as Config;
 
@@ -16,6 +34,7 @@ export class ConfigData {
     }
 
     if (process.env.DOCKER_COMPOSE_MODE) {
+      log.debug("Docker Compose mode detected", "Applying container configurations");
       // Thay đổi thông tin lavalink khi chạy trong Docker Compose
       const lavalink_changedata = res.lavalink.NODES[0];
       lavalink_changedata.host = String(process.env.NODE_HOST);
@@ -33,6 +52,9 @@ export class ConfigData {
       }
     }
 
+    // Cache the config data as static
+    ConfigData._data = res;
+    log.debug("Configuration data cached", "Config loaded and cached successfully");
     return res;
   }
 

@@ -8,7 +8,8 @@ import { ZklinkPlayer, ZklinkTrack } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import { NowPlayingUpdateService } from "../../services/NowPlayingUpdateService.js";
-const data: Config = new ConfigData().data;
+import { log } from "../../utilities/LoggerHelper.js";
+const data: Config = ConfigData.getInstance().data;
 // Mã chính
 export default class implements Command {
   public name = ["nowplaying"];

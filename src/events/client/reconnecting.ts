@@ -1,11 +1,8 @@
 import { Manager } from "../../manager.js";
-import { logInfo } from "../../utilities/Logger.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager) {
-    logInfo(
-      "ClientReconnect",
-      `Đã kết nối lại ${client.user!.tag} (${client.user!.id})`
-    );
+    log.info("Discord client reconnecting", "Attempting to reconnect to Discord");
   }
 }

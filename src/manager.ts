@@ -13,7 +13,8 @@ import {
 import { WebServer } from "./web/WebServer.js";
 import { DatabaseService } from "./database/index.js";
 import { resolve } from "path";
-import { LogManager } from "./services/LogManager.js";
+import { Logger } from "./structures/Logger.js";
+import { LoggerHelper, log } from "./utilities/LoggerHelper.js";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { RestAPI } from "./web/RestAPI.js";
@@ -42,7 +43,7 @@ import chalk from "chalk";
 import TempVoiceService from "./services/TempVoiceService.js";
 import { AssistanceHandler } from "./@guild-helpers/AssistanceHandler.js";
 import { StatisticsHandler } from "./@guild-helpers/StatisticsHandler.js";
-import { logger, logInfo, logWarn } from "./utilities/Logger.js";
+import { LoggerService } from "./services/LoggerService.js";
 config();
 
 function getShard(clusterManager: ClusterManager) {
@@ -56,7 +57,7 @@ function getShard(clusterManager: ClusterManager) {
 export class Manager extends Client {
   public cluster: { id: number | 0; data: Cluster | null };
   public manifest: ManifestInterface;
-  public logger: LogManager;
+  public logger: Logger;
   public db!: DatabaseTable;
   public owner: string;
   public color_main: ColorResolvable;
@@ -148,10 +149,10 @@ export class Manager extends Client {
       data: clusterManager ? cluster : null,
       id: clusterManager ? cluster.worker.id : 0,
     };
-    this.logger = new LogManager(this, this.cluster.id);
+    this.logger = Logger.getInstance();
     
-    // Khởi tạo logger utility với manager
-    logger.setManager(this);
+    // Thiết lập client reference cho LoggerHelper để kiểm tra debug mode
+    LoggerHelper.setClient(this);
     
     this.manifest = new ManifestLoader().data;
     this.owner = this.config.bot.OWNER_ID;
@@ -245,20 +246,14 @@ export class Manager extends Client {
   }
 
   public start() {
-    logInfo("ClientManager", "Đang khởi động client Zk Music's...");
-    logInfo("ClientManager", `Phiên bản: ${this.manifest.metadata.bot.version}`);
-    logInfo("ClientManager", `Tên mã: ${this.manifest.metadata.bot.codename}`);
-    logInfo(
-      "ClientManager",
-      `Phiên bản Autofix: ${this.manifest.metadata.autofix.version}`
-    );
+    // Hiển thị banner đẹp mắt khi khởi động
+    log.info(this.manifest.metadata.bot.codename, `Phiên bản: ${this.manifest.metadata.bot.version}`);
+    
+    log.info(this.manifest.metadata.bot.codename, `Codename: ${this.manifest.metadata.bot.codename}`);
+    log.info(this.manifest.metadata.bot.codename, `Autofix version: ${this.manifest.metadata.autofix.version}`);
+    
     if (this.config.features.HIDE_LINK && this.config.features.REPLACE_LINK) {
-      logWarn(
-        "ClientManager",
-        chalk.bold.red(
-          "Bạn chỉ có thể bật một tính năng: HIDE_LINK hoặc REPLACE_LINK. Vui lòng tắt một trong hai để tiếp tục."
-        )
-      );
+      log.warn("Config", "HIDE_LINK và REPLACE_LINK đều được bật, chỉ nên bật 1 trong 2 tính năng này");
       return;
     }
     if (this.config.features.FilterMenu ?? false) {
@@ -283,6 +278,10 @@ export class Manager extends Client {
     new CommandDeployer(this);
     new initHandler(this);
     new DatabaseService(this);
+    
+    // Khởi tạo Logger Service
+    const loggerService = LoggerService.getInstance(this);
+    
     super.login(this.config.bot.TOKEN);
   }
 }

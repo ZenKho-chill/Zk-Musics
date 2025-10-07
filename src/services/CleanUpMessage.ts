@@ -1,6 +1,7 @@
 import { Manager } from "../manager.js";
 import { TextChannel } from "discord.js";
 import { ZklinkPlayer } from "../Zklink/Player/ZklinkPlayer.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 export class CleanUpMessage {
   client: Manager;
@@ -20,6 +21,9 @@ export class CleanUpMessage {
       nplayingMsg.coll.stop();
       nplayingMsg.msg.delete().catch(() => null);
       this.client.nplayingMsg.delete(this.player.guildId);
-    } catch (err) {}
+      log.debug("Cleaned up nowplaying message", `Guild: ${this.player.guildId}`);
+    } catch (err) {
+      log.error("Error cleaning up message", `Guild: ${this.player.guildId}`, err as Error);
+    }
   }
 }

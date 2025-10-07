@@ -9,7 +9,7 @@ bot:
   ADMIN: ["ID NGƯỜI TIN CẬY 1", "ID NGƯỜI TIN CẬY 2", "ID NGƯỜI TIN CẬY 3"]
   DEFAULT_VOLUME: 50 # Không được vượt quá 100, nếu vượt quá bot sẽ tự đặt về 100
   LANGUAGE: "en" # Bạn có thể đặt 'en' hoặc thêm ngôn ngữ tuỳ chỉnh
-  DEBUG_MODE: true
+  DEBUG_MODE: true # Bật/tắt debug logs (true = hiển thị debug, false = ẩn debug)
   SHARDING_SYSTEM:
     shardsPerClusters: 1
     totalClusters: 1
@@ -60,19 +60,7 @@ PremiumRole:
   GuildID: "ID MÁY CHỦ CỦA BẠN"
   RoleID: "ID VAI TRÒ CỦA BẠN"
 
-# Cấu hình kênh log cho bot (để trống hoặc xóa section này nếu không dùng)
-logchannel:
-  UpdateChannelId: "ID KÊNH CẬP NHẬT"
-  RedeemChannelID: "ID KÊNH ĐỔI THƯỞNG"
-  RemoveChannelID: "ID KÊNH XÓA"
-  GenerateCodeChannelID: "ID KÊNH TẠO MÃ"
-  RatingChannelID: "ID KÊNH ĐÁNH GIÁ"
-  BugReportChannelID: "ID KÊNH BÁO LỖI"
-  SuggestionChannelID: "ID KÊNH GỢI Ý"
-  ErrorChannelID: "ID KÊNH LỖI"
-  GuildJoinChannelID: "YOUR CHANEL ID"
-  GuildLeaveChannelID: "YOUR CHANEL ID"
-  PremiumExpireChannelID: "YOUR CHANEL ID"
+
 
 utilities:
   LyricsGenius:
@@ -145,7 +133,7 @@ features:
     TOPGG_VOTELOGS:
       Enable: false
       TopGgAuth: "YOUR AUTH/PASSWORD"
-      LogVoteChannelID: "YOUR CHANNEL ID"
+      VoteChannelID: "YOUR CHANNEL ID"
       TopGgToken: "YOUR TOKEN TOP.GG"
 
 HELPER_SETUP:

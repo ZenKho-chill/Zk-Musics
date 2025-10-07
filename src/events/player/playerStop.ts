@@ -5,22 +5,15 @@ import { Mode247Builder } from "../../services/Mode247Builder.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import chalk from "chalk";
 import { UpdateMusicStatusChannel } from "../../utilities/UpdateStatusChannel.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 export default class {
   async execute(client: Manager, player: ZklinkPlayer) {
-    if (!client.isDatabaseConnected)
-      return logWarn(
-        "DatabaseService",
-        "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
-      );
+    if (!client.isDatabaseConnected) {
+      // Log đã bị xóa - Cơ sở dữ liệu chưa kết nối
+      return;
+    }
 
     const guild = await client.guilds.fetch(player.guildId).catch(() => undefined);
-    logInfo(
-      "PlayerStop",
-      `${chalk.hex("#ff7f50")("Player đã dừng tại @ ")}${chalk.hex("#ff7f50")(
-        guild?.name
-      )} / ${chalk.hex("#ff7f50")(player.guildId)}`
-    );
+    // Log đã bị xóa - Player đã dừng
 
     /////////// Cập nhật thiết lập nhạc //////////
     await client.UpdateMusic(player);

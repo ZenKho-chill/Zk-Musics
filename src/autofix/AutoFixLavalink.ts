@@ -1,8 +1,9 @@
 import { Manager } from "../manager.js";
 import { LavalinkDataType } from "../@types/Lavalink.js";
 import { CheckLavalinkServer } from "./CheckLavalinkServer.js";
+import { log } from "../utilities/LoggerHelper.js";
 import chalk from "chalk";
-import { logInfo, logWarn } from "../utilities/Logger.js";
+
 
 export class AutoFixLavalink {
   client: Manager;
@@ -14,7 +15,7 @@ export class AutoFixLavalink {
   }
 
   async execute() {
-    logInfo("AutoFixLavalink", "Bắt đầu tự sửa lavalink");
+    log.info("Autofix Lavalink", `Mục tiêu: ${this.lavalinkName}`);
     if (this.client.lavalinkList.length == 0) {
       new CheckLavalinkServer(this.client);
       return this.fixLavalink();
@@ -23,30 +24,20 @@ export class AutoFixLavalink {
 
   async fixLavalink() {
     const autofixError = chalk.hex("#e12885");
-    const autofixErrorMess = autofixError("Lỗi: ");
 
     this.checkLavalink();
     await this.removeCurrentLavalink();
     if (this.client.lavalinkList.filter((i) => i.online).length == 0) {
-      logInfo(
-        "AutoFixLavalink",
-        autofixErrorMess + "Không có lavalink trực tuyến hoặc khả dụng cho bot này."
-      );
-      logInfo(
-        "AutoFixLavalink",
-        autofixErrorMess + "Vui lòng tắt bot, nhập server lavalink hợp lệ (v4) và khởi động lại bot"
-      );
-      logInfo("AutoFixLavalink", "Đã kết thúc autofix lavalink");
+      log.error("Autofix Lavalink thất bại", "Không có server Lavalink");
+      log.warn("Autofix Lavalink không thể tiếp tục hoạt động", "Vui lòng tắt bot và kiểm tra danh sách lavalink");
+      log.warn("Tắt Autofix Lavalink");
       return;
     }
 
     await this.applyNewLavalink();
 
-    logInfo(
-      "AutoFixLavalink",
-      "Đã chuyển sang lavalink mới, vui lòng chờ 3 giây để kết nối."
-    );
-    logInfo("AutoFixLavalink", "Đã kết thúc autofix lavalink");
+    log.info("Đổi server lavalink", "Đang đổi server lavalink mới, vui lòng chờ...");
+    log.info("Autofix lavalink hoàn thành");
   }
 
   checkLavalink() {
@@ -70,7 +61,7 @@ export class AutoFixLavalink {
 
     // Kiểm tra xem lavalinkIndex có hợp lệ không
     if (lavalinkIndex === -1) {
-      logWarn("AutoFixLavalink", "Không tìm thấy node lavalink.");
+      log.warn("Lavalink Node", `Không tìm thấy server: ${this.lavalinkName}`);
       return;
     }
 
@@ -78,7 +69,7 @@ export class AutoFixLavalink {
 
     // Đảm bảo targetLavalink được định nghĩa trước khi tiếp tục
     if (!targetLavalink) {
-      logWarn("AutoFixLavalink", "Node lavalink mục tiêu không xác định.");
+      log.warn("Lavalink node", `Server không xác định: ${lavalinkIndex}`);
       return;
     }
 

@@ -6,7 +6,7 @@ import { ApplicationCommandOptionType, REST, Routes } from "discord.js";
 import { CommandInterface, UploadCommandInterface } from "../@types/Interaction.js";
 import { join, dirname } from "path";
 import { BotInfoType } from "../@types/User.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -40,41 +40,31 @@ export class CommandDeployer {
   async execute() {
     const command = [];
 
-    logInfo(CommandDeployer.name, "Đang đọc file interaction...");
+    log.info("Commands", "Đang đọc file interaction");
 
     const store = await this.combineDir();
 
     command.push(...this.parseEngine(store));
 
-    logInfo(
-      CommandDeployer.name,
-      "Đã đọc xong file interaction, đang thiết lập REST..."
-    );
+    log.info("Commands", `Đọc ${store.length} lệnh`);
 
     const rest = new REST({ version: "10" }).setToken(this.client.config.bot.TOKEN);
+    
+    log.info("REST Client", "Sẵn sàng thiết lập REST");
     const client = await rest.get(Routes.user());
 
-    logInfo(
-      CommandDeployer.name,
-      `Đã thiết lập REST cho ${(client as BotInfoType).username}#${
-        (client as BotInfoType).discriminator
-      } (${(client as BotInfoType).id})`
-    );
+    log.info("Đã thiết lập REST", `Chạy với tên ${(client as BotInfoType).username}`);
 
-    if (command.length === 0)
-      return logInfo(
-        CommandDeployer.name,
-        "Không có interaction nào được load. Kết thúc auto deploy..."
-      );
+    if (command.length === 0) {
+      log.warn("Không có interaction nào được load", "No commands to deploy");
+      return;
+    }
 
     await rest.put(Routes.applicationCommands((client as BotInfoType).id), {
       body: command,
     });
 
-    logInfo(
-      CommandDeployer.name,
-      `Đã triển khai interaction! Kết thúc auto deploy...`
-    );
+    log.info("Triển khai interaction", `Khai báo ${command.length} lệnh`);
   }
 
   protected parseEngine(store: CommandInterface[]) {

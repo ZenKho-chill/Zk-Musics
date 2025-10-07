@@ -4,7 +4,6 @@ import { join, dirname } from "path";
 import { fileURLToPath, pathToFileURL } from "url";
 import { Manager } from "../../manager.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export class PlayerEventLoader {
   client: Manager;
@@ -20,7 +19,7 @@ export class PlayerEventLoader {
       let eventsFile = await readdirRecursive(eventsPath);
       await this.registerPath(eventsFile);
     }
-    logInfo(PlayerEventLoader.name, `${this.counter} sự kiện đã được nạp!`);
+    // Log đã bị xóa - Sự kiện đã được nạp
   }
 
   async registerPath(eventsPath: string[]) {

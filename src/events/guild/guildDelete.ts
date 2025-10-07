@@ -1,10 +1,10 @@
 import { Manager } from "../../manager.js";
 import { EmbedBuilder, Guild, TextChannel } from "discord.js";
-import { logInfo, logWarn } from "../../utilities/Logger.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager, guild: Guild) {
-    logInfo("GuildDelete", `Đã rời guild ${guild.name} @ ${guild.id}`);
+    // Log đã bị xóa - Đã rời guild
     const language = client.config.bot.LANGUAGE;
     client.guilds.cache.delete(`${guild!.id}`);
     await client.db.setup.delete(guild.id);
@@ -15,12 +15,9 @@ export default class {
     await client.db.PlayedSongGuild.delete(guild.id);
     await client.db.TempVoiceChannel.delete(guild.id);
     await client.db.TempVoiceChannelSetting.delete(guild.id);
-    if (!client.config.logchannel.GuildLeaveChannelID) return;
+    
+    // Log channel đã bị xóa - Gửi thông báo leave vào kênh chung thay vì log channel
     try {
-      const eventChannel = await client.channels.fetch(
-        client.config.logchannel.GuildLeaveChannelID
-      );
-      if (!eventChannel || !eventChannel.isTextBased()) return;
       const owner = await client.users.fetch(guild.ownerId);
       const embed = new EmbedBuilder()
         .setAuthor({
@@ -62,16 +59,16 @@ export default class {
         .setTimestamp()
         .setColor(client.color_main);
 
-      const channel = eventChannel as TextChannel;
-      await channel.send({
-        embeds: [embed],
-      });
-      logInfo(
-        "GuildDelete",
-        `Đã gửi tin nhắn rời tới kênh sự kiện cho guild ${guild.name}`
-      );
+      // Tìm một text channel để gửi thông báo (thay vì log channel đã bị xóa)
+      const availableChannels = guild.channels.cache.filter(c => c.isTextBased());
+      const channel = availableChannels.first() as TextChannel;
+      
+      if (channel) {
+        await channel.send({ embeds: [embed] });
+      }
+      // Log đã bị xóa - Đã gửi tin nhắn rời tới kênh
     } catch (err) {
-      logWarn("GuildDelete", `Gửi tin tới kênh sự kiện thất bại: ${err}`);
+      // Log đã bị xóa - Gửi tin tới kênh thất bại
     }
   }
 }

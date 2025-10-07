@@ -5,8 +5,9 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { ZklinkPlayer } from "../../Zklink/main.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
-const data: Config = new ConfigData().data;
+import { log } from "../../utilities/LoggerHelper.js";
+
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["announcement"];
@@ -66,16 +67,10 @@ export default class implements Command {
             await playing_channel.send({ embeds: [announcement] });
             successfulGuilds++;
           } catch (err) {
-            logWarn(
-              "Announcement",
-              `Lỗi khi gửi tin nhắn trong kênh ${playing_channel.id}`
-            );
+            // Log đã bị xóa - Cảnh báo lỗi khi gửi tin nhắn trong kênh
           }
         } else {
-          logWarn(
-            "Announcement",
-            `Không tìm thấy kênh có ID ${player.textId} trong ${guild.name}.`
-          );
+          // Log đã bị xóa - Cảnh báo không tìm thấy kênh phát nhạc
         }
       }
     }
@@ -100,6 +95,8 @@ export default class implements Command {
   public async execute(client: Manager, handler: CommandHandler) {
     try {
       await handler.deferReply();
+      
+      log.info("Announcement command executed", `User: ${handler.user?.tag} | Guild: ${handler.guild?.name}`);
 
       const inputProvided = handler.args[0] ? handler.args[0] : null;
       const input = inputProvided ? handler.args[0] : null;
@@ -237,7 +234,7 @@ export default class implements Command {
             handler.args[0] = collectedInput;
             await this.execute(client, handler);
           } catch (error) {
-            logWarn("Announcement", `Lỗi khi thực thi lệnh`);
+            // Log đã bị xóa - Cảnh báo lỗi khi thực thi lệnh
           }
         });
 
@@ -261,7 +258,7 @@ export default class implements Command {
       // Nếu không có cả file và URL, xử lý bình thường
       await this.processAnnouncement(client, handler, input!, finalImageUrl);
     } catch (error) {
-      logWarn("Announcement", `Lỗi khi gửi thông báo`);
+      // Log đã bị xóa - Cảnh báo lỗi khi gửi thông báo
     }
   }
 }

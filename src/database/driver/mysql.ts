@@ -23,8 +23,10 @@ export class MySQLConnectDriver {
 
     new keyChecker(this.client, this.dbConfig.config, sampleConfig, "mysql");
 
+    
     const mysqlDriver = new MySQLDriver(this.dbConfig.config);
 
     new TableSetup(this.client, mysqlDriver, "MySQL");
+    
   }
 }

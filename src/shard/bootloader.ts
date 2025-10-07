@@ -1,19 +1,28 @@
 import { Manager } from "../manager.js";
 import { ConfigData } from "../services/ConfigData.js";
 import { ClusterManager } from "./ClusterManager.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 export function bootBot(clusterManager?: ClusterManager) {
-  const configData = new ConfigData().data;
+  const configData = ConfigData.getInstance().data;
   const zk = new Manager(configData, configData.features.MESSAGE_CONTENT.enable, clusterManager);
 
   // Xử lý chống crash
   process
-    .on("unhandledRejection", (error) => zk.logger.unhandled("AntiCrash", error))
-    .on("uncaughtException", (error) => zk.logger.unhandled("AntiCrash", error))
-    .on("uncaughtExceptionMonitor", (error) => zk.logger.unhandled("AntiCrash", error))
-    .on("exit", () => zk.logger.info("ClientManager", `Zk Music's đã tắt. Hẹn gặp lại lần sau!`))
+    .on("unhandledRejection", (error) => {
+      log.unhandled("UnhandledRejection", error as Error);
+    })
+    .on("uncaughtException", (error) => {
+      log.unhandled("UncaughtException", error as Error);
+    })
+    .on("uncaughtExceptionMonitor", (error) => {
+      log.unhandled("ExceptionMonitor", error as Error);
+    })
+    .on("exit", () => {
+      log.info("Zk Music's đã tắt", "Process terminated");
+    })
     .on("SIGINT", () => {
-      zk.logger.info("ClientManager", `Đang tắt Zk Music's...`);
+      log.warn("Đang tắt Zk Music's", "SIGINT received");
       process.exit(0);
     });
 

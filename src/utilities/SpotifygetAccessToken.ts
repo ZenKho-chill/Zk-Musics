@@ -1,6 +1,7 @@
 import { Manager } from "../manager.js";
 import axios from "axios";
-import { logWarn } from "./Logger.js";
+import { log } from "../utilities/LoggerHelper.js";
+
 
 export async function SpotifygetAccessToken(client: Manager): Promise<string | null> {
   const CLIENT_ID = client.config.lavalink.SPOTIFY.id;
@@ -22,7 +23,7 @@ export async function SpotifygetAccessToken(client: Manager): Promise<string | n
 
     return response.data.access_token;
   } catch (error) {
-    logWarn("SpotifygetAccessToken", `Lỗi khi lấy access token từ Spotify: ${error}`, { error });
+    log.warn("Cảnh báo lỗi khi lấy access token từ Spotify", "Spotify API authentication failed", error as Error);
     return null;
   }
 }

@@ -5,9 +5,9 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
-const data: Config = new ConfigData().data;
+
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["suggestions"];
@@ -40,22 +40,9 @@ export default class implements Command {
     try {
       await handler.deferReply();
 
-      const SuggestionChannelID = client.config.logchannel.SuggestionChannelID;
-
-      if (!SuggestionChannelID || SuggestionChannelID.length === 0) {
-        // Nếu SuggestionChannelID không được cấu hình
-        return handler.editReply({
-          embeds: [
-            new EmbedBuilder()
-              .setColor(client.color_main)
-              .setDescription(
-                `${client.i18n.get(handler.language, "commands.info", "suggestions_failure")}`
-              ),
-          ],
-        });
-      }
-
-      const channel = await client.channels.fetch(SuggestionChannelID).catch(() => undefined);
+      // Sử dụng kênh hiện tại thay vì SuggestionChannelID đã bị xóa
+      const channel = handler.channel;
+      
       if (!channel || !channel.isTextBased()) {
         // Nếu kênh không tồn tại hoặc không phải kênh văn bản
         return handler.editReply({
@@ -122,7 +109,7 @@ export default class implements Command {
 
       return handler.editReply({ embeds: [successEmbed] });
     } catch (error) {
-      logWarn("Suggestion", "Lỗi khi thực thi lệnh suggestions");
+      // Log đã bị xóa - Cảnh báo lỗi khi thực thi lệnh suggestions
       return handler.editReply({
         embeds: [
           new EmbedBuilder()

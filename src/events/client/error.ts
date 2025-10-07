@@ -1,8 +1,8 @@
 import { Manager } from "../../manager.js";
-import { logError } from "../../utilities/Logger.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export default class {
   async execute(client: Manager, error: Error) {
-    logError("ClientError", error);
+    log.error("Lỗi Discord client", "Discord client error occurred", error);
   }
 }

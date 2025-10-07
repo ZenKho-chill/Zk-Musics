@@ -14,8 +14,8 @@ import { Manager } from "../../manager.js";
 import { UserStatistics } from "../../database/schema/UserStatistics.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logError } from "../../utilities/Logger.js";
-const data: Config = new ConfigData().data;
+
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["statistics", "user"];
@@ -308,7 +308,7 @@ async function fetchFirstMessageDate(guild: Guild, userId: Snowflake): Promise<s
         }
       }
     } catch (error) {
-      logError("StatisticUser", "Error getting earliest message", { error });
+      // Log đã bị xóa - Ghi lại lỗi khi lấy tin nhắn sớm nhất
       continue;
     }
   }

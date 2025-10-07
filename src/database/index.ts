@@ -3,7 +3,7 @@ import { JSONConnectDriver } from "./driver/json.js";
 import { MySQLConnectDriver } from "./driver/mysql.js";
 import { Manager } from "../manager.js";
 import { PostgresConnectDriver } from "./driver/postgres.js";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 export class DatabaseService {
   client: Manager;
@@ -15,6 +15,8 @@ export class DatabaseService {
   async execute() {
     try {
       const databaseConfig = this.client.config.features.DATABASE;
+      
+      log.info("Database", `Driver: ${databaseConfig.driver}`);
 
       switch (databaseConfig.driver) {
         case "json":
@@ -30,11 +32,15 @@ export class DatabaseService {
           new PostgresConnectDriver(this.client, databaseConfig);
           break;
         default:
+          log.warn("Database", `Không xác định, sử dụng json`);
           new JSONConnectDriver(this.client, databaseConfig);
           break;
       }
+      
+      log.info("Database", `Sử dụng ${databaseConfig.driver}`);
     } catch (error) {
-      return logError("DatabaseService", String(error));
+      log.error("Database", `Khởi tạo hệ thống database thất bại | ${error as Error}`);
+      return;
     }
   }
 }

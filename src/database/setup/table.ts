@@ -28,7 +28,7 @@ import { TopArtist } from "../schema/TopArtist.js";
 import { TempVoiceChannel } from "../schema/TempVoiceChannel.js";
 import { TempVoiceChannelSetting } from "../schema/TempVoiceChannelSetting.js";
 import { UserStatistics } from "../schema/UserStatistics.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+// Log đã bị xóa - import Logger functions
 
 export class TableSetup {
   client: Manager;
@@ -49,10 +49,7 @@ export class TableSetup {
     await baseDB.init();
     const end = Date.now();
 
-    logInfo(
-      "DatabaseService",
-      `Đã kết nối tới cơ sở dữ liệu! [${this.driverName}] [${end - start}ms]`
-    );
+    // Log đã bị xóa - Đã kết nối tới cơ sở dữ liệu
 
     this.client.db = {
       autoreconnect: await baseDB.table<AutoReconnect>("autoreconnect"),

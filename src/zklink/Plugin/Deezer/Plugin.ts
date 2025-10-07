@@ -114,7 +114,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
     const [, type, id] = REGEX.exec(query) || [];
 
     if (type in this.methods) {
-      this.debug(`Bắt đầu tìm kiếm từ plugin ${this.sourceName()}`);
+      // Debug đã bị xóa - Bắt đầu tìm kiếm từ plugin
       try {
         const _function = this.methods[type];
         const result: Result = await _function(id, options?.requester);
@@ -149,7 +149,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
         tracks: data?.data?.map((track) => this.buildZklinkTrack(track, requester)) || [],
       };
     } catch (e: any) {
-      this.debug(`Lỗi không mong đợi trong searchTrack: ${e}`);
+      // Debug đã bị xóa - Lỗi không mong đợi trong searchTrack
       return { tracks: [] };
     }
   }
@@ -159,20 +159,20 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
       const request = await fetch(url);
 
       if (!request.ok) {
-        this.debug(`Lỗi khi gọi Deezer API: ${request.status} ${request.statusText}`);
+        // Debug đã bị xóa - Lỗi khi gọi Deezer API
         return null;
       }
 
       const text = await request.text();
       if (!text.trim()) {
-        this.debug("Deezer API trả về response rỗng");
+        // Debug đã bị xóa - Deezer API trả về response rỗng
         return null;
       }
 
       const data = JSON.parse(text) as T;
       return data;
     } catch (error) {
-      this.debug(`Lỗi khi parse JSON từ Deezer API: ${error}`);
+      // Debug đã bị xóa - Lỗi khi parse JSON từ Deezer API
       return null;
     }
   }
@@ -187,7 +187,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
       return { tracks: [this.buildZklinkTrack(data, requester)] };
     } catch (e: any) {
-      this.debug(`Lỗi không mong đợi trong getTrack: ${e}`);
+      // Debug đã bị xóa - Lỗi không mong đợi trong getTrack
       return { tracks: [] };
     }
   }
@@ -207,7 +207,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
       return { tracks, name: data.title };
     } catch (e: any) {
-      this.debug(`Lỗi không mong đợi trong getAlbum: ${e}`);
+      // Debug đã bị xóa - Lỗi không mong đợi trong getAlbum
       return { tracks: [] };
     }
   }
@@ -227,7 +227,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
       return { tracks, name: data.title };
     } catch (e: any) {
-      this.debug(`Lỗi không mong đợi trong getPlaylist: ${e}`);
+      // Debug đã bị xóa - Lỗi không mong đợi trong getPlaylist
       return { tracks: [] };
     }
   }
@@ -273,10 +273,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   }
 
   private debug(logs: string) {
-    this.manager
-      ? // @ts-ignore
-        this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Plugin] / [Deezer] | ${logs}`)
-      : true;
+    // Debug đã bị xóa
   }
 }
 

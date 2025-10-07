@@ -17,7 +17,7 @@ export class JSONConnectDriver {
     const sampleConfig = {
       path: "./zk.database.json",
     };
-
+    
     new keyChecker(this.client, this.dbConfig.config, sampleConfig, "json");
 
     const jsonDriver = new JSONDriver(this.dbConfig.config.path);

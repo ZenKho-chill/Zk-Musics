@@ -2,8 +2,8 @@ import cron from "node-cron";
 import { Snowflake } from "discord.js";
 import { Manager } from "../manager.js";
 import { request } from "undici";
+import { log } from "../utilities/LoggerHelper.js";
 import chalk from "chalk";
-import { logDebug, logInfo, logWarn, logError } from "../utilities/Logger.js";
 export enum TopggServiceEnum {
   ERROR,
   VOTED,
@@ -25,28 +25,21 @@ export class TopggService {
     if (res.status == 200) {
       this.isTokenAvalible = true;
       this.botId = userId;
-      logInfo(
-        TopggService.name,
-        chalk.italic(`Dịch vụ TopGG đã được cài đặt thành công!`)
-      );
+      log.info("Dịch vụ TopGG đã được cài đặt thành công", `Bot ID: ${userId}`);
       return true;
     }
-    logWarn(TopggService.name, "Có sự cố khi cài đặt dịch vụ TopGG");
-    logWarn(TopggService.name, await res.text());
+    log.error("Có sự cố khi cài đặt dịch vụ TopGG", `HTTP Status: ${res.status}`);
     return false;
   }
 
   public async checkVote(userId: string): Promise<TopggServiceEnum> {
     if (!this.botId || !this.isTokenAvalible) {
-      logError(
-        TopggService.name,
-        "Dịch vụ TopGG chưa được cấu hình! check vote sẽ luôn trả về lỗi"
-      );
+      log.warn("Dịch vụ TopGG chưa được cấu hình", "Token hoặc Bot ID không hợp lệ");
       return TopggServiceEnum.ERROR;
     }
     const res = await this.fetch(`/bots/${this.botId}/check?userId=${userId}`);
     if (res.status !== 200) {
-      logError(TopggService.name, "Có lỗi khi lấy dữ liệu từ top.gg");
+      log.error("Có lỗi khi lấy dữ liệu từ top.gg", `HTTP Status: ${res.status} | User: ${userId}`);
       return TopggServiceEnum.ERROR;
     }
     const jsonRes = (await res.json()) as { voted: number };
@@ -68,10 +61,7 @@ export class TopggService {
     cron.schedule("0 */1 * * * *", () =>
       this.updateStatisticCount(this.client.guilds.cache.size, this.shardCount)
     );
-    logInfo(
-      TopggService.name,
-      chalk.italic(`Thống kê TopGG đã được bật thành công!`)
-    );
+    log.info("Thống kê TopGG đã được bật thành công", `Update every hour for ${this.client.guilds.cache.size} guilds`);
   }
 
   public async updateStatisticCount(serverCount: number, shardCount: number) {

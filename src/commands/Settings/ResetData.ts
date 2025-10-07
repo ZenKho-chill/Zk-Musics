@@ -8,9 +8,10 @@ import { Accessableby, Command } from "../../structures/Command.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Manager } from "../../manager.js";
 import { Config } from "../../@types/Config.js";
+import { log } from "../../utilities/LoggerHelper.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
-const data: Config = new ConfigData().data;
+
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["reset", "data"];
@@ -189,7 +190,7 @@ export default class implements Command {
         flags: MessageFlags.Ephemeral,
       });
     } catch (error) {
-      logInfo("Đặt lại dữ liệu", `Lỗi khi xóa cơ sở dữ liệu, ${error}`);
+      // Log đã bị xóa - Ghi lại lỗi khi xóa cơ sở dữ liệu
       await handler.interaction.reply({
         content: `Đã xảy ra lỗi khi xóa cơ sở dữ liệu\n\`${error.message}\``,
         flags: MessageFlags.Ephemeral,

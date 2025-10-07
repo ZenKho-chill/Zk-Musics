@@ -1,7 +1,7 @@
 import { ConfigData } from "../services/ConfigData.js";
 import { ClusterManager } from "./ClusterManager.js";
 
-const configData = new ConfigData().data;
+const configData = ConfigData.getInstance().data;
 
 configData.bot.SHARDING_SYSTEM;
 

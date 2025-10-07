@@ -23,8 +23,10 @@ export class PostgresConnectDriver {
 
     new keyChecker(this.client, this.dbConfig.config, sampleConfig, "postgres");
 
+    
     const mysqlDriver = new PostgresDriver(this.dbConfig.config);
 
     new TableSetup(this.client, mysqlDriver, "Postgres");
+    
   }
 }

@@ -5,9 +5,10 @@ import { EmbedBuilder } from "discord.js";
 import { createCanvas, loadImage, GlobalFonts } from "@napi-rs/canvas";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
-const data: Config = new ConfigData().data;
+
+const data: Config = ConfigData.getInstance().data;
 
 // Đăng ký font để sử dụng trong canvas
 GlobalFonts.registerFromPath("./script/Courage-Road.ttf", "Courage Road");
@@ -183,7 +184,7 @@ export default class implements Command {
         ],
       });
     } catch (error) {
-      logWarn("UserStats", "Lỗi khi tạo ảnh thống kê người dùng");
+      // Log đã bị xóa - Cảnh báo lỗi khi tạo ảnh thống kê người dùng
       await handler.editReply({
         embeds: [
           new EmbedBuilder()

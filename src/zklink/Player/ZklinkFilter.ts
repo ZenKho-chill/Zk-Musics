@@ -32,7 +32,7 @@ export class ZklinkFilter {
     const filterData = ZklinkFilterData[filter];
 
     if (!filterData) {
-      this.debug(`Filter ${filter} không có trong danh sách filter có sẵn của Zklink`);
+      // Debug đã bị xóa - Filter không có trong danh sách
       return this.player;
     }
 
@@ -43,11 +43,7 @@ export class ZklinkFilter {
       },
     });
 
-    this.debug(
-      filter !== "clear"
-        ? `Filter ${filter} đã được đặt thành công.`
-        : "Tất cả filter đã được đặt lại về vị trí mặc định thành công."
-    );
+    // Debug đã bị xóa - Filter đã được đặt thành công
 
     return this.player;
   }
@@ -66,7 +62,7 @@ export class ZklinkFilter {
       },
     });
 
-    this.debug("Tất cả filter đã được đặt lại về vị trí mặc định thành công.");
+    // Debug đã bị xóa - Tất cả filter đã được đặt lại
 
     return this.player;
   }
@@ -166,17 +162,13 @@ export class ZklinkFilter {
       },
     });
 
-    this.debug("Đã đặt filter tuỳ chỉnh thành công. Dữ liệu: " + util.inspect(filter));
+    // Debug đã bị xóa - Đã đặt filter tuỳ chỉnh thành công
 
     return this.player;
   }
 
   protected debug(logs: string) {
-    // @ts-ignore
-    this.player.manager.emit(
-      ZklinkEvents.Debug,
-      `[Zklink] / [Người phát @ ${this.player.guildId}] / [Bộ lọc] | ${logs}`
-    );
+    // Debug đã bị xóa
   }
 
   protected checkDestroyed(): void {

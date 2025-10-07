@@ -11,7 +11,8 @@ import { ConvertTime } from "../../utilities/ConvertTime.js";
 import { ZklinkLoopMode } from "../../Zklink/Interface/Constants.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-const data: Config = new ConfigData().data;
+import { log } from "../../utilities/LoggerHelper.js";
+const data: Config = ConfigData.getInstance().data;
 
 // Mã chính
 export default class implements Command {

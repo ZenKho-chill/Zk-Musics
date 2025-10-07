@@ -16,6 +16,7 @@ import {
 import chalk from "chalk";
 import { Manager } from "../../manager.js";
 import { GlobalInteraction, NoAutoInteraction } from "../../@types/Interaction.js";
+import { log } from "../../utilities/LoggerHelper.js";
 import {
   CheckPermissionResultInterface,
   CheckPermServices,
@@ -29,7 +30,6 @@ import { RateLimitManager } from "@sapphire/ratelimits";
 import { AutocompleteManager } from "../../services/AutocompleteManager.js";
 import { TopggServiceEnum } from "../../services/TopggService.js";
 import { Mode247Builder } from "../../services/Mode247Builder.js";
-import { logWarn, logInfo, logError } from "../../utilities/Logger.js";
 const commandRateLimitManager = new RateLimitManager(1000);
 
 /**
@@ -43,11 +43,10 @@ export default class {
     if (!interaction.isChatInputCommand()) return;
     if (!interaction.guild || interaction.user.bot) return;
 
-    if (!client.isDatabaseConnected)
-      return logWarn(
-        "DatabaseService",
-        "Cơ sở dữ liệu chưa kết nối nên sự kiện này tạm thời sẽ không chạy. Vui lòng thử lại sau!"
-      );
+    if (!client.isDatabaseConnected) {
+      // Log đã bị xóa - Cơ sở dữ liệu chưa kết nối
+      return;
+    }
 
     let guildModel = await client.db.language.get(`${interaction.guild.id}`);
     if (!guildModel) {
@@ -587,15 +586,28 @@ export default class {
 
       if (attachments) handler.attactments.push(attachments);
 
-      logInfo(
-        "Slash Commands",
-        `${chalk.hex("#00D100").bold(commandNameArray.join("-"))} được sử dụng bởi ${chalk.hex(
-          "#00D100"
-        )(interaction.user.displayName)} (${chalk.hex("#00D100")(
-          interaction.user.id
-        )}) từ ${chalk.hex("#00D100")(interaction.guild.name)} (${chalk.hex("#00D100")(
-          interaction.guild.id
-        )})`
+      // Log lệnh được thực thi
+      log.info(
+        `Lệnh được thực thi: /${commandNameArray.join(" ")}`,
+        `User: ${interaction.user.username} (${interaction.user.id}) | Guild: ${interaction.guild.name} (${interaction.guild.id})`,
+        {
+          command: commandNameArray.join("-"),
+          user: {
+            id: interaction.user.id,
+            username: interaction.user.username,
+            discriminator: interaction.user.discriminator
+          },
+          guild: {
+            id: interaction.guild.id,
+            name: interaction.guild.name
+          },
+          channel: {
+            id: interaction.channel?.id,
+            name: (interaction.channel as any)?.name || 'DM'
+          },
+          args: args.length > 0 ? args : undefined,
+          timestamp: new Date().toISOString()
+        }
       );
 
       ////////// Thống kê Sử dụng Lệnh Người Dùng //////////
@@ -626,7 +638,24 @@ export default class {
 
       command.execute(client, handler);
     } catch (error) {
-      logError("CommandManager", error);
+      // Log lỗi khi thực thi lệnh
+      log.error(
+        `Lỗi khi thực thi lệnh: /${commandNameArray.join(" ")}`,
+        `User: ${interaction.user.username} (${interaction.user.id}) | Guild: ${interaction.guild.name} (${interaction.guild.id})`,
+        error as Error,
+        {
+          command: commandNameArray.join("-"),
+          user: {
+            id: interaction.user.id,
+            username: interaction.user.username
+          },
+          guild: {
+            id: interaction.guild.id,
+            name: interaction.guild.name
+          }
+        }
+      );
+      
       interaction.reply({
         content: `${client.i18n.get(language, "interaction", "unexpected_error")}\n ${error}`,
       });

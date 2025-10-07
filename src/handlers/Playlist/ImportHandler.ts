@@ -11,9 +11,8 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
 import { ZklinkSearchResultType, ZklinkTrack } from "../../Zklink/main.js";
-import { logInfo, logDebug, logWarn, logError } from "../../utilities/Logger.js";
 
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export class PlaylistImportHandler {
   public async execute(client: Manager, handler: CommandHandler) {
@@ -178,60 +177,60 @@ export class PlaylistImportHandler {
     const tracks = playlist.tracks;
     let addedCount = 0;
 
-    logDebug("PlaylistImportHandler", `Starting to add ${tracks.length} tracks to queue`);
+    // Log đã bị xóa - Starting to add tracks to queue
 
     for (const trackData of tracks) {
       try {
-        logDebug("PlaylistImportHandler", `Searching track "${trackData.title}" with URI: ${trackData.uri}`);
+        // Log đã bị xóa - Debug searching track with URI
         
         // Tìm kiếm track để lấy đầy đủ thông tin
         const searchResult = await client.Zklink.search(trackData.uri, {
           requester: interaction.user,
         });
 
-        logDebug("PlaylistImportHandler", `Search result - Found ${searchResult.tracks?.length || 0} tracks, Type: ${searchResult.type}`);
+        // Log đã bị xóa - Debug search result found tracks
 
         if (searchResult.tracks && searchResult.tracks.length > 0) {
           const track = searchResult.tracks[0];
-          logDebug("PlaylistImportHandler", `Adding track "${track.title}" to queue`);
+          // Log đã bị xóa - Debug adding track to queue
           
           // Thử cả 2 cách add track
           try {
             if (addedCount === 0) {
               // Track đầu tiên - set làm current
-              logDebug("PlaylistImportHandler", "Setting first track as current");
+              // Log đã bị xóa - Debug setting first track as current
               player.queue.current = track;
-              logDebug("PlaylistImportHandler", "Current track set successfully");
+              // Log đã bị xóa - Debug current track set successfully
             } else {
               // Các track khác - add vào queue
-              logDebug("PlaylistImportHandler", "Adding to queue");
+              // Log đã bị xóa - Debug adding to queue
               player.queue.add(track);
             }
           } catch (addError) {
-            logError("PlaylistImportHandler", "Error adding track", { addError });
+            // Log đã bị xóa - Error adding track
           }
           
-          logDebug("PlaylistImportHandler", `Queue size after add: ${player.queue.size}`);
-          logDebug("PlaylistImportHandler", `Queue length: ${player.queue.length}`);
-          logDebug("PlaylistImportHandler", `Has current track: ${!!player.queue.current}`);
+          // Log đã bị xóa - Debug queue size after add
+          // Log đã bị xóa - Debug queue length
+          // Log đã bị xóa - Debug has current track
           
           addedCount++;
         } else {
-          logDebug("PlaylistImportHandler", `No tracks found for "${trackData.title}"`);
+          // Log đã bị xóa - Debug no tracks found
         }
       } catch (error) {
-        logError("PlaylistImportHandler", `Không thể thêm track "${trackData.title}"`, { error });
+        // Log đã bị xóa - Error không thể thêm track
       }
     }
 
-    logDebug("PlaylistImportHandler", `Finished adding tracks. Added: ${addedCount}, Queue size: ${player.queue.size}`);
+    // Log đã bị xóa - Debug finished adding tracks
 
     // Kiểm tra có tracks không (current track hoặc queue)
     const hasMusic = player.queue.current || player.queue.size > 0;
-    logDebug("PlaylistImportHandler", `Has music to play: ${hasMusic}`);
+    // Log đã bị xóa - Debug has music to play
     
     if (!hasMusic) {
-      logError("PlaylistImportHandler", "No music available to play!");
+      // Log đã bị xóa - Error no music available to play
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
@@ -242,14 +241,14 @@ export class PlaylistImportHandler {
     }
 
     // Phát nhạc - luôn luôn gọi play() để ensure player starts
-    logDebug("PlaylistImportHandler", `Player state - Playing: ${player.playing}, Paused: ${player.paused}, Has current: ${!!player.queue.current}`);
+    // Log đã bị xóa - Debug player state
     
     try {
-      logDebug("PlaylistImportHandler", "Calling player.play()...");
+      // Log đã bị xóa - Debug calling player.play()
       await player.play();
-      logDebug("PlaylistImportHandler", "Player.play() completed");
+      // Log đã bị xóa - Debug player.play() completed
     } catch (playError) {
-      logError("PlaylistImportHandler", "Error calling player.play()", { playError });
+      // Log đã bị xóa - Error calling player.play()
     }
 
     const embed = new EmbedBuilder()

@@ -1,5 +1,6 @@
 import { Message, PermissionFlagsBits } from "discord.js";
 import { GlobalInteraction } from "../@types/Interaction.js";
+import { log } from "../utilities/LoggerHelper.js";
 
 export interface CheckPermissionResultInterface {
   result: "PermissionPass" | string;
@@ -11,6 +12,8 @@ export class CheckPermServices {
     interaction: GlobalInteraction,
     permArray: bigint[]
   ): Promise<CheckPermissionResultInterface> {
+    log.debug("Checking permissions", `User: ${interaction.user.id} | Guild: ${interaction.guild?.id}`);
+    
     const voiceChannel = await interaction.guild?.members
       .fetch(interaction.user.id)
       .catch(() => undefined);

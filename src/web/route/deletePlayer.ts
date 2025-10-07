@@ -1,17 +1,14 @@
 import util from "node:util";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
-import { logInfo } from "../../utilities/Logger.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
 export async function deletePlayer(
   client: Manager,
   req: Fastify.FastifyRequest,
   res: Fastify.FastifyReply
 ) {
-  logInfo(
-    "PlayerRouterService",
-    `${req.method} ${req.routeOptions.url} params=${req.params ? util.inspect(req.params) : "{}"}`
-  );
+  // Log đã bị xóa - deletePlayer request info
   const guildId = (req.params as Record<string, string>)["guildId"];
   const player = client.Zklink.players.get(guildId);
   if (!player) {
@@ -19,6 +16,11 @@ export async function deletePlayer(
     res.send({ error: "Không tìm thấy player hiện tại!" });
     return;
   }
-  await player.destroy();
+  try {
+    await player.destroy();
+  } catch (error) {
+    log.error("Lỗi khi destroy player qua API", `Guild: ${guildId}`, error as Error);
+    return res.code(500).send({ error: "Failed to destroy player" });
+  }
   res.code(204);
 }

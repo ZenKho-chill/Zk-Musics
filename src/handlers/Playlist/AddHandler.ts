@@ -19,9 +19,8 @@ import { ConfigData } from "../../services/ConfigData.js";
 import { Manager } from "../../manager.js";
 import { CommandHandler } from "../../structures/CommandHandler.js";
 import { GlobalInteraction } from "../../@types/Interaction.js";
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
-const data = new ConfigData().data;
+const data = ConfigData.getInstance().data;
 
 export class PlaylistAddHandler {
   public async execute(client: Manager, handler: CommandHandler) {
@@ -90,7 +89,7 @@ export class PlaylistAddHandler {
 
       // Kiểm tra xem interaction đã được acknowledge chưa
       if (interaction.replied || interaction.deferred) {
-        logInfo("AddHandler", "Playlist selection interaction already acknowledged, skipping...");
+        // Log đã bị xóa - Playlist selection interaction already acknowledged
         return;
       }
 
@@ -100,7 +99,7 @@ export class PlaylistAddHandler {
         // Defer update để edit tin nhắn gốc thay vì tạo mới
         await interaction.deferUpdate();
       } catch (error) {
-        logError("AddHandler", "Error deferring playlist selection update", { error });
+        // Log đã bị xóa - Error deferring playlist selection update
         return;
       }
 
@@ -171,8 +170,8 @@ export class PlaylistAddHandler {
       components: [buttonRow],
     });
 
-    logDebug("AddHandler", "Button created", { buttonId: `song_input_modal_${playlistId}` });
-    logDebug("AddHandler", "Reply message created", { messageExists: !!replyMessage });
+    // Log đã bị xóa - Button created
+    // Log đã bị xóa - Reply message created
 
     // Collector cho button - sử dụng replyMessage thay vì interaction.message
     const buttonCollector = replyMessage.createMessageComponentCollector({
@@ -180,7 +179,7 @@ export class PlaylistAddHandler {
       time: 300000, // 5 phút
     });
 
-    logDebug("AddHandler", "Button collector created", { collectorExists: !!buttonCollector });
+    // Log đã bị xóa - Button collector created
 
     // Collector cho mention message
     const messageFilter = (m: any) => {
@@ -195,11 +194,7 @@ export class PlaylistAddHandler {
 
     // Handle button click
     buttonCollector.on("collect", async (buttonInt: ButtonInteraction) => {
-      logDebug("AddHandler", "Button clicked", { 
-        customId: buttonInt.customId,
-        userId: buttonInt.user.id, 
-        expectedUserId: handler.user?.id 
-      });
+      // Log đã bị xóa - Button clicked
       
       if (buttonInt.user.id !== handler.user?.id) {
         return buttonInt.reply({
@@ -209,7 +204,7 @@ export class PlaylistAddHandler {
       }
 
       if (buttonInt.customId.startsWith("song_input_modal_")) {
-        logDebug("AddHandler", "Starting modal show process");
+        // Log đã bị xóa - Starting modal show process
         // Không defer reply ở đây vì sẽ show modal
         await this.showSongInputModal(buttonInt, client, playlistId, language, handler);
         // Stop collectors sau khi show modal
@@ -220,7 +215,7 @@ export class PlaylistAddHandler {
 
     // Handle mention message
     messageCollector?.on("collect", async (message) => {
-      logDebug("AddHandler", "Message collected from user", { userId: message.author.id });
+      // Log đã bị xóa - Message collected from user
       const input = message.content
         .replace(new RegExp(`<@!?${client.user?.id}>`, 'g'), '') // Xóa mention
         .trim();
@@ -232,7 +227,7 @@ export class PlaylistAddHandler {
       }
 
       if (input) {
-        logDebug("AddHandler", "Processing search with input", { input });
+        // Log đã bị xóa - Processing search with input
         // Stop collectors trước khi xử lý để tránh duplicate
         buttonCollector.stop();
         messageCollector?.stop();
@@ -252,7 +247,7 @@ export class PlaylistAddHandler {
           components: [],
         });
       } catch (error) {
-        logError("AddHandler", "Error handling timeout", { error });
+        // Log đã bị xóa - Ghi lại lỗi khi xử lý timeout
       }
     };
 
@@ -262,10 +257,7 @@ export class PlaylistAddHandler {
 
     buttonCollector.on("end", async (collected) => {
       collectorsEnded++;
-      logDebug("AddHandler", "Button collector ended", { 
-        collectedSize: collected.size, 
-        totalEnded: collectorsEnded 
-      });
+      // Log đã bị xóa - Debug button collector ended
       
       if (collected.size > 0) {
         hasProcessedInteraction = true;
@@ -273,17 +265,14 @@ export class PlaylistAddHandler {
       
       // Chỉ timeout khi cả 2 collectors đã end và không có interaction nào thành công
       if (collectorsEnded === 2 && !hasProcessedInteraction) {
-        logDebug("AddHandler", "Both collectors ended with no interactions, triggering timeout");
+        // Log đã bị xóa - Debug cả hai collectors đã kết thúc, triggering timeout
         await handleTimeout();
       }
     });
 
     messageCollector?.on("end", async (collected) => {
       collectorsEnded++;
-      logDebug("AddHandler", "Message collector ended", { 
-        collectedSize: collected.size, 
-        totalEnded: collectorsEnded 
-      });
+      // Log đã bị xóa - Debug message collector ended
       
       if (collected.size > 0) {
         hasProcessedInteraction = true;
@@ -291,7 +280,6 @@ export class PlaylistAddHandler {
       
       // Chỉ timeout khi cả 2 collectors đã end và không có interaction nào thành công
       if (collectorsEnded === 2 && !hasProcessedInteraction) {
-        logDebug("AddHandler", "Both collectors ended with no interactions, triggering timeout");
         await handleTimeout();
       }
     });
@@ -321,13 +309,9 @@ export class PlaylistAddHandler {
 
     modal.addComponents(actionRow);
 
-    logDebug("AddHandler", "Showing modal for user", { userId: interaction.user.id });
-    
     try {
       await interaction.showModal(modal);
-      logDebug("AddHandler", "Modal shown successfully");
     } catch (showError) {
-      logError("AddHandler", "Failed to show modal", { error: showError });
       return;
     }
 
@@ -356,7 +340,6 @@ export class PlaylistAddHandler {
       
     } catch (error) {
       // Modal timeout hoặc error
-      logError("AddHandler", "Modal submit error", { error });
       
       // Thông báo timeout cho user qua original interaction
       try {
@@ -369,7 +352,7 @@ export class PlaylistAddHandler {
           components: [],
         });
       } catch (editError) {
-        logError("AddHandler", "Error editing reply after modal timeout", { error: editError });
+        // Không cần xử lý
       }
     }
   }
@@ -429,7 +412,6 @@ export class PlaylistAddHandler {
 
       // Kiểm tra xem interaction đã được acknowledge chưa
       if (buttonInt.replied || buttonInt.deferred) {
-        logInfo("AddHandler", "Button interaction already acknowledged, skipping...");
         return;
       }
 
@@ -453,7 +435,6 @@ export class PlaylistAddHandler {
           });
         }
       } catch (error) {
-        logError("AddHandler", "Error in button interaction", { error });
         return;
       }
     });
@@ -532,14 +513,12 @@ export class PlaylistAddHandler {
 
       // Kiểm tra xem interaction đã được acknowledge chưa
       if (selectInt.replied || selectInt.deferred) {
-        logInfo("AddHandler", "Track selection interaction already acknowledged, skipping...");
         return;
       }
 
       try {
         await selectInt.deferUpdate();
       } catch (error) {
-        logError("AddHandler", "Error deferring track selection update", { error });
         return;
       }
       
@@ -737,7 +716,7 @@ export class PlaylistAddHandler {
       try {
         await msg.delete();
       } catch (error) {
-        logInfo("AddHandler", "Could not delete user message", { error });
+        // Không cần xử lý
       }
 
       const input = msg.content.trim();
@@ -807,7 +786,6 @@ export class PlaylistAddHandler {
       }
 
     } catch (error) {
-      logError("AddHandler", "Error searching/adding song", { error });
       await handler.editReply({
         embeds: [
           new EmbedBuilder()
@@ -918,14 +896,12 @@ export class PlaylistAddHandler {
       if (interaction.customId === "search_result_select" && interaction.isStringSelectMenu()) {
         // Kiểm tra xem interaction đã được acknowledge chưa
         if (interaction.replied || interaction.deferred) {
-          logInfo("AddHandler", "Search result interaction already acknowledged, skipping...");
           return;
         }
 
         try {
           await interaction.deferUpdate();
         } catch (error) {
-          logError("AddHandler", "Error deferring search result update", { error });
           return;
         }
 
@@ -974,7 +950,7 @@ export class PlaylistAddHandler {
             components: [disabledRow],
           });
         } catch (error) {
-          logError("AddHandler", "Error updating timeout message", { error });
+          // Không cần xử lý
         }
       }
     });

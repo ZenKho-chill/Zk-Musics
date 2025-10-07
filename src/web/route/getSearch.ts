@@ -3,17 +3,14 @@ import { User } from "discord.js";
 import { Manager } from "../../manager.js";
 import Fastify from "fastify";
 import { ZklinkSearchResultType } from "../../Zklink/Interface/Manager.js";
-import { logInfo } from "../../utilities/Logger.js";
+// Log đã bị xóa - import logInfo
 
 export async function getSearch(
   client: Manager,
   req: Fastify.FastifyRequest,
   res: Fastify.FastifyReply
 ) {
-  logInfo(
-    "SearchRouterService",
-    `${req.method} ${req.routeOptions.url} truy_vấn=${req.query ? util.inspect(req.query) : "{}"}`
-  );
+  // Log đã bị xóa - getSearch request info
   const query = (req.query as Record<string, string>)["identifier"];
   const requester = (req.query as Record<string, string>)["requester"];
   const source = (req.query as Record<string, string>)["source"];

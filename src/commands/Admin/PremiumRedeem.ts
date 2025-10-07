@@ -12,7 +12,7 @@ import { Premium } from "../../database/schema/Premium.js";
 import { GuildPremium } from "../../database/schema/GuildPremium.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 
 export default class implements Command {
   public name = ["premium", "redeem"];
@@ -255,7 +255,7 @@ export default class implements Command {
     targetName: string,
     targetId: string
   ): Promise<void> {
-    if (!client.config.logchannel.RedeemChannelID) return;
+    // Log channel đã bị xóa - không gửi log
     const language = client.config.bot.LANGUAGE;
 
     const redeemedAt = premium ? premium.redeemedAt : guildPremium ? guildPremium.redeemedAt : 0;
@@ -318,13 +318,7 @@ export default class implements Command {
       .setTimestamp()
       .setColor(client.color_main);
 
-    try {
-      const channel = await client.channels
-        .fetch(client.config.logchannel.RedeemChannelID)
-        .catch(() => undefined);
-      if (!channel || !channel.isTextBased()) return;
-      await (channel as any).send({ embeds: [embed] });
-    } catch {}
+    // Log channel đã bị xóa - không gửi embed
     return;
   }
 }

@@ -11,9 +11,10 @@ import { CommandHandler } from "../../structures/CommandHandler.js";
 import { AutocompleteInteractionChoices, GlobalInteraction } from "../../@types/Interaction.js";
 import { Config } from "../../@types/Config.js";
 import { ConfigData } from "../../services/ConfigData.js";
-import { logInfo, logDebug, logWarn, logError } from "../../utilities/Logger.js";
+import { log } from "../../utilities/LoggerHelper.js";
 
-const data: Config = new ConfigData().data;
+
+const data: Config = ConfigData.getInstance().data;
 
 export default class PlaylistCommand implements Command {
   public name = ["pl", "playlist"];
@@ -124,7 +125,7 @@ export default class PlaylistCommand implements Command {
           });
       }
     } catch (error) {
-      logError("PlaylistCommand", `Error executing ${action} handler`, { error });
+      // Log đã bị xóa - Ghi lại lỗi khi thực thi playlist handler
       // Chỉ defer nếu chưa được defer và không phải create action
       if (!handler.interaction.deferred && !handler.interaction.replied && action !== "create") {
         await handler.deferReply({ ephemeral: true });

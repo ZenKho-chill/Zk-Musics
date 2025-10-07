@@ -6,7 +6,6 @@ import { fileURLToPath, pathToFileURL } from "url";
 import { KeyCheckerEnum } from "../../@types/KeyChecker.js";
 import { PlayerButton } from "../../@types/Button.js";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-import { logDebug, logInfo, logWarn, logError } from "../../utilities/Logger.js";
 
 export class PlayerButtonsLoader {
   client: Manager;
@@ -24,15 +23,9 @@ export class PlayerButtonsLoader {
     }
 
     if (this.client.plButton.size) {
-      logInfo(
-        PlayerButtonsLoader.name,
-        `${this.client.plButton.size} nút điều khiển player đã được tải!`
-      );
+      // Log đã bị xóa - Nút điều khiển player đã được tải
     } else {
-      logWarn(
-        PlayerButtonsLoader.name,
-        `Không có nút player nào được tải, mọi thứ ổn chứ?`
-      );
+      // Log đã bị xóa - Không có nút player nào được tải
     }
   }
 
@@ -41,28 +34,19 @@ export class PlayerButtonsLoader {
     const command = new (await import(pathToFileURL(commandFile).toString())).default();
 
     if (!command.name?.length) {
-      logWarn(
-        PlayerButtonsLoader.name,
-        `"${rltPath}" File nút player không có tên. Bỏ qua...`
-      );
+      // Log đã bị xóa - File nút player không có tên
       return;
     }
 
     if (this.client.plButton.get(command.name)) {
-      logWarn(
-        PlayerButtonsLoader.name,
-        `"${command.name}" nút player đã được cài. Bỏ qua...`
-      );
+      // Log đã bị xóa - Nút player đã được cài
       return;
     }
 
     const checkRes = this.keyChecker(command);
 
     if (checkRes !== KeyCheckerEnum.Pass) {
-      logWarn(
-        PlayerButtonsLoader.name,
-        `"${command.name}" nút player chưa được triển khai đúng [${checkRes}]. Bỏ qua...`
-      );
+      // Log đã bị xóa - Nút player chưa được triển khai đúng
       return;
     }
 

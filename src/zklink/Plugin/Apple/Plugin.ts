@@ -9,7 +9,7 @@ import { SourceZklinkPlugin } from "../SourceZklinkPlugin.js";
 import { ZklinkEvents, ZklinkPluginType } from "../../Interface/Constants.js";
 import { Config } from "../../../@types/Config.js";
 import { ConfigData } from "../../../services/ConfigData.js";
-const data: Config = new ConfigData().data;
+const data: Config = ConfigData.getInstance().data;
 import { fetch } from "undici";
 const REGEX =
   /(?:https:\/\/music\.apple\.com\/)(?:.+)?(artist|album|music-video|playlist)\/([\w\-\.]+(\/)+[\w\-\.]+|[^&]+)\/([\w\-\.]+(\/)+[\w\-\.]+|[^&]+)/;
@@ -163,7 +163,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
     if (type in this.methods) {
       try {
-        this.debug(`Bắt đầu tìm kiếm từ plugin ${this.sourceName()}`);
+        // Debug đã bị xóa - Bắt đầu tìm kiếm từ plugin
         let _function = this.methods[type];
         if (isTrack) _function = this.methods.track;
         const result: Result = await _function(id, options?.requester);
@@ -190,20 +190,20 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
       });
 
       if (!req.ok) {
-        this.debug(`Lỗi khi gọi Apple Music API: ${req.status} ${req.statusText}`);
+        // Debug đã bị xóa - Lỗi khi gọi Apple Music API
         return null as D;
       }
 
       const text = await req.text();
       if (!text.trim()) {
-        this.debug("Apple Music API trả về response rỗng");
+        // Debug đã bị xóa - Apple Music API trả về response rỗng
         return null as D;
       }
 
       const res = JSON.parse(text) as any;
       return res.data as D;
     } catch (error) {
-      this.debug(`Lỗi khi parse JSON từ Apple Music API: ${error}`);
+      // Debug đã bị xóa - Lỗi khi parse JSON từ Apple Music API
       return null as D;
     }
   }
@@ -213,7 +213,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
       const res = await this.getData(
         `/search?types=songs&term=${query.replace(/ /g, "+").toLocaleLowerCase()}`
       ).catch((e) => {
-        this.debug(`Lỗi khi tìm kiếm track: ${e}`);
+        // Debug đã bị xóa - Lỗi khi tìm kiếm track
         return null;
       });
 
@@ -228,7 +228,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
           ) || [],
       };
     } catch (e: any) {
-      this.debug(`Lỗi không mong đợi trong searchTrack: ${e}`);
+      // Debug đã bị xóa - Lỗi không mong đợi trong searchTrack
       return { tracks: [] };
     }
   }
@@ -236,7 +236,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private async getTrack(id: string, requester: unknown): Promise<Result> {
     try {
       const track = await this.getData(`/songs/${id}`).catch((e) => {
-        this.debug(`Lỗi khi lấy track: ${e}`);
+        // Debug đã bị xóa - Lỗi khi lấy track
         return null;
       });
 
@@ -246,7 +246,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
       return { tracks: [this.buildZklinkTrack(track[0], requester)] };
     } catch (e: any) {
-      this.debug(`Lỗi không mong đợi trong getTrack: ${e}`);
+      // Debug đã bị xóa - Lỗi không mong đợi trong getTrack
       return { tracks: [] };
     }
   }
@@ -254,7 +254,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private async getArtist(id: string, requester: unknown): Promise<Result> {
     try {
       const track = await this.getData(`/artists/${id}/view/top-songs`).catch((e) => {
-        this.debug(`Lỗi khi lấy artist: ${e}`);
+        // Debug đã bị xóa - Lỗi khi lấy artist
         return null;
       });
 
@@ -264,7 +264,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
       return { tracks: [this.buildZklinkTrack(track[0], requester)] };
     } catch (e: any) {
-      this.debug(`Lỗi không mong đợi trong getArtist: ${e}`);
+      // Debug đã bị xóa - Lỗi không mong đợi trong getArtist
       return { tracks: [] };
     }
   }
@@ -272,7 +272,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private async getAlbum(id: string, requester: unknown): Promise<Result> {
     try {
       const album = await this.getData(`/albums/${id}`).catch((e) => {
-        this.debug(`Lỗi khi lấy album: ${e}`);
+        // Debug đã bị xóa - Lỗi khi lấy album
         return null;
       });
 
@@ -287,7 +287,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
       return { tracks, name: album[0].attributes?.name };
     } catch (e: any) {
-      this.debug(`Lỗi không mong đợi trong getAlbum: ${e}`);
+      // Debug đã bị xóa - Lỗi không mong đợi trong getAlbum
       return { tracks: [] };
     }
   }
@@ -295,7 +295,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   private async getPlaylist(id: string, requester: unknown): Promise<Result> {
     try {
       const playlist = await this.getData(`/playlists/${id}`).catch((e) => {
-        this.debug(`Lỗi khi lấy playlist: ${e}`);
+        // Debug đã bị xóa - Lỗi khi lấy playlist
         return null;
       });
 
@@ -310,7 +310,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
 
       return { tracks, name: playlist[0].attributes?.name };
     } catch (e: any) {
-      this.debug(`Lỗi không mong đợi trong getPlaylist: ${e}`);
+      // Debug đã bị xóa - Lỗi không mong đợi trong getPlaylist
       return { tracks: [] };
     }
   }
@@ -359,10 +359,7 @@ export class ZklinkPlugin extends SourceZklinkPlugin {
   }
 
   private debug(logs: string) {
-    this.manager
-      ? // @ts-ignore
-        this.manager.emit(ZklinkEvents.Debug, `[Zklink] / [Plugin] / [Apple] | ${logs}`)
-      : true;
+    // Debug đã bị xóa
   }
 }
 
